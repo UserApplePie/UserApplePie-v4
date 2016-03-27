@@ -17,4 +17,4 @@
 
 <div class="container">
 
-<p><img src='<?=Url::templatePath();?>images/nova.png' alt='<?=SITETITLE;?>'></p>
+<p><img src='<?=Url::templatePath();?>images/uap3logolg.gif' alt='<?=SITETITLE;?>'></p>
