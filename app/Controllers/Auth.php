@@ -286,8 +286,8 @@ class Auth extends Controller
     		$data['js'] .= "<script src='".Url::templatePath()."js/password_strength_match.js'></script>";
 
         View::renderTemplate('header', $data);
-        View::render('Members/Change-Password', $data);
         View::render('Members/Member-Account-Sidebar', $data);
+        View::render('Members/Change-Password', $data);
         View::renderTemplate('footer', $data);
     }
 
@@ -340,8 +340,8 @@ class Auth extends Controller
     		$data['js'] .= "<script src='".Url::templatePath()."js/live_email.js'></script>";
 
         View::renderTemplate('header', $data);
-        View::render('Members/Change-Email', $data);
         View::render('Members/Member-Account-Sidebar', $data);
+        View::render('Members/Change-Email', $data);
         View::renderTemplate('footer', $data);
     }
 

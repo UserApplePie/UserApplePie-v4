@@ -43,8 +43,8 @@ class Members extends Controller
         ";
 
         View::renderTemplate('header', $data);
-        View::render('Members/Members', $data);
         View::render('Members/Member-Stats-Sidebar', $data);
+        View::render('Members/Members', $data);
         View::renderTemplate('footer', $data);
     }
 
@@ -71,8 +71,8 @@ class Members extends Controller
         ";
 
         View::renderTemplate('header', $data);
-        View::render('Members/Members', $data);
         View::render('Members/Member-Stats-Sidebar', $data);
+        View::render('Members/Members', $data);
         View::renderTemplate('footer', $data);
     }
 
@@ -168,8 +168,8 @@ class Members extends Controller
             ";
 
             View::renderTemplate('header', $data);
-            View::render('Members/Edit-Profile', $data);
             View::render('Members/Member-Account-Sidebar', $data);
+            View::render('Members/Edit-Profile', $data);
             View::renderTemplate('footer', $data);
         }
         else
@@ -193,8 +193,8 @@ class Members extends Controller
         ";
 
         View::renderTemplate('header', $data);
-        View::render('Members/Account-Settings', $data);
         View::render('Members/Member-Account-Sidebar', $data);
+        View::render('Members/Account-Settings', $data);
         View::renderTemplate('footer', $data);
     }
 
@@ -216,8 +216,8 @@ class Members extends Controller
         ";
 
         View::renderTemplate('header', $data);
-        View::render('Members/Account-Settings', $data);
         View::render('Members/Member-Account-Sidebar', $data);
+        View::render('Members/Account-Settings', $data);
         View::renderTemplate('footer', $data);
     }
 }
