@@ -8,8 +8,10 @@
 
 namespace Core;
 
-use Core\Controller;
-use Core\View;
+use Core\Controller,
+  Core\View,
+  Helpers\Auth\Auth as AuthHelper,
+  App\Models\Users;
 
 /**
  * Error class to generate 404 pages.
@@ -22,6 +24,8 @@ class Error extends Controller
      * @var string
      */
     private $error = null;
+    public $auth;
+    public $user;
 
     /**
      * Save error to $this->error.
@@ -32,6 +36,16 @@ class Error extends Controller
     {
         parent::__construct();
         $this->error = $error;
+
+        $this->auth = new AuthHelper();
+        $this->user = new Users();
+
+        if ($this->auth->isLogged()) {
+            $u_id = $this->auth->currentSessionInfo()['uid'];
+            $this->user->update($u_id);
+        }
+
+        $this->user->cleanOfflineUsers();
     }
 
     /**
@@ -43,6 +57,9 @@ class Error extends Controller
 
         $data['title'] = '404';
         $data['error'] = $error ? $error : $this->error;
+
+        /** Check to see if user is logged in **/
+        $data['isLoggedIn'] = $this->auth->isLogged();
 
         View::renderTemplate('header', $data);
         View::render('Error/404', $data);

@@ -49,7 +49,12 @@ class Alias
             '\Helpers\\SimpleCurl' => 'SimpleCurl',
             '\Helpers\\TableBuilder' => 'TableBuilder',
             '\Helpers\\Tags' => 'Tags',
-            '\Helpers\\Url' => 'Url'
+            '\Helpers\\Url' => 'Url',
+            'App\Models\\Members' => 'MembersModel',
+            'App\Models\\Users' => 'Users',
+            '\Helpers\Auth\\Auth' => 'AuthHelper',
+            '\Helpers\\SimpleImage' => 'SimpleImage'
+
         ];
     }
 }

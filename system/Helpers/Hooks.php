@@ -54,7 +54,8 @@ class Hooks
             'afterBody',
             'footer',
             'js',
-            'routes'
+            'routes',
+            'sidebar'
         ));
 
         //load modules
@@ -131,7 +132,7 @@ class Hooks
     public static function addHook($where, $function)
     {
         if (!isset(self::$hooks[$where])) {
-            die("There is no such place ($where) for hooks.");
+            die("There is no such place ($where) for hooks 321.");
         } else {
             $theseHooks = explode('|', self::$hooks[$where]);
             $theseHooks[] = $function;
@@ -180,7 +181,7 @@ class Hooks
 
             return $result;
         } else {
-            die("There is no such place ($where) for hooks.");
+            die("There is no such place ($where) for hooks 123.");
         }
     }
 

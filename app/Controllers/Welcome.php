@@ -8,15 +8,19 @@
 
 namespace App\Controllers;
 
-use Core\View;
-use Core\Controller;
-use Helpers\Session;
+use Core\View,
+  Core\Controller,
+  Helpers\Session,
+  Helpers\Auth\Auth as AuthHelper,
+  App\Models\Users as Users,
+  App\Models\Members as MembersModel;
 
 /**
  * Sample controller showing a construct and 2 methods and their typical usage.
  */
 class Welcome extends Controller
 {
+
     /**
      * Call the parent construct
      */
@@ -34,8 +38,17 @@ class Welcome extends Controller
         $data['title'] = $this->language->get('welcomeText');
         $data['welcomeMessage'] = $this->language->get('welcomeMessage');
 
+        /** Check to see if user is logged in **/
+        $data['isLoggedIn'] = $this->auth->isLogged();
+
+        /** Get Data For Member Totals Stats Sidebar **/
+        $onlineUsers = new MembersModel();
+        $data['activatedAccounts'] = count($onlineUsers->getActivatedAccounts());
+        $data['onlineAccounts'] = count($onlineUsers->getOnlineAccounts());
+
         View::renderTemplate('header', $data);
         View::render('Welcome/Welcome', $data);
+        View::render('Members/Member-Stats-Sidebar', $data);
         View::renderTemplate('footer', $data);
     }
 
@@ -47,8 +60,23 @@ class Welcome extends Controller
         $data['title'] = $this->language->get('subpageText');
         $data['welcomeMessage'] = $this->language->get('subpageMessage');
 
+        /** Check to see if user is logged in **/
+        $data['isLoggedIn'] = $this->auth->isLogged();
+
+        /** Get Data For Member Totals Stats Sidebar **/
+        $onlineUsers = new MembersModel();
+        $data['activatedAccounts'] = count($onlineUsers->getActivatedAccounts());
+        $data['onlineAccounts'] = count($onlineUsers->getOnlineAccounts());
+
+        /** Setup Breadcrumbs **/
+    		$data['breadcrumbs'] = "
+    			<li class='active'>".$data['title']."</li>
+        ";
+
         View::renderTemplate('header', $data);
         View::render('Welcome/SubPage', $data);
+        View::render('Members/Member-Stats-Sidebar', $data);
         View::renderTemplate('footer', $data);
     }
+
 }

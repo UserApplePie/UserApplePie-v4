@@ -18,56 +18,62 @@ class Mail extends PhpMailer
      *
      * @var string $From set sender email
      */
-    public $From     = 'noreply@domain.com';
+    public $From     = EMAIL_USERNAME;
 
     /**
      * FromName
      *
      * @var string $FromName set sender name
      */
-    public $FromName = SITETITLE;
+    public $FromName = EMAIL_FROM_NAME;
 
     /**
      * Host
      *
      * @var string $Host set sender SMTP Route
      */
-    //public $Host     = 'smtp.gmail.com';
+    public $Host     = EMAIL_HOST;
 
     /**
      * Mailer
      *
      * @var string $Mailer set type default is SMTP
      */
-    //public $Mailer   = 'smtp';
+    public $Mailer   = 'smtp';
 
     /**
      * SMTPAuth
      *
      * @var string $SMTPAuth use authenticated
      */
-    //public $SMTPAuth = true;
+    public $SMTPAuth = true;
 
     /**
      * Username
      *
      * @var string $Username set username
      */
-    //public $Username = 'email';
+    public $Username = EMAIL_USERNAME;
 
     /**
      * Password
      *
      * @var string $Password set password
      */
-    //public $Password = 'password';
+    public $Password = EMAIL_PASSWORD;
 
     /**
      * SMTPSecure
      *
      * @var string $SMTPSecure set Secure SMTP
      */
-    //public $SMTPSecure = 'tls';
+    public $SMTPSecure = EMAIL_STMP_SECURE;
+
+    /**
+     * The default SMTP server port.
+     * @type int
+     */
+    public $Port = EMAIL_PORT;
 
     /**
      * WordWrap

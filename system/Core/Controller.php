@@ -8,7 +8,9 @@
 
 namespace Core;
 
-use Core\Language;
+use Core\Language,
+  Helpers\Auth\Auth as AuthHelper,
+  App\Models\Users;
 
 /**
  * Core controller, all other controllers extend this base controller.
@@ -22,11 +24,24 @@ abstract class Controller
      */
     public $language;
 
+    public $auth;
+    public $user;
+
     /**
      * On run make an instance of the config class and view class.
      */
     public function __construct()
     {
+        $this->auth = new AuthHelper();
+        $this->user = new Users();
+
+        if ($this->auth->isLogged()) {
+            $u_id = $this->auth->currentSessionInfo()['uid'];
+            $this->user->update($u_id);
+        }
+
+        $this->user->cleanOfflineUsers();
+
         /** initialise the language object */
         $this->language = new Language();
     }

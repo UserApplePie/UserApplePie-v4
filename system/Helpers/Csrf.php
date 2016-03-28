@@ -49,7 +49,6 @@ class Csrf
             Session::set($name, md5(uniqid(rand(), true)));
             Session::set($name.'_time', time());
         }
-
         return Session::get($name);
     }
 
@@ -62,6 +61,6 @@ class Csrf
      */
     public static function isTokenValid($name)
     {
-        return $_POST[$name] === Session::get($name);
+        return $_POST['token_'.$name] === Session::get($name);
     }
 }

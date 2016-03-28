@@ -1,0 +1,184 @@
+Exception information:
+
+           Date: Mar 27, 2016 12:57PM
+
+           Message: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uap3.uap3_users_online' doesn't exist
+
+           Code: 42S02
+
+           File: /www/websites/uap3demo.userapplepie.com/system/Helpers/Database.php
+
+           Line: 102
+
+           Stack trace:
+
+           #0 /www/websites/uap3demo.userapplepie.com/system/Helpers/Database.php(102): PDOStatement->execute()
+#1 /www/websites/uap3demo.userapplepie.com/app/Models/Users.php(80): Helpers\Database->select('SELECT * FROM u...')
+#2 /www/websites/uap3demo.userapplepie.com/app/Controllers/Members.php(26): App\Models\Users->cleanOfflineUsers()
+#3 /www/websites/uap3demo.userapplepie.com/system/Core/Router.php(190): App\Controllers\Members->__construct()
+#4 /www/websites/uap3demo.userapplepie.com/system/Core/Router.php(229): Core\Router->invokeController('App\Controllers...', 'members', Array)
+#5 /www/websites/uap3demo.userapplepie.com/system/Core/Router.php(266): Core\Router->invokeObject('App\Controllers...', Array)
+#6 /www/websites/uap3demo.userapplepie.com/app/Routes.php(40): Core\Router->dispatch()
+#7 /www/websites/uap3demo.userapplepie.com/public/index.php(74): require('/www/websites/u...')
+#8 {main}
+
+           ---------
+
+2016-03-27 13:05PM - require(/www/websites/uap3demo.userapplepie.com/app/Modules/Members/Members.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 62
+
+2016-03-27 13:07PM - require(/www/websites/uap3demo.userapplepie.com/app/Modules/Members/Members.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 62
+
+2016-03-27 13:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Modules/Members/Members.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 62
+
+Exception information:
+
+           Date: Mar 27, 2016 13:34PM
+
+           Message: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uap3.uap_users_online' doesn't exist
+
+           Code: 42S02
+
+           File: /www/websites/uap3demo.userapplepie.com/system/Helpers/Database.php
+
+           Line: 102
+
+           Stack trace:
+
+           #0 /www/websites/uap3demo.userapplepie.com/system/Helpers/Database.php(102): PDOStatement->execute()
+#1 /www/websites/uap3demo.userapplepie.com/app/Models/Members.php(92): Helpers\Database->select('?????SELECT????...')
+#2 /www/websites/uap3demo.userapplepie.com/app/Controllers/Members.php(73): App\Models\Members->getOnlineMembers()
+#3 [internal function]: App\Controllers\Members->online()
+#4 /www/websites/uap3demo.userapplepie.com/system/Core/Router.php(198): call_user_func_array(Array, Array)
+#5 /www/websites/uap3demo.userapplepie.com/system/Core/Router.php(229): Core\Router->invokeController('App\Controllers...', 'online', Array)
+#6 /www/websites/uap3demo.userapplepie.com/system/Core/Router.php(266): Core\Router->invokeObject('App\Controllers...', Array)
+#7 /www/websites/uap3demo.userapplepie.com/app/Routes.php(40): Core\Router->dispatch()
+#8 /www/websites/uap3demo.userapplepie.com/public/index.php(74): require('/www/websites/u...')
+#9 {main}
+
+           ---------
+
+Exception information:
+
+           Date: Mar 27, 2016 13:34PM
+
+           Message: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uap3.uap_users_online' doesn't exist
+
+           Code: 42S02
+
+           File: /www/websites/uap3demo.userapplepie.com/system/Helpers/Database.php
+
+           Line: 102
+
+           Stack trace:
+
+           #0 /www/websites/uap3demo.userapplepie.com/system/Helpers/Database.php(102): PDOStatement->execute()
+#1 /www/websites/uap3demo.userapplepie.com/app/Models/Members.php(92): Helpers\Database->select('?????SELECT????...')
+#2 /www/websites/uap3demo.userapplepie.com/app/Controllers/Members.php(73): App\Models\Members->getOnlineMembers()
+#3 [internal function]: App\Controllers\Members->online()
+#4 /www/websites/uap3demo.userapplepie.com/system/Core/Router.php(198): call_user_func_array(Array, Array)
+#5 /www/websites/uap3demo.userapplepie.com/system/Core/Router.php(229): Core\Router->invokeController('App\Controllers...', 'online', Array)
+#6 /www/websites/uap3demo.userapplepie.com/system/Core/Router.php(266): Core\Router->invokeObject('App\Controllers...', Array)
+#7 /www/websites/uap3demo.userapplepie.com/app/Routes.php(40): Core\Router->dispatch()
+#8 /www/websites/uap3demo.userapplepie.com/public/index.php(74): require('/www/websites/u...')
+#9 {main}
+
+           ---------
+
+2016-03-27 13:49PM - Missing argument 1 for Helpers\Csrf::makeToken(), called in /www/websites/uap3demo.userapplepie.com/app/Controllers/Auth.php on line 74 and defined in /www/websites/uap3demo.userapplepie.com/system/Helpers/Csrf.php on line 42
+
+2016-03-27 16:30PM - require(/www/websites/uap3demo.userapplepie.com/app/Templates/Default/Members/Member-Stats-Sidebar.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 83
+
+2016-03-27 16:34PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/Members/Online-Users.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 16:35PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/Member-Stats-Sidebar.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 16:35PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/Member-Stats-Sidebar.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 16:36PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/Member-Stats-Sidebar.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 18:01PM - mkdir(): Permission denied in /www/websites/uap3demo.userapplepie.com/app/Controllers/Members.php on line 113
+
+2016-03-27 18:03PM - mkdir(): Permission denied in /www/websites/uap3demo.userapplepie.com/app/Controllers/Members.php on line 113
+
+2016-03-27 18:04PM - mkdir(): Permission denied in /www/websites/uap3demo.userapplepie.com/app/Controllers/Members.php on line 113
+
+2016-03-27 19:08PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:08PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:08PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:08PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:08PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:08PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:08PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:08PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:09PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 19:10PM - require(/www/websites/uap3demo.userapplepie.com/app/Views/Welcome/LiveCheck.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 41
+
+2016-03-27 20:30PM - require(/www/websites/uap3demo.userapplepie.com/app/Templates/Default/email-change.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 83
+
+2016-03-27 20:38PM - require(/www/websites/uap3demo.userapplepie.com/app/Templates/Default/Member-Stats-Sidebar.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 83
+
+2016-03-27 20:40PM - require(/www/websites/uap3demo.userapplepie.com/app/Templates/Default/resend.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 83
+
+2016-03-27 20:42PM - require(/www/websites/uap3demo.userapplepie.com/app/Templates/Default/resend.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 83
+
+2016-03-27 20:45PM - require(/www/websites/uap3demo.userapplepie.com/app/Templates/Default/Member-Stats-Sidebar.php): failed to open stream: No such file or directory in /www/websites/uap3demo.userapplepie.com/system/Core/View.php on line 83
+

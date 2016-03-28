@@ -3,15 +3,16 @@
 use Core\Error;
 
 ?>
-<div class="container content">
-	<div class="row">
-		<div class="col-md-12">
+<div class="col-lg-12 col-md-12 col-sm-12">
+	<div class="panel panel-danger">
+		<div class="panel-heading">
 
 			<h1>404</h1>
 
 			<?php echo $data['error'];?>
 
-			<hr />
+		</div>
+		<div class="panel-body">
 
 			<h3>The page you were looking for could not be found</h3>
 			<p>This could be the result of the page being removed, the name being changed or the page being temporarily unavailable</p>
