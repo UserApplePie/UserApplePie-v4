@@ -175,6 +175,9 @@ class Config
         // Max attempts for login before user is locked out
         define("MAX_ATTEMPTS", 5);
 
+        // How long a user is locked out after they reach the max attempts
+        define("SECURITY_DURATION", "+5 minutes");
+
         // Account activation route
         define("ACTIVATION_ROUTE", 'Activate');
 
@@ -186,9 +189,6 @@ class Config
 
         //How long a REMEMBER ME SESSION lasts : Default = +1 month
         define("SESSION_DURATION_RM", "+1 month");
-
-        //Max attempts for logging in
-        define("SECURITY_DURATION", "+5 minutes");
 
         //INT cost of BCRYPT algorithm
         define("COST", 10);

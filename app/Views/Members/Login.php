@@ -25,6 +25,12 @@
           </div>
 
       </form>
+
+		</div>
+		<div class="panel-footer">
+					<a class="btn btn-primary btn-sm" name="" href="<?=DIR?>Register">Register</a>
+					<a class="btn btn-primary btn-sm" name="" href="<?=DIR?>Forgot-Password">Forgot Password</a>
+					<a class="btn btn-primary btn-sm" name="" href="<?=DIR?>Resend-Activation-Email">Resend Activation Email</a>
     </div>
   </div>
 </div>

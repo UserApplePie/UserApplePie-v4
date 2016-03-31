@@ -11,6 +11,7 @@ use Helpers\ErrorHelper,
 		<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		<meta name='viewport' content='width=device-width, initial-scale=1'>
     <title><?php echo $title.' - '.SITETITLE;?></title>
+		<link rel='shortcut icon' href='<?php echo Url::templatePath(); ?>images/favicon.ico'>
     <?php
     echo $meta;//place to pass data / plugable hook zone
     Assets::css([
@@ -42,9 +43,7 @@ use Helpers\ErrorHelper,
   				<li><a href="<?=DIR?>">Home</a></li>
   			</ul>
   			<ul class="nav navbar-nav navbar-right">
-  				<?php if(!$data['isLoggedIn']){ ?>
-  					<li><a href="<?=DIR?>Resend-Activation-Email">Resend Activation</a></li>
-  					<li><a href="<?=DIR?>Forgot-Password">Forgot Password</a></li>
+  				<?php if(!$isLoggedIn){ ?>
   					<li><a href="<?=DIR?>Login">Login</a></li>
   					<li><a href="<?=DIR?>Register">Register</a></li>
   				<?php }else{ ?>

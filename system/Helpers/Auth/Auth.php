@@ -19,8 +19,8 @@ class Auth {
 
     public function __construct() {
         $this->lang = include 'Lang.php'; //language file messages
-        $this->expireAttempt(); //expire attempts
         $this->authorize = new AuthModel();
+        $this->expireAttempt(); //expire attempts
     }
 
     /**
@@ -242,7 +242,7 @@ class Auth {
      * (Currently used on __construct but need more testing)
      */
     private function expireAttempt() {
-        $query_attempts = $this->authorize->getAttempts;
+        $query_attempts = $this->authorize->getAttempts();
         $count = count($query_attempts);
         $curr_time = strtotime(date("Y-m-d H:i:s"));
         if ($count != 0) {
