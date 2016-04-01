@@ -23,7 +23,7 @@ use Helpers\ErrorHelper,
 </head>
 <body>
 
-  <nav class="navbar navbar-default">
+  <nav class="navbar navbar-default navbar-fixed-top">
   	<div class="container">
   		<!-- Brand and toggle get grouped for better mobile display -->
   		<div class="navbar-header">
@@ -47,8 +47,51 @@ use Helpers\ErrorHelper,
   					<li><a href="<?=DIR?>Login">Login</a></li>
   					<li><a href="<?=DIR?>Register">Register</a></li>
   				<?php }else{ ?>
-						<li><a href="<?=DIR?>Account-Settings">Account Settings</a></li>
-  					<li><a href="<?=DIR?>Logout">Logout</a></li>
+							<li class='dropdown'>
+								<a href='#' title='<?php echo $data['currentUserData'][0]->username; ?>' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>
+								<span class='glyphicon glyphicon-user' aria-hidden='true'></span> <?php echo $data['currentUserData'][0]->username; ?> <span class='caret'></span> </a>
+									<ul class='dropdown-menu'>
+										<li>
+											<div class="navbar-login">
+												<div class="row">
+													<div class="col-lg-4 col-md-4" align="center">
+														<div class="col-centered" align="center">
+														<?php // Check to see if user has a profile image
+															if(!empty($data['currentUserData'][0]->userImage)){
+																echo "<img src='".$data['currentUserData'][0]->userImage."' class='img-responsive'>";
+															}else{
+																echo "<span class='glyphicon glyphicon-user icon-size'></span>";
+															}
+														?>
+														</div>
+													</div>
+													<div class="col-lg-8 col-md-8">
+														<p class="text-left"><strong><h5><?php echo $data['currentUserData'][0]->username; if(isset($data['currentUserData'][0]->firstName)){echo "  <small>".$data['currentUserData'][0]->firstName."</small>";}?></h5></strong></p>
+														<p class="text-left small"><?php echo $cu_email; ?></p>
+														<p class="text-left">
+															<a href='<?php echo DIR."Profile/".$data['currentUserData'][0]->username; ?>' title='View Your Profile' class='btn btn-primary btn-block btn-xs'> <span class='glyphicon glyphicon-user' aria-hidden='true'></span> View Profile</a>
+														</p>
+													</div>
+												</div>
+											</div>
+                      <li class="divider"></li>
+                      <li>
+                      <div class="navbar-login navbar-login-session">
+                          <div class="row">
+                              <div class="col-lg-12">
+                                  <p>
+																		<a href='<?=DIR?>Account-Settings' title='Change Your Account Settings' class='btn btn-info btn-block btn-xs'> <span class='glyphicon glyphicon-briefcase' aria-hidden='true'></span> Account Settings</a>
+																		<!--<a href='<?php echo DIR; ?>Messages' title='Private Messages' class='btn btn-danger btn-block btn-xs'> <span class='glyphicon glyphicon-envelope' aria-hidden='true'></span> Private Messages</a> -->
+																		<?php if($data['isAdmin']){ // Display Admin Panel Links if User Is Admin ?>
+																			<a href='<?php echo DIR; ?>AdminPanel' title='Open Admin Panel' class='btn btn-warning btn-block btn-xs'> <span class='glyphicon glyphicon-dashboard' aria-hidden='true'></span> Admin Panel</a>
+																		<?php } ?>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+									</li>
+								</ul>
+							<li><a href='<?php echo DIR; ?>Logout'>Logout</a></li>
   				<?php }?>
   			</ul>
   		</div><!-- /.navbar-collapse -->

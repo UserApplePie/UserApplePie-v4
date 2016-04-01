@@ -39,7 +39,11 @@ class Welcome extends Controller
         $data['welcomeMessage'] = $this->language->get('welcomeMessage');
 
         /** Check to see if user is logged in **/
-        $data['isLoggedIn'] = $this->auth->isLogged();
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+          //** User is logged in - Get their data **/
+          $u_id = $this->auth->user_info();
+          $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+        }
 
         /** Get Data For Member Totals Stats Sidebar **/
         $onlineUsers = new MembersModel();
@@ -61,7 +65,11 @@ class Welcome extends Controller
         $data['welcomeMessage'] = $this->language->get('subpageMessage');
 
         /** Check to see if user is logged in **/
-        $data['isLoggedIn'] = $this->auth->isLogged();
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+          //** User is logged in - Get their data **/
+          $u_id = $this->auth->user_info();
+          $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+        }
 
         /** Get Data For Member Totals Stats Sidebar **/
         $onlineUsers = new MembersModel();

@@ -273,7 +273,11 @@ class Auth extends Controller
         $data['title'] = 'Change Password';
 
         /** Check to see if user is logged in **/
-        $data['isLoggedIn'] = $this->auth->isLogged();
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+          //** User is logged in - Get their data **/
+          $u_id = $this->auth->user_info();
+          $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+        }
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
@@ -327,7 +331,11 @@ class Auth extends Controller
     		$data['email'] = $this->user->getUserEmail($u_id);
 
         /** Check to see if user is logged in **/
-        $data['isLoggedIn'] = $this->auth->isLogged();
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+          //** User is logged in - Get their data **/
+          $u_id = $this->auth->user_info();
+          $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+        }
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "

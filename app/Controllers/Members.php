@@ -11,7 +11,8 @@ use Core\View,
   App\Models\Members as MembersModel,
   Helpers\ErrorHelper,
   Helpers\SuccessHelper,
-  Helpers\SimpleImage;
+  Helpers\SimpleImage,
+  Core\Error;
 
 class Members extends Controller
 {
@@ -30,7 +31,11 @@ class Members extends Controller
         $data['members'] = $onlineUsers->getMembers();
 
         /** Check to see if user is logged in **/
-        $data['isLoggedIn'] = $this->auth->isLogged();
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+          //** User is logged in - Get their data **/
+          $u_id = $this->auth->user_info();
+          $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+        }
 
         /** Get Data For Member Totals Stats Sidebar **/
         $onlineUsers = new MembersModel();
@@ -58,7 +63,11 @@ class Members extends Controller
         $data['members'] = $onlineUsers->getOnlineMembers();
 
         /** Check to see if user is logged in **/
-        $data['isLoggedIn'] = $this->auth->isLogged();
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+          //** User is logged in - Get their data **/
+          $u_id = $this->auth->user_info();
+          $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+        }
 
         /** Get Data For Member Totals Stats Sidebar **/
         $onlineUsers = new MembersModel();
@@ -80,16 +89,20 @@ class Members extends Controller
      * Get profile by username
      * @param $username
      */
-    public function viewProfile($username)
+    public function viewProfile($user)
     {
         $onlineUsers = new MembersModel();
-        $profile = $onlineUsers->getUserProfile($username);
+        $profile = $onlineUsers->getUserProfile($user);
         if(sizeof($profile)>0){
-            $data['title'] = $username . "'s Profile";
+            $data['title'] = $profile[0]->username . "'s Profile";
             $data['profile'] = $profile[0];
 
             /** Check to see if user is logged in **/
-            $data['isLoggedIn'] = $this->auth->isLogged();
+            if($data['isLoggedIn'] = $this->auth->isLogged()){
+              //** User is logged in - Get their data **/
+              $u_id = $this->auth->user_info();
+              $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+            }
 
             /** Setup Breadcrumbs **/
         		$data['breadcrumbs'] = "
@@ -101,7 +114,7 @@ class Members extends Controller
             View::renderTemplate('footer', $data);
         }
         else
-            Error::error404();
+            Error::profileError();
     }
 
     public function editProfile()
@@ -159,7 +172,11 @@ class Members extends Controller
             $data['csrfToken'] = Csrf::makeToken('editprofile');
 
             /** Check to see if user is logged in **/
-            $data['isLoggedIn'] = $this->auth->isLogged();
+            if($data['isLoggedIn'] = $this->auth->isLogged()){
+              //** User is logged in - Get their data **/
+              $u_id = $this->auth->user_info();
+              $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+            }
 
             /** Setup Breadcrumbs **/
         		$data['breadcrumbs'] = "
@@ -185,7 +202,11 @@ class Members extends Controller
         $data['welcomeMessage'] = 'Welcome to your account settings.  Enjoy!';
 
         /** Check to see if user is logged in **/
-        $data['isLoggedIn'] = $this->auth->isLogged();
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+          //** User is logged in - Get their data **/
+          $u_id = $this->auth->user_info();
+          $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+        }
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
@@ -207,7 +228,11 @@ class Members extends Controller
         $data['welcomeMessage'] = 'Welcome to your privacy settings.  Enjoy!';
 
         /** Check to see if user is logged in **/
-        $data['isLoggedIn'] = $this->auth->isLogged();
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+          //** User is logged in - Get their data **/
+          $u_id = $this->auth->user_info();
+          $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+        }
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "

@@ -163,12 +163,12 @@ class Users extends Model
             g.groupFontColor,
             g.groupFontWeight
           FROM
-            uap_users u
+            ".PREFIX."users u
           LEFT JOIN
-            uap_users_groups ug
+            ".PREFIX."users_groups ug
             ON u.userID = ug.userID
           LEFT JOIN
-            uap_groups g
+            ".PREFIX."groups g
             ON ug.groupID = g.groupID
           WHERE
             u.isactive=1
@@ -178,6 +178,42 @@ class Users extends Model
             u.userID ASC, g.groupID DESC
       ");
       return $data;
+    }
+
+    /**
+    * Get Current User's Data
+    * @param $userID
+    * @return array
+    */
+    public function getCurrentUserData($userID){
+      return $this->db->select("
+        SELECT
+          u.userID,
+          u.username,
+          u.firstName,
+          u.userImage,
+          ug.userID,
+          ug.groupID,
+          g.groupID,
+          g.groupName,
+          g.groupFontColor,
+          g.groupFontWeight
+        FROM
+          ".PREFIX."users u
+        LEFT JOIN
+          ".PREFIX."users_groups ug
+          ON u.userID = ug.userID
+        LEFT JOIN
+          ".PREFIX."groups g
+          ON ug.groupID = g.groupID
+        WHERE
+          u.userID = :userID
+        GROUP BY
+          u.userID
+        ORDER BY
+          u.userID ASC, g.groupID DESC
+      ",
+        array(':userID' => $userID));
     }
 
 }

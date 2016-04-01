@@ -87,4 +87,23 @@ class Error extends Controller
             }
         }
     }
+
+    /*
+     * Create 404 error
+     */
+    public static function error404(){
+        $c = new self('404 Page Not Found');
+        $c->index();
+        exit();
+    }
+
+    /*
+     * Create view profile error
+     */
+    public static function profileError(){
+        $c = new self('The member profile you requeted was not found or does not exist!');
+        $c->index();
+        exit();
+    }
+
 }

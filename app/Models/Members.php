@@ -97,22 +97,42 @@ class Members extends Model
      * @param $username
      * @return array
      */
-    public function getUserProfile($username)
+    public function getUserProfile($user)
     {
+      // Check to see if profile is being requeted by userID
+      if(ctype_digit($user)){
+        // Requeted profile information based on ID
         return $this->db->select("
-					SELECT
-						u.userID,
-						u.username,
-						u.firstName,
-						u.gender,
-						u.userImage,
-						u.LastLogin,
-						u.SignUp,
-						u.website,
-						u.aboutme
-					FROM " . PREFIX . "users u
-					WHERE u.username = :username",
-            array(':username' => $username));
+          SELECT
+            u.userID,
+            u.username,
+            u.firstName,
+            u.gender,
+            u.userImage,
+            u.LastLogin,
+            u.SignUp,
+            u.website,
+            u.aboutme
+          FROM " . PREFIX . "users u
+          WHERE u.userID = :userID",
+            array(':userID' => $user));
+      }else{
+        // Requested profile information based on Name
+          return $this->db->select("
+  					SELECT
+  						u.userID,
+  						u.username,
+  						u.firstName,
+  						u.gender,
+  						u.userImage,
+  						u.LastLogin,
+  						u.SignUp,
+  						u.website,
+  						u.aboutme
+  					FROM " . PREFIX . "users u
+  					WHERE u.username = :username",
+              array(':username' => $user));
+      }
     }
 
     public function getUserName($id)
