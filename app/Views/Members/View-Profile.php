@@ -15,11 +15,19 @@
                     <div class=" col-md-12 col-lg-12 ">
                         <table class="table table-striped">
                             <tbody><tr><td>First Name</td><td><?php echo $data['profile']->firstName; ?></td></tr>
-                            <tr><td>Group</td><td>Not RETRIEVING GROUPS YET</td></tr>
+                              <?php
+                                if($data['user_groups']){
+                                  echo "<tr><td>Group</td><td>";
+                                  foreach($data['user_groups'] as $row){
+                                    echo " $row <br>";
+                                  }
+                                  echo "</td></tr>";
+                                }
+                              ?>
                             <tr><td>Gender</td><td><?php echo $data['profile']->gender; ?></td></tr>
                             <tr><td>Website</td><td><a href="<?php echo $data['profile']->website; ?>" target="_blank">View</a></td></tr>
-                            <tr><td>Last Login</td><td><?php echo $data['profile']->LastLogin; ?></td></tr>
-                            <tr><td>Sign Up</td><td><?php echo $data['profile']->SignUp; ?></td></tr>
+                            <tr><td>Last Login</td><td><?php echo date("F d, Y",strtotime($data['profile']->LastLogin)); ?></td></tr>
+                            <tr><td>Sign Up</td><td><?php echo date("F d, Y",strtotime($data['profile']->SignUp)); ?></td></tr>
                             </tbody>
                         </table>
                     </div>

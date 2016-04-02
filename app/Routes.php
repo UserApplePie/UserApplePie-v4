@@ -50,6 +50,16 @@ Router::any('Online-Members','App\Controllers\Members@online');
 Router::any('Profile/(:any)','App\Controllers\Members@viewProfile');
 /** End Member Routing **/
 
+/** Admin Panel Routing **/
+Router::any('AdminPanel', 'App\Controllers\AdminPanel@Dashboard');
+Router::any('AdminPanel-Users', 'App\Controllers\AdminPanel@Users');
+Router::any('AdminPanel-Users/(:any)', 'App\Controllers\AdminPanel@Users');
+Router::any('AdminPanel-Users/(:any)/(:any)', 'App\Controllers\AdminPanel@Users');
+Router::any('AdminPanel-User/(:any)', 'App\Controllers\AdminPanel@User');
+Router::any('AdminPanel-Groups', 'App\Controllers\AdminPanel@Groups');
+Router::any('AdminPanel-Group/(:any)', 'App\Controllers\AdminPanel@Group');
+/** End Admin Panel Routing **/
+
 /** Module routes. */
 $hooks = Hooks::get();
 $hooks->run('routes');

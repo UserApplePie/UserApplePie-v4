@@ -67,7 +67,7 @@ use Helpers\ErrorHelper,
 													</div>
 													<div class="col-lg-8 col-md-8">
 														<p class="text-left"><strong><h5><?php echo $data['currentUserData'][0]->username; if(isset($data['currentUserData'][0]->firstName)){echo "  <small>".$data['currentUserData'][0]->firstName."</small>";}?></h5></strong></p>
-														<p class="text-left small"><?php echo $cu_email; ?></p>
+														<p class="text-left small"><?php echo $data['currentUserData'][0]->email; ?></p>
 														<p class="text-left">
 															<a href='<?php echo DIR."Profile/".$data['currentUserData'][0]->username; ?>' title='View Your Profile' class='btn btn-primary btn-block btn-xs'> <span class='glyphicon glyphicon-user' aria-hidden='true'></span> View Profile</a>
 														</p>
@@ -82,7 +82,7 @@ use Helpers\ErrorHelper,
                                   <p>
 																		<a href='<?=DIR?>Account-Settings' title='Change Your Account Settings' class='btn btn-info btn-block btn-xs'> <span class='glyphicon glyphicon-briefcase' aria-hidden='true'></span> Account Settings</a>
 																		<!--<a href='<?php echo DIR; ?>Messages' title='Private Messages' class='btn btn-danger btn-block btn-xs'> <span class='glyphicon glyphicon-envelope' aria-hidden='true'></span> Private Messages</a> -->
-																		<?php if($data['isAdmin']){ // Display Admin Panel Links if User Is Admin ?>
+																		<?php if($data['isAdmin'] == 'true'){ // Display Admin Panel Links if User Is Admin ?>
 																			<a href='<?php echo DIR; ?>AdminPanel' title='Open Admin Panel' class='btn btn-warning btn-block btn-xs'> <span class='glyphicon glyphicon-dashboard' aria-hidden='true'></span> Admin Panel</a>
 																		<?php } ?>
                                 </p>

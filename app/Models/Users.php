@@ -192,6 +192,7 @@ class Users extends Model
           u.username,
           u.firstName,
           u.userImage,
+          u.email,
           ug.userID,
           ug.groupID,
           g.groupID,
@@ -214,6 +215,38 @@ class Users extends Model
           u.userID ASC, g.groupID DESC
       ",
         array(':userID' => $userID));
+    }
+
+    /**
+    * Check if current user is admin
+    * @param $userID
+    * @return boolean true/false
+    */
+    public function checkIsAdmin($userID){
+      // Get user's group status
+      $current_user_groups = $this->db->select("
+        SELECT
+          ug.userID,
+          ug.groupID
+        FROM
+          ".PREFIX."users_groups ug
+        WHERE
+          ug.userID = :userID
+        ORDER BY
+          ug.userID ASC
+      ",
+        array(':userID' => $userID));
+      foreach($current_user_groups as $user_group_data){
+        $cu_groupID[] = $user_group_data->groupID;
+      }
+      /* Now to check if user is in admin group (default admin groupID: 4) */
+      /* If more than one admin group just add num to array ex: array('3','4') */
+      $admin_group = array('4','3');
+      foreach ($admin_group as $key) {
+        $admin_check[] = in_array($key,$cu_groupID) ? 'YesAdmin' : 'NoAdmin';
+      }
+      /* Return result of admin check */
+      return in_array('YesAdmin',$admin_check) ? 'true' : 'false';
     }
 
 }

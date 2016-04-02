@@ -43,6 +43,7 @@ class Welcome extends Controller
           //** User is logged in - Get their data **/
           $u_id = $this->auth->user_info();
           $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+          $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
         }
 
         /** Get Data For Member Totals Stats Sidebar **/
@@ -69,6 +70,7 @@ class Welcome extends Controller
           //** User is logged in - Get their data **/
           $u_id = $this->auth->user_info();
           $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+          $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
         }
 
         /** Get Data For Member Totals Stats Sidebar **/

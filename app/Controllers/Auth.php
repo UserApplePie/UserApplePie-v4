@@ -277,6 +277,7 @@ class Auth extends Controller
           //** User is logged in - Get their data **/
           $u_id = $this->auth->user_info();
           $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+          $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
         }
 
         /** Setup Breadcrumbs **/
@@ -335,6 +336,7 @@ class Auth extends Controller
           //** User is logged in - Get their data **/
           $u_id = $this->auth->user_info();
           $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+          $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
         }
 
         /** Setup Breadcrumbs **/

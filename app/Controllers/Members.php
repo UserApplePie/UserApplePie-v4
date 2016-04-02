@@ -32,9 +32,10 @@ class Members extends Controller
 
         /** Check to see if user is logged in **/
         if($data['isLoggedIn'] = $this->auth->isLogged()){
-          //** User is logged in - Get their data **/
+          /** User is logged in - Get their data **/
           $u_id = $this->auth->user_info();
           $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+          $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
         }
 
         /** Get Data For Member Totals Stats Sidebar **/
@@ -67,6 +68,7 @@ class Members extends Controller
           //** User is logged in - Get their data **/
           $u_id = $this->auth->user_info();
           $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+          $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
         }
 
         /** Get Data For Member Totals Stats Sidebar **/
@@ -102,7 +104,11 @@ class Members extends Controller
               //** User is logged in - Get their data **/
               $u_id = $this->auth->user_info();
               $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+              $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
             }
+
+            /** Get User's Groups **/
+            $data['user_groups'] = $this->user->getUserGroupName($u_id);
 
             /** Setup Breadcrumbs **/
         		$data['breadcrumbs'] = "
@@ -176,6 +182,7 @@ class Members extends Controller
               //** User is logged in - Get their data **/
               $u_id = $this->auth->user_info();
               $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+              $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
             }
 
             /** Setup Breadcrumbs **/
@@ -206,6 +213,7 @@ class Members extends Controller
           //** User is logged in - Get their data **/
           $u_id = $this->auth->user_info();
           $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+          $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
         }
 
         /** Setup Breadcrumbs **/
@@ -232,6 +240,7 @@ class Members extends Controller
           //** User is logged in - Get their data **/
           $u_id = $this->auth->user_info();
           $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+          $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
         }
 
         /** Setup Breadcrumbs **/

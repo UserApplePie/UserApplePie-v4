@@ -18,7 +18,7 @@
                 echo "<tr>
                         <td><a href='".DIR."profile/{$member->username}'> {$member->username}</a></td>
                         <td>{$member->firstName}</td>
-                        <td class='color {$member->groupFontColor}'>{$member->groupName}</td></tr>";
+                        <td><font color='{$member->groupFontColor}' style='font-weight:{$member->groupFontWeight}'>{$member->groupName}</font></td></tr>";
             }
         ?>
         </tbody>
