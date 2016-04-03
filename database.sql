@@ -146,3 +146,13 @@ CREATE TABLE IF NOT EXISTS `uap3_users_online` (
   PRIMARY KEY (`id`),
   KEY `lastAccess` (`lastAccess`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Dumping data for table `uap_users_groups`
+-- Sets first user as Admin
+--
+
+INSERT INTO `uap_users_groups` (`userID`, `groupID`) VALUES
+(1, 4);
