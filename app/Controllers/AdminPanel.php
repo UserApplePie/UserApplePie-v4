@@ -18,6 +18,7 @@ use Helpers\Csrf;
 use Helpers\Request;
 use App\Models\AdminPanel as AdminPanelModel;
 use Core\Error;
+use App\Models\Members as MembersModel;
 
 define('USERS_PAGEINATOR_LIMIT', '10');  // Sets up users listing page limit
 
@@ -36,7 +37,12 @@ class AdminPanel extends Controller{
     // Get data for dashboard
     $data['current_page'] = $_SERVER['REQUEST_URI'];
     $data['title'] = "Dashboard";
-    $data['welcomeMessage'] = "Welcom to the Admin Panel Dashboard - Stuff Coming Soon!";
+    $data['welcomeMessage'] = "Welcom to the Admin Panel Dashboard!";
+
+    /** Get Data For Member Totals Stats Sidebar **/
+    $onlineUsers = new MembersModel();
+    $data['activatedAccounts'] = count($onlineUsers->getActivatedAccounts());
+    $data['onlineAccounts'] = count($onlineUsers->getOnlineAccounts());
 
     // Setup Breadcrumbs
     $data['breadcrumbs'] = "
