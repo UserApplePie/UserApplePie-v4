@@ -50,14 +50,47 @@ class Auth extends Controller
                 $this->user->update($userId);
 
                 /**
-                 * TODO: return to previous page before log in, if none go home page
-                 */
+                * Login Success
+                * Redirect to user
+                * Check to see if user came from another page within the site
+                */
+                if(isset($_SESSION['login_prev_page'])){ $login_prev_page = $_SESSION['login_prev_page']; }else{ $login_prev_page = ""; }
+                /**
+                * Checking to see if user user was viewing anything before login
+                * If they were viewing a page on this site, then after login
+                * send them to that page they were on.
+                */
+                if(!empty($login_prev_page)){
+                  /* Send member to previous page */
+                  //var_dump($login_prev_page); // Debug
 
-                // Success Message Display
-                SuccessHelper::push('You Have Successfully Logged In', '');
+                  /* Clear the prev page session if set */
+                  if(isset($_SESSION['login_prev_page'])){
+                    unset($_SESSION['login_prev_page']);
+                  }
+
+                  $prev_page = SITEURL."$login_prev_page";
+                  //var_dump($prev_page); // Debug
+
+                  /* Send user back to page they were at before login */
+                  /* Success Message Display */
+                  SuccessHelper::push('You Have Successfully Logged In', $prev_page);
+                }else{
+                  /* No previous page, send member to home page */
+                  //echo " send user to home page "; // Debug
+
+                  /* Clear the prev page session if set */
+                  if(isset($_SESSION['login_prev_page'])){
+                    unset($_SESSION['login_prev_page']);
+                  }
+
+                  /* Redirect member to home page */
+                  /* Success Message Display */
+                  SuccessHelper::push('You Have Successfully Logged In', '');
+                }
             }
             else{
-                // Error Message Display
+                /* Error Message Display */
                 ErrorHelper::push('Incorrect username and password combination', 'Login');
             }
         }
@@ -234,8 +267,8 @@ class Auth extends Controller
     public function settings()
     {
         if (!$this->auth->isLogged())
-            Url::redirect('login');
-
+          /** User Not logged in - kick them out **/
+          \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
     }
 
     /**
@@ -244,7 +277,8 @@ class Auth extends Controller
     public function changePassword()
     {
         if (!$this->auth->isLogged())
-            Url::redirect('login');
+          /** User Not logged in - kick them out **/
+          \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
 
         if(isset($_POST['submit'])){
 
@@ -302,7 +336,8 @@ class Auth extends Controller
     public function changeEmail()
     {
         if (!$this->auth->isLogged())
-            Url::redirect('Login');
+          /** User Not logged in - kick them out **/
+          \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
 
         if(isset($_POST['submit'])){
 
@@ -404,7 +439,7 @@ class Auth extends Controller
     public function resetPassword($username,$resetkey)
     {
         if($this->auth->isLogged())
-            Url::redirect('login');
+            Url::redirect();
 
         if($this->auth->checkResetKey($username, $resetkey)){
             if(isset($_POST['submit'])){

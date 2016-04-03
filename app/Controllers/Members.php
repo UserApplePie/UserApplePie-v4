@@ -183,6 +183,9 @@ class Members extends Controller
               $u_id = $this->auth->user_info();
               $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
               $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+            }else{
+              /** User Not logged in - kick them out **/
+              \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
             }
 
             /** Setup Breadcrumbs **/
@@ -195,9 +198,10 @@ class Members extends Controller
             View::render('Members/Member-Account-Sidebar', $data);
             View::render('Members/Edit-Profile', $data);
             View::renderTemplate('footer', $data);
+        }else{
+          /** User Not logged in - kick them out **/
+          \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
         }
-        else
-            Error::error404();
     }
 
     /**
@@ -214,6 +218,9 @@ class Members extends Controller
           $u_id = $this->auth->user_info();
           $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
           $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+        }else{
+          /** User Not logged in - kick them out **/
+          \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
         }
 
         /** Setup Breadcrumbs **/
@@ -241,6 +248,9 @@ class Members extends Controller
           $u_id = $this->auth->user_info();
           $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
           $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+        }else{
+          /** User Not logged in - kick them out **/
+          \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
         }
 
         /** Setup Breadcrumbs **/

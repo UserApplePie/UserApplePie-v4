@@ -1,7 +1,12 @@
 <?php
 use Helpers\ErrorHelper,
-	Helpers\SuccessHelper;
+	Helpers\SuccessHelper,
+	Helpers\PageFunctions;
 
+	// Check to see what page is being viewed
+	// If not Home, Login, Register, etc..
+	// Send url to Session
+	PageFunctions::prevpage();
 ?>
 
 <!DOCTYPE html>
