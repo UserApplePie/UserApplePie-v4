@@ -138,14 +138,14 @@ class Config
         * SMTP Email port
         * default : 25 (https://www.arclab.com/en/kb/email/list-of-smtp-and-pop3-servers-mailserver-list.html)
         */
-        define('EMAIL_PORT', '587');
+        define('EMAIL_PORT', '25');
 
         /**
         * SMTP Email authentication
         * default : ssl
         * choices : ssl, tls, (leave it empty)
         */
-        define('EMAIL_STMP_SECURE','tls');
+        define('EMAIL_STMP_SECURE','ssl');
 
         /**
          * Optionall set a site email address.
@@ -170,7 +170,7 @@ class Config
  *****************/
 
         // Account needs email activation, false=no true=yes
-        define("ACCOUNT_ACTIVATION",true);
+        define("ACCOUNT_ACTIVATION",false);
 
         // Max attempts for login before user is locked out
         define("MAX_ATTEMPTS", 5);
