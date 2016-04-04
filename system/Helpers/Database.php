@@ -211,6 +211,19 @@ class Database extends PDO
     }
 
     /**
+     * Open Delete method
+     *
+     * @param  string $sql query
+     */
+    public function delete_open($sql)
+    {
+        $stmt = $this->prepare("DELETE FROM $sql");
+
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+
+    /**
      * truncate table
      * @param  string $table table name
      */

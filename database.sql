@@ -63,25 +63,6 @@ CREATE TABLE IF NOT EXISTS `uap3_groups` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `uap3_messages`
---
-
-CREATE TABLE IF NOT EXISTS `uap3_messages` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `to_userID` int(11) NOT NULL,
-  `from_userID` int(11) NOT NULL,
-  `subject` varchar(255) NOT NULL,
-  `content` text NOT NULL,
-  `date_read` datetime DEFAULT NULL,
-  `date_sent` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `to_delete` varchar(5) NOT NULL DEFAULT 'false',
-  `from_delete` varchar(5) NOT NULL DEFAULT 'false',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `uap3_sessions`
 --
 

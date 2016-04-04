@@ -86,7 +86,12 @@ use Helpers\ErrorHelper,
                               <div class="col-lg-12">
                                   <p>
 																		<a href='<?=DIR?>Account-Settings' title='Change Your Account Settings' class='btn btn-info btn-block btn-xs'> <span class='glyphicon glyphicon-briefcase' aria-hidden='true'></span> Account Settings</a>
-																		<!--<a href='<?php echo DIR; ?>Messages' title='Private Messages' class='btn btn-danger btn-block btn-xs'> <span class='glyphicon glyphicon-envelope' aria-hidden='true'></span> Private Messages</a> -->
+																		<?php
+																			/* Check to see if Private Message Module is installed, if it is show link */
+																			if(file_exists('../app/Modules/Messages/messages.module.php')){
+																				echo "<a href='".DIR."Messages' title='Private Messages' class='btn btn-danger btn-block btn-xs'> <span class='glyphicon glyphicon-envelope' aria-hidden='true'></span> Private Messages</a>";
+																			}
+																		?>
 																		<?php if($data['isAdmin'] == 'true'){ // Display Admin Panel Links if User Is Admin ?>
 																			<a href='<?php echo DIR; ?>AdminPanel' title='Open Admin Panel' class='btn btn-warning btn-block btn-xs'> <span class='glyphicon glyphicon-dashboard' aria-hidden='true'></span> Admin Panel</a>
 																		<?php } ?>
