@@ -112,4 +112,27 @@
     		</div>
     	</div>
     <?php } ?>
+
+    <?php
+      /* Check to see if Forum Plugin is installed. If so then show forum admin links */
+      if(file_exists('../app/Modules/Forum/forum.module.php')){
+    ?>
+      <div class='panel panel-info'>
+        <div class='panel-heading'>
+          <h3 class='jumbotron-heading'>Forum</h3>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <a href='<?php echo DIR; ?>AdminPanel-Forum-Settings'><i class='glyphicon glyphicon-cog'></i> Global Settings</a>
+          </li>
+          <li class="list-group-item">
+            <a href='<?php echo DIR; ?>AdminPanel-Forum-Categories'><i class='glyphicon glyphicon-list'></i> Categories</a>
+          </li>
+          <li class="list-group-item">
+            <a href='<?php echo DIR; ?>AdminPanel-Forum-Blocked-Content'><i class='glyphicon glyphicon-remove-sign'></i> Blocked Content</a>
+          </li>
+        </ul>
+      </div>
+    <?php } ?>
+
 </div>
