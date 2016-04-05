@@ -92,6 +92,7 @@ CREATE TABLE IF NOT EXISTS `uap3_users` (
   `userImage` varchar(255) NOT NULL,
   `website` varchar(255) NOT NULL,
   `aboutme` text NOT NULL,
+  `signature` text NOT NULL,
   `isactive` tinyint(1) NOT NULL DEFAULT '0',
   `activekey` varchar(15) NOT NULL DEFAULT '0',
   `resetkey` varchar(15) NOT NULL DEFAULT '0',

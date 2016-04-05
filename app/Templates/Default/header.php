@@ -46,6 +46,12 @@ use Helpers\ErrorHelper,
   		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
   			<ul class="nav navbar-nav">
   				<li><a href="<?=DIR?>">Home</a></li>
+					<?php
+						/* Check to see if Private Message Module is installed, if it is show link */
+						if(file_exists('../app/Modules/Forum/forum.module.php')){
+							echo "<li><a href='".DIR."Forum' title='Forum'> Forum </a></li>";
+						}
+					?>
   			</ul>
   			<ul class="nav navbar-nav navbar-right">
   				<?php if(!$isLoggedIn){ ?>
@@ -63,7 +69,7 @@ use Helpers\ErrorHelper,
 														<div class="col-centered" align="center">
 														<?php // Check to see if user has a profile image
 															if(!empty($data['currentUserData'][0]->userImage)){
-																echo "<img src='".$data['currentUserData'][0]->userImage."' class='img-responsive'>";
+																echo "<img src='".DIR.$data['currentUserData'][0]->userImage."' class='img-responsive'>";
 															}else{
 																echo "<span class='glyphicon glyphicon-user icon-size'></span>";
 															}

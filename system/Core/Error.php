@@ -59,7 +59,12 @@ class Error extends Controller
         $data['error'] = $error ? $error : $this->error;
 
         /** Check to see if user is logged in **/
-        $data['isLoggedIn'] = $this->auth->isLogged();
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+          /** User is logged in - Get their data **/
+          $u_id = $this->auth->user_info();
+          $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+          $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+        }
 
         View::renderTemplate('header', $data);
         View::render('Error/404', $data);

@@ -28,6 +28,11 @@ class Config
         ob_start();
 
         /**
+         * Optional create a constant for the name of the site.
+         */
+        define('SITETITLE', 'UAP V3.0');
+
+        /**
          * Define the complete site URL.
          */
         define('SITEURL', 'http://uap3demo.userapplepie.com/');
@@ -65,11 +70,6 @@ class Config
          * Set prefix for sessions.
          */
         define('SESSION_PREFIX', 'uap3_');
-
-        /**
-         * Optional create a constant for the name of the site.
-         */
-        define('SITETITLE', 'UAP V3.0');
 
 /********************
  *                  *

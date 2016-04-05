@@ -120,4 +120,15 @@ class Auth extends Model
     {
         return $this->db->select("SELECT userID FROM ".PREFIX."users WHERE username=:username", array(":username" => $username));
     }
+
+    /**
+     * Check is user is a New Member (groupID = 1)
+     * @param $userID
+     * @return array
+     */
+    public function getUserGroups($userID)
+    {
+        return $this->db->select("SELECT groupID FROM ".PREFIX."users_groups WHERE userID = :userID",array(':userID' => $userID));
+    }
+
 }
