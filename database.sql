@@ -132,9 +132,21 @@ CREATE TABLE IF NOT EXISTS `uap3_users_online` (
 -- --------------------------------------------------------
 
 --
--- Dumping data for table `uap_users_groups`
+-- Dumping data for table `uap3_users_groups`
 -- Sets first user as Admin
 --
 
 INSERT INTO `uap3_users_groups` (`userID`, `groupID`) VALUES
 (1, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Dumping data for table `uap3_groups`
+--
+
+INSERT INTO `uap3_groups` (`groupID`, `groupName`, `groupDescription`, `groupFontColor`, `groupFontWeight`) VALUES
+(1, 'New Member', 'Site Members that Recently Registered to the Web Site.', 'GREEN', 'Bold'),
+(2, 'Member', 'Site Members That Have Been Here a While.', 'BLUE', 'BOLD'),
+(3, 'Moderator', 'Site Members That Have a Little Extra Privilege on the Site.', 'ORANGE', 'BOLD'),
+(4, 'Administrator', 'Site Members That Have Full Access To The Site.', 'RED', 'BOLD');
