@@ -136,5 +136,5 @@ CREATE TABLE IF NOT EXISTS `uap3_users_online` (
 -- Sets first user as Admin
 --
 
-INSERT INTO `uap_users_groups` (`userID`, `groupID`) VALUES
+INSERT INTO `uap3_users_groups` (`userID`, `groupID`) VALUES
 (1, 4);
