@@ -3,8 +3,11 @@
  * Config - an example for setting up system settings.
  * When you are done editing, rename this file to 'Config.php'.
  *
- * @author Nova Framework - David Carr - dave@daveismyname.com
- * @author UAP - David (DaVaR) Sargent - davar@thedavar.net
+ * Nova Framework
+ * @author David Carr - dave@daveismyname.com
+ * @version 3.0
+ * UserApplePie
+ * @author David (DaVaR) Sargent
  * @version 3.0
  */
 

@@ -2,7 +2,11 @@
 /**
  * Tags Class
  *
+ * Nova Framework
  * @author David Carr - dave@daveismyname.com
+ * @version 3.0
+ * UserApplePie
+ * @author David (DaVaR) Sargent
  * @version 3.0
  */
 

@@ -2,10 +2,9 @@
 /**
  * Admin Panel Models
  *
- * @author DaVaR - davar@userapplepie.com
- * @version 1.0
- * @date Feb 20 2016
- * @updated Mar 4 2016
+ * UserApplePie
+ * @author David (DaVaR) Sargent
+ * @version 3.0
  */
 
 namespace App\Models;

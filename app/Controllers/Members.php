@@ -1,4 +1,12 @@
 <?php
+/**
+ * Members Controller
+ *
+ * UserApplePie
+ * @author David (DaVaR) Sargent
+ * @version 3.0
+ */
+
 namespace App\Controllers;
 
 use Core\View,

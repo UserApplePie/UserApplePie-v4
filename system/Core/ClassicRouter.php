@@ -2,7 +2,11 @@
 /**
  * ClassicRoute - manage, in classic style, a route to an HTTP request and an assigned callback function.
  *
- * @author Virgil-Adrian Teaca - virgil@giulianaeassociati.com
+ * Nova Framework
+ * @author David Carr - dave@daveismyname.com
+ * @version 3.0
+ * UserApplePie
+ * @author David (DaVaR) Sargent
  * @version 3.0
  */
 
