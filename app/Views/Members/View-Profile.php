@@ -14,7 +14,14 @@
                 <div class="row">
                     <div class=" col-md-12 col-lg-12 ">
                         <table class="table table-striped">
-                            <tbody><tr><td>First Name</td><td><?php echo $data['profile']->firstName; ?></td></tr>
+                            <tbody>
+                              <?php
+                                /* Check to see if Private Message Module is installed, if it is show link */
+                                if(file_exists('../app/Modules/Messages/messages.module.php')){
+                                  echo "<tr><td>PM</td><td><a href='/NewMessage/".$data['profile']->username."' class='btn btn-xs btn-default'>Send Message</a></td></tr>";
+                                }
+                              ?>
+                              <tr><td>First Name</td><td><?php echo $data['profile']->firstName; ?></td></tr>
                               <?php
                                 if($data['user_groups']){
                                   echo "<tr><td>Group</td><td>";

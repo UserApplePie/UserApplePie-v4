@@ -118,4 +118,35 @@ class CurrentUserData
     return $signature_data;
 	}
 
+  // Gets total number of unread messages from database for selected user
+  public function getUnreadMessages($where_id){
+    if(ctype_digit($where_id)){
+      self::$db = Database::get();
+			$data = self::$db->select("
+					SELECT
+            *
+					FROM
+						".PREFIX."messages
+					WHERE
+						to_userID = :userID
+          AND
+            date_read IS NULL
+          AND
+            to_delete = :to_delete
+					",
+				array(':userID' => $where_id, ':to_delete' => 'false'));
+        $count = count($data);
+        if($count > 0){
+          return $count;
+        }else{
+          $count = "0";
+          return $count;
+        }
+			return $count;
+		}else{
+      $count = "0";
+      return $count;
+    }
+  }
+
 }

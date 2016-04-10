@@ -21,6 +21,7 @@ use Helpers\ErrorHelper,
     echo $meta;//place to pass data / plugable hook zone
     Assets::css([
         'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css',
+		Url::templatePath().'css/bootstrap.css',
         Url::templatePath().'css/style.css',
     ]);
     echo $css; //place to pass data / plugable hook zone
@@ -38,7 +39,7 @@ use Helpers\ErrorHelper,
   				<span class="icon-bar"></span>
   				<span class="icon-bar"></span>
   			</button>
-        <img class='navbar-brand' src='<?php echo Url::templatePath(); ?>images/logo.gif'>
+			<img class='navbar-brand' src='<?php echo Url::templatePath(); ?>images/logo.gif'>
   			<a class="navbar-brand" href="<?=DIR?>"><?=SITETITLE?></a>
   		</div>
 
@@ -60,7 +61,15 @@ use Helpers\ErrorHelper,
   				<?php }else{ ?>
 							<li class='dropdown'>
 								<a href='#' title='<?php echo $data['currentUserData'][0]->username; ?>' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>
-								<span class='glyphicon glyphicon-user' aria-hidden='true'></span> <?php echo $data['currentUserData'][0]->username; ?> <span class='caret'></span> </a>
+								<span class='glyphicon glyphicon-user' aria-hidden='true'></span> <?php echo $data['currentUserData'][0]->username; ?>
+								<?php
+								          // Check to see if there are any unread messages in inbox
+													$notifi_count = \Helpers\CurrentUserData::getUnreadMessages($data['currentUserData'][0]->userID);
+								          if($notifi_count >= "1"){
+								            echo "<span class='badge'>".$notifi_count."</span>";
+								          }
+								?>
+								<span class='caret'></span> </a>
 									<ul class='dropdown-menu'>
 										<li>
 											<div class="navbar-login">
@@ -95,7 +104,13 @@ use Helpers\ErrorHelper,
 																		<?php
 																			/* Check to see if Private Message Module is installed, if it is show link */
 																			if(file_exists('../app/Modules/Messages/messages.module.php')){
-																				echo "<a href='".DIR."Messages' title='Private Messages' class='btn btn-danger btn-block btn-xs'> <span class='glyphicon glyphicon-envelope' aria-hidden='true'></span> Private Messages</a>";
+																				echo "<a href='".DIR."Messages' title='Private Messages' class='btn btn-danger btn-block btn-xs'> <span class='glyphicon glyphicon-envelope' aria-hidden='true'></span> Private Messages ";
+																					// Check to see if there are any unread messages in inbox
+																					$new_msg_count = \Helpers\CurrentUserData::getUnreadMessages($data['currentUserData'][0]->userID);
+																					if($new_msg_count >= "1"){
+																						echo "<span class='badge'>".$new_msg_count."</span>";
+																					}
+																				echo " </a>";
 																			}
 																		?>
 																		<?php if($data['isAdmin'] == 'true'){ // Display Admin Panel Links if User Is Admin ?>
