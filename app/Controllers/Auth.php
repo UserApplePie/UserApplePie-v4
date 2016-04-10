@@ -69,7 +69,7 @@ class Auth extends Controller
                     unset($_SESSION['login_prev_page']);
                   }
 
-                  $prev_page = SITEURL."$login_prev_page";
+                  $prev_page = "$login_prev_page";
                   //var_dump($prev_page); // Debug
 
                   /* Send user back to page they were at before login */
@@ -168,7 +168,7 @@ class Auth extends Controller
                     if ($registered) {
                         $data['message'] = ACCOUNT_ACTIVATION ?
                             "Registration Successful! Check Your Email For Activating your Account." :
-                            "Registration Successful! Click <a href='".DIR."login'>Login</a> to login.";
+                            "Registration Successful! Click <a href='".DIR."Login'>Login</a> to login.";
                             // Success Message Display
                             SuccessHelper::push($data['message'], 'Register');
                     }

@@ -21,7 +21,6 @@ use Helpers\ErrorHelper,
     echo $meta;//place to pass data / plugable hook zone
     Assets::css([
         'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css',
-		Url::templatePath().'css/bootstrap.css',
         Url::templatePath().'css/style.css',
     ]);
     echo $css; //place to pass data / plugable hook zone
@@ -63,11 +62,14 @@ use Helpers\ErrorHelper,
 								<a href='#' title='<?php echo $data['currentUserData'][0]->username; ?>' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>
 								<span class='glyphicon glyphicon-user' aria-hidden='true'></span> <?php echo $data['currentUserData'][0]->username; ?>
 								<?php
-								          // Check to see if there are any unread messages in inbox
-													$notifi_count = \Helpers\CurrentUserData::getUnreadMessages($data['currentUserData'][0]->userID);
-								          if($notifi_count >= "1"){
-								            echo "<span class='badge'>".$notifi_count."</span>";
-								          }
+									/* Check to see if Private Message Module is installed, if it is show link */
+									if(file_exists('../app/Modules/Messages/messages.module.php')){
+										// Check to see if there are any unread messages in inbox
+										$notifi_count = \Helpers\CurrentUserData::getUnreadMessages($data['currentUserData'][0]->userID);
+										if($notifi_count >= "1"){
+										echo "<span class='badge'>".$notifi_count."</span>";
+										}
+									}
 								?>
 								<span class='caret'></span> </a>
 									<ul class='dropdown-menu'>

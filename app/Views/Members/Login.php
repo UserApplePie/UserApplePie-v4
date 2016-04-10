@@ -10,11 +10,11 @@
           <div class="col-xs-12">
               <div class="form-group">
                   <label class="control-label">Username or Email</label>
-                  <input  class="form-control" type="text" id="username" name="username" placeholder="Username or email">
+                  <input  class="form-control" type="text" id="username" name="username" placeholder="Username or E-mail">
               </div>
               <div class="form-group">
                   <label class="control-label">Password</label>
-                  <input class="form-control" type="password" id="password" name="password" placeholder="password">
+                  <input class="form-control" type="password" id="password" name="password" placeholder="Password">
               </div>
               <div class="form-inline">
                   <label class="control-label">Remember Me</label>

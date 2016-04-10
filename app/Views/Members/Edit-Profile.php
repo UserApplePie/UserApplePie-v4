@@ -26,11 +26,11 @@
                     <input id="website" type="website" class="form-control" name="website" placeholder="Enter your website" value="<?php echo $data['profile']->website; ?>">
                 </div>
                 <?php if($data['profile']->userImage != ""){ ?>
-                <input id="oldImg" name="oldImg" type="hidden" value="<?php echo $data['profile']->userImage; ?>"">
-                <div class="form-group">
-                    <label for="email">Current Profile Picture: </label>
-                    <img alt="User Pic" src="<?php echo DIR.$data['profile']->userImage; ?>" class="img-circle img-responsive">
-                </div>
+	                <input id="oldImg" name="oldImg" type="hidden" value="<?php echo $data['profile']->userImage; ?>"">
+	                <div class="form-group">
+	                    <label for="email">Current Profile Picture: </label>
+	                    <img alt="User Pic" src="<?php echo DIR.$data['profile']->userImage; ?>" class="img-circle img-responsive">
+	                </div>
                 <?php } ?>
                 <div class="form-group">
                     <label class="control-label">New Profile Picture</label>
@@ -40,6 +40,15 @@
                     <label for="aboutMe">About Me: </label>
                     <textarea id="aboutMe"  class="form-control" name="aboutMe" placeholder="Enter Profile" rows="5"><?php echo str_replace('<br />' , '', $data['profile']->aboutme); ?></textarea>
                 </div>
+								<?php
+									/* Check to see if Private Message Module is installed, if it is show link */
+									if(file_exists('../app/Modules/Forum/forum.module.php')){
+								?>
+									<div class="form-group">
+	                    <label for="signature">Forum Signature: </label>
+	                    <textarea id="signature"  class="form-control" name="signature" placeholder="Forum Signature" rows="5"><?php echo str_replace('<br />' , '', $data['profile']->signature); ?></textarea>
+	                </div>
+								<?php } ?>
                 <input type="hidden" name="token_editprofile" value="<?= $data['csrfToken']; ?>" />
                 <input type="submit" name="submit" class="btn btn-primary" value="Update My Profile">
             </form>

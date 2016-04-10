@@ -137,6 +137,7 @@ class Members extends Controller
                     $gender = Request::post('gender') == 'male' ? 'Male' : 'Female';
                     $website = !filter_var(Request::post('website'), FILTER_VALIDATE_URL) === false ? Request::post('website') : DIR.'profile/'.$username;
                     $aboutMe = nl2br(strip_tags(Request::post('aboutMe')));
+                    $signature = nl2br(strip_tags(Request::post('signature')));
                     $picture = file_exists($_FILES['profilePic']['tmp_name']) || is_uploaded_file($_FILES['profilePic']['tmp_name']) ? $_FILES ['profilePic'] : array ();
                     $userImage = Request::post('oldImg');
 
@@ -157,7 +158,7 @@ class Members extends Controller
                         ErrorHelper::push($data['message'], 'Edit-Profile');
                       }
                     }
-                    $onlineUsers->updateProfile($u_id, $firstName, $gender, $website, $userImage, $aboutMe);
+                    $onlineUsers->updateProfile($u_id, $firstName, $gender, $website, $userImage, $aboutMe, $signature);
                     $data['message'] = "Successfully updated profile";
                     // Success Message Display
                     SuccessHelper::push($data['message'], 'Edit-Profile');

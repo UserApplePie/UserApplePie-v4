@@ -6,7 +6,11 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-8 col-lg-8" align="center">
+                      <?php if(!empty($data['profile']->userImage)){ ?>
                         <img alt="<?php echo $data['profile']->username; ?>'s Profile Picture" src="<?php echo DIR.$data['profile']->userImage; ?>" class="img-circle img-responsive">
+                        <?php }else{ ?>
+          								<span class='glyphicon glyphicon-user icon-size'></span>
+          							<?php } ?>
                     </div>
                 </div>
             </div>

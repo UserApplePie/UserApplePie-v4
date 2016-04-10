@@ -112,7 +112,8 @@ class Members extends Model
             u.LastLogin,
             u.SignUp,
             u.website,
-            u.aboutme
+            u.aboutme,
+            u.signature
           FROM " . PREFIX . "users u
           WHERE u.userID = :userID",
             array(':userID' => $user));
@@ -128,7 +129,8 @@ class Members extends Model
   						u.LastLogin,
   						u.SignUp,
   						u.website,
-  						u.aboutme
+  						u.aboutme,
+              u.signature
   					FROM " . PREFIX . "users u
   					WHERE u.username = :username",
               array(':username' => $user));
@@ -140,8 +142,8 @@ class Members extends Model
         return $this->db->select("SELECT userID,username FROM ".PREFIX."users WHERE userID=:id",array(":id"=>$id));
     }
 
-    public function updateProfile($u_id, $firstName, $gender, $website, $userImage, $aboutme)
+    public function updateProfile($u_id, $firstName, $gender, $website, $userImage, $aboutme, $signature)
     {
-        return $this->db->update(PREFIX.'users', array('firstName' => $firstName, 'gender' => $gender, 'userImage' => $userImage, 'website' => $website, 'aboutme' => $aboutme), array('userID' => $u_id));
+        return $this->db->update(PREFIX.'users', array('firstName' => $firstName, 'gender' => $gender, 'userImage' => $userImage, 'website' => $website, 'aboutme' => $aboutme, 'signature' => $signature), array('userID' => $u_id));
     }
 }

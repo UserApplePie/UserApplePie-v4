@@ -358,7 +358,7 @@ class Auth {
                         //todo bien continua con register
                         $password = $this->hashPass($password);
                         $activekey = $this->randomKey(RANDOM_KEY_LENGTH); //genera una randomkey para activacion enviar por email
-                        $info = array("username" => $username, "password" => $password, "email" => $email, "activekey" => $activekey, "userImage"=>"images/profile-pics/defaults/default-".rand(1,5).".jpg");
+                        $info = array("username" => $username, "password" => $password, "email" => $email, "activekey" => $activekey, "userImage"=>"../assets/images/profile-pics/defaults/default-".rand(1,5).".jpg");
                         $user_id = $this->authorize->addIntoDB("users", $info);
 
                         $info = array('userID' => $user_id, 'groupID' => 1);
