@@ -5,12 +5,9 @@
  * @author David Carr - dave@novaframework.com
  * @version 3.0
  */
-
 namespace Helpers;
-
 use Helpers\Session;
 use Helpers\Inflector;
-
 /**
  * Collection of methods for working with urls.
  */
@@ -26,7 +23,6 @@ class Url
     public static function redirect($url = null, $fullpath = false, $code = 200)
     {
         $url = ($fullpath === false) ? DIR.$url : $url;
-
         if ($code == 200) {
             header('Location: '.$url);
         } else {
@@ -34,7 +30,6 @@ class Url
         }
         exit;
     }
-
     /**
      * Detect the true URI
      *
@@ -44,24 +39,19 @@ class Url
     {
         $requestUri = $_SERVER['REQUEST_URI'];
         $scriptName = $_SERVER['SCRIPT_NAME'];
-
         $pathName = dirname($scriptName);
-
         if (strpos($requestUri, $scriptName) === 0) {
             $requestUri = substr($requestUri, strlen($scriptName));
         } else if (strpos($requestUri, $pathName) === 0) {
             $requestUri = substr($requestUri, strlen($pathName));
         }
-
-        if (($requestUri == '/') || empty($requestUri)) {
-            return '/';
+        $uri = parse_url(ltrim($requestUri, '/'), PHP_URL_PATH);
+        if (! empty($uri)) {
+            return str_replace(array('//', '../'), '/', $uri);
         }
-
-        $uri = parse_url($requestUri, PHP_URL_PATH);
-
-        return str_replace(array('//', '../'), '/', ltrim($uri, '/'));
+        // Empty URI of homepage; internally encoded as '/'
+        return '/';
     }
-
     /**
      * Created the absolute address to the assets folder.
      *
@@ -75,10 +65,8 @@ class Url
         } else {
             $path = '';
         }
-
         return SITEURL .$path .'assets/';
     }
-
     /**
      * Created the absolute address to the template folder.
      *
@@ -88,10 +76,8 @@ class Url
     public static function templatePath($custom = TEMPLATE, $folder = '/assets/')
     {
         $template = Inflector::tableize($custom);
-
         return SITEURL .'templates/' .$template .$folder;
     }
-
     /**
      * Created the relative address to the template folder.
      *
@@ -102,7 +88,6 @@ class Url
     {
         return 'Templates/' .$custom .$folder;
     }
-
     /**
      * Converts plain text urls into HTML links, second argument will be
      * used as the url label <a href=''>$custom</a>.
@@ -116,16 +101,13 @@ class Url
     public static function autoLink($text, $custom = null)
     {
         $regex   = '@(http)?(s)?(://)?(([-\w]+\.)+([^\s]+)+[^,.\s])@';
-
         if ($custom === null) {
             $replace = '<a href="http$2://$4">$1$2$3$4</a>';
         } else {
             $replace = '<a href="http$2://$4">'.$custom.'</a>';
         }
-
         return preg_replace($regex, $replace, $text);
     }
-
     /**
      * This function converts and url segment to an safe one, for example:
      * `test name @132` will be converted to `test-name--123`
@@ -139,22 +121,15 @@ class Url
     public static function generateSafeSlug($slug)
     {
         setlocale(LC_ALL, "en_US.utf8");
-
         $slug = preg_replace('/[`^~\'"]/', null, iconv('UTF-8', 'ASCII//TRANSLIT', $slug));
-
         $slug = htmlentities($slug, ENT_QUOTES, 'UTF-8');
-
         $pattern = '~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i';
         $slug = preg_replace($pattern, '$1', $slug);
-
         $slug = html_entity_decode($slug, ENT_QUOTES, 'UTF-8');
-
         $pattern = '~[^0-9a-z]+~i';
         $slug = preg_replace($pattern, '-', $slug);
-
         return strtolower(trim($slug, '-'));
     }
-
     /**
      * Go to the previous url.
      */
@@ -163,7 +138,6 @@ class Url
         header('Location: '. $_SERVER['HTTP_REFERER']);
         exit;
     }
-
     /**
      * Get all url parts based on a / seperator.
      *
@@ -173,7 +147,6 @@ class Url
     {
         return explode('/', $_SERVER['REQUEST_URI']);
     }
-
     /**
      * Get item in array.
      *
@@ -188,7 +161,6 @@ class Url
             return $segments[$id];
         }
     }
-
     /**
      * Get last item in array.
      *
@@ -199,7 +171,6 @@ class Url
     {
         return end($segments);
     }
-
     /**
      * Get first item in array
      *
