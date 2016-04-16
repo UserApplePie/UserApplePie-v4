@@ -116,7 +116,7 @@ class Members extends Controller
             }
 
             /** Get User's Groups **/
-            $data['user_groups'] = $this->user->getUserGroupName($u_id);
+            $data['user_groups'] = $this->user->getUserGroupName($profile[0]->userID);
 
             /** Setup Breadcrumbs **/
         		$data['breadcrumbs'] = "
