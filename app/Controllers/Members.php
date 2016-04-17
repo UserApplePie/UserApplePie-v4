@@ -142,6 +142,7 @@ class Members extends Controller
             if (isset($_POST['submit'])) {
                 if(Csrf::isTokenValid('editprofile')) {
                     $firstName = strip_tags(Request::post('firstName'));
+                    $lastName = strip_tags(Request::post('lastName'));
                     $gender = Request::post('gender') == 'male' ? 'Male' : 'Female';
                     $website = !filter_var(Request::post('website'), FILTER_VALIDATE_URL) === false ? Request::post('website') : DIR.'profile/'.$username;
                     $aboutMe = nl2br(strip_tags(Request::post('aboutMe')));
@@ -166,7 +167,7 @@ class Members extends Controller
                         ErrorHelper::push($data['message'], 'Edit-Profile');
                       }
                     }
-                    $onlineUsers->updateProfile($u_id, $firstName, $gender, $website, $userImage, $aboutMe, $signature);
+                    $onlineUsers->updateProfile($u_id, $firstName, $lastName, $gender, $website, $userImage, $aboutMe, $signature);
                     $data['message'] = "Successfully updated profile";
                     // Success Message Display
                     SuccessHelper::push($data['message'], 'Edit-Profile');

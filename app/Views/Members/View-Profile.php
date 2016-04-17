@@ -26,6 +26,7 @@
                                 }
                               ?>
                               <tr><td>First Name</td><td><?php echo $data['profile']->firstName; ?></td></tr>
+                              <tr><td>Last Name</td><td><?php echo $data['profile']->lastName; ?></td></tr>
                               <?php
                                 if($data['user_groups']){
                                   echo "<tr><td>Group</td><td>";

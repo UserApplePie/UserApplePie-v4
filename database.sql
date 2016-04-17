@@ -88,6 +88,7 @@ CREATE TABLE IF NOT EXISTS `uap3_users` (
   `password` varchar(128) NOT NULL,
   `email` varchar(100) NOT NULL,
   `firstName` varchar(100) NOT NULL,
+  `lastName` varchar(100) NOT NULL,
   `gender` varchar(8) NOT NULL,
   `userImage` varchar(255) NOT NULL,
   `website` varchar(255) NOT NULL,

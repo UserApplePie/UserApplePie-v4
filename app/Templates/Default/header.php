@@ -88,7 +88,7 @@ use Helpers\ErrorHelper,
 														</div>
 													</div>
 													<div class="col-lg-8 col-md-8">
-														<p class="text-left"><strong><h5><?php echo $data['currentUserData'][0]->username; if(isset($data['currentUserData'][0]->firstName)){echo "  <small>".$data['currentUserData'][0]->firstName."</small>";}?></h5></strong></p>
+														<p class="text-left"><strong><h5><?php echo $data['currentUserData'][0]->username; if(isset($data['currentUserData'][0]->firstName)){echo "  <small>".$data['currentUserData'][0]->firstName."</small>";}; if(isset($data['currentUserData'][0]->lastName)){echo "  <small>".$data['currentUserData'][0]->lastName."</small>";} ?></h5></strong></p>
 														<p class="text-left small"><?php echo $data['currentUserData'][0]->email; ?></p>
 														<p class="text-left">
 															<a href='<?php echo DIR."Profile/".$data['currentUserData'][0]->username; ?>' title='View Your Profile' class='btn btn-primary btn-block btn-xs'> <span class='glyphicon glyphicon-user' aria-hidden='true'></span> View Profile</a>

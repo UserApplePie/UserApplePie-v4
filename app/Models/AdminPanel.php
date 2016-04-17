@@ -305,4 +305,34 @@ class AdminPanel extends Model {
     }
   }
 
+  // Get list of data for past days
+  public function getPastUsersData($getData = null, $length = null){
+    if($getData == 'LastLogin'){
+      $data = $this->db->select("
+        SELECT
+          *,
+          DATE_FORMAT(LastLogin, '%m/%d/%Y')
+        FROM
+          ".PREFIX."users
+        WHERE
+          LastLogin BETWEEN NOW() - INTERVAL :length DAY AND NOW()
+        ORDER BY
+          userID
+        ", array(':length' => $length));
+    }else if($getData == 'SignUp'){
+      $data = $this->db->select("
+        SELECT
+          *,
+          DATE_FORMAT(SignUp, '%m/%d/%Y')
+        FROM
+          ".PREFIX."users
+        WHERE
+          SignUp BETWEEN NOW() - INTERVAL :length DAY AND NOW()
+        ORDER BY
+          userID
+        ", array(':length' => $length));
+    }
+    return $data;
+  }
+
 }

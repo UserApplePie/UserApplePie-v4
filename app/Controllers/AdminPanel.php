@@ -43,6 +43,39 @@ class AdminPanel extends Controller{
     $data['activatedAccounts'] = count($onlineUsers->getActivatedAccounts());
     $data['onlineAccounts'] = count($onlineUsers->getOnlineAccounts());
 
+    /** Get Count Data For Groups **/
+    $data['usergroups'] = count($this->model->getAllGroups());
+
+    /** Get Count of Members that Have Logged In Past Days **/
+    $data['mem_login_past_1'] = count($this->model->getPastUsersData('LastLogin', '1'));
+    $data['mem_login_past_7'] = count($this->model->getPastUsersData('LastLogin', '7'));
+    $data['mem_login_past_30'] = count($this->model->getPastUsersData('LastLogin', '30'));
+    $data['mem_login_past_90'] = count($this->model->getPastUsersData('LastLogin', '90'));
+    $data['mem_login_past_365'] = count($this->model->getPastUsersData('LastLogin', '365'));
+
+    /** Get Count of Members that Have Signed Up In Past Days **/
+    $data['mem_signup_past_1'] = count($this->model->getPastUsersData('SignUp', '1'));
+    $data['mem_signup_past_7'] = count($this->model->getPastUsersData('SignUp', '7'));
+    $data['mem_signup_past_30'] = count($this->model->getPastUsersData('SignUp', '30'));
+    $data['mem_signup_past_90'] = count($this->model->getPastUsersData('SignUp', '90'));
+    $data['mem_signup_past_365'] = count($this->model->getPastUsersData('SignUp', '365'));
+
+    /** Check to see if Forum Plugin is Installed  **/
+    if(file_exists('../app/Modules/Forum/forum.module.php')){
+      $forum_status = "Installed";
+    }else{
+      $forum_status = "NOT Installed";
+    }
+    $data['apd_plugin_forum'] = $forum_status;
+
+    /** Check to see if Private Messages Plugin is Installed **/
+    if(file_exists('../app/Modules/Messages/messages.module.php')){
+      $msg_status = "Installed";
+    }else{
+      $msg_status = "NOT Installed";
+    }
+    $data['apd_plugin_message'] = $msg_status;
+
     // Setup Breadcrumbs
     $data['breadcrumbs'] = "
       <li><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>

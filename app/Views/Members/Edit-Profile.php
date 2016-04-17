@@ -12,8 +12,12 @@
             <form role="form" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="firstName">First Name: </label><span class="label label-danger pull-right">Required</span>
-                    <input id="firstName" type="text" class="form-control" name="firstName" placeholder="Enter your Name" value="<?php echo $data['profile']->firstName; ?>">
+                    <input id="firstName" type="text" class="form-control" name="firstName" placeholder="First Name" value="<?php echo $data['profile']->firstName; ?>">
                 </div>
+								<div class="form-group">
+										<label for="lastName">Last Name: </label><span class="label label-danger pull-right">Required</span>
+										<input id="lastName" type="text" class="form-control" name="lastName" placeholder="Last Name" value="<?php echo $data['profile']->lastName; ?>">
+								</div>
                 <div class='form-group'>
                     <label for="gender">Gender: </label><span class="label label-danger pull-right">Required</span>
                     <select class='form-control' id='gender' name='gender'>

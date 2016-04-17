@@ -42,6 +42,7 @@ class Members extends Model
 					u.userID,
 					u.username,
 					u.firstName,
+          u.lastName,
 					u.isactive,
 					ug.userID,
 					ug.groupID,
@@ -76,6 +77,7 @@ class Members extends Model
 					u.userID,
 					u.username,
 					u.firstName,
+          u.lastName,
 					uo.userID,
 					ug.userID,
 					ug.groupID,
@@ -115,6 +117,7 @@ class Members extends Model
             u.userID,
             u.username,
             u.firstName,
+            u.lastName,
             u.gender,
             u.userImage,
             u.LastLogin,
@@ -132,6 +135,7 @@ class Members extends Model
   						u.userID,
   						u.username,
   						u.firstName,
+              u.lastName,
   						u.gender,
   						u.userImage,
   						u.LastLogin,
@@ -150,8 +154,8 @@ class Members extends Model
         return $this->db->select("SELECT userID,username FROM ".PREFIX."users WHERE userID=:id",array(":id"=>$id));
     }
 
-    public function updateProfile($u_id, $firstName, $gender, $website, $userImage, $aboutme, $signature)
+    public function updateProfile($u_id, $firstName, $lastName, $gender, $website, $userImage, $aboutme, $signature)
     {
-        return $this->db->update(PREFIX.'users', array('firstName' => $firstName, 'gender' => $gender, 'userImage' => $userImage, 'website' => $website, 'aboutme' => $aboutme, 'signature' => $signature), array('userID' => $u_id));
+        return $this->db->update(PREFIX.'users', array('firstName' => $firstName, 'lastName' => $lastName, 'gender' => $gender, 'userImage' => $userImage, 'website' => $website, 'aboutme' => $aboutme, 'signature' => $signature), array('userID' => $u_id));
     }
 }
