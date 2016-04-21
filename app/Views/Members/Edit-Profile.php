@@ -38,7 +38,7 @@
                 <?php } ?>
                 <div class="form-group">
                     <label class="control-label">New Profile Picture</label>
-                    <input type="file" class="form-control" accept="image/jpeg" id="profilePic" name="profilePic">
+                    <input type="file" class="form-control" accept="image/jpeg, image/gif, image/x-png" id="profilePic" name="profilePic">
                 </div>
                 <div class="form-group">
                     <label for="aboutMe">About Me: </label>
