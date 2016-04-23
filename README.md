@@ -38,7 +38,21 @@ The UAP v3 requirements are limited.
 
 ---
 
-# Install
+# Recommended way to install
+
+UserApplePie is on packagist [https://packagist.org/packages/userapplepie/uap-user-management](https://packagist.org/packages/userapplepie/uap-user-management).
+
+Install from terminal now by using:
+
+```
+composer create-project userapplepie/uap-user-management foldername -s dev
+```
+
+The foldername is the desired folder to be created.
+
+---
+
+# Install Manually
 
 Option 1 - files above document root:
 
