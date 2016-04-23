@@ -27,6 +27,7 @@ if(isset($data['ownjs'])){
 Assets::js([
 	'https://code.jquery.com/jquery-1.12.1.min.js',
     'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js',
+		'https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js',
 ]);
 echo $js; //place to pass data / plugable hook zone
 echo $footer; //place to pass data / plugable hook zone
