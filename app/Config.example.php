@@ -38,7 +38,7 @@ class Config
         /**
          * Define the complete site URL.
          */
-        define('SITEURL', 'http://uap3demo.userapplepie.com/');
+        define('SITEURL', 'http://www.userapplepie.com/');
 
         /**
          * Define relative base path.
@@ -93,17 +93,17 @@ class Config
         /**
          * Database name.
          */
-        define('DB_NAME', 'uap3');
+        define('DB_NAME', 'db_dbname');
 
         /**
          * Database username.
          */
-        define('DB_USER', 'uap3');
+        define('DB_USER', 'db_username');
 
         /**
          * Database password.
          */
-        define('DB_PASS', 'password');
+        define('DB_PASS', 'db_password');
 
         /**
          * PREFER to be used in database calls default is uap3_
@@ -119,12 +119,12 @@ class Config
         /**
         * SMTP Email Username
         */
-        define('EMAIL_USERNAME', 'noreply@userapplepie.com');
+        define('EMAIL_USERNAME', 'username@gmail.com');
 
         /**
         * SMTP Email Password
         */
-        define('EMAIL_PASSWORD', 'password');
+        define('EMAIL_PASSWORD', 'email_pass');
 
         /**
         * SMTP Email sent from whom? a name
@@ -135,7 +135,7 @@ class Config
         * SMTP Email host
         * Example : Google (smtp.gmail.com), Yahoo (smtp.mail.yahoo.com)
         */
-        define('EMAIL_HOST','localhost');
+        define('EMAIL_HOST','smtp.gmail.com');
 
         /**
         * SMTP Email port
@@ -153,7 +153,7 @@ class Config
         /**
          * Optionall set a site email address.
          */
-        define('SITEEMAIL', 'noreply@userapplepie.com');
+        define('SITEEMAIL', 'username@gmail.com');
 
 /********************
  *                  *
@@ -247,3 +247,6 @@ class Config
         Session::init();
     }
 }
+//////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////UserApplePie/////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////

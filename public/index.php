@@ -19,8 +19,14 @@ if (file_exists(ROOTDIR.'vendor/autoload.php')) {
     exit;
 }
 
+
 if (!is_readable(APPDIR.'Config.php')) {
-    die('No Config.php found, configure and rename Config.example.php to Config.php in app.');
+	/** No Config Setup, Start Install */
+	if (file_exists(APPDIR.'Install/Install.php')) {
+		require APPDIR.'Install/Install.php';
+	} else {
+		die('No Config.php found, configure and rename Config.example.php to Config.php in app.');
+	}
 }
 
 /*
@@ -64,11 +70,15 @@ if (defined('ENVIRONMENT')) {
 
 }
 
-/** initiate Alias */
-new Core\Alias();
 
-/** initiate config */
-new \App\Config();
+/** Make sure Config File Exists **/
+if (is_readable(APPDIR.'Config.php')) {
+	/** initiate Alias */
+	new Core\Alias();
 
-/** load routes */
-require APPDIR.'Routes.php';
+	/** initiate config */
+	new \App\Config();
+	
+	/** load routes */
+	require APPDIR.'Routes.php';
+}
