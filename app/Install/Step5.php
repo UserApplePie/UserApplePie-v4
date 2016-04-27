@@ -2,11 +2,20 @@
 /** UAP Install Step 5 **/
 /** Install Success **/
 
-/** Last thing we need to do is Rename Config.example.php to Config.php **/
-if (file_exists(ROOTDIR.'app/Config.example.php')) {
-	rename(ROOTDIR.'app/Config.example.php', ROOTDIR.'app/Config.php');
+/** Last thing we need to do is Copy Config.example.php to Config.php **/
+if (file_exists(ROOTDIR.'app/Config.example.php') && is_writable(ROOTDIR.'app')) {
+	if(copy(ROOTDIR.'app/Config.example.php', ROOTDIR.'app/Config.php')){
+		$copy_file = true;
+	}else{
+		$copy_file = false;
+	}
+}else{
+	$copy_file = false;
 }
 
+if(!$copy_file){
+	echo "<div class='alert alert-danger'>There was an error creating Config.php.  You must manually rename Config.example.php to Config.php in the /app/ folder.</div>";
+}else{
 ?>
 
 <div class='panel panel-info'>
@@ -28,3 +37,4 @@ if (file_exists(ROOTDIR.'app/Config.example.php')) {
 
 	</div>
 </div>
+<?php } ?>
