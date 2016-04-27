@@ -6,7 +6,8 @@
 /** System Settings **/
 
 use Helpers\ErrorHelper,
-	Helpers\SuccessHelper;
+	Helpers\SuccessHelper,
+	Helpers\Url;
 
 /** Function to update Config.example.php file **/
 function update_config($default, $new){
@@ -99,7 +100,9 @@ if(isset($_POST['submit'])){
 	**/
 	if(isset($_GET['update_config_file_refresh'])){
 		if($_GET['update_config_file_refresh'] == "true"){
-			echo "<div class='well'><center><h3>Please Wait While The Config File Is Updated!</h3></center></div>";
+			echo "<div class='well'><center>";
+			echo "<img src='uap3logo_wait_animation.gif'>";
+			echo "<h3>Please Wait While The Config File Is Updated!</h3></center></div>";
 			echo "<meta http-equiv='refresh' content='5; url=/?install_step=2&update_config_file=true'>";
 		}
 	}else{

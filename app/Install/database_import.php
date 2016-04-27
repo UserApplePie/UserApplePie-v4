@@ -53,7 +53,7 @@ if($database_working){
         }
         // Perform the query
         if(!mysqli_query($link,$templine)){
-          print('<hr>Error performing query \'<strong>' . $templine . '\': ' . mysqli_connect_error() . ' ');
+          print('<hr><font color=red><b>Error performing query</b></font> \'' . $templine . '\': ' . mysqli_connect_error() . ' ');
           $errors[] = "true";
         }
         // Reset temp variable to empty
@@ -66,4 +66,6 @@ if($database_working){
 if(count($errors) == 0){
   echo "<hr><font color=green><b>Database Imported Successfully!</b></font>";
   $database_import = true;
+}else{
+	$database_error = true;
 }

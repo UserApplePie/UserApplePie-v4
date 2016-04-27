@@ -31,6 +31,12 @@
 			if($database_import){
 				echo "<hr>";
 				echo "<a href='/?install_step=4' class='btn btn-primary btn-lg'>Move on to Step 4</a>";
+			}else{
+				/** Check for database error **/
+				if($database_error){
+					echo "<hr><div class='alert alert-danger'>There was an error importing data to database.  Check your database and make sure ".DB_NAME." database exist and is empty.</div>";
+					echo "<a href='/?install_step=3&import_database=true' class='btn btn-warning btn-lg'>Retry Import Data to Database</a><br>";
+				}
 			}
 		?>
 
