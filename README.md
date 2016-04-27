@@ -50,6 +50,8 @@ composer create-project userapplepie/uap-user-management foldername -s dev
 
 The foldername is the desired folder to be created.
 
+Once installed on your server, open the site, and it will display an install script.
+
 ---
 
 # Install Manually
