@@ -37,7 +37,11 @@ if (!function_exists('mysqli_connect')) {
 }
 
 /** URL Rewrite Module Check **/
-$mrw_isEnabled = in_array('mod_rewrite', apache_get_modules());
+if (function_exists('apache_get_modules')) {
+	$mrw_isEnabled = in_array('mod_rewrite', apache_get_modules());
+}else{
+	$mrw_isEnabled =  getenv('HTTP_MOD_REWRITE')=='On' ? true : false ;
+}
 if (!$mrw_isEnabled) {
 	/** URL Rewrite Module Bad **/
 	$mrw_version = "N/A";
