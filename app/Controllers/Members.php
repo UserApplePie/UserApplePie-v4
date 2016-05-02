@@ -158,8 +158,8 @@ class Members extends Controller
         									mkdir('../assets/images/profile-pics',0777,true);
 
         								$image = new SimpleImage($picture['tmp_name']);
-        								$dir = '../assets/images/profile-pics/'.$username[0]->username.'.jpg';
-        								$image->best_fit(400,300)->save($dir);
+        								$dir = '/assets/images/profile-pics/'.$username[0]->username.'.jpg';
+        								$image->best_fit(400,300)->save("..".$dir);
         								$userImage = $dir;
         							}else{
                         $data['message'] = "Error Uploading profile photo";

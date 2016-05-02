@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-md-8 col-lg-8" align="center">
                       <?php if(!empty($data['profile']->userImage)){ ?>
-                        <img alt="<?php echo $data['profile']->username; ?>'s Profile Picture" src="<?php echo DIR.$data['profile']->userImage; ?>" class="img-circle img-responsive">
+                        <img alt="<?php echo $data['profile']->username; ?>'s Profile Picture" src="<?php echo SITEURL.$data['profile']->userImage; ?>" class="img-circle img-responsive">
                         <?php }else{ ?>
           								<span class='glyphicon glyphicon-user icon-size'></span>
           							<?php } ?>
@@ -22,7 +22,7 @@
                               <?php
                                 /* Check to see if Private Message Module is installed, if it is show link */
                                 if(file_exists('../app/Modules/Messages/messages.module.php')){
-                                  echo "<tr><td>PM</td><td><a href='/NewMessage/".$data['profile']->username."' class='btn btn-xs btn-default'>Send Message</a></td></tr>";
+                                  echo "<tr><td>PM</td><td><a href='".SITEURL."/NewMessage/".$data['profile']->username."' class='btn btn-xs btn-default'>Send Message</a></td></tr>";
                                 }
                               ?>
                               <tr><td>First Name</td><td><?php echo $data['profile']->firstName; ?></td></tr>
