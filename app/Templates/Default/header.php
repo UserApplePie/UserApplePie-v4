@@ -81,7 +81,7 @@ use Helpers\ErrorHelper,
 														<div class="col-centered" align="center">
 														<?php // Check to see if user has a profile image
 															if(!empty($data['currentUserData'][0]->userImage)){
-																echo "<img src='".DIR.$data['currentUserData'][0]->userImage."' class='img-responsive'>";
+																echo "<img src='".SITEURL.$data['currentUserData'][0]->userImage."' class='img-responsive'>";
 															}else{
 																echo "<span class='glyphicon glyphicon-user icon-size'></span>";
 															}
