@@ -6,13 +6,30 @@ UserApplePie Change Log
 - Added Prettify for better code snippets display in forums plugin
 - Updated Composer file so UAP can be installed via composer
 - Fixed default profile images location for registration 
-- Updated BBCode Helper to use Prettify for code snippets
+- Updated BBCode Helper to use Prettify for code snippets and Youtube fix
 - Removed files Composer installs to lighten package size
+- Updated Config file to be more friendly
+- Updated how profile images are uploaded and viewed
+- Added Install script
+- Updated how unnamed groups are displayed in AdminPanel
+- Updated how last login is displayed if never logged in within user profiles
+- Updated database users table with Default Null settings
+- Added mode rewrite check in .htaccess file
 - Files Edited Since Previous Version:
+	- app/Controllers/Members.php
+	- app/Views/AdminPanel/Groups.php
+	- app/Views/Members/Edit-Profile.php
+	- app/Views/Members/View-Profile.php
+	- app/Config.example.php
 	- app/Templates/Default/footer.php
 	- app/Templates/Default/header.php
+	- app/Install/....
+	- public/index.php
+	- public/.htaccess
 	- system/Helpers/Auth/Auth.php
 	- system/Helpers/BBCode.php
+	- system/Helpers/PageViews.php 
+	- database.sql
 	- composer.json
 	- vendor/...
 ==========================================================================
