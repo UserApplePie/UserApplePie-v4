@@ -20,7 +20,7 @@ class BBCode
       $html[] = "<hr>";
       $bb[] = "#\[code\](.*?)\[/code\]#si";
       $html[] = "<div class='codeblock'><div class='php' width='' align='left'><pre class='prettyprint'><b><i><font size=0.5>Code</font></i></b><pre>\\1</pre></div></div>";
-      $str = str_replace('http://youtu.be/','',$str);
+      $str = str_replace('https://youtu.be/','',$str);
       $str = preg_replace ($bb, $html, $str);
       $patern="#\[url href=([^\]]*)\]([^\[]*)\[/url\]#i";
       $replace='<a href="\\1" target="_blank" rel="nofollow">\\2</a>';
