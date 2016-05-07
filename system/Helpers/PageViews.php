@@ -52,11 +52,11 @@ class PageViews
         WHERE
           view_id = :view_id
             AND view_location = :view_location
-            AND view_owner_userid = :view_owner_userid
+            AND view_user_ip = :view_user_ip
         ",
       array(':view_id' => $view_id,
             ':view_location' => $view_location,
-            ':view_owner_userid' => $view_owner_userid));
+            ':view_user_ip' => $view_user_ip));
       $already_view_count = count($already_view_data);
 
       // Check to see if current user has already viewed this page
