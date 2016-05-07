@@ -68,7 +68,9 @@ $orderby = $data['orderby'];
 						foreach($data['groups_list'] as $row) {
 							echo "<tr>";
               echo "<td>$row->groupID</td>";
-							echo "<td><a href='".DIR."AdminPanel-Group/$row->groupID'>$row->groupName</a></td>";
+							/** Check to make sure group has a name/title **/
+							$group_name = (!empty($row->groupName) ? $row->groupName : "UnNamed Group");
+							echo "<td><a href='".DIR."AdminPanel-Group/$row->groupID'>$group_name</a></td>";
               echo "<td><font color='$row->groupFontColor' style='font-weight: $row->groupFontWeight'>$row->groupName</font></td>";
 							echo "</tr>";
 						}

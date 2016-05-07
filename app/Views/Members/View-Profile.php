@@ -38,7 +38,7 @@
                               ?>
                             <tr><td>Gender</td><td><?php echo $data['profile']->gender; ?></td></tr>
                             <tr><td>Website</td><td><a href="<?php echo $data['profile']->website; ?>" target="_blank">View</a></td></tr>
-                            <tr><td>Last Login</td><td><?php echo date("F d, Y",strtotime($data['profile']->LastLogin)); ?></td></tr>
+                            <tr><td>Last Login</td><td><?php if($row->LastLogin){ echo date("F d, Y",strtotime($row->LastLogin)); }else{ echo "Never"; } ?></td></tr>
                             <tr><td>Sign Up</td><td><?php echo date("F d, Y",strtotime($data['profile']->SignUp)); ?></td></tr>
                             </tbody>
                         </table>
