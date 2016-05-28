@@ -141,7 +141,7 @@ use Helpers\ErrorHelper,
 		<?php
 		// Display Breadcrumbs if set
 		if(isset($data['breadcrumbs'])){
-			echo "<div class='col-lg-12 col-md-12'>";
+			echo "<div class='col-lg-12 col-md-12 col-sm-12'>";
 				echo "<ol class='breadcrumb'>";
 					echo "<li><a href='".DIR."'>Home</a></li>";
 					echo $data['breadcrumbs'];

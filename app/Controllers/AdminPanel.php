@@ -19,7 +19,7 @@ use App\Models\AdminPanel as AdminPanelModel;
 use Core\Error;
 use App\Models\Members as MembersModel;
 
-define('USERS_PAGEINATOR_LIMIT', '10');  // Sets up users listing page limit
+define('USERS_PAGEINATOR_LIMIT', '20');  // Sets up users listing page limit
 
 class AdminPanel extends Controller{
 
@@ -491,6 +491,69 @@ class AdminPanel extends Controller{
     View::renderTemplate('header', $data);
     View::render('AdminPanel/AP-Sidebar', $data);
     View::render('AdminPanel/Group', $data);
+    View::renderTemplate('footer', $data);
+  }
+
+  /**
+  * Mass Email Function
+  * Allows Admin to Send an Email to All Members
+  **/
+  public function MassEmail(){
+
+    /** Check to see if user is logged in **/
+    if($data['isLoggedIn'] = $this->auth->isLogged()){
+      /** User is logged in - Get their data **/
+      $u_id = $this->auth->user_info();
+      $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+      if($data['isAdmin'] = $this->user->checkIsAdmin($u_id) == 'false'){
+        /** User Not Admin - kick them out **/
+        \Helpers\ErrorHelper::push('You are Not Admin', '');
+      }
+    }else{
+      /** User Not logged in - kick them out **/
+      \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
+    }
+
+    /** Setup Title and Welcome Message **/
+    $data['title'] = "Mass Email";
+    $data['welcomeMessage'] = "Welcome to the Mass Email Admin Feature.  This feature will send an email to All site members that have not disabled the feature.";
+
+    $data['get_users_massemail_allow'] = $this->model->getUsersMassEmail();
+    $data['csrfToken'] = Csrf::makeToken('massemail');
+
+    // Setup Breadcrumbs
+    $data['breadcrumbs'] = "
+      <li><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+      <li class='active'><i class='fa fa-fw fa-user'></i>".$data['title']."</li>
+    ";
+
+    // Check to make sure admin is trying to create group
+		if(isset($_POST['submit'])){
+			// Check to make sure the csrf token is good
+			if (Csrf::isTokenValid('massemail')) {
+          // Catch password inputs using the Request helper
+          $subject = Request::post('subject');
+          $content = Request::post('content');
+
+          // Run the mass email script
+          foreach ($data['get_users_massemail_allow'] as $row) {
+            if($this->model->sendMassEmail($row->userID, $u_id, $subject, $content, $row->username, $row->email)){
+              $count = $count + 1;
+            }
+          }
+          if($count > 0){
+            // Success
+            \Helpers\SuccessHelper::push('You Have Successfully Sent Mass Email to '.$count.' Users', 'AdminPanel-MassEmail');
+          }else{
+            // Fail
+            \Helpers\ErrorHelper::push('Mass Email Error', 'AdminPanel-MassEmail');
+          }
+      }
+    }
+
+    View::renderTemplate('header', $data);
+    View::render('AdminPanel/AP-Sidebar', $data);
+    View::render('AdminPanel/MassEmail', $data);
     View::renderTemplate('footer', $data);
   }
 

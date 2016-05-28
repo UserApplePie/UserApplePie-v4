@@ -50,6 +50,8 @@ Router::any('LiveCheckUserName', 'App\Controllers\LiveCheck@userNameCheck');
 
 /** Member Routing **/
 Router::any('Members','App\Controllers\Members@members');
+Router::any('Members/(:any)','App\Controllers\Members@members');
+Router::any('Members/(:any)/(:any)','App\Controllers\Members@members');
 Router::any('Online-Members','App\Controllers\Members@online');
 Router::any('Profile/(:any)','App\Controllers\Members@viewProfile');
 /** End Member Routing **/
@@ -62,6 +64,7 @@ Router::any('AdminPanel-Users/(:any)/(:any)', 'App\Controllers\AdminPanel@Users'
 Router::any('AdminPanel-User/(:any)', 'App\Controllers\AdminPanel@User');
 Router::any('AdminPanel-Groups', 'App\Controllers\AdminPanel@Groups');
 Router::any('AdminPanel-Group/(:any)', 'App\Controllers\AdminPanel@Group');
+Router::any('AdminPanel-MassEmail', 'App\Controllers\AdminPanel@MassEmail');
 /** End Admin Panel Routing **/
 
 /** Module routes. */

@@ -35,9 +35,23 @@ class Members extends Model
      * Get all members that are activated with info
      * @return array
      */
-    public function getMembers()
+    public function getMembers($orderby, $limit = null)
     {
-        return $this->db->select("
+        // Set default orderby if one is not set
+        if($orderby == "UG-DESC"){
+          $run_order = "g.groupName DESC";
+        }else if($orderby == "UG-ASC"){
+          $run_order = "g.groupName ASC";
+        }else if($orderby == "UN-DESC"){
+          $run_order = "u.username DESC";
+        }else if($orderby == "UN-ASC"){
+          $run_order = "u.username ASC";
+        }else{
+          // Default order
+          $run_order = "u.userID ASC";
+        }
+
+        $users = $this->db->select("
 				SELECT
 					u.userID,
 					u.username,
@@ -62,8 +76,30 @@ class Members extends Model
 					u.isactive = true
 				GROUP BY
 					u.userID
-				ORDER BY
-					u.userID ASC, g.groupID DESC");
+        ORDER BY
+          $run_order
+        $limit");
+
+        return $users;
+    }
+
+    /**
+    * getTotalMembers
+    *
+    * Gets total count of users that are active
+    *
+    * @return int count
+    */
+    public function getTotalMembers(){
+      $data = $this->db->select("
+          SELECT
+            *
+          FROM
+            ".PREFIX."users
+          WHERE
+  					isactive = true
+          ");
+      return count($data);
     }
 
     /**
@@ -157,5 +193,15 @@ class Members extends Model
     public function updateProfile($u_id, $firstName, $lastName, $gender, $website, $userImage, $aboutme, $signature)
     {
         return $this->db->update(PREFIX.'users', array('firstName' => $firstName, 'lastName' => $lastName, 'gender' => $gender, 'userImage' => $userImage, 'website' => $website, 'aboutme' => $aboutme, 'signature' => $signature), array('userID' => $u_id));
+    }
+
+    public function updateUPrivacy($u_id, $privacy_massemail, $privacy_pm)
+    {
+        $data = $this->db->update(PREFIX.'users', array('privacy_massemail' => $privacy_massemail, 'privacy_pm' => $privacy_pm), array('userID' => $u_id));
+        if(count($data) > 0){
+          return true;
+        }else{
+          return false;
+        }
     }
 }

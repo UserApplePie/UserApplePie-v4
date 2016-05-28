@@ -202,6 +202,8 @@ class Users extends Model
           u.lastName,
           u.userImage,
           u.email,
+          u.privacy_massemail,
+          u.privacy_pm,
           ug.userID,
           ug.groupID,
           g.groupID,

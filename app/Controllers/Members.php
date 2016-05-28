@@ -22,21 +22,40 @@ use Core\View,
   Helpers\SimpleImage,
   Core\Error;
 
+define('USERS_PAGEINATOR_LIMIT', '20');  // Sets up users listing page limit
+
 class Members extends Controller
 {
+    private $pages;
+
     public function __construct()
     {
         parent::__construct();
+        $this->pages = new \Helpers\Paginator(USERS_PAGEINATOR_LIMIT);  // How many rows per page
     }
 
     /**
      * Page for list of activated accounts
      */
-    public function members()
+    public function members($set_order_by = 'ID-ASC', $current_page = '1')
     {
         $onlineUsers = new MembersModel();
         $data['title'] = 'Members';
-        $data['members'] = $onlineUsers->getMembers();
+
+        // Check for orderby selection
+        $data['orderby'] = $set_order_by;
+
+        // Set total number of rows for paginator
+        $total_num_users = $onlineUsers->getTotalMembers();
+        $this->pages->setTotal($total_num_users);
+
+        // Send page links to view
+        $pageFormat = DIR."Members/$set_order_by/"; // URL page where pages are
+        $data['pageLinks'] = $this->pages->pageLinks($pageFormat, null, $current_page);
+        $data['current_page_num'] = $current_page;
+
+        // Get list of members
+        $data['members'] = $onlineUsers->getMembers($data['orderby'], $this->pages->getLimit($current_page, USERS_PAGEINATOR_LIMIT));
 
         /** Check to see if user is logged in **/
         if($data['isLoggedIn'] = $this->auth->isLogged()){
@@ -249,8 +268,11 @@ class Members extends Controller
      */
     public function privacy()
     {
+        $onlineUsers = new MembersModel();
+
         $data['title'] = 'Privacy Settings';
         $data['welcomeMessage'] = 'Welcome to your privacy settings.  Enjoy!';
+        $data['csrfToken'] = Csrf::makeToken('editprivacy');
 
         /** Check to see if user is logged in **/
         if($data['isLoggedIn'] = $this->auth->isLogged()){
@@ -263,6 +285,31 @@ class Members extends Controller
           \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
         }
 
+        if (isset($_POST['submit'])) {
+            if(Csrf::isTokenValid('editprivacy')) {
+                $privacy_massemail = Request::post('privacy_massemail');
+                $privacy_pm = Request::post('privacy_pm');
+
+                if($privacy_massemail != "true"){$privacy_massemail = "false";}
+                if($privacy_pm != "true"){$privacy_pm = "false";}
+
+                if($onlineUsers->updateUPrivacy($u_id, $privacy_massemail, $privacy_pm)){
+                  SuccessHelper::push('You have Successfully updated your Privacy Settings!', 'Privacy-Settings');
+                }else{
+                  ErrorHelper::push('Error Updating Privacy Settings!', 'Privacy-Settings');
+                }
+            }
+        }
+
+        /** Check users settings to see if privacy mass email is enabled or not **/
+        if($data['currentUserData'][0]->privacy_massemail == "true"){
+          $data['pme_checked'] = "checked";
+        }
+        /** Check users settings to see if privacy private message is enabled or not **/
+        if($data['currentUserData'][0]->privacy_pm == "true"){
+          $data['ppm_checked'] = "checked";
+        }
+
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
           <li><a href='".DIR."Account-Settings'>Account Settings</a></li>
@@ -271,7 +318,7 @@ class Members extends Controller
 
         View::renderTemplate('header', $data);
         View::render('Members/Member-Account-Sidebar', $data);
-        View::render('Members/Account-Settings', $data);
+        View::render('Members/Privacy-Settings', $data);
         View::renderTemplate('footer', $data);
     }
 }
