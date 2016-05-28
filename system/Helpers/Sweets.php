@@ -41,7 +41,7 @@ class Sweets
  *
  * @return string returns sweet data
  */
-  public static function getSweets($sweet_id = null, $sweet_location = null, $sweet_sec_id = null){
+  public static function getSweets($sweet_id = null, $sweet_location = null, $sweet_sec_id = null, $display_type = "btn"){
     // Get sweet count from db
     // Check to see if this is a sweet for a secondary post
 //    var_dump($sweet_sec_id);
@@ -80,7 +80,11 @@ class Sweets
               ':sweet_sec_id' => $sweet_sec_id));
       $sweet_total = count($sweet_count);
     }
-    $sweet_display = " <div class='btn btn-success btn-xs'>".SWEET_TITLE_DISPLAY." <span class='badge'>$sweet_total</span></div> ";
+    if($display_type == "btn"){
+      $sweet_display = " <div class='btn btn-success btn-xs'>".SWEET_TITLE_DISPLAY." <span class='badge'>$sweet_total</span></div> ";
+    }else if($display_type = "num"){
+      $sweet_display = $sweet_total;
+    }
     return $sweet_display;
   }
 

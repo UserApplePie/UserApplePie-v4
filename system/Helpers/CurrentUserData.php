@@ -149,4 +149,75 @@ class CurrentUserData
     }
   }
 
+  /**
+   * Get all members that are activated with info
+   * @return array
+   */
+  public function getMembers()
+  {
+    self::$db = Database::get();
+    return count(self::$db->select("
+      SELECT
+        u.userID,
+        u.username,
+        u.firstName,
+        u.isactive,
+        ug.userID,
+        ug.groupID,
+        g.groupID,
+        g.groupName,
+        g.groupFontColor,
+        g.groupFontWeight
+      FROM
+        ".PREFIX."users u
+      LEFT JOIN
+        ".PREFIX."users_groups ug
+        ON u.userID = ug.userID
+      LEFT JOIN
+        ".PREFIX."groups g
+        ON ug.groupID = g.groupID
+      WHERE
+        u.isactive = true
+      GROUP BY
+        u.userID
+      ORDER BY
+        u.userID ASC, g.groupID DESC"));
+  }
+
+  /**
+   * Get all info on members that are online
+   * @return array
+   */
+  public function getOnlineMembers()
+  {
+    self::$db = Database::get();
+    return count(self::$db->select("
+      SELECT
+        u.userID,
+        u.username,
+        u.firstName,
+        uo.userID,
+        ug.userID,
+        ug.groupID,
+        g.groupID,
+        g.groupName,
+        g.groupFontColor,
+        g.groupFontWeight
+      FROM
+        ".PREFIX."users_online uo
+      LEFT JOIN
+        ".PREFIX."users u
+        ON u.userID = uo.userID
+      LEFT JOIN
+        ".PREFIX."users_groups ug
+        ON uo.userID = ug.userID
+      LEFT JOIN
+        ".PREFIX."groups g
+        ON ug.groupID = g.groupID
+      GROUP BY
+        u.userID
+      ORDER BY
+        u.userID ASC, g.groupID DESC"));
+  }
+
 }
