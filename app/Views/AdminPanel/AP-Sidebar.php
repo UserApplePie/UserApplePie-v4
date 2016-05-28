@@ -7,6 +7,7 @@
             <li class="list-group-item"><a href="<?php echo DIR; ?>AdminPanel">Dashboard</a></li>
             <li class="list-group-item"><a href="<?php echo DIR; ?>AdminPanel-Users">Users</a></li>
             <li class="list-group-item"><a href="<?php echo DIR; ?>AdminPanel-Groups">Groups</a></li>
+            <li class="list-group-item"><a href="<?php echo DIR; ?>AdminPanel-MassEmail">Mass Email</a></li>
         </ul>
     </div>
 

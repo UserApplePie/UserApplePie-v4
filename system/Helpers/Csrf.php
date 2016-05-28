@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Cross Site Request Forgery helper
+ * Cross Site Request Forgery helper.
  *
  * @author jimgwhit
  * @version 3.0
@@ -12,10 +13,10 @@ use Helpers\Session;
 
 /**
  * Instructions:
- * At the top of the controller where the other "use" statements are place:
+ * At the top of the controller where the other "use" statements are, place:
  * use Helpers\Csrf;
  *
- * Just prior to rendering the view for adding or editing data create the CSRF token:
+ * Just prior to rendering the view for adding or editing data, create the CSRF token:
  * $data['csrf_token'] = Csrf::makeToken();
  * $this->view->renderTemplate('header', $data);
  * $this->view->render('pet/edit', $data, $error); // as an example
@@ -28,39 +29,60 @@ use Helpers\Session;
  * if (!Csrf::isTokenValid()) {
  *      Url::redirect('admin/login'); // or wherever you want to redirect to.
  *    }
- * And that's all
+ * And that's all.
  */
-class Csrf
-{
+class Csrf {
     /**
-     * get CSRF token and generate a new one if expired
+     * Retrieve the CSRF token and generate a new one if expired.
      *
      * @access public
      * @static static method
      * @return string
      */
-    public static function makeToken($name)
-    {
-        $max_time    = 60 * 60 * 24; // token is valid for 1 day
+    public static function makeToken($name = 'csrfToken') {
+        $max_time = 60 * 60 * 24; // token is valid for 1 day.
         $csrf_token = Session::get($name);
-        $stored_time  = Session::get($name.'_time');
+        $stored_time = Session::get($name . '_time');
 
         if ($max_time + $stored_time <= time() || empty($csrf_token)) {
-            Session::set($name, md5(uniqid(rand(), true)));
-            Session::set($name.'_time', time());
+            $hash = hash('sha512', self::genRandomNumber());
+            Session::set($name, $hash);
+            Session::set($name . '_time', time());
         }
+
         return Session::get($name);
     }
 
     /**
-     * checks if CSRF token in session is same as in the form submitted
+     * Check to see if the CSRF token in session is the same as submitted form.
      *
      * @access public
      * @static static method
      * @return bool
      */
-    public static function isTokenValid($name)
-    {
+    public static function isTokenValid($name = 'csrfToken') {
         return $_POST['token_'.$name] === Session::get($name);
     }
+    /**
+     * Generate a random number using any available function on the system.
+     *
+     * @access public
+     * @static static method
+     * @return integer
+     */
+
+    public static function genRandomNumber($size = 32) {
+        if (extension_loaded('openssl')) {
+            return openssl_random_pseudo_bytes($size);
+        }
+        if (extension_loaded('mcrypt')) {
+            return mcrypt_create_iv($size, MCRYPT_DEV_URANDOM);
+        }
+        if (function_exists('random_bytes')) {
+            return random_bytes($size);
+        }
+        return mt_rand(0,mt_getrandmax());
+
+    }
+
 }

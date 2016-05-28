@@ -7,9 +7,49 @@
     <table class="table table-striped table-hover table-bordered responsive">
         <thead>
             <tr>
-                <th>Username</th>
+                <th>
+									<?php
+			              if(empty($data['orderby'])){
+			                $obu_value = "UN-DESC";
+			                $obu_icon = "";
+			              }
+			              else if($data['orderby'] == "UN-DESC"){
+			                $obu_value = "UN-ASC";
+			                $obu_icon = "<i class='glyphicon glyphicon-triangle-bottom'></i>";
+			              }
+			              else if($data['orderby'] == "UN-ASC"){
+			                $obu_value = "UN-DESC";
+			                $obu_icon = "<i class='glyphicon glyphicon-triangle-top'></i>";
+			              }else{
+											$obu_value = "UN-ASC";
+			                $obu_icon = "";
+										}
+			              // Setup the order by id button
+			              echo "<a href='".DIR."Members/$obu_value/".$data['current_page_num']."' class=''>UserName $obu_icon</button>";
+			            ?>
+								</th>
                 <th>First Name</th>
-                <th>User Group</th>
+                <th>
+									<?php
+			              if(empty($data['orderby'])){
+			                $obg_value = "UG-DESC";
+			                $obg_icon = "";
+			              }
+			              else if($data['orderby'] == "UG-DESC"){
+			                $obg_value = "UG-ASC";
+			                $obg_icon = "<i class='glyphicon glyphicon-triangle-bottom'></i>";
+			              }
+			              else if($data['orderby'] == "UG-ASC"){
+			                $obg_value = "UG-DESC";
+			                $obg_icon = "<i class='glyphicon glyphicon-triangle-top'></i>";
+			              }else{
+											$obg_value = "UG-ASC";
+			                $obg_icon = "";
+										}
+			              // Setup the order by id button
+			              echo "<a href='".DIR."Members/$obg_value/".$data['current_page_num']."' class=''>User Group $obg_icon</button>";
+			            ?>
+								</th>
             </tr>
         </thead>
         <tbody>
@@ -23,5 +63,13 @@
         ?>
         </tbody>
     </table>
+		<?php
+			// Check to see if there is more than one page
+			if($data['pageLinks'] > "1"){
+				echo "<div class='panel-footer' style='text-align: center'>";
+				echo $data['pageLinks'];
+				echo "</div>";
+			}
+		?>
   </div>
 </div>

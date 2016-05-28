@@ -335,4 +335,55 @@ class AdminPanel extends Model {
     return $data;
   }
 
+  // Get list of all users
+  public function getUsersMassEmail(){
+
+    $user_data = $this->db->select("
+        SELECT
+          userID,
+          username,
+          email
+        FROM
+          ".PREFIX."users
+        WHERE
+          privacy_massemail = 'true'
+        ORDER BY
+          userID
+        ");
+    return $user_data;
+  }
+
+  // Puts new/reply message data into database
+  public function sendMassEmail($to_userID, $from_userID, $subject, $content, $username, $email){
+    // Format the Content for database
+		$content = nl2br($content);
+		// Update messages table
+		$query = $this->db->insert(PREFIX.'messages', array('to_userID' => $to_userID, 'from_userID' => $from_userID, 'subject' => $subject, 'content' => $content));
+		$count = count($query);
+		// Check to make sure something was updated
+		if($count > 0){
+      // Message was updated in database, now we send the to user an email notification.
+      // Get from user's data
+      $data2 = $this->db->select("SELECT username FROM ".PREFIX."users WHERE userID = :userID",
+        array(':userID' => $from_userID));
+      $from_username = $data2[0]->username;
+      //EMAIL MESSAGE USING PHPMAILER
+      $mail = new \Helpers\PhpMailer\Mail();
+      $mail->setFrom(SITEEMAIL, EMAIL_FROM_NAME);
+      $mail->addAddress($email);
+      $mail_subject = " " . SITETITLE . " - $subject";
+      $mail->subject($mail_subject);
+      $body = "Hello {$username}";
+      $body .= "<hr/> {$content}<hr/>";
+      $body .= "This is a Mass Email sent by {$from_username} on " . SITETITLE . "<hr/>";
+      $body .= "Go to <a href=\"" . SITEURL . "\">" . SITETITLE . "</a> to change your privacy settings if you wish to not receive these mass emails.";
+      $mail->body($body);
+      $mail->send();
+
+			return true;
+		}else{
+			return false;
+		}
+  }
+
 }

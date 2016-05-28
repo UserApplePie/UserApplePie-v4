@@ -98,7 +98,10 @@ CREATE TABLE IF NOT EXISTS `uap3_users` (
   `activekey` varchar(15) NOT NULL DEFAULT '0',
   `resetkey` varchar(15) NOT NULL DEFAULT '0',
   `LastLogin` datetime DEFAULT NULL,
+  `privacy_massemail` varchar(5) NOT NULL DEFAULT 'true',
+  `privacy_pm` varchar(5) NOT NULL DEFAULT 'true',
   `SignUp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  
   PRIMARY KEY (`userID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
