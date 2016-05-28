@@ -15,7 +15,7 @@ class PageFunctions {
 		// Get Current Page so we have something to compair to
 		$cur_page = $_SERVER['REQUEST_URI'];
 		//Remove the extra forward slash from link
-		$cur_page = ltrim($cur_page, '/');
+		$cur_page = ltrim($cur_page, DIR);
 		// Check to see if we should log as a previous page
 		if(!in_array($cur_page, $no_redir_pages)){
 			$_SESSION['login_prev_page'] = $cur_page;
