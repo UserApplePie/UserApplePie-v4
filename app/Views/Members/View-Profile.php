@@ -37,7 +37,9 @@
                                 }
                               ?>
                             <tr><td>Gender</td><td><?php echo $data['profile']->gender; ?></td></tr>
-                            <tr><td>Website</td><td><a href="<?php echo $data['profile']->website; ?>" target="_blank">View</a></td></tr>
+							<?php if(isset($data['profile']->website)){ ?>
+                            <tr><td>Website</td><td><a href="<?php echo "http://".$data['profile']->website; ?>" target="_blank">View</a></td></tr>
+							<?php } ?>
                             <tr><td>Last Login</td><td><?php if($row->LastLogin){ echo date("F d, Y",strtotime($row->LastLogin)); }else{ echo "Never"; } ?></td></tr>
                             <tr><td>Sign Up</td><td><?php echo date("F d, Y",strtotime($data['profile']->SignUp)); ?></td></tr>
                             </tbody>

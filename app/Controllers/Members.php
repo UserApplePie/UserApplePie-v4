@@ -163,7 +163,7 @@ class Members extends Controller
                     $firstName = strip_tags(Request::post('firstName'));
                     $lastName = strip_tags(Request::post('lastName'));
                     $gender = Request::post('gender') == 'male' ? 'Male' : 'Female';
-                    $website = !filter_var(Request::post('website'), FILTER_VALIDATE_URL) === false ? Request::post('website') : DIR.'profile/'.$username;
+                    $website = strip_tags(preg_replace('#^https?://#', '', Request::post('website')));
                     $aboutMe = nl2br(strip_tags(Request::post('aboutMe')));
                     $signature = nl2br(strip_tags(Request::post('signature')));
                     $picture = file_exists($_FILES['profilePic']['tmp_name']) || is_uploaded_file($_FILES['profilePic']['tmp_name']) ? $_FILES ['profilePic'] : array ();
