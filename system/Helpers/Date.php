@@ -7,7 +7,7 @@
  * @version 3.0
  * UserApplePie
  * @author David (DaVaR) Sargent
- * @version 3.0.2
+ * @version 3.0.3
  */
 
 namespace Helpers;
