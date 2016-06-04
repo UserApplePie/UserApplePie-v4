@@ -8,7 +8,9 @@
 
 namespace Helpers\Auth;
 
-use App\Models\Auth as AuthModel;
+use App\Models\Auth as AuthModel,
+	Helpers\ErrorHelper,
+	Core\Language;
 
 class Auth {
 
@@ -16,9 +18,12 @@ class Auth {
     public $successmsg;
     public $lang;
     public $authorize;
+    public $language;
 
     public function __construct() {
-        $this->lang = include 'Lang.php'; //language file messages
+		/** initialise the language object */
+        $this->language = new Language();
+        $this->language->load('Auth');
         $this->authorize = new AuthModel();
         $this->expireAttempt(); //expire attempts
     }
@@ -310,31 +315,31 @@ class Auth {
         if (!Cookie::get('auth_session')) {
             // Input Verification :
             if (strlen($username) == 0) {
-                $this->errormsg[] = $this->lang['register_username_empty'];
+                $this->errormsg[] = $this->language->get('register_username_empty');
             } elseif (strlen($username) > MAX_USERNAME_LENGTH) {
-                $this->errormsg[] = $this->lang['register_username_long'];
+                $this->errormsg[] = $this->language->get('register_username_long');
             } elseif (strlen($username) < MIN_USERNAME_LENGTH) {
-                $this->errormsg[] = $this->lang['register_username_short'];
+                $this->errormsg[] = $this->language->get('register_username_short');
             }
             if (strlen($password) == 0) {
-                $this->errormsg[] = $this->lang['register_password_empty'];
+                $this->errormsg[] = $this->language->get('register_password_empty');
             } elseif (strlen($password) > MAX_PASSWORD_LENGTH) {
-                $this->errormsg[] = $this->lang['register_password_long'];
+                $this->errormsg[] = $this->language->get('register_password_long');
             } elseif (strlen($password) < MIN_PASSWORD_LENGTH) {
-                $this->errormsg[] = $this->lang['register_password_short'];
+                $this->errormsg[] = $this->language->get('register_password_short');
             } elseif ($password !== $verifypassword) {
-                $this->errormsg[] = $this->lang['register_password_nomatch'];
+                $this->errormsg[] = $this->language->get('register_password_nomatch');
             } elseif (strstr($password, $username)) {
-                $this->errormsg[] = $this->lang['register_password_username'];
+                $this->errormsg[] = $this->language->get('register_password_username');
             }
             if (strlen($email) == 0) {
-                $this->errormsg[] = $this->lang['register_email_empty'];
+                $this->errormsg[] = $this->language->get('register_email_empty');
             } elseif (strlen($email) > MAX_EMAIL_LENGTH) {
-                $this->errormsg[] = $this->lang['register_email_long'];
+                $this->errormsg[] = $this->language->get('register_email_long');
             } elseif (strlen($email) < MIN_EMAIL_LENGTH) {
-                $this->errormsg[] = $this->lang['register_email_short'];
+                $this->errormsg[] = $this->language->get('register_email_short');
             } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $this->errormsg[] = $this->lang['register_email_invalid'];
+                $this->errormsg[] = $this->language->get('register_email_invalid');
             }
             if (count($this->errormsg) == 0) {
                 // Input is valid
@@ -343,7 +348,7 @@ class Auth {
                 if ($count != 0) {
                     //ya existe el usuario
                     $this->logActivity("UNKNOWN", "AUTH_REGISTER_FAIL", "Username ({$username}) already exists");
-                    $this->errormsg[] = $this->lang['register_username_exist'];
+                    $this->errormsg[] = $this->language->get('register_username_exist');
                     return false;
                 } else {
                     //usuario esta libre
@@ -352,7 +357,7 @@ class Auth {
                     if ($count != 0) {
                         //ya existe el email
                         $this->logActivity("UNKNOWN", "AUTH_REGISTER_FAIL", "Email ({$email}) already exists");
-                        $this->errormsg[] = $this->lang['register_email_exist'];
+                        $this->errormsg[] = $this->language->get('register_email_exist');
                         return false;
                     } else {
                         //todo bien continua con register
@@ -365,18 +370,29 @@ class Auth {
                         $this->authorize->addIntoDB("users_groups",$info);
 
                         $this->logActivity($username, "AUTH_REGISTER_SUCCESS", "Account created");
-                        $this->successmsg[] = $this->lang['register_success'];
+                        $this->successmsg[] = $this->language->get('register_success');
                         //activar usuario directamente
                         $this->activateAccount($username, $activekey); //se ignora la activekey ya que es directo
                         return true;
                     }
                 }
             } else {
+				$this->logActivity($username, "AUTH_REGISTER_FAIL", "User Info Standards Not Met");
+				$error_data = "<hr>";
+				
+				foreach($this->errormsg as $row){
+					$error_data .= " - ".$row."<br>";
+				}
+				/* Error Message Display */
+				ErrorHelper::push('User info is incorrect. '.$error_data, 'Register');
                 return false; //algun error
             }
         } else {
             // User is logged in
-            $this->errormsg[] = $this->lang['register_email_loggedin'];
+            $this->errormsg[] = $this->language->get('register_email_loggedin');
+			$this->logActivity($username, "AUTH_REGISTER_FAIL", "Error With Site Cookie");
+			/* Error Message Display */
+            ErrorHelper::push('User is logged in, can not register for site while logged in.', 'Register');
             return false;
         }
     }
@@ -465,10 +481,12 @@ class Auth {
                 }
             } else {
                 //some error
+				$this->logActivity($username, "AUTH_REGISTER_FAIL", "User Info Standards Not Met");
                 return false;
             }
         } else {
             // User is logged in
+			$this->logActivity($username, "AUTH_REGISTER_FAIL", "Error With Site Cookie");
             $this->errormsg[] = $this->lang['register_email_loggedin'];
             return false;
         }

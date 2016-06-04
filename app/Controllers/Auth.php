@@ -182,7 +182,7 @@ class Auth extends Controller
                     else{
                         $data['message'] = "Registration Error: Please try again";
                         // Error Message Display
-                        ErrorHelper::push($data['message'], 'Register');
+        //                ErrorHelper::push($data['message'], 'Register');
                     }
                 }
                 else{
