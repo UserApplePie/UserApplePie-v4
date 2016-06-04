@@ -1,6 +1,20 @@
 UserApplePie Change Log
 
 ==========================================================================
+					UAP v3.0.3
+--------------------------------------------------------------------------
+- Added Mass Email Function to Admin Panel
+- Added Pagination to Members page
+- Updated User Profiles to fix a couple bugs
+- Updated how Auth system displays errors
+- Added Privacy Settings to User Account Settings
+- Fix style in forgot password section
+- Updated CSRF token strength
+- Check github for list of files updated in this release
+	-https://github.com/UserApplePie/UserApplePie-v3/compare/3.0.2...master
+==========================================================================
+
+==========================================================================
 					UAP v3.0.2
 --------------------------------------------------------------------------
 - Added Prettify for better code snippets display in forums plugin
