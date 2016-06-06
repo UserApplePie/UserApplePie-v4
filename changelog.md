@@ -6,7 +6,6 @@ UserApplePie Change Log
 - Added Site Stats Helper
 - Added new Admin Panel Template
 - Updated Admin Panel pages to work with new Admin Panel Template
-
 ==========================================================================
 
 ==========================================================================
