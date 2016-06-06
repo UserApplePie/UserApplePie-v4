@@ -7,6 +7,8 @@
 -- Server version: 5.5.47-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.14
 
+-- UserApplePie v3.0.4
+
 -- Instructions
 -- Import this file to your mySQL database
 
@@ -132,6 +134,25 @@ CREATE TABLE IF NOT EXISTS `uap3_users_online` (
   PRIMARY KEY (`id`),
   KEY `lastAccess` (`lastAccess`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `uap3_sitelogs`
+--
+
+CREATE TABLE IF NOT EXISTS `uap3_sitelogs` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `membername` varchar(255) NOT NULL DEFAULT '',
+  `refer` varchar(255) NOT NULL DEFAULT '',
+  `useragent` varchar(255) NOT NULL DEFAULT '',
+  `cfile` varchar(255) NOT NULL DEFAULT '',
+  `uri` varchar(255) NOT NULL DEFAULT '',
+  `ipaddy` varchar(255) NOT NULL DEFAULT '',
+  `server` varchar(255) NOT NULL DEFAULT '',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
