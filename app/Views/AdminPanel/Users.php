@@ -10,14 +10,11 @@ use Core\Language,
 $orderby = $data['orderby'];
 
 ?>
-<div class='col-lg-8 col-md-8 col-sm-8'>
+<div class='col-lg-12 col-md-12 col-sm-12'>
 	<div class='panel panel-default'>
 		<div class='panel-heading'>
-			<h3 class='jumbotron-heading'><?php echo $data['title'] ?></h3>
+			<?php echo $data['title'] ?>
 		</div>
-		<div class='panel-body'>
-			<p><?php echo $data['welcomeMessage'] ?></p>
-
 			<table class='table table-hover responsive'>
 				<tr>
 					<th>
@@ -62,8 +59,10 @@ $orderby = $data['orderby'];
               echo "<a href='".DIR."AdminPanel-Users/$obu_value/".$data['current_page_num']."' class='btn btn-info btn-sm'>UserName $obu_icon</button>";
             ?>
           </th>
-          <th>FirstName</th>
+          <th>Name</th>
           <th>LastLogin</th>
+					<th>SignUp</th>
+					<th></th>
 				</tr>
 				<?php
 					if(isset($data['users_list'])){
@@ -71,16 +70,21 @@ $orderby = $data['orderby'];
 							echo "<tr>";
               echo "<td>$row->userID</td>";
 							echo "<td><a href='".DIR."AdminPanel-User/$row->userID'>$row->username</a></td>";
-							echo "<td>$row->firstName</td>";
+							echo "<td>$row->firstName $row->lastName</td>";
               echo "<td>";
-								if($row->LastLogin){ echo date("F d, Y",strtotime($row->LastLogin)); }else{ echo "Never"; }
+								if($row->LastLogin){ echo date("M d, y",strtotime($row->LastLogin)); }else{ echo "Never"; }
+							echo "</td>";
+							echo "<td>";
+							echo date("M d, y",strtotime($row->SignUp));
+							echo "</td>";
+							echo "<td align='right'>";
+							echo "<a href='".DIR."AdminPanel-User/$row->userID' class='btn btn-xs btn-primary'><span class='glyphicon glyphicon-pencil'></span></a>";
 							echo "</td>";
 							echo "</tr>";
 						}
 					}
 				?>
 			</table>
-		</div>
 		<?php
 			// Check to see if there is more than one page
 			if($data['pageLinks'] > "1"){

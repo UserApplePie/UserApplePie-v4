@@ -3,6 +3,15 @@ UserApplePie Change Log
 ==========================================================================
 					UAP v3.0.3
 --------------------------------------------------------------------------
+- Added Site Stats Helper
+- Added new Admin Panel Template
+- Updated Admin Panel pages to work with new Admin Panel Template
+
+==========================================================================
+
+==========================================================================
+					UAP v3.0.3
+--------------------------------------------------------------------------
 - Added Mass Email Function to Admin Panel
 - Added Pagination to Members page
 - Updated User Profiles to fix a couple bugs

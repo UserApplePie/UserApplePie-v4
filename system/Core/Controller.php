@@ -7,7 +7,7 @@
  * @version 3.0
  * UserApplePie
  * @author David (DaVaR) Sargent
- * @version 3.0.3
+ * @version 3.0.4
  */
 
 namespace Core;
@@ -69,6 +69,9 @@ abstract class Controller
             $u_id = $this->auth->currentSessionInfo()['uid'];
             $this->user->update($u_id);
         }
+
+        /** Log All Activity to Site Logs **/
+        \Helpers\SiteStats::log(\Helpers\CurrentUserData::getUserName($u_id));
 
         /** Clean offline users from DB */
         $this->user->cleanOfflineUsers();

@@ -4,7 +4,7 @@
  *
  * UserApplePie
  * @author David (DaVaR) Sargent
- * @version 3.0.3
+ * @version 3.0.4
  */
 
 namespace App\Models;
@@ -35,7 +35,9 @@ class AdminPanel extends Model {
           userID,
           username,
           firstName,
-          LastLogin
+          lastName,
+          LastLogin,
+          SignUp
         FROM
           ".PREFIX."users
         ORDER BY
@@ -49,42 +51,25 @@ class AdminPanel extends Model {
   public function getUser($id){
     $user_data = $this->db->select("
         SELECT
-          u.userID,
-          u.username,
-          u.firstName,
-          u.email,
-          u.gender,
-          u.userImage,
-          u.LastLogin,
-          u.SignUp,
-          u.isactive,
-          u.website,
-          u.aboutme
+          u.*
         FROM
           ".PREFIX."users u
         WHERE
           u.userID = :userID
-        ORDER BY
-          u.userID ASC
         ",
         array(':userID' => $id));
     return $user_data;
   }
 
   // Update User's Profile Data
-	public function updateProfile($au_id, $au_username, $au_firstName, $au_email, $au_gender, $au_website, $au_userImage, $au_aboutme){
+	public function updateProfile($au_id, $au_username, $au_firstName, $au_lastName, $au_email, $au_gender, $au_website, $au_userImage, $au_aboutme, $au_signature){
 		// Format the About Me for database
 		$au_aboutme = nl2br($au_aboutme);
-
+    $au_signature = nl2br($au_signature);
 		// Update users table
-		$query_a = $this->db->update(PREFIX.'users', array('username' => $au_username, 'firstName' => $au_firstName, 'email' => $au_email, 'gender' => $au_gender, 'userImage' => $au_userImage), array('userID' => $au_id));
-		$count_a = count($query_a);
-		// Update users_extprofile
-		$query_b = $this->db->update(PREFIX.'users', array('website' => $au_website, 'aboutme' => $au_aboutme), array('userID' => $au_id));
-		$count_b = count($query_b);
-		// Check to make sure something was updated
-		$count_t = $count_a + $count_b;
-		if($count_t > 0){
+		$query = $this->db->update(PREFIX.'users', array('username' => $au_username, 'firstName' => $au_firstName, 'lastName' => $au_lastName, 'email' => $au_email, 'gender' => $au_gender, 'userImage' => $au_userImage, 'website' => $au_website, 'aboutme' => $au_aboutme, 'signature' => $au_signature), array('userID' => $au_id));
+		$count = count($query);
+		if($count > 0){
 			return true;
 		}else{
 			return false;
