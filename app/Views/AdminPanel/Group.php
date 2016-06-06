@@ -10,10 +10,10 @@ use Helpers\Form,
 
 ?>
 
-<div class='col-lg-8 col-md-8 col-sm-8'>
+<div class='col-lg-12 col-md-12 col-sm-12'>
 	<div class='panel panel-default'>
 		<div class='panel-heading'>
-			<h3 class='jumbotron-heading'><?php echo $data['title']." - ".$data['g_groupName']  ?></h3>
+			<?php echo $data['title']." - ".$data['g_groupName']  ?>
 		</div>
 		<div class='panel-body'>
 

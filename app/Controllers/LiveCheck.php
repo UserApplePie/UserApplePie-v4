@@ -4,7 +4,7 @@
  *
  * UserApplePie
  * @author David (DaVaR) Sargent
- * @version 3.0.3
+ * @version 3.0.4
  */
 
 namespace App\Controllers;

@@ -4,7 +4,7 @@
  *
  * UserApplePie
  * @author David (DaVaR) Sargent
- * @version 3.0.3
+ * @version 3.0.4
  */
 
 namespace App\Controllers;
@@ -60,6 +60,9 @@ class AdminPanel extends Controller{
     $data['mem_signup_past_90'] = count($this->model->getPastUsersData('SignUp', '90'));
     $data['mem_signup_past_365'] = count($this->model->getPastUsersData('SignUp', '365'));
 
+    /** Get total page views count **/
+    $data['totalPageViews'] = \Helpers\SiteStats::getTotalViews();
+
     /** Check to see if Forum Plugin is Installed  **/
     if(file_exists('../app/Modules/Forum/forum.module.php')){
       $forum_status = "Installed";
@@ -96,10 +99,10 @@ class AdminPanel extends Controller{
       \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
     }
 
-    View::renderTemplate('header', $data);
+    View::renderTemplate('header', $data, 'AdminPanel');
     View::render('AdminPanel/AP-Sidebar', $data);
     View::render('AdminPanel/AdminPanel', $data);
-    View::renderTemplate('footer', $data);
+    View::renderTemplate('footer', $data, 'AdminPanel');
   }
 
   public function users($set_order_by = 'ID-ASC', $current_page = '1'){
@@ -142,10 +145,10 @@ class AdminPanel extends Controller{
       \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
     }
 
-    View::renderTemplate('header', $data);
+    View::renderTemplate('header', $data, 'AdminPanel');
     View::render('AdminPanel/AP-Sidebar', $data);
     View::render('AdminPanel/Users', $data);
-    View::renderTemplate('footer', $data);
+    View::renderTemplate('footer', $data, 'AdminPanel');
   }
 
   public function user($id){
@@ -198,13 +201,15 @@ class AdminPanel extends Controller{
           $au_username = Request::post('au_username');
           $au_email = Request::post('au_email');
   				$au_firstName = Request::post('au_firstName');
+          $au_lastName = Request::post('au_lastName');
   				$au_gender = Request::post('au_gender');
   				$au_website = Request::post('au_website');
   				$au_userImage = Request::post('au_userImage');
   				$au_aboutme = Request::post('au_aboutme');
+          $au_signature = Request::post('au_signature');
 
   				// Run the update profile script
-  				if($this->model->updateProfile($au_id, $au_username, $au_firstName, $au_email, $au_gender, $au_website, $au_userImage, $au_aboutme)){
+  				if($this->model->updateProfile($au_id, $au_username, $au_firstName, $au_lastName, $au_email, $au_gender, $au_website, $au_userImage, $au_aboutme, $au_signature)){
   					// Success
             \Helpers\SuccessHelper::push('You Have Successfully Updated User Profile', 'AdminPanel-User/'.$au_id);
   				}else{
@@ -274,26 +279,13 @@ class AdminPanel extends Controller{
 
     // Setup Current User data
 		// Get user data from user's database
-		$current_user_data = $this->model->getUser($id);
-		foreach($current_user_data as $user_data){
-      $data['u_id'] = $id;
-			$data['u_username'] = $user_data->username;
-			$data['u_firstName'] = $user_data->firstName;
-			$data['u_gender'] = $user_data->gender;
-			$data['u_userImage'] = $user_data->userImage;
-			$data['u_aboutme'] = str_replace("<br />", "", $user_data->aboutme);
-			$data['u_website'] = $user_data->website;
-      $data['u_email'] = $user_data->email;
-      $data['u_lastlogin'] = $user_data->LastLogin;
-      $data['u_signup'] = $user_data->SignUp;
-      $data['u_isactive'] = $user_data->isactive;
-		}
+		$data['user_data'] = $this->model->getUser($id);
 
     // Setup Breadcrumbs
     $data['breadcrumbs'] = "
       <li><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
       <li><a href='".DIR."AdminPanel-Users'><i class='fa fa-fw fa-user'></i> Users </a></li>
-      <li class='active'><i class='fa fa-fw fa-user'></i>User - ".$data['u_username']."</li>
+      <li class='active'><i class='fa fa-fw fa-user'></i>User - ".$data['user_data'][0]->username."</li>
     ";
 
     /** Check to see if user is logged in **/
@@ -310,10 +302,10 @@ class AdminPanel extends Controller{
       \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
     }
 
-    View::renderTemplate('header', $data);
+    View::renderTemplate('header', $data, 'AdminPanel');
     View::render('AdminPanel/AP-Sidebar', $data);
     View::render('AdminPanel/User', $data);
-    View::renderTemplate('footer', $data);
+    View::renderTemplate('footer', $data, 'AdminPanel');
   }
 
   // Setup Groups Page
@@ -343,15 +335,19 @@ class AdminPanel extends Controller{
         if($_POST['create_group'] == "true"){
           // Catch password inputs using the Request helper
           $ag_groupName = Request::post('ag_groupName');
-
-          // Run the update group script
-          $new_group_id = $this->model->createGroup($ag_groupName);
-          if($new_group_id){
-            // Success
-            \Helpers\SuccessHelper::push('You Have Successfully Added Group', 'AdminPanel-Group/'.$new_group_id);
+          if(!empty($ag_groupName)){
+            // Run the update group script
+            $new_group_id = $this->model->createGroup($ag_groupName);
+            if($new_group_id){
+              /** Group Create Success **/
+              \Helpers\SuccessHelper::push('You Have Successfully Created a New Group', 'AdminPanel-Group/'.$new_group_id);
+            }else{
+              /** Group Create Error. Show Error **/
+              \Helpers\ErrorHelper::push('Group Creation Error!', 'AdminPanel-Groups');
+            }
           }else{
-            // Fail
-            \Helpers\SuccessHelper::push('Add Group Error', 'AdminPanel-Groups');
+            /** Group Name Field Empty. Show Error **/
+            \Helpers\ErrorHelper::push('Group Creation Error: Group Name Field Empty!', 'AdminPanel-Groups');
           }
         }
       }
@@ -371,10 +367,10 @@ class AdminPanel extends Controller{
       \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
     }
 
-    View::renderTemplate('header', $data);
+    View::renderTemplate('header', $data, 'AdminPanel');
     View::render('AdminPanel/AP-Sidebar', $data);
     View::render('AdminPanel/Groups', $data);
-    View::renderTemplate('footer', $data);
+    View::renderTemplate('footer', $data, 'AdminPanel');
   }
 
   // Setup Group Page
@@ -488,10 +484,10 @@ class AdminPanel extends Controller{
       \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
     }
 
-    View::renderTemplate('header', $data);
+    View::renderTemplate('header', $data, 'AdminPanel');
     View::render('AdminPanel/AP-Sidebar', $data);
     View::render('AdminPanel/Group', $data);
-    View::renderTemplate('footer', $data);
+    View::renderTemplate('footer', $data, 'AdminPanel');
   }
 
   /**
@@ -527,14 +523,22 @@ class AdminPanel extends Controller{
       <li class='active'><i class='fa fa-fw fa-user'></i>".$data['title']."</li>
     ";
 
+    $data['subject'] = $_SESSION['subject'];
+    unset($_SESSION['subject']);
+    $data['content'] = $_SESSION['content'];
+    unset($_SESSION['content']);
+
     // Check to make sure admin is trying to create group
 		if(isset($_POST['submit'])){
 			// Check to make sure the csrf token is good
 			if (Csrf::isTokenValid('massemail')) {
-          // Catch password inputs using the Request helper
-          $subject = Request::post('subject');
-          $content = Request::post('content');
-
+        // Catch password inputs using the Request helper
+        $subject = Request::post('subject');
+        $content = Request::post('content');
+        if(empty($subject)){ $errormsg[] = "Subject Field Blank!"; }
+        if(empty($content)){ $errormsg[] = "Content Field Blank!"; }
+        $error_count = count($errormsg);
+        if($error_count == 0){
           // Run the mass email script
           foreach ($data['get_users_massemail_allow'] as $row) {
             if($this->model->sendMassEmail($row->userID, $u_id, $subject, $content, $row->username, $row->email)){
@@ -542,19 +546,29 @@ class AdminPanel extends Controller{
             }
           }
           if($count > 0){
-            // Success
+            /** Success **/
             \Helpers\SuccessHelper::push('You Have Successfully Sent Mass Email to '.$count.' Users', 'AdminPanel-MassEmail');
           }else{
-            // Fail
+            /** Fail **/
             \Helpers\ErrorHelper::push('Mass Email Error', 'AdminPanel-MassEmail');
           }
+        }else{
+          $me_errors = "<hr>";
+          foreach ($errormsg as $row) {
+            $me_errors .= $row."<Br>";
+          }
+          /** Fail **/
+          $_SESSION['subject'] = $subject;
+          $_SESSION['content'] = $content;
+          \Helpers\ErrorHelper::push('Mass Email Error'.$me_errors, 'AdminPanel-MassEmail');
+        }
       }
     }
 
-    View::renderTemplate('header', $data);
+    View::renderTemplate('header', $data, 'AdminPanel');
     View::render('AdminPanel/AP-Sidebar', $data);
     View::render('AdminPanel/MassEmail', $data);
-    View::renderTemplate('footer', $data);
+    View::renderTemplate('footer', $data, 'AdminPanel');
   }
 
 }
