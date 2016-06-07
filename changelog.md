@@ -6,6 +6,9 @@ UserApplePie Change Log
 - Added Site Stats Helper
 - Added new Admin Panel Template
 - Updated Admin Panel pages to work with new Admin Panel Template
+- Updated AP Users Listing display for mobile devices
+- Updated User Profiles to show last long date
+- Updated Auth System to log users last login date
 ==========================================================================
 
 ==========================================================================
@@ -27,7 +30,7 @@ UserApplePie Change Log
 --------------------------------------------------------------------------
 - Added Prettify for better code snippets display in forums plugin
 - Updated Composer file so UAP can be installed via composer
-- Fixed default profile images location for registration 
+- Fixed default profile images location for registration
 - Updated BBCode Helper to use Prettify for code snippets and Youtube fix
 - Removed files Composer installs to lighten package size
 - Updated Config file to be more friendly
@@ -50,7 +53,7 @@ UserApplePie Change Log
 	- public/.htaccess
 	- system/Helpers/Auth/Auth.php
 	- system/Helpers/BBCode.php
-	- system/Helpers/PageViews.php 
+	- system/Helpers/PageViews.php
 	- database.sql
 	- composer.json
 	- vendor/...
