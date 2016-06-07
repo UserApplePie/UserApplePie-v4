@@ -40,7 +40,7 @@
 							<?php if(isset($data['profile']->website)){ ?>
                             <tr><td>Website</td><td><a href="<?php echo "http://".$data['profile']->website; ?>" target="_blank">View</a></td></tr>
 							<?php } ?>
-                            <tr><td>Last Login</td><td><?php if($row->LastLogin){ echo date("F d, Y",strtotime($row->LastLogin)); }else{ echo "Never"; } ?></td></tr>
+                            <tr><td>Last Login</td><td><?php if($data['profile']->LastLogin){ echo date("F d, Y",strtotime($data['profile']->LastLogin)); }else{ echo "Never"; } ?></td></tr>
                             <tr><td>Sign Up</td><td><?php echo date("F d, Y",strtotime($data['profile']->SignUp)); ?></td></tr>
                             </tbody>
                         </table>
