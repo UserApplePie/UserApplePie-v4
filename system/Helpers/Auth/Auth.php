@@ -116,8 +116,6 @@ class Auth {
                             $this->newSession($username,$remember); //generate new cookie session
                             $this->logActivity($username, "AUTH_LOGIN_SUCCESS", "User logged in");
                             $this->successmsg[] = $this->language->get('login_success');
-														/* Error Message Display */
-														ErrorHelper::push($this->errormsg[0], 'Login');
                             return true;
                         }
                     }

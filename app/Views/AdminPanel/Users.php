@@ -60,8 +60,8 @@ $orderby = $data['orderby'];
             ?>
           </th>
           <th>Name</th>
-          <th>LastLogin</th>
-					<th>SignUp</th>
+          <th class="hidden-xs">LastLogin</th>
+					<th class="hidden-xs">SignUp</th>
 					<th></th>
 				</tr>
 				<?php
@@ -71,10 +71,10 @@ $orderby = $data['orderby'];
               echo "<td>$row->userID</td>";
 							echo "<td><a href='".DIR."AdminPanel-User/$row->userID'>$row->username</a></td>";
 							echo "<td>$row->firstName $row->lastName</td>";
-              echo "<td>";
+              echo "<td class='hidden-xs'>";
 								if($row->LastLogin){ echo date("M d, y",strtotime($row->LastLogin)); }else{ echo "Never"; }
 							echo "</td>";
-							echo "<td>";
+							echo "<td class='hidden-xs'>";
 							echo date("M d, y",strtotime($row->SignUp));
 							echo "</td>";
 							echo "<td align='right'>";
