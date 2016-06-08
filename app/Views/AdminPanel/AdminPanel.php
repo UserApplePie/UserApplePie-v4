@@ -1,3 +1,27 @@
+<?php
+if(isset($cur_uap_version) || isset($cur_uap_messages_version) || isset($cur_uap_forum_version)){
+	echo "<div class='col-lg-12 col-md-12 col-sm-12'>";
+	echo "<div class='alert alert-danger'>";
+		if(isset($cur_uap_version)){
+			echo "<b>New Update Released for UAP! <br>";
+			echo "New Version:</b> $cur_uap_version <br>";
+			echo "<b>Current Version:</b> ".UAPVersion."<br>";
+		}
+		if(isset($cur_uap_messages_version)){
+			echo "<br><b>New Update Released for UAP Messages Plugin! <br>";
+			echo "New Version:</b> $cur_uap_messages_version <br>";
+			echo "<b>Current Version:</b> ".UAPMessagesVersion."<br>";
+		}
+		if(isset($cur_uap_forum_version)){
+			echo "<br><b>New Update Released for UAP Forum Plugin! <br>";
+			echo "New Version:</b> $cur_uap_forum_version <br>";
+			echo "<b>Current Version:</b> ".UAPForumVersion."<br>";
+		}
+		echo "<hr>Visit <a href='http://www.userapplepie.com' target='_blank'>www.UserApplePie.com</a> For Updates";
+	echo "</div>";
+	echo "</div>";
+}
+?>
 <div class='col-lg-12 col-md-12 col-sm-12'>
 	<div class='row'>
 		<div class="col-xs-12 col-md-6 col-lg-3">

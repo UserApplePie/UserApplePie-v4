@@ -3,11 +3,13 @@
 defined('DS') || define('DS', DIRECTORY_SEPARATOR);
 
 /** Define the absolute paths for configured directories */
-
 define('APPDIR', realpath(__DIR__.'/../app/').'/');
 define('SYSTEMDIR', realpath(__DIR__.'/../system/').'/');
 define('PUBLICDIR', realpath(__DIR__).'/');
 define('ROOTDIR', realpath(__DIR__.'/../').'/');
+
+/** Define Current Version of UAP **/
+define('UAPVersion', 'v3.0.4');
 
 /** load composer autoloader */
 if (file_exists(ROOTDIR.'vendor/autoload.php')) {
@@ -78,7 +80,7 @@ if (is_readable(APPDIR.'Config.php')) {
 
 	/** initiate config */
 	new \App\Config();
-	
+
 	/** load routes */
 	require APPDIR.'Routes.php';
 }

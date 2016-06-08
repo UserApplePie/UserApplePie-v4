@@ -1,6 +1,15 @@
 UserApplePie Change Log
 
 ==========================================================================
+					UAP v3.0.4
+--------------------------------------------------------------------------
+- Added Site Stats Helper
+- Added new Admin Panel Template
+- Updated Admin Panel pages to work with new Admin Panel Template
+- Added UAP Version Checker to Admin Panel to show alert when out of date
+==========================================================================
+
+==========================================================================
 					UAP v3.0.3
 --------------------------------------------------------------------------
 - Added Site Stats Helper

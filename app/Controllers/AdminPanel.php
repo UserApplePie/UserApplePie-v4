@@ -63,9 +63,20 @@ class AdminPanel extends Controller{
     /** Get total page views count **/
     $data['totalPageViews'] = \Helpers\SiteStats::getTotalViews();
 
+    /** Get Current UAP Version Data From UserApplePie.com **/
+    $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=UAP');
+    preg_match("/UAP (.*) UAP/i", $html, $match);
+    $cur_uap_version = UAPVersion;
+    if($cur_uap_version != $match[1]){ $data['cur_uap_version'] = $match[1]; }
+
     /** Check to see if Forum Plugin is Installed  **/
     if(file_exists('../app/Modules/Forum/forum.module.php')){
       $forum_status = "Installed";
+      /** Get Current UAP Version Data From UserApplePie.com **/
+      $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=Forum');
+      preg_match("/UAP-Forum (.*) UAP-Forum/i", $html, $match);
+      $cur_uap_forum_version = UAPForumVersion;
+      if($cur_uap_forum_version != $match[1]){ $data['cur_uap_forum_version'] = $match[1]; }
     }else{
       $forum_status = "NOT Installed";
     }
@@ -74,6 +85,11 @@ class AdminPanel extends Controller{
     /** Check to see if Private Messages Plugin is Installed **/
     if(file_exists('../app/Modules/Messages/messages.module.php')){
       $msg_status = "Installed";
+      /** Get Current UAP Version Data From UserApplePie.com **/
+      $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=Messages');
+      preg_match("/UAP-Messages (.*) UAP-Messages/i", $html, $match);
+      $cur_uap_messages_version = UAPMessagesVersion;
+      if($cur_uap_messages_version != $match[1]){ $data['cur_uap_messages_version'] = $match[1]; }
     }else{
       $msg_status = "NOT Installed";
     }
