@@ -204,12 +204,12 @@ class Auth extends Controller
         /** needed for recaptcha **/
         if (RECAP_PUBLIC_KEY != "" && RECAP_PRIVATE_KEY != "") {
             $data['ownjs'] = array(
-                "<script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&amp;render=explicit' async defer></script>",
-                "<script type='text/javascript'>
-                    var onloadCallback = function() {
-                        grecaptcha.render('html_element', {'sitekey' : '".RECAP_PUBLIC_KEY."'});
-                    };
-                </script>");
+              "<script type='text/javascript'>
+                  var onloadCallback = function() {
+                      grecaptcha.render('html_element', {'sitekey' : '".RECAP_PUBLIC_KEY."'});
+                  };
+              </script>",
+              "<script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&amp;render=explicit' async defer></script>",);
         }
 
         /** Add JS Files requried for live checks **/
