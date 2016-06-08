@@ -69,7 +69,7 @@ $orderby = $data['orderby'];
 						foreach($data['users_list'] as $row) {
 							echo "<tr>";
               echo "<td>$row->userID</td>";
-							echo "<td><a href='".DIR."AdminPanel-User/$row->userID'>$row->username</a></td>";
+							echo "<td><button type='button' class='btn btn-default btn-xs' data-toggle='modal' data-target='#myModal-$row->userID'>$row->username</button></td>";
 							echo "<td>$row->firstName $row->lastName</td>";
               echo "<td class='hidden-xs'>";
 								if($row->LastLogin){ echo date("M d, y",strtotime($row->LastLogin)); }else{ echo "Never"; }
@@ -81,6 +81,51 @@ $orderby = $data['orderby'];
 							echo "<a href='".DIR."AdminPanel-User/$row->userID' class='btn btn-xs btn-primary'><span class='glyphicon glyphicon-pencil'></span></a>";
 							echo "</td>";
 							echo "</tr>";
+							echo "
+								<!-- Modal -->
+								<div class='modal fade' id='myModal-$row->userID' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>
+								  <div class='modal-dialog' role='document'>
+								    <div class='modal-content'>
+								      <div class='modal-header'>
+								        <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+								        <h4 class='modal-title' id='myModalLabel'><span class='glyphicon glyphicon-user'></span> ".$row->username."&#39;s Information</h4>
+								      </div>
+								      <div class='modal-body'>
+												<div class='row'>
+							";
+													if(!empty($row->userImage)){
+														echo "<div class='col-lg-6 col-md-6 col-sm-6'>";
+														echo "<img alt='$row->username's Profile Picture' src='".SITEURL.$row->userImage."' class='img-rounded img-responsive'>";
+														echo "</div>";
+														echo "<div class='col-lg-6 col-md-6 col-sm-6'>";
+													}else{
+														echo "<div class='col-lg-12 col-md-12 col-sm-12'>";
+													}
+							echo "
+														<b style='border-bottom: 1px solid #ccc'>User's Groups</b><Br>
+							";
+														$users_groups = \Helpers\CurrentUserData::getUserGroups($row->userID);
+														if(isset($users_groups)){
+															foreach($users_groups as $ug_row){ echo " - <font size='2'>".$ug_row."</font> <br>"; };
+														}else{
+															echo " - <font size='2'>User Not a Member of Any Groups</font> <br>";
+														}
+							echo "
+														<br><b style='border-bottom: 1px solid #ccc'>Account Status:</b><br>
+							";
+														if($row->isactive == 1){ echo "- Account is <font color=green>Active</font>"; }else{ echo "- Account is <font color=red>Not Active</font>"; }
+							echo "
+													</div>
+												</div>
+								      </div>
+								      <div class='modal-footer'>
+												<a class='btn btn-primary btn-sm' href='".DIR."AdminPanel-User/$row->userID'>Edit ".$row->username."&#39;s Info</a>
+								        <button type='button' class='btn btn-default btn-sm' data-dismiss='modal'>Close</button>
+								      </div>
+								    </div>
+								  </div>
+								</div>
+							";
 						}
 					}
 				?>

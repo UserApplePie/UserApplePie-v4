@@ -36,6 +36,8 @@ class AdminPanel extends Model {
           username,
           firstName,
           lastName,
+          userImage,
+          isactive,
           LastLogin,
           SignUp
         FROM
@@ -161,7 +163,8 @@ class AdminPanel extends Model {
           groupID,
           groupName,
           groupFontColor,
-          groupFontWeight
+          groupFontWeight,
+          groupDescription
         FROM
           ".PREFIX."groups
         WHERE
@@ -217,7 +220,8 @@ class AdminPanel extends Model {
           groupID,
           groupName,
           groupFontColor,
-          groupFontWeight
+          groupFontWeight,
+          groupDescription
         FROM
           ".PREFIX."groups
         ORDER BY
