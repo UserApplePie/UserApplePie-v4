@@ -52,6 +52,23 @@ class CurrentUserData
   }
 
   /**
+  * Get Group members count
+  */
+  public static function getGroupMembersCount($where_id){
+    self::$db = Database::get();
+    $user_groups = self::$db->select("
+        SELECT
+          *
+        FROM
+          ".PREFIX."users_groups
+        WHERE
+          groupID = :groupID
+        ",
+      array(':groupID' => $where_id));
+    return count($user_groups);
+  }
+
+  /**
 	 * Get current user's username from database
 	 */
 	public static function getUserName($where_id){

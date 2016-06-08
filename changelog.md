@@ -7,6 +7,8 @@ UserApplePie Change Log
 - Added new Admin Panel Template
 - Updated Admin Panel pages to work with new Admin Panel Template
 - Added UAP Version Checker to Admin Panel to show alert when out of date
+- Updated Admin Panel Users Page
+- Updated Admin Panel Groups Page
 ==========================================================================
 
 ==========================================================================

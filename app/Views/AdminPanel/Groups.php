@@ -79,6 +79,7 @@ $orderby = $data['orderby'];
           ?>
         </th>
         <th>Display</th>
+        <th></th>
 			</tr>
 			<?php
 				if(isset($data['groups_list'])){
@@ -87,9 +88,39 @@ $orderby = $data['orderby'];
             echo "<td>$row->groupID</td>";
 						/** Check to make sure group has a name/title **/
 						$group_name = (!empty($row->groupName) ? $row->groupName : "UnNamed Group");
-						echo "<td><a href='".DIR."AdminPanel-Group/$row->groupID'>$group_name</a></td>";
+						echo "<td><button type='button' class='btn btn-default btn-xs' data-toggle='modal' data-target='#myModal-$row->groupID'>$group_name</button></td>";
             echo "<td><font color='$row->groupFontColor' style='font-weight: $row->groupFontWeight'>$row->groupName</font></td>";
+            echo "<td align='right'>";
+            echo "<a href='".DIR."AdminPanel-Group/$row->groupID' class='btn btn-xs btn-primary'><span class='glyphicon glyphicon-pencil'></span></a>";
+            echo "</td>";
 						echo "</tr>";
+            echo "
+              <!-- Modal -->
+              <div class='modal fade' id='myModal-$row->groupID' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>
+                <div class='modal-dialog' role='document'>
+                  <div class='modal-content'>
+                    <div class='modal-header'>
+                      <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+                      <h4 class='modal-title' id='myModalLabel'><span class='glyphicon glyphicon-tower'></span> ".$row->groupName." Information</h4>
+                    </div>
+                    <div class='modal-body'>
+                      <b style='border-bottom: 1px solid #ccc'>Group Name Display:</b><br>
+                      <font color='$row->groupFontColor' style='font-weight: $row->groupFontWeight'>$row->groupName</font>
+                      <br><br>
+                      <b style='border-bottom: 1px solid #ccc'>Group Description:</b><br>
+                      $row->groupDescription
+                      <br><br>
+                      <b style='border-bottom: 1px solid #ccc'>Total Group Members:</b><br>
+                      ".\Helpers\CurrentUserData::getGroupMembersCount($row->groupID)."
+                    </div>
+                    <div class='modal-footer'>
+                      <a class='btn btn-primary btn-sm' href='".DIR."AdminPanel-Group/$row->groupID'>Edit Group Info</a>
+                      <button type='button' class='btn btn-default btn-sm' data-dismiss='modal'>Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ";
 					}
 				}
 			?>
