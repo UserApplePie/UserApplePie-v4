@@ -45,7 +45,8 @@ use Helpers\ErrorHelper,
 					<li class="dropdown pull-right">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class='glyphicon glyphicon-user' aria-hidden='true'></span> <?php echo $data['currentUserData'][0]->username; ?> <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="<?=DIR?>"><span class='glyphicon glyphicon-off' aria-hidden='true'></span> Back To Main Site</a></li>
+							<li><a href="<?=DIR?>"><span class='glyphicon glyphicon-eject' aria-hidden='true'></span> Back To Main Site</a></li>
+							<li><a href='<?php echo DIR; ?>Logout'><span class='glyphicon glyphicon-off' aria-hidden='true'></span> Logout</a></li>
 						</ul>
 					</li>
 				</ul>
