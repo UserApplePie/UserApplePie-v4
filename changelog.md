@@ -9,6 +9,7 @@ UserApplePie Change Log
 - Added UAP Version Checker to Admin Panel to show alert when out of date
 - Updated Admin Panel Users Page
 - Updated Admin Panel Groups Page
+- Fixed bug with Chrome on Privacy Settings page now showing checkbox
 ==========================================================================
 
 ==========================================================================
