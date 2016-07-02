@@ -9,15 +9,15 @@
       <form class="form" method="post">
           <div class="col-xs-12">
               <div class="form-group">
-                  <label class="control-label">Username or Email</label>
-                  <input  class="form-control" type="text" id="username" name="username" placeholder="Username or E-mail">
+                  <label class="control-label"><?=Language::show('login_field_username', 'Auth')?></label>
+                  <input  class="form-control" type="text" id="username" name="username" placeholder="<?=Language::show('login_field_username', 'Auth')?>">
               </div>
               <div class="form-group">
-                  <label class="control-label">Password</label>
-                  <input class="form-control" type="password" id="password" name="password" placeholder="Password">
+                  <label class="control-label"><?=Language::show('login_field_password', 'Auth')?></label>
+                  <input class="form-control" type="password" id="password" name="password" placeholder="<?=Language::show('login_field_password', 'Auth')?>">
               </div>
               <div class="form-inline">
-                  <label class="control-label">Remember Me</label>
+                  <label class="control-label"><?=Language::show('login_field_rememberme', 'Auth')?></label>
                   <input class="form-control" type="checkbox" id="rememberMe" name="rememberMe">
               </div>
               <input type="hidden" name="token_login" value="<?= $data['csrfToken']; ?>" />
@@ -28,9 +28,9 @@
 
 		</div>
 		<div class="panel-footer">
-					<a class="btn btn-primary btn-sm" name="" href="<?=DIR?>Register">Register</a>
-					<a class="btn btn-primary btn-sm" name="" href="<?=DIR?>Forgot-Password">Forgot Password</a>
-					<a class="btn btn-primary btn-sm" name="" href="<?=DIR?>Resend-Activation-Email">Resend Activation Email</a>
+					<a class="btn btn-primary btn-sm" name="" href="<?=DIR?>Register"><?=Language::show('register_button', 'Auth')?></a>
+					<a class="btn btn-primary btn-sm" name="" href="<?=DIR?>Forgot-Password"><?=Language::show('forgotpass_button', 'Auth')?></a>
+					<a class="btn btn-primary btn-sm" name="" href="<?=DIR?>Resend-Activation-Email"><?=Language::show('resendactivation_button', 'Auth')?></a>
     </div>
   </div>
 </div>
