@@ -15,28 +15,28 @@
 				<!-- Username -->
 				<div class='input-group' style='width: 100%; margin-bottom: 25px'>
 					<span class='input-group-addon'><i class='glyphicon glyphicon-user'></i></span>
-					<?php echo Form::input(array('id' => 'username', 'name' => 'username', 'class' => 'form-control', 'placeholder' => 'UserName')); ?>
+					<?php echo Form::input(array('id' => 'username', 'name' => 'username', 'class' => 'form-control', 'placeholder' => Language::show('register_field_username', 'Auth'))); ?>
 					<span id='resultun' class='input-group-addon'></span>
 				</div>
 
 				<!-- Password 1 -->
 				<div class='input-group' style='width: 100%; margin-bottom: 25px'>
 					<span class='input-group-addon'><i class='glyphicon glyphicon-lock'></i></span>
-					<?php echo Form::input(array('id' => 'passwordInput', 'type' => 'password', 'name' => 'password', 'class' => 'form-control', 'placeholder' => 'Password')); ?>
+					<?php echo Form::input(array('id' => 'passwordInput', 'type' => 'password', 'name' => 'password', 'class' => 'form-control', 'placeholder' => Language::show('register_field_password', 'Auth'))); ?>
 					<span id='password01' class='input-group-addon'></span>
 				</div>
 
 				<!-- Password 2 -->
 				<div class='input-group' style='width: 100%; margin-bottom: 25px'>
 					<span class='input-group-addon'><i class='glyphicon glyphicon-lock'></i></span>
-					<?php echo Form::input(array('id' => 'confirmPasswordInput', 'type' => 'password', 'name' => 'passwordc', 'class' => 'form-control', 'placeholder' => 'Confirm Password')); ?>
+					<?php echo Form::input(array('id' => 'confirmPasswordInput', 'type' => 'password', 'name' => 'passwordc', 'class' => 'form-control', 'placeholder' => Language::show('register_field_confpass', 'Auth'))); ?>
 					<span id='password02' class='input-group-addon'></span>
 				</div>
 
 				<!-- Email -->
 				<div class='input-group' style='width: 100%; margin-bottom: 25px'>
 					<span class='input-group-addon'><i class='glyphicon glyphicon-envelope'></i></span>
-					<?php echo Form::input(array('id' => 'email', 'type' => 'text', 'name' => 'email', 'class' => 'form-control', 'placeholder' => 'E-Mail')); ?>
+					<?php echo Form::input(array('id' => 'email', 'type' => 'text', 'name' => 'email', 'class' => 'form-control', 'placeholder' => Language::show('register_field_email', 'Auth'))); ?>
 					<span id='resultemail' class='input-group-addon'></span>
 				</div>
 
@@ -53,7 +53,7 @@
 
 				<hr>
 				<button class="btn btn-md btn-success" name="submit" type="submit">
-					Register
+					<?php echo Language::show('register_button', 'Auth'); ?>
 				</button>
 			<?php echo Form::close(); ?>
 

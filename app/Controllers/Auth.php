@@ -27,7 +27,7 @@ class Auth extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->language->load('Welcome');
+        $this->language->load('Auth');
     }
 
     /**
@@ -81,7 +81,7 @@ class Auth extends Controller
 
                   /* Send user back to page they were at before login */
                   /* Success Message Display */
-                  SuccessHelper::push('You Have Successfully Logged In', $prev_page);
+                  SuccessHelper::push($this->language->get('login_success'), $prev_page);
                 }else{
                   /* No previous page, send member to home page */
                   //echo " send user to home page "; // Debug
@@ -93,12 +93,12 @@ class Auth extends Controller
 
                   /* Redirect member to home page */
                   /* Success Message Display */
-                  SuccessHelper::push('You Have Successfully Logged In', '');
+                  SuccessHelper::push($this->language->get('login_success'), '');
                 }
             }
             else{
                 /* Error Message Display */
-                ErrorHelper::push('Incorrect username and password combination', 'Login');
+                ErrorHelper::push($this->language->get('login_incorrect'), 'Login');
             }
         }
 
@@ -129,7 +129,7 @@ class Auth extends Controller
             $this->auth->logout();
         }
         // Success Message Display
-        SuccessHelper::push('You Have Successfully Logged Out', '');
+        SuccessHelper::push($this->language->get('logout'), '');
     }
 
     /**
@@ -174,32 +174,30 @@ class Auth extends Controller
 
                     if ($registered) {
                         $data['message'] = ACCOUNT_ACTIVATION ?
-                            "Registration Successful! Check Your Email For Activating your Account." :
-                            "Registration Successful! Click <a href='".DIR."Login'>Login</a> to login.";
+                            $this->language->get('register_success') :
+                            $this->language->get('register_success_noact');
                             // Success Message Display
                             SuccessHelper::push($data['message'], 'Register');
                     }
                     else{
-                        $data['message'] = "Registration Error: Please try again";
                         // Error Message Display
-                        ErrorHelper::push($data['message'], 'Register');
+                        ErrorHelper::push($this->language->get('register_error'), 'Register');
                     }
                 }
                 else{
-                    $data['message'] = "Stop being a spambot";
                     // Error Message Display
-                    ErrorHelper::push($data['message'], 'Register');
+                    ErrorHelper::push($this->language->get('register_error_recap'), 'Register');
                 }
             }
             else{
-                $data['message'] = "Stop trying to hack!";
                 // Error Message Display
-                ErrorHelper::push($data['message'], 'Register');
+                ErrorHelper::push($this->language->get('register_error'), 'Register');
             }
         }
 
         $data['csrfToken'] = Csrf::makeToken('register');
-        $data['title'] = 'Register for an Account';
+        $data['title'] = $this->language->get('register_page_title');
+        $data['welcomeMessage'] = $this->language->get('register_page_welcome_message');
 
         /** needed for recaptcha **/
         if (RECAP_PUBLIC_KEY != "" && RECAP_PRIVATE_KEY != "") {
@@ -241,22 +239,17 @@ class Auth extends Controller
         if ($this->auth->isLogged())
             Url::redirect();
 
-
         if($this->auth->activateAccount($username, $activekey)) {
-            $data['message'] = "Your Account Has Been Activated!  You may <a href='" . DIR . "Login'>Login</a> now.";
             // Success Message Display
-            SuccessHelper::push($data['message'], 'Login');
+            SuccessHelper::push($this->language->get('activate_success'), 'Login');
         }
         else{
-            $data['message'] = "Account Activation <strong>Failed</strong>! Try again by <a href='".DIR."Resend-Activation-Email'>requesting a new activation key</a>";
             // Error Message Display
-            ErrorHelper::push($data['message'], 'Resend-Activation-Email');
+            ErrorHelper::push($this->language->get('activate_fail'), 'Resend-Activation-Email');
         }
 
-        $data['title'] = 'Account Activation';
-
-        /** Check to see if user is logged in **/
-        $data['isLoggedIn'] = $this->auth->isLogged();
+        $data['title'] = $this->language->get('activate_title');
+        $data['welcomeMessage'] = $this->language->get('activate_welcomemessage');
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
@@ -269,23 +262,13 @@ class Auth extends Controller
     }
 
     /**
-     * Account settings
-     */
-    public function settings()
-    {
-        if (!$this->auth->isLogged())
-          /** User Not logged in - kick them out **/
-          \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
-    }
-
-    /**
      * Change user's password
      */
     public function changePassword()
     {
         if (!$this->auth->isLogged())
           /** User Not logged in - kick them out **/
-          \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
+          ErrorHelper::push($this->language->get('user_not_logged_in'), 'Login');
 
         if(isset($_POST['submit'])){
 
@@ -298,20 +281,19 @@ class Auth extends Controller
                 $u_username = $this->auth->currentSessionInfo()['username'];
 
                 if($this->auth->changePass($u_username, $currentPassword, $newPassword, $confirmPassword)){
-                    $data['message'] = "Your password has been changed.";
                     // Success Message Display
-                    SuccessHelper::push($data['message'], 'Change-Password');
+                    SuccessHelper::push($this->language->get('resetpass_success'), 'Change-Password');
                 }
                 else{
-                    $data['message'] = "An error occurred while changing your password.";
                     // Error Message Display
-                    ErrorHelper::push($data['message'], 'Change-Password');
+                    ErrorHelper::push($this->language->get('resetpass_error'), 'Change-Password');
                 }
             }
         }
 
         $data['csrfToken'] = Csrf::makeToken('changepassword');
-        $data['title'] = 'Change Password';
+        $data['title'] = $this->language->get('changepass_title');
+        $data['welcomeMessage'] = $this->language->get('changepass_welcomemessage');
 
         /** Check to see if user is logged in **/
         if($data['isLoggedIn'] = $this->auth->isLogged()){
@@ -323,7 +305,7 @@ class Auth extends Controller
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
-          <li><a href='".DIR."Account-Settings'>Account Settings</a></li>
+          <li><a href='".DIR."Account-Settings'>".$this->language->get('account_settings_title')."</a></li>
     			<li class='active'>".$data['title']."</li>
         ";
 
@@ -344,7 +326,7 @@ class Auth extends Controller
     {
         if (!$this->auth->isLogged())
           /** User Not logged in - kick them out **/
-          \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
+          ErrorHelper::push($this->language->get('user_not_logged_in'), 'Login');
 
         if(isset($_POST['submit'])){
 
@@ -354,20 +336,19 @@ class Auth extends Controller
                 $username = $this->auth->currentSessionInfo()['username'];
 
                 if($this->auth->changeEmail($username, $newEmail, $password)){
-                    $data['message'] = "Your email has been changed to {$newEmail}.";
                     // Success Message Display
-                    SuccessHelper::push($data['message'], 'Change-Email');
+                    SuccessHelper::push($this->language->get('changeemail_success'), 'Change-Email');
                 }
                 else{
-                    $data['message'] = "An error occurred while changing your email.";
                     // Error Message Display
-                    ErrorHelper::push($data['message'], 'Change-Email');
+                    ErrorHelper::push($this->language->get('changeemail_error'), 'Change-Email');
                 }
             }
         }
 
         $data['csrfToken'] = Csrf::makeToken('changeemail');
-        $data['title'] = 'Change Email';
+        $data['title'] = $this->language->get('changeemail_title');
+        $data['welcomeMessage'] = $this->language->get('changeemail_welcomemessage');
 
         /** Get Current User's userID and Email **/
     		$u_id = $this->auth->user_info();
@@ -383,7 +364,7 @@ class Auth extends Controller
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
-          <li><a href='".DIR."Account-Settings'>Account Settings</a></li>
+          <li><a href='".DIR."Account-Settings'>".$this->language->get('account_settings_title')."</a></li>
     			<li class='active'>".$data['title']."</li>
         ";
 
@@ -411,19 +392,18 @@ class Auth extends Controller
                 $email = Request::post('email');
 
                 if($this->auth->resetPass($email)){
-                    $data['message'] = "A link has been sent to your email to reset your password";
                     // Success Message Display
-                    SuccessHelper::push($data['message'], 'Forgot-Password');
+                    SuccessHelper::push($this->language->get('resetpass_email_sent'), 'Forgot-Password');
                 }else{
-                    $data['message'] = "No email is affiliated with any accounts on this website.";
                     // Error Message Display
-                    ErrorHelper::push($data['message'], 'Forgot-Password');
+                    ErrorHelper::push($this->language->get('resetpass_email_error'), 'Forgot-Password');
                 }
             }
         }
 
-        $data['title'] = "Forgot Password";
         $data['csrfToken'] = Csrf::makeToken('forgotpassword');
+        $data['title'] = $this->language->get('forgotpass_title');
+        $data['welcomeMessage'] = $this->language->get('forgotpass_welcomemessage');
 
         /** Check to see if user is logged in **/
         $data['isLoggedIn'] = $this->auth->isLogged();
@@ -455,14 +435,12 @@ class Auth extends Controller
                     $confirm_password = Request::post('confirmPassword');
 
                     if($this->auth->resetPass('', $username, $resetkey, $password, $confirm_password)){
-                        $data['message'] = "Your password has been changed, make sure to keep your password somewhere safe.";
                         // Success Message Display
-                        SuccessHelper::push($data['message'], 'Login');
+                        SuccessHelper::push($this->language->get('resetpass_success'), 'Login');
                     }
                     else{
-                        $data['message'] = "Some error occurred, please try again.";
                         // Error Message Display
-                        ErrorHelper::push($data['message'], 'Forgot-Password');
+                        ErrorHelper::push($this->language->get('resetpass_error'), 'Forgot-Password');
                     }
                 }
             }
@@ -473,8 +451,9 @@ class Auth extends Controller
             ErrorHelper::push($data['message'], 'Forgot-Password');
         }
 
-        $data['title'] = "Reset Password";
         $data['csrfToken'] = Csrf::makeToken('resetpassword');
+        $data['title'] = $this->language->get('resetpass_title');
+        $data['welcomeMessage'] = $this->language->get('resetpass_welcomemessage');
 
         /** Check to see if user is logged in **/
         $data['isLoggedIn'] = $this->auth->isLogged();
@@ -501,19 +480,18 @@ class Auth extends Controller
             $email = Request::post('email');
 
             if($this->auth->resendActivation($email)){
-                $data['message'] = "An activation code has been sent to your email";
                 // Success Message Display
-                SuccessHelper::push($data['message'], 'Resend-Activation-Email');
+                SuccessHelper::push($this->language->get('resendactivation_success'), 'Login');
             }
             else{
-                $data['message'] = "No account is affiliated with the {$email} or it may have already been activated.";
                 // Error Message Display
-                ErrorHelper::push($data['message'], 'Resend-Activation-Email');
+                ErrorHelper::push($this->language->get('resendactivation_error'), 'Resend-Activation-Email');
             }
         }
 
         $data['csrfToken'] = Csrf::makeToken('resendactivation');
-        $data['title'] = 'Resend Activation Email';
+        $data['title'] = $this->language->get('resendactivation_title');
+        $data['welcomeMessage'] = $this->language->get('resendactivation_welcomemessage');
 
         /** Check to see if user is logged in **/
         $data['isLoggedIn'] = $this->auth->isLogged();

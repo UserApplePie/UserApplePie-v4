@@ -56,8 +56,8 @@ use Helpers\ErrorHelper,
   			</ul>
   			<ul class="nav navbar-nav navbar-right">
   				<?php if(!$isLoggedIn){ ?>
-  					<li><a href="<?=DIR?>Login">Login</a></li>
-  					<li><a href="<?=DIR?>Register">Register</a></li>
+  					<li><a href="<?=DIR?>Login"><?=Language::show('login_button', 'Auth');?></a></li>
+  					<li><a href="<?=DIR?>Register"><?=Language::show('register_button', 'Auth');?></a></li>
   				<?php }else{ ?>
 							<li class='dropdown'>
 								<a href='#' title='<?php echo $data['currentUserData'][0]->username; ?>' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>
