@@ -5,10 +5,24 @@
 					<div class='navbar-text'>
 
 						<!-- Footer links / text -->
-						Powered By <a href='http://www.userapplepie.com' title='View UserApplePie Website' ALT='UserApplePie' target='_blank'>UserApplePie v3</a>
+						<?=Language::show('uap_poweredby', 'Welcome');?> <a href='http://www.userapplepie.com' title='View UserApplePie Website' ALT='UserApplePie' target='_blank'>UserApplePie v3</a>
 
 						<!-- Display Copywrite stuff with auto year -->
-						<Br> &copy; <?php echo date("Y") ?> <?php echo SITETITLE;?> All Rights Reserved.
+						<Br> &copy; <?php echo date("Y") ?> <?php echo SITETITLE;?> <?=Language::show('uap_all_rights', 'Welcome');?>.
+							<br>
+							<?php
+								/** Get List of all enabled Languages **/
+								$languages = \Core\Language::getlangs();
+								$cur_lang_code = LANG_CODE;
+								foreach ($languages as $code => $info) {
+									/** List Lang Links **/
+									if($cur_lang_code == $code){
+										echo "<strong>".$info['name']."</strong> ";
+									}else{
+										echo "<a href='".DIR."ChangeLang/".$code."' title='".$info['info']."'>".$info['name']."</a> ";
+									}
+								}
+							?>
 					</div>
 				</div>
 			</footer>

@@ -31,6 +31,7 @@ class Members extends Controller
     public function __construct()
     {
         parent::__construct();
+        $this->language->load('Members');
         $this->pages = new \Helpers\Paginator(USERS_PAGEINATOR_LIMIT);  // How many rows per page
     }
 
@@ -40,7 +41,8 @@ class Members extends Controller
     public function members($set_order_by = 'ID-ASC', $current_page = '1')
     {
         $onlineUsers = new MembersModel();
-        $data['title'] = 'Members';
+        $data['title'] = $this->language->get('members_title');
+        $data['welcomeMessage'] = $this->language->get('members_welcomemessage');
 
         // Check for orderby selection
         $data['orderby'] = $set_order_by;
@@ -87,7 +89,8 @@ class Members extends Controller
     public function online()
     {
         $onlineUsers = new MembersModel();
-        $data['title'] = 'Members';
+        $data['title'] = $this->language->get('members_online_title');
+        $data['welcomeMessage'] = $this->language->get('members_online_welcomemessage');
         $data['members'] = $onlineUsers->getOnlineMembers();
 
         /** Check to see if user is logged in **/
@@ -123,7 +126,7 @@ class Members extends Controller
         $onlineUsers = new MembersModel();
         $profile = $onlineUsers->getUserProfile($user);
         if(sizeof($profile)>0){
-            $data['title'] = $profile[0]->username . "'s Profile";
+            $data['title'] = $profile[0]->username . "'s ".$this->language->get('members_profile_title');
             $data['profile'] = $profile[0];
 
             /** Check to see if user is logged in **/
@@ -181,20 +184,17 @@ class Members extends Controller
         								$image->best_fit(400,300)->save("..".$dir);
         								$userImage = $dir;
         							}else{
-                        $data['message'] = "Error Uploading profile photo";
                         // Error Message Display
-                        ErrorHelper::push($data['message'], 'Edit-Profile');
+                        ErrorHelper::push($this->language->get('edit_profile_photo_error'), 'Edit-Profile');
                       }
                     }
                     $onlineUsers->updateProfile($u_id, $firstName, $lastName, $gender, $website, $userImage, $aboutMe, $signature);
-                    $data['message'] = "Successfully updated profile";
                     // Success Message Display
-                    SuccessHelper::push($data['message'], 'Edit-Profile');
+                    SuccessHelper::push($this->language->get('edit_profile_success'), 'Edit-Profile');
                 }
                 else{
-                    $data['message'] = "Error Updating profile";
                     // Error Message Display
-                    ErrorHelper::push($data['message'], 'Edit-Profile');
+                    ErrorHelper::push($this->language->get('edit_profile_error'), 'Edit-Profile');
                 }
 
             }
@@ -202,7 +202,7 @@ class Members extends Controller
             $username = $username[0]->username;
             $profile = $onlineUsers->getUserProfile($username);
 
-            $data['title'] = $username . "'s Profile";
+            $data['title'] = $username . "'s ".$this->language->get('edit_profile_title');
             $data['profile'] = $profile[0];
             $data['csrfToken'] = Csrf::makeToken('editprofile');
 
@@ -214,12 +214,12 @@ class Members extends Controller
               $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
             }else{
               /** User Not logged in - kick them out **/
-              \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
+              \Helpers\ErrorHelper::push($this->language->get('user_not_logged_in'), 'Login');
             }
 
             /** Setup Breadcrumbs **/
         		$data['breadcrumbs'] = "
-              <li><a href='".DIR."Account-Settings'>Account Settings</a></li>
+              <li><a href='".DIR."Account-Settings'>".$this->language->get('mem_act_settings_title')."</a></li>
         			<li class='active'>".$data['title']."</li>
             ";
 
@@ -229,7 +229,7 @@ class Members extends Controller
             View::renderTemplate('footer', $data);
         }else{
           /** User Not logged in - kick them out **/
-          \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
+          \Helpers\ErrorHelper::push($this->language->get('user_not_logged_in'), 'Login');
         }
     }
 
@@ -238,8 +238,8 @@ class Members extends Controller
      */
     public function account()
     {
-        $data['title'] = 'Account Settings';
-        $data['welcomeMessage'] = 'Welcome to your account settings.  Enjoy!';
+        $data['title'] = $this->language->get('mem_act_settings_title');
+        $data['welcomeMessage'] = $this->language->get('mem_act_settings_welcomemessage');
 
         /** Check to see if user is logged in **/
         if($data['isLoggedIn'] = $this->auth->isLogged()){
@@ -249,7 +249,7 @@ class Members extends Controller
           $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
         }else{
           /** User Not logged in - kick them out **/
-          \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
+          \Helpers\ErrorHelper::push($this->language->get('user_not_logged_in'), 'Login');
         }
 
         /** Setup Breadcrumbs **/
@@ -270,8 +270,8 @@ class Members extends Controller
     {
         $onlineUsers = new MembersModel();
 
-        $data['title'] = 'Privacy Settings';
-        $data['welcomeMessage'] = 'Welcome to your privacy settings.  Enjoy!';
+        $data['title'] = $this->language->get('ps_title');
+        $data['welcomeMessage'] = $this->language->get('ps_welcomemessage');
         $data['csrfToken'] = Csrf::makeToken('editprivacy');
 
         /** Check to see if user is logged in **/
@@ -282,7 +282,7 @@ class Members extends Controller
           $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
         }else{
           /** User Not logged in - kick them out **/
-          \Helpers\ErrorHelper::push('You are Not Logged In', 'Login');
+          \Helpers\ErrorHelper::push($this->language->get('user_not_logged_in'), 'Login');
         }
 
         if (isset($_POST['submit'])) {
@@ -294,9 +294,9 @@ class Members extends Controller
                 if($privacy_pm != "true"){$privacy_pm = "false";}
 
                 if($onlineUsers->updateUPrivacy($u_id, $privacy_massemail, $privacy_pm)){
-                  SuccessHelper::push('You have Successfully updated your Privacy Settings!', 'Privacy-Settings');
+                  SuccessHelper::push($this->language->get('ps_success'), 'Privacy-Settings');
                 }else{
-                  ErrorHelper::push('Error Updating Privacy Settings!', 'Privacy-Settings');
+                  ErrorHelper::push($this->language->get('ps_error'), 'Privacy-Settings');
                 }
             }
         }
@@ -312,7 +312,7 @@ class Members extends Controller
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
-          <li><a href='".DIR."Account-Settings'>Account Settings</a></li>
+          <li><a href='".DIR."Account-Settings'>".$this->language->get('mem_act_settings_title')."</a></li>
     			<li class='active'>".$data['title']."</li>
         ";
 

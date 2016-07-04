@@ -46,11 +46,11 @@ use Helpers\ErrorHelper,
   		<!-- Collect the nav links, forms, and other content for toggling -->
   		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
   			<ul class="nav navbar-nav">
-  				<li><a href="<?=DIR?>">Home</a></li>
+  				<li><a href="<?=DIR?>"><?=Language::show('uap_home', 'Welcome');?></a></li>
 					<?php
 						/* Check to see if Private Message Module is installed, if it is show link */
 						if(file_exists('../app/Modules/Forum/forum.module.php')){
-							echo "<li><a href='".DIR."Forum' title='Forum'> Forum </a></li>";
+							echo "<li><a href='".DIR."Forum' title='Forum'> ".Language::show('uap_forum', 'Welcome')." </a></li>";
 						}
 					?>
   			</ul>
@@ -92,7 +92,7 @@ use Helpers\ErrorHelper,
 														<p class="text-left"><strong><h5><?php echo $data['currentUserData'][0]->username; if(isset($data['currentUserData'][0]->firstName)){echo "  <small>".$data['currentUserData'][0]->firstName."</small>";}; if(isset($data['currentUserData'][0]->lastName)){echo "  <small>".$data['currentUserData'][0]->lastName."</small>";} ?></h5></strong></p>
 														<p class="text-left small"><?php echo $data['currentUserData'][0]->email; ?></p>
 														<p class="text-left">
-															<a href='<?php echo DIR."Profile/".$data['currentUserData'][0]->username; ?>' title='View Your Profile' class='btn btn-primary btn-block btn-xs'> <span class='glyphicon glyphicon-user' aria-hidden='true'></span> View Profile</a>
+															<a href='<?php echo DIR."Profile/".$data['currentUserData'][0]->username; ?>' title='View Your Profile' class='btn btn-primary btn-block btn-xs'> <span class='glyphicon glyphicon-user' aria-hidden='true'></span> <?=Language::show('uap_view_profile', 'Welcome');?></a>
 														</p>
 													</div>
 												</div>
@@ -103,11 +103,11 @@ use Helpers\ErrorHelper,
                           <div class="row">
                               <div class="col-lg-12">
                                   <p>
-																		<a href='<?=DIR?>Account-Settings' title='Change Your Account Settings' class='btn btn-info btn-block btn-xs'> <span class='glyphicon glyphicon-briefcase' aria-hidden='true'></span> Account Settings</a>
+																		<a href='<?=DIR?>Account-Settings' title='Change Your Account Settings' class='btn btn-info btn-block btn-xs'> <span class='glyphicon glyphicon-briefcase' aria-hidden='true'></span> <?=Language::show('uap_account_settings', 'Welcome');?></a>
 																		<?php
 																			/* Check to see if Private Message Module is installed, if it is show link */
 																			if(file_exists('../app/Modules/Messages/messages.module.php')){
-																				echo "<a href='".DIR."Messages' title='Private Messages' class='btn btn-danger btn-block btn-xs'> <span class='glyphicon glyphicon-envelope' aria-hidden='true'></span> Private Messages ";
+																				echo "<a href='".DIR."Messages' title='Private Messages' class='btn btn-danger btn-block btn-xs'> <span class='glyphicon glyphicon-envelope' aria-hidden='true'></span> ".Language::show('uap_private_messages', 'Welcome');
 																					// Check to see if there are any unread messages in inbox
 																					$new_msg_count = \Helpers\CurrentUserData::getUnreadMessages($data['currentUserData'][0]->userID);
 																					if($new_msg_count >= "1"){
@@ -117,7 +117,7 @@ use Helpers\ErrorHelper,
 																			}
 																		?>
 																		<?php if($data['isAdmin'] == 'true'){ // Display Admin Panel Links if User Is Admin ?>
-																			<a href='<?php echo DIR; ?>AdminPanel' title='Open Admin Panel' class='btn btn-warning btn-block btn-xs'> <span class='glyphicon glyphicon-dashboard' aria-hidden='true'></span> Admin Panel</a>
+																			<a href='<?php echo DIR; ?>AdminPanel' title='Open Admin Panel' class='btn btn-warning btn-block btn-xs'> <span class='glyphicon glyphicon-dashboard' aria-hidden='true'></span> <?=Language::show('uap_admin_panel', 'Welcome');?></a>
 																		<?php } ?>
                                 </p>
                             </div>
@@ -125,7 +125,7 @@ use Helpers\ErrorHelper,
                     </div>
 									</li>
 								</ul>
-							<li><a href='<?php echo DIR; ?>Logout'>Logout</a></li>
+							<li><a href='<?php echo DIR; ?>Logout'><?=Language::show('uap_logout', 'Welcome');?></a></li>
   				<?php }?>
   			</ul>
   		</div><!-- /.navbar-collapse -->
@@ -143,7 +143,7 @@ use Helpers\ErrorHelper,
 		if(isset($data['breadcrumbs'])){
 			echo "<div class='col-lg-12 col-md-12 col-sm-12'>";
 				echo "<ol class='breadcrumb'>";
-					echo "<li><a href='".DIR."'>Home</a></li>";
+					echo "<li><a href='".DIR."'>".Language::show('uap_home', 'Welcome')."</a></li>";
 					echo $data['breadcrumbs'];
 				echo "</ol>";
 			echo "</div>";

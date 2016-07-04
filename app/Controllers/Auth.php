@@ -103,7 +103,8 @@ class Auth extends Controller
         }
 
         $data['csrfToken'] = Csrf::makeToken('login');
-        $data['title'] = 'Login to Account';
+        $data['title'] = $this->language->get('login_page_title');
+        $data['welcomeMessage'] = $this->language->get('login_page_welcome_message');
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "

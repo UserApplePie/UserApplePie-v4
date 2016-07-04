@@ -250,7 +250,7 @@ class Paginator
             $end = $this->perPage * $this->page;
             // Make sure we don't show any number greater than the total rows
             if($end > $this->totalRows){$end = $this->totalRows;}
-            $pagination.= "Displaying $start-$end of $this->totalRows";
+            $pagination.= \Core\Language::show('uap_pages_displaying', 'Welcome')." $start-$end of $this->totalRows";
         }
         return $pagination;
     }

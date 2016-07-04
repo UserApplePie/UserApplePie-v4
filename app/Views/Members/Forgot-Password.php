@@ -9,11 +9,11 @@
       <form class="form" method="post">
           <div class="col-xs-12">
               <div class="form-group">
-                  <label class="control-label">Email</label>
-                  <input  class="form-control" type="email" id="email" name="email" placeholder="Email">
+                  <label class="control-label">E-mail</label>
+                  <input  class="form-control" type="email" id="email" name="email" placeholder="E-mail">
               </div>
               <input type="hidden" name="token_forgotpassword" value="<?= $data['csrfToken']; ?>" />
-              <button class="btn btn-primary" type="submit" name="submit">Send Password Reset Email</button>
+              <button class="btn btn-primary" type="submit" name="submit"><?=Language::show('forgotpass_button', 'Auth')?></button>
           </div>
       </form>
 

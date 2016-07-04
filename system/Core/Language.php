@@ -23,12 +23,24 @@ class Language
     private $array;
 
     /**
+     * Check to see if user changed the language from default
+     */
+    public function __construct()
+    {
+        if(isset($_SESSION['cur_lang'])){
+          define('LANG_CODE', $_SESSION['cur_lang']);
+        }else{
+          define('LANG_CODE', LANGUAGE_CODE);
+        }
+    }
+
+    /**
      * Load language function.
      *
      * @param string $name
      * @param string $code
      */
-    public function load($name, $code = LANGUAGE_CODE)
+    public function load($name, $code = LANG_CODE)
     {
         /** lang file */
         $file = APPDIR."Language/$code/$name.php";
@@ -51,7 +63,7 @@ class Language
      *
      * @return string
      */
-    public function get($value, $code = LANGUAGE_CODE)
+    public function get($value, $code = LANG_CODE)
     {
         if (!empty($this->array[$code][$value])) {
             return $this->array[$code][$value];
@@ -71,7 +83,7 @@ class Language
      *
      * @return string
      */
-    public static function show($value, $name, $code = LANGUAGE_CODE)
+    public static function show($value, $name, $code = LANG_CODE)
     {
         /** lang file */
         $file = APPDIR."Language/$code/$name.php";
@@ -91,5 +103,25 @@ class Language
         } else {
             return $value;
         }
+    }
+
+    /**
+     * Get List of All Enabled Languages from LangList.php
+     *
+     */
+    public static function getlangs()
+    {
+      /** lang list file */
+      $file = APPDIR."Language/LangList.php";
+      /** check if is readable */
+      if (is_readable($file)) {
+          /** require file */
+          $array = include($file);
+          return $array;
+      } else {
+          /** display error */
+          echo Error::display("Could not load language file '$code/$name.php'");
+          die;
+      }
     }
 }
