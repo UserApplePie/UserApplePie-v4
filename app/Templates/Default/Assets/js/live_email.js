@@ -4,7 +4,7 @@ $(document).ready(function()
  {
   var name = $(this).val();
 
-  if(name.length >= 5)
+  if(name.length >= char_limit.email_min && name.length <= char_limit.email_max)
   {
    $("#resultemail").html('');
 
@@ -24,12 +24,12 @@ $(document).ready(function()
 			if(data == 'BAD')
 			{
 			   $("#resultemail").html("<i class='glyphicon glyphicon-remove text-danger'></i>");
-			   $("#resultemail2").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Email Address Invalid!</div>");
+			   $("#resultemail2").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + lang.email_invalid + "</div>");
 			}
 			if(data == 'INUSE')
 			{
 			   $("#resultemail").html("<i class='glyphicon glyphicon-remove text-danger'></i>");
-			   $("#resultemail2").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Email is already in use.</div>");
+			   $("#resultemail2").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + lang.email_inuse + "</div>");
 			}
         }
     });
@@ -39,7 +39,7 @@ $(document).ready(function()
   else
   {
    $("#resultemail").html("<i class='glyphicon glyphicon-remove text-danger'></i>");
-   $("#resultemail2").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Email must be at least <strong>5</strong> characters.</div>");
+   $("#resultemail2").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + lang.email_char_count + "</div>");
   }
  });
 
