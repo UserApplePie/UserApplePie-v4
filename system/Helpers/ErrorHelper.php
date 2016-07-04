@@ -29,7 +29,7 @@ class ErrorHelper
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
               <span aria-hidden='true'>&times;</span>
             </button>
-            <strong>Error!</strong> $error_msg
+            <strong>".\Core\Language::show('uap_error', 'Welcome')."!</strong> $error_msg
           </div>
         </div>";
   		unset($_SESSION['error_message']);
@@ -82,7 +82,7 @@ class ErrorHelper
               <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                 <span aria-hidden='true'>&times;</span>
               </button>
-              <strong>Error!</strong> $error_msg
+              <strong>".\Core\Language::show('uap_error', 'Welcome')."!</strong> $error_msg
             </div>
           </div>";
         return $display_msg;

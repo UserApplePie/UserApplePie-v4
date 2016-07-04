@@ -22,26 +22,26 @@
                               <?php
                                 /* Check to see if Private Message Module is installed, if it is show link */
                                 if(file_exists('../app/Modules/Messages/messages.module.php')){
-                                  echo "<tr><td>PM</td><td><a href='".SITEURL."/NewMessage/".$data['profile']->username."' class='btn btn-xs btn-default'>Send Message</a></td></tr>";
+                                  echo "<tr><td>PM</td><td><a href='".SITEURL."/NewMessage/".$data['profile']->username."' class='btn btn-xs btn-default'>".Language::show('members_profile_sendmsg', 'Members')."</a></td></tr>";
                                 }
                               ?>
-                              <tr><td>First Name</td><td><?php echo $data['profile']->firstName; ?></td></tr>
-                              <tr><td>Last Name</td><td><?php echo $data['profile']->lastName; ?></td></tr>
+                              <tr><td><?=Language::show('members_profile_firstname', 'Members'); ?></td><td><?php echo $data['profile']->firstName; ?></td></tr>
+                              <tr><td><?=Language::show('members_profile_lastname', 'Members'); ?></td><td><?php echo $data['profile']->lastName; ?></td></tr>
                               <?php
                                 if($data['user_groups']){
-                                  echo "<tr><td>Group</td><td>";
+                                  echo "<tr><td>".Language::show('members_profile_group', 'Members')."</td><td>";
                                   foreach($data['user_groups'] as $row){
                                     echo " $row <br>";
                                   }
                                   echo "</td></tr>";
                                 }
                               ?>
-                            <tr><td>Gender</td><td><?php echo $data['profile']->gender; ?></td></tr>
+                            <tr><td><?=Language::show('members_profile_gender', 'Members'); ?></td><td><?php echo $data['profile']->gender; ?></td></tr>
 							              <?php if(isset($data['profile']->website)){ ?>
-                              <tr><td>Website</td><td><a href="<?php echo "http://".$data['profile']->website; ?>" target="_blank">View</a></td></tr>
+                              <tr><td><?=Language::show('members_profile_website', 'Members'); ?></td><td><a href="<?php echo "http://".$data['profile']->website; ?>" target="_blank">View</a></td></tr>
 							              <?php } ?>
-                            <tr><td>Last Login</td><td><?php if($data['profile']->LastLogin){ echo date("F d, Y",strtotime($data['profile']->LastLogin)); }else{ echo "Never"; } ?></td></tr>
-                            <tr><td>Sign Up</td><td><?php echo date("F d, Y",strtotime($data['profile']->SignUp)); ?></td></tr>
+                            <tr><td><?=Language::show('members_profile_lastlogin', 'Members'); ?></td><td><?php if($data['profile']->LastLogin){ echo date("F d, Y",strtotime($data['profile']->LastLogin)); }else{ echo "Never"; } ?></td></tr>
+                            <tr><td><?=Language::show('members_profile_signup', 'Members'); ?></td><td><?php echo date("F d, Y",strtotime($data['profile']->SignUp)); ?></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -53,7 +53,7 @@
     <div class="col-md-8 col-lg-8">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4>All About <?php echo $data['profile']->username; ?></h4>
+                <h4><?=Language::show('members_profile_allabout', 'Members'); ?> <?php echo $data['profile']->username; ?></h4>
             </div>
             <div class="panel-body">
                 <?php echo $data['profile']->aboutme; ?>

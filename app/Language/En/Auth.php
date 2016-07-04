@@ -72,9 +72,17 @@ return [
 	'register_error' => "Registration Error: Please try again",
 	'register_error_recap' => "reCAPTCHA Error: Please try again",
 
+	/** Register Email **/
+	'regi_email_hello' => "Hello",
+	'regi_email_recently_registered' => "You recently registered a new account on",
+	'regi_email_to_activate' => "To activate your account please click the following link",
+	'regi_email_act_my_acc' => "Activate my account",
+	'regi_email_you_may_copy' => "You May Copy and Paste this URL in your Browser Address Bar",
+
 	/** User Activation Page **/
 	'activate_title' => "Account Activation",
 	'activate_welcomemessage' => "Welcome to the Account Activation.",
+	'activate_send_button' => "Resend Activation E-Mail",
 	'activate_username_empty' => "Invalid URL!",
 	'activate_username_short' => "Invalid URL!",
 	'activate_username_long' => "Invalid URL!",
@@ -123,6 +131,7 @@ return [
 	/** Reset Password Page **/
 	'forgotpass_title' => "Forgot Password",
 	'forgotpass_welcomemessage' => "Enter your e-mail address to send reset password email.",
+	'forgotpass_button' => "Send Password Reset E-Mail",
 	'resetpass_title' => "Reset Password",
 	'resetpass_welcomemessage' => "Enter your new password.",
 	'resetpass_lockedout' => "You have been temporarily locked out!",

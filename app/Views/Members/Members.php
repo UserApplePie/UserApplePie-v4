@@ -5,6 +5,7 @@
 			<h1><?=$title;?></h1>
 		</div>
     <table class="table table-striped table-hover table-bordered responsive">
+				<thead><tr><th colspan='3'><?=$welcomeMessage;?></th></tr></thead>
         <thead>
             <tr>
                 <th>
@@ -25,10 +26,10 @@
 			                $obu_icon = "";
 										}
 			              // Setup the order by id button
-			              echo "<a href='".DIR."Members/$obu_value/".$data['current_page_num']."' class=''>UserName $obu_icon</button>";
+			              echo "<a href='".DIR."Members/$obu_value/".$data['current_page_num']."' class=''>".Language::show('members_username', 'Members')." $obu_icon</button>";
 			            ?>
 								</th>
-                <th>First Name</th>
+                <th><?=Language::show('members_firstname', 'Members'); ?></th>
                 <th>
 									<?php
 			              if(empty($data['orderby'])){
@@ -47,7 +48,7 @@
 			                $obg_icon = "";
 										}
 			              // Setup the order by id button
-			              echo "<a href='".DIR."Members/$obg_value/".$data['current_page_num']."' class=''>User Group $obg_icon</button>";
+			              echo "<a href='".DIR."Members/$obg_value/".$data['current_page_num']."' class=''>".Language::show('members_usergroup', 'Members')." $obg_icon</button>";
 			            ?>
 								</th>
             </tr>

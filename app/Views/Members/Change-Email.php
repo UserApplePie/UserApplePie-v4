@@ -10,7 +10,7 @@
 				<!-- Current Password -->
 				<div class='input-group' style='width: 80%; margin-bottom: 25px'>
 					<span class='input-group-addon'><i class='glyphicon glyphicon-lock'></i></span>
-					<?php echo Form::input(array('type' => 'password', 'name' => 'passwordemail', 'class' => 'form-control', 'placeholder' => 'Current Password')); ?>
+					<?php echo Form::input(array('type' => 'password', 'name' => 'passwordemail', 'class' => 'form-control', 'placeholder' => Language::show('current_password', 'Members'))); ?>
 				</div>
 
 				<!-- Email -->
@@ -26,7 +26,7 @@
 				<!-- CSRF Token -->
 				<input type="hidden" name="token_changeemail" value="<?php echo $data['csrfToken']; ?>" />
 				<button class="btn btn-md btn-success" name="submit" type="submit">
-					Change my Email Address
+					<?=Language::show('change_email_button', 'Members'); ?>
 				</button>
 			<?php echo Form::close(); ?>
     </div>

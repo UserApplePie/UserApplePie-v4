@@ -67,6 +67,9 @@ Router::any('AdminPanel-Group/(:any)', 'App\Controllers\AdminPanel@Group');
 Router::any('AdminPanel-MassEmail', 'App\Controllers\AdminPanel@MassEmail');
 /** End Admin Panel Routing **/
 
+/** Language Code Change **/
+Router::any('ChangeLang/(:any)', 'App\Controllers\ChangeLang@index');
+
 /** Module routes. */
 $hooks = Hooks::get();
 $hooks->run('routes');

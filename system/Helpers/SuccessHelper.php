@@ -31,7 +31,7 @@ class SuccessHelper
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
               <span aria-hidden='true'>&times;</span>
             </button>
-            <strong>Success!</strong> $success_msg
+            <strong>".\Core\Language::show('uap_success', 'Welcome')."!</strong> $success_msg
           </div>
         </div>";
   		unset($_SESSION['success_message']);
@@ -84,7 +84,7 @@ class SuccessHelper
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
               <span aria-hidden='true'>&times;</span>
             </button>
-            <strong>Success!</strong> $success_msg
+            <strong>".\Core\Language::show('uap_success', 'Welcome')."!</strong> $success_msg
           </div>
         </div>";
       return $display_msg;

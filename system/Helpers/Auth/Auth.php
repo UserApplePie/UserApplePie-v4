@@ -414,7 +414,7 @@ class Auth {
 									$error_data = "";
 								}
 								/* Error Message Display */
-								ErrorHelper::push('User info is incorrect. '.$error_data, 'Register');
+								ErrorHelper::push($this->language->get('register_error')." ".$error_data, 'Register');
                 return false; //algun error
             }
         } else {
@@ -422,7 +422,7 @@ class Auth {
             $this->errormsg[] = $this->language->get('register_email_loggedin');
 						$this->logActivity($username, "AUTH_REGISTER_FAIL", "Error With Site Cookie");
 						/* Error Message Display */
-            ErrorHelper::push('User is logged in, can not register for site while logged in.', 'Register');
+            ErrorHelper::push($this->language->get('register_email_loggedin'), 'Register');
             return false;
         }
     }
@@ -496,11 +496,11 @@ class Auth {
                         $mail = new \Helpers\PhpMailer\Mail();
                         $mail->addAddress($email);
                         $mail->subject(SITETITLE. " - EMAIL VERIFICATION");
-                        $body = "Hello {$username}<br/><br/>";
-                        $body .= "You recently registered a new account on ".SITETITLE."<br/>";
-                        $body .= "To activate your account please click the following link<br/><br/>";
-                        $body .= "<b><a href='".SITEURL.ACTIVATION_ROUTE."/username/{$username}/key/{$activekey}'>Activate my account</a></b>";
-                        $body .= "<br><br> You May Copy and Paste this URL in your Browser Address Bar: <br>";
+                        $body = $this->language->get('regi_email_hello')." {$username}<br/><br/>";
+                        $body .= $this->language->get('regi_email_recently_registered')." ".SITETITLE."<br/>";
+                        $body .= $this->language->get('regi_email_to_activate')."<br/><br/>";
+                        $body .= "<b><a href='".SITEURL.ACTIVATION_ROUTE."/username/{$username}/key/{$activekey}'>".$this->language->get('regi_email_act_my_acc')."</a></b>";
+                        $body .= "<br><br> ".$this->language->get('regi_email_you_may_copy').": <br>";
                         $body .= SITEURL.ACTIVATION_ROUTE."/username/{$username}/key/{$activekey}";
                         $mail->body($body);
                         $mail->send();
@@ -521,13 +521,14 @@ class Auth {
 									$error_data = "";
 								}
 								/* Error Message Display */
-								ErrorHelper::push('User info is incorrect. '.$error_data, 'Register');
+								ErrorHelper::push($this->language->get('register_error')." ".$error_data, 'Register');
                 return false;
             }
         } else {
             // User is logged in
-						$this->logActivity($username, "AUTH_REGISTER_FAIL", "Error With Site Cookie");
-            $this->errormsg[] = $this->language->get('register_email_loggedin');
+						$this->logActivity($username, "AUTH_REGISTER_FAIL", "User Already Logged In");
+						/* Error Message Display */
+            ErrorHelper::push($this->language->get('register_email_loggedin'), 'Register');
             return false;
         }
     }
@@ -551,7 +552,7 @@ class Auth {
             //username is already activated
             if($db_isactive){
                 $this->logActivity($username, "AUTH_ACTIVATE_ERROR", "Activation failed. Account already activated.");
-                $this->errormsg[] = $this->language->get('activate_account_activated');
+								ErrorHelper::push($this->language->get('activate_account_activated'), 'Login');
                 return false;
             }
             else{
@@ -565,7 +566,6 @@ class Auth {
                     //accounct activated only if the db class returns number of rows affected
                     if ($activated > 0) {
                         $this->logActivity($username, "AUTH_ACTIVATE_SUCCESS", "Activation successful. Key Entry deleted.");
-                        $this->successmsg[] = $this->language->get('activate_success');
                         return true;
                     }
                     //somehow the activation failed... After all the checks from above, it SHOULD NEVER reach this point
@@ -577,7 +577,7 @@ class Auth {
                 //key is not same as in database
                 else{
                     $this->logActivity($username, "AUTH_ACTIVATE_ERROR", "Activation failed. Incorrect key.");
-                    $this->errormsg[] = $this->language->get('activate_key_incorrect');
+										ErrorHelper::push($this->language->get('activate_key_incorrect'), 'Resend-Activation-Email');
                     return false;
                 }
             }
@@ -585,7 +585,7 @@ class Auth {
         //username doesn't exist
         else{
             $this->logActivity($username, "AUTH_ACTIVATE_ERROR", "Activation failed. Invalid username.");
-            $this->errormsg[] = $this->language->get('activate_username_incorrect');
+						ErrorHelper::push($this->language->get('activate_username_incorrect'), 'Resend-Activation-Email');
             return false;
         }
     }

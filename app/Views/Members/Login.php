@@ -21,7 +21,7 @@
                   <input class="form-control" type="checkbox" id="rememberMe" name="rememberMe">
               </div>
               <input type="hidden" name="token_login" value="<?= $data['csrfToken']; ?>" />
-              <button class="btn btn-primary" type="submit" name="submit">Login</button>
+              <button class="btn btn-primary" type="submit" name="submit"><?=Language::show('login_button', 'Auth')?></button>
           </div>
 
       </form>
