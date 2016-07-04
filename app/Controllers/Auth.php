@@ -213,6 +213,17 @@ class Auth extends Controller
 
         /** Add JS Files requried for live checks **/
     		$data['js'] = "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>";
+        $data['js'] = "<script type='text/javascript'>
+                        var char_limit = {
+                          username_min: '".MIN_USERNAME_LENGTH."',
+                          username_max: '".MAX_USERNAME_LENGTH."',
+                          password_min: '".MIN_PASSWORD_LENGTH."',
+                          password_max: '".MAX_PASSWORD_LENGTH."',
+                          email_min: '".MIN_EMAIL_LENGTH."',
+                          email_max: '".MAX_EMAIL_LENGTH."'
+                        };
+                      </script>";
+        $data['js'] .= "<script src='".Url::templatePath()."js/lang.".LANG_CODE.".js'></script>";
     		$data['js'] .= "<script src='".Url::templatePath()."js/live_email.js'></script>";
     		$data['js'] .= "<script src='".Url::templatePath()."js/live_username_check.js'></script>";
     		$data['js'] .= "<script src='".Url::templatePath()."js/password_strength_match.js'></script>";
@@ -312,6 +323,13 @@ class Auth extends Controller
 
         /** Add JS Files requried for live checks **/
     		$data['js'] = "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>";
+        $data['js'] = "<script type='text/javascript'>
+                        var char_limit = {
+                          password_min: '".MIN_PASSWORD_LENGTH."',
+                          password_max: '".MAX_PASSWORD_LENGTH."'
+                        };
+                      </script>";
+        $data['js'] .= "<script src='".Url::templatePath()."js/lang.".LANG_CODE.".js'></script>";
     		$data['js'] .= "<script src='".Url::templatePath()."js/password_strength_match.js'></script>";
 
         View::renderTemplate('header', $data);
@@ -371,6 +389,13 @@ class Auth extends Controller
 
         /** Add JS Files requried for live checks **/
     		$data['js'] = "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>";
+        $data['js'] = "<script type='text/javascript'>
+                        var char_limit = {
+                          email_min: '".MIN_EMAIL_LENGTH."',
+                          email_max: '".MAX_EMAIL_LENGTH."'
+                        };
+                      </script>";
+        $data['js'] .= "<script src='".Url::templatePath()."js/lang.".LANG_CODE.".js'></script>";
     		$data['js'] .= "<script src='".Url::templatePath()."js/live_email.js'></script>";
 
         View::renderTemplate('header', $data);

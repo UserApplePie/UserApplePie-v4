@@ -4,7 +4,7 @@ $(document).ready(function()
  {
   var name = $(this).val();
 
-  if(name.length >= 5)
+  if(name.length >= char_limit.username_min && name.length <= char_limit.username_max)
   {
    $("#resultun").html('');
 
@@ -29,12 +29,12 @@ $(document).ready(function()
 			if(data == 'CHAR')
 			{
 			   $("#resultun").html("<i class='glyphicon glyphicon-remove text-danger'></i>");
-			   $("#resultun2").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>User Name Invalid!</div>");
+			   $("#resultun2").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + lang.username_invalid + "</div>");
 			}
 			if(data == 'INUSE')
 			{
 			   $("#resultun").html("<i class='glyphicon glyphicon-remove text-danger'></i>");
-			   $("#resultun2").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>User Name is already in use.</div>");
+			   $("#resultun2").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + lang.username_inuse + "</div>");
 			}
         }
     });
@@ -44,7 +44,7 @@ $(document).ready(function()
   else
   {
    $("#resultun").html("<i class='glyphicon glyphicon-remove text-danger'></i>");
-   $("#resultun2").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>User Name must be at least <strong>5</strong> characters.</div>");
+   $("#resultun2").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + lang.username_char_count + "</div>");
   }
  });
 
