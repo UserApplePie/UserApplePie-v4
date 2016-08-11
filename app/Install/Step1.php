@@ -174,20 +174,20 @@ if(folder_writable('assets/images/profile-pics/')){
 		</div>
 
 		<?php
-		
+
 			/** Check if all requirements are good **/
 			$error_count = count($step1_errors);
-			
-		
+
+
 			if($error_count == "0"){
 				echo "<div class='alert alert-info'>Everything above looks good. Lets go to the next step. </div>";
-				echo "<a href="http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]?install_step=2" class='btn btn-primary btn-lg'>Move on to Step 2</a>";
+				echo "<a href='http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]?install_step=2' class='btn btn-primary btn-lg'>Move on to Step 2</a>";
 			}else{
 				echo "<div class='alert alert-danger'>There are <font color=red><b>$error_count errors</b></font> above. ";
 				echo "<a href='/' class='btn btn-warning btn-sm pull-right'>Refresh Page</a><hr>";
 				echo "Once errors are fixed, refresh this page to retest settings.<br>";
 				echo "Make sure there is no <font color=red><b>RED</b></font> text before you can move on to Step 2!";
-				
+
 				echo "</div>";
 			}
 		?>

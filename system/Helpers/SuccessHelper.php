@@ -91,4 +91,28 @@ class SuccessHelper
     }
   }
 
+  /**
+   * Get and display recent success message from success session
+   * Temp usage without lang file
+   * @return string
+   */
+  public static function display_nolang(){
+    // Check to see if session success_message exists
+    if(isset($_SESSION['success_message'])){
+      // Get data from session then display it
+  		$success_msg = $_SESSION['success_message'];
+  		$display_msg = "
+        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+          <div class='alert alert-success alert-dismissible' role='alert'>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+              <span aria-hidden='true'>&times;</span>
+            </button>
+            <strong>Success!</strong> $success_msg
+          </div>
+        </div>";
+  		unset($_SESSION['success_message']);
+      return $display_msg;
+  	}
+  }
+
 }
