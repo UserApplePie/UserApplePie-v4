@@ -107,7 +107,7 @@ if(isset($_POST['submit'])){
 		}
 	}else{
 		echo "<div class='row'>";
-			echo SuccessHelper::display();
+			echo SuccessHelper::display_nolang();
 		echo "</div>";
 ?>
 
@@ -241,7 +241,7 @@ if(isset($_POST['submit'])){
 					</div>
 				</div>
 				<div class='panel-footer'>
-					<b>reCAPTCHA Test:</b> reCAPTCHA should be displayed below if your keys are correct.
+					<b>reCAPTCHA Test:</b> reCAPTCHA should be display_nolanged below if your keys are correct.
 						<div class="g-recaptcha" data-sitekey="<?=RECAP_PUBLIC_KEY?>"></div>
 					<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
