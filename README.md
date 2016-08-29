@@ -7,7 +7,7 @@
 [![Software License](http://img.shields.io/badge/License-BSD--3-brightgreen.svg)](LICENSE)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/UserApplePie/UAP-MVC-CMS-3/master/license.txt)
 
-[![Join the chat at https://gitter.im/UserApplePie/UAP-MVC-CMS](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/UserApplePie/UAP-MVC-CMS-3?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge){:target="_blank"}
+[![Join the chat at https://gitter.im/UserApplePie/UAP-MVC-CMS](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/UserApplePie/UAP-MVC-CMS-3?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ---
 
