@@ -19,13 +19,13 @@ UserApplePie is a PHP 5.5+ CMS MVC Framework. It's designed to be lightweight an
 
 ## Documentation
 
-Full docs & tutorials are available at [userapplepie.com](http://www.userapplepie.com/){:target="_blank"}
+Full docs & tutorials are available at [userapplepie.com](http://www.userapplepie.com/)
 
 ---
 
 ## Demo Website
 
-Check out the demo website at [uap4demo.userapplepie.com](http://uap4demo.userapplepie.com/){:target="_blank"}
+Check out the demo website at [uap4demo.userapplepie.com](http://uap4demo.userapplepie.com/)
 
 ---
 
@@ -43,7 +43,7 @@ The UAP v4 requirements are limited.
 
 # Recommended way to install
 
-UserApplePie is on packagist [https://packagist.org/packages/userapplepie/uap-user-management](https://packagist.org/packages/userapplepie/uap-user-management){:target="_blank"}
+UserApplePie is on packagist [https://packagist.org/packages/userapplepie/uap-user-management](https://packagist.org/packages/userapplepie/uap-user-management)
 
 Install from terminal now by using:
 
