@@ -7,7 +7,7 @@
 [![Software License](http://img.shields.io/badge/License-BSD--3-brightgreen.svg)](LICENSE)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/UserApplePie/UAP-MVC-CMS-3/master/license.txt)
 
-[![Join the chat at https://gitter.im/UserApplePie/UAP-MVC-CMS](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/UserApplePie/UAP-MVC-CMS-3?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/UserApplePie/UAP-MVC-CMS](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/UserApplePie/UAP-MVC-CMS-3?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge){:target="_blank"}
 
 ---
 
@@ -19,13 +19,13 @@ UserApplePie is a PHP 5.5+ CMS MVC Framework. It's designed to be lightweight an
 
 ## Documentation
 
-Full docs & tutorials are available at [userapplepie.com](http://www.userapplepie.com/).
+Full docs & tutorials are available at [userapplepie.com](http://www.userapplepie.com/){:target="_blank"}
 
 ---
 
 ## Demo Website
 
-Check out the demo website at [uap4demo.userapplepie.com](http://uap4demo.userapplepie.com/).
+Check out the demo website at [uap4demo.userapplepie.com](http://uap4demo.userapplepie.com/){:target="_blank"}
 
 ---
 
@@ -43,7 +43,7 @@ The UAP v4 requirements are limited.
 
 # Recommended way to install
 
-UserApplePie is on packagist [https://packagist.org/packages/userapplepie/uap-user-management](https://packagist.org/packages/userapplepie/uap-user-management).
+UserApplePie is on packagist [https://packagist.org/packages/userapplepie/uap-user-management](https://packagist.org/packages/userapplepie/uap-user-management){:target="_blank"}
 
 Install from terminal now by using:
 
