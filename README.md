@@ -13,16 +13,13 @@
 
 ## What is UserApplePie v4?
 
-UserApplePie is a PHP 5.5 MVC CMS system based on Nova Framework. It's designed to be lightweight and modular, allowing developers to build better and easy to maintain code with PHP.
-
-The base framework comes with a range of [helper classes](https://github.com/nova-framework/framework/tree/master/app/Helpers).
+UserApplePie is a PHP 5.5+ CMS MVC Framework. It's designed to be lightweight and modular, allowing developers to build better and easy to maintain code with PHP.
 
 ---
 
 ## Documentation
 
 Full docs & tutorials are available at [userapplepie.com](http://www.userapplepie.com/).
-Nova Framework docs & tutorials are available at [novaframework.com](http://novaframework.com/).
 
 ---
 
