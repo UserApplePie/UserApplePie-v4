@@ -39,19 +39,19 @@ class Config {
     /**
      * Database name.
      */
-    define('DB_NAME', 'db_dbname');
+    define('DB_NAME', 'uap4_test');
     /**
      * Database username.
      */
-    define('DB_USER', 'db_username');
+    define('DB_USER', 'root');
     /**
      * Database password.
      */
-    define('DB_PASS', 'db_password');
+    define('DB_PASS', 'rootld1985');
     /**
      * PREFER to be used in database calls default is uap3_
      */
-    define('PREFIX', 'uap3_');
+    define('PREFIX', 'uap4_');
 
 
     /* Set timezone */
