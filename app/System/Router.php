@@ -77,4 +77,13 @@ class Router {
         }
     }
 
+    public static function extendedRoutes(){
+        if(!empty($_GET['url'])){
+            $url = $_GET['url'];
+            $url = rtrim($url,'/');
+            $parts = explode("/", $url);
+            return $parts;
+        }
+    }
+
 }

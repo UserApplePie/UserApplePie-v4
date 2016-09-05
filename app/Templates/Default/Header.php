@@ -11,7 +11,8 @@
             'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
             'https://bootswatch.com/cerulean/bootstrap.css',
             'https://bootswatch.com/assets/css/custom.min.css',
-            'https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css'
+            'https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css',
+            SITE_URL.'Templates/Default/Assets/css/style.css'
         ])?>
         <?=(isset($css)) ? $css : ""?>
         <?=(isset($header)) ? $header : ""?>
@@ -20,12 +21,13 @@
         <div class="navbar navbar-default navbar-fixed-top">
           <div class="container">
             <div class="navbar-header">
-              <a href="../" class="navbar-brand">UserApplePie v4</a>
-              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
+                <img class='navbar-brand' src='<?=SITE_URL?>Templates/Default/Assets/images/logo.gif' />
+                <a href="../" class="navbar-brand">UserApplePie v4</a>
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
             </div>
             <div class="navbar-collapse collapse" id="navbar-main">
               <ul class="nav navbar-nav">

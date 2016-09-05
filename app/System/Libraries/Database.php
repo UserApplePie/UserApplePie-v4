@@ -1,149 +1,195 @@
 <?php namespace App\System\Libraries;
 
-class Database {
+/*
+** Database Class
+** Altered version of http://novaframework.com/php-framework 3.0 Database Helper
+*/
 
-    private $obj;
-    private $result = null;
-    public $current_field = "";
-    public $lengths = "";
-    public $num_rows = "";
+class Database extends \PDO {
 
-    function __construct($host, $username, $password, $database = null){
-        if(is_null($database)){
-            $this->obj = new mysqli($host, $username, $password);
-        }else{
-            $this->obj = new mysqli($host, $username, $password, $database);
+    /**
+     * @var array Array of saved databases for reusing
+     */
+    protected static $instances = array();
+    /**
+     * Static method get
+     *
+     * @param  array $group
+     * @return \helpers\database
+     */
+    public static function get($group = false)
+    {
+        // Determining if exists or it's not empty, then use default group defined in config
+        $group = !$group ? array (
+            'type' => DB_TYPE,
+            'host' => DB_HOST,
+            'name' => DB_NAME,
+            'user' => DB_USER,
+            'pass' => DB_PASS
+        ) : $group;
+        // Group information
+        $type = $group['type'];
+        $host = $group['host'];
+        $name = $group['name'];
+        $user = $group['user'];
+        $pass = $group['pass'];
+        // ID for database based on the group information
+        $id = "$type.$host.$name.$user.$pass";
+        // Checking if the same
+        if (isset(self::$instances[$id])) {
+            return self::$instances[$id];
         }
-
-        function changeDB($database){
-            $this->obj->select_db($database);
+        try {
+            // I've run into problem where
+            // SET NAMES "UTF8" not working on some hostings.
+            // Specifiying charset in DSN fixes the charset problem perfectly!
+            $instance = new Database("$type:host=$host;dbname=$name;charset=utf8", $user, $pass);
+            $instance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            // Setting Database into $instances to avoid duplication
+            self::$instances[$id] = $instance;
+            return $instance;
+        } catch (\PDOException $e) {
+            //in the event of an error record the error to ErrorLog.html
+            //Logger::newMessage($e);
+            //Logger::customErrorMsg();
         }
-
-        function refValues($arr){
-            if(strnatcmp(phpversion(), "5.3") >= 0){
-                $refs = array();
-                foreach ($arr as $key => $value) {
-                    $refs[$key] = &$arr[$key];
-                }
-                return $refs;
-            }
-            return $arr;
-        }
-
-        function query($query, $args = null){
-            if(is_null($args)){
-                $this->result =  $this->obj->query($query);
-                $this->current_field = $this->result->current_field;
-                $this->lengths = $this->result->lengths;
-                $this->num_rows = $this->result->num_rows;
-                return $this->result;
-            }else{
-                if(!is_array($args)){
-                    $argsBkp = $args;
-                    $args = array($argsBkp);
-                }
-                if($stmt = $this->obj->prepare($query)){
-                    $datatypes = "";
-                    foreach ($args as $value) {
-                        if(is_int($value)){
-                            $datatypes .= "i";
-                        }else if(is_double($value)){
-                            $datatypes .= "d";
-                        }else if(is_string($value)){
-                            $datatypes .= "s";
-                        }else{
-                            $datatypes .= "b";
-                        }
-                    }
-                    array_unshift($args, $datatypes);
-                    if(call_user_func_array(array($stmt, "bind_param"), $this->refValues($args))){
-                        $stmt->execute();
-                        $this->result = $stmt->get_result();
-                        if($this->result){
-                            $this->current_field =$this->result->current_field;
-                            $this->lengths = $this->result->lengths;
-                            $this->num_rows = $this->result->num_rows;
-                        }else{
-                            $this->current_field = "";
-                            $this->lengths = 0;
-                            $this->num_rows = 0;
-                        }
-                        $this->error = $stmt->error;
-                        return $this->result;
-                    }else{
-                        $this->current_field = "";
-                        $this->lengths = 0;
-                        $this->num_rows = 0;
-                        return false;
-                    }
-                }else{
-                    $this->current_field = "";
-                    $this->lengths = 0;
-                    $this->num_rows = 0;
-                    return false;
-                }
+    }
+    /**
+     * run raw sql queries
+     * @param  string $sql sql command
+     * @return return query
+     */
+    public function raw($sql)
+    {
+        return $this->query($sql);
+    }
+    /**
+     * method for selecting records from a database
+     * @param  string $sql       sql query
+     * @param  array  $array     named params
+     * @param  object $fetchMode
+     * @param  string $class     class name
+     * @return array            returns an array of records
+     */
+    public function select($sql, $array = array(), $fetchMode = \PDO::FETCH_OBJ, $class = '')
+    {
+        $stmt = $this->prepare($sql);
+        foreach ($array as $key => $value) {
+            if (is_int($value)) {
+                $stmt->bindValue("$key", $value, \PDO::PARAM_INT);
+            } else {
+                $stmt->bindValue("$key", $value);
             }
         }
-    }
-
-    function data_seek($offset = 0){
-        return $this->result->data_seek($offset);
-    }
-
-    function fetch_all(){
-        return $this->result->fetch_all();
-    }
-
-    function fetch_array(){
-        return $this->result->fetch_array();
-    }
-
-    function fetch_assoc(){
-        return $this->result->fetch_assoc();
-    }
-
-    function fetch_field_direct($field){
-        return $this->result->fetch_field_direct();
-    }
-
-    function fetch_field(){
-        return $this->result->fetch_field();
-    }
-
-    function fetch_fields(){
-        return $this->result->fetch_fields();
-    }
-
-    function fetch_object($class_name = "stdClass", $params = null){
-        if(is_null($params)){
-            return $this->result->fetch_object($class_name);
-        }else{
-            return $this->result->fetch_object($class_name, $params);
+        $stmt->execute();
+        if ($fetchMode === \PDO::FETCH_CLASS) {
+            return $stmt->fetchAll($fetchMode, $class);
+        } else {
+            return $stmt->fetchAll($fetchMode);
         }
     }
-
-    function fetch_row(){
-        return $this->result->fetch_row();
-    }
-
-    function fetch_seek($field){
-        return $this->result->field_seek($field);
-    }
-
-    function insert_id(){
-        return $this->result->insert_id;
-    }
-
-    function fetch_all_kv(){
-        $out = array();
-        while ($row = $this->result->fetch_assoc()) {
-            $out[] = $row;
+    /**
+     * insert method
+     * @param  string $table table name
+     * @param  array $data  array of columns and values
+     */
+    public function insert($table, $data)
+    {
+        ksort($data);
+        $fieldNames = implode(',', array_keys($data));
+        $fieldValues = ':'.implode(', :', array_keys($data));
+        $stmt = $this->prepare("INSERT INTO $table ($fieldNames) VALUES ($fieldValues)");
+        foreach ($data as $key => $value) {
+            $stmt->bindValue(":$key", $value);
         }
-        return $out;
+        $stmt->execute();
+        return $this->lastInsertId();
     }
-
-    function __destruct(){
-        $this->obj->close();
+    /**
+     * update method
+     * @param  string $table table name
+     * @param  array $data  array of columns and values
+     * @param  array $where array of columns and values
+     */
+    public function update($table, $data, $where)
+    {
+        ksort($data);
+        $fieldDetails = null;
+        foreach ($data as $key => $value) {
+            $fieldDetails .= "$key = :field_$key,";
+        }
+        $fieldDetails = rtrim($fieldDetails, ',');
+        $whereDetails = null;
+        $i = 0;
+        foreach ($where as $key => $value) {
+            if ($i == 0) {
+                $whereDetails .= "$key = :where_$key";
+            } else {
+                $whereDetails .= " AND $key = :where_$key";
+            }
+            $i++;
+        }
+        $whereDetails = ltrim($whereDetails, ' AND ');
+        $stmt = $this->prepare("UPDATE $table SET $fieldDetails WHERE $whereDetails");
+        foreach ($data as $key => $value) {
+            $stmt->bindValue(":field_$key", $value);
+        }
+        foreach ($where as $key => $value) {
+            $stmt->bindValue(":where_$key", $value);
+        }
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+    /**
+     * Delete method
+     *
+     * @param  string $table table name
+     * @param  array $where array of columns and values
+     * @param  integer   $limit limit number of records
+     */
+    public function delete($table, $where, $limit = 1)
+    {
+        ksort($where);
+        $whereDetails = null;
+        $i = 0;
+        foreach ($where as $key => $value) {
+            if ($i == 0) {
+                $whereDetails .= "$key = :$key";
+            } else {
+                $whereDetails .= " AND $key = :$key";
+            }
+            $i++;
+        }
+        $whereDetails = ltrim($whereDetails, ' AND ');
+        //if limit is a number use a limit on the query
+        if (is_numeric($limit)) {
+            $uselimit = "LIMIT $limit";
+        }
+        $stmt = $this->prepare("DELETE FROM $table WHERE $whereDetails $uselimit");
+        foreach ($where as $key => $value) {
+            $stmt->bindValue(":$key", $value);
+        }
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+    /**
+     * Open Delete method
+     *
+     * @param  string $sql query
+     */
+    public function delete_open($sql)
+    {
+        $stmt = $this->prepare("DELETE FROM $sql");
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+    /**
+     * truncate table
+     * @param  string $table table name
+     */
+    public function truncate($table)
+    {
+        return $this->exec("TRUNCATE TABLE $table");
     }
 
 }

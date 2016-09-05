@@ -17,6 +17,7 @@ class Routes {
         $routes[] = self::add('Contact', 'Home', 'Contact');
         $routes[] = self::add('Login', 'Auth', 'Login');
         $routes[] = self::add('Register', 'Auth', 'Register');
+        $routes[] = self::add('Templates', 'Home', 'Templates');
         return $routes;
     }
 

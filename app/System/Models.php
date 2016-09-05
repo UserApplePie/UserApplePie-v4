@@ -1,13 +1,14 @@
-<?php namespace App\System
+<?php namespace App\System;
 
-use App\System\Libraries;
+use App\System\Libraries\Database;
 
 class Models {
 
-    public $model;
+    protected $db;
 
     function __construct(){
-        $this->model = new Database(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+        /** Connect to PDO for all models. */
+        $this->db = Database::get();
     }
 
 }
