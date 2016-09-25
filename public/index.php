@@ -32,4 +32,8 @@ if (is_readable(APPDIR.'Config.php')) {
   /* Load the Page Router */
   new \App\System\Router();
 
+} else {
+    echo "<h1>Update and Rename Example-Config.php to Config.php</h1>";
+    echo "<p>Make sure to rename <code>/app/Example-Config.php</code> to <code>/app/Config.php</code> for this application to start working.</p>";
+    echo "<p>Read the README for details.</p>";
 }

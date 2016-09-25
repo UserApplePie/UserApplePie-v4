@@ -12,9 +12,10 @@ use App\System\Controller,
 
 class Home extends Controller {
 
-    public function Home(){
+    public function Home($one = '', $two = ''){
         $data['bodyText'] = "Home Page <br> Pie Yo!  Enjoy every slice!";
         $data['bodyText'] .= "<br>This content can be changed in <code>/app/Views/Home/Home.php</code>";
+        $data['bodyText'] .= "<br>$one - $two<br>";
         Load::View("Home::Home", $data, "Home::Sidebar::Right");
     }
 

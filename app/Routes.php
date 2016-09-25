@@ -12,7 +12,7 @@ class Routes {
 
     static function setRoutes(){
         $routes = array();
-        $routes[] = self::add('Home', 'Home', 'Home');
+        $routes[] = self::add('Home', 'Home', 'Home', '(:any)/(:num)');
         $routes[] = self::add('About', 'Home', 'About');
         $routes[] = self::add('Contact', 'Home', 'Contact');
         $routes[] = self::add('Login', 'Auth', 'Login');
@@ -21,11 +21,12 @@ class Routes {
         return $routes;
     }
 
-    static function add($url, $controller, $method){
+    static function add($url, $controller, $method, $arguments = null){
         $routes = array(
             "url" => $url,
             "controller" => $controller,
-            "method" => $method
+            "method" => $method,
+            "arguments" => $arguments
         );
         return $routes;
     }

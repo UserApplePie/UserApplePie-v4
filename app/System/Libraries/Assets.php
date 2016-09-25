@@ -35,7 +35,7 @@ class Assets {
             );
             $filename = $extRoutes[4];
 
-            $ext = strtolower(end((explode('.', $filename))));
+            $ext = strtolower(@end((explode('.', $filename))));
 
             $file = APPDIR.'Templates/'.$extRoutes[1].'/Assets/'.$extRoutes[3].'/'.$filename;
             //var_dump($ext, $file, $mimes[$ext]);

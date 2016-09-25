@@ -22,7 +22,7 @@
           <div class="container">
             <div class="navbar-header">
                 <img class='navbar-brand' src='<?=SITE_URL?>Templates/Default/Assets/images/logo.gif' />
-                <a href="../" class="navbar-brand">UserApplePie v4</a>
+                <a href="../" class="navbar-brand"><?=SITE_TITLE?></a>
                 <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>

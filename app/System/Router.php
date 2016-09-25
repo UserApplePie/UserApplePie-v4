@@ -21,7 +21,54 @@ class Router {
         if(class_exists($controller)){
             $controller = new $controller();
             if(method_exists($controller, $route["method"])){
-                $controller->{$route["method"]}();
+                if(isset($route["arguments"])){
+                    /** Split up the arguments from routes **/
+                    $arguments = array();
+                    $arg_paths = array();
+                    $arg = rtrim($route["arguments"],'/');
+                    $arguments = explode("/", $arg);
+                    /** For each argument we get data from url **/
+                    $params = array_slice(SELF::extendedRoutes(), 1);
+                    foreach ($arguments as $key => $value) {
+                        /** Check to see if argument is any **/
+                        if($value == "(:any)"){
+                            if(isset($params[$key])){
+                                if(preg_match('/^[A-Za-z0-9_-]*$/', $params[$key])){
+                                    $new_params[] = $params[$key];
+                                }else{
+                                    $error_check = true;
+                                }
+                            }
+                        }
+                        /** Check to see if argument is a number **/
+                        if($value == "(:num)"){
+                            if(isset($params[$key])){
+                                if(preg_match('/^[1-9][0-9]{0,15}$/', $params[$key])){
+                                    $new_params[] = $params[$key];
+                                }else{
+                                    $error_check = true;
+                                }
+                            }
+                        }
+                    }
+                    /** The called Method should be defined right in the called Controller **/
+                    if (! in_array(strtolower($route["method"]), array_map('strtolower', get_class_methods($controller)))) {
+                        $error_check = true;
+                    }
+                    (isset($error_check)) ? '' : $error_check = false;
+                    if($error_check != true){
+                        if(isset($new_params)){
+                            /** Execute the Controller's Method with the given arguments **/
+                            call_user_func_array(array($controller, $route["method"]), $new_params);
+                        }else{
+                            $controller->{$route["method"]}();
+                        }
+                    }else{
+                        Error::show(404);
+                    }
+                }else{
+                    $controller->{$route["method"]}();
+                }
             }else{
                 Error::show(404);
             }
