@@ -36,10 +36,13 @@ class Auth extends Controller
      */
     public function login()
     {
+        /* Check to see if user is already logged in */
         if ($this->auth->isLogged())
             Url::redirect();
 
+        /* Start the Login Process */
         if (isset($_POST['submit']) && Csrf::isTokenValid('login')) {
+
             $username = Request::post('username');
             $password = Request::post('password');
             $rememberMe = null !=  Request::post('rememberMe');
@@ -69,16 +72,11 @@ class Auth extends Controller
                 */
                 if(!empty($login_prev_page)){
                   /* Send member to previous page */
-                  //var_dump($login_prev_page); // Debug
-
                   /* Clear the prev page session if set */
                   if(isset($_SESSION['login_prev_page'])){
                     unset($_SESSION['login_prev_page']);
                   }
-
                   $prev_page = "$login_prev_page";
-                  //var_dump($prev_page); // Debug
-
                   /* Send user back to page they were at before login */
                   /* Success Message Display */
                   SuccessMessages::push($this->language->get('login_success'), $prev_page);
@@ -93,7 +91,7 @@ class Auth extends Controller
 
                   /* Redirect member to home page */
                   /* Success Message Display */
-                  SuccessMessages::push($this->language->get('login_success'), '');
+                 SuccessMessages::push($this->language->get('login_success'), '');
                 }
             }
             else{
@@ -113,10 +111,10 @@ class Auth extends Controller
 
         /** Check to see if user is logged in **/
         if($data['isLoggedIn'] = $this->auth->isLogged()){
-          //** User is logged in - Get their data **/
-          $u_id = $this->auth->user_info();
-          $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
-          $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+            /** User is logged in - Get their data **/
+            $u_id = $this->auth->user_info();
+            $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+            $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
         }
 
         Load::View("Members/Login", $data);

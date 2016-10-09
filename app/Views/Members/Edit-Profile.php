@@ -6,7 +6,6 @@
 			<h1><?=$title;?></h1>
 		</div>
 		<div class="panel-body">
-			<p><?=$welcomeMessage;?></p>
         <div class="col-xs-12">
             <h4><?=Language::show('edit_profile', 'Members'); ?> <strong><?php echo $data['profile']->username; ?></strong></h4>
             <hr>

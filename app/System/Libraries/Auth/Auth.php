@@ -325,7 +325,6 @@ class Auth {
             // Hash exists, Delete all sessions for that username :
             $this->authorize->deleteSession($username);
             $this->logActivity($username, "AUTH_LOGOUT", "User session cookie deleted - Database session deleted - Hash ({$hash})");
-            //setcookie("auth_session", $hash, time() - 3600, "/");
             Cookie::destroy("auth_session", $hash);
         }
     }

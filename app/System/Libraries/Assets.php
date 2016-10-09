@@ -39,7 +39,6 @@ class Assets {
             $ext = strtolower(@end((explode('.', $filename))));
 
             $file = APPDIR.'Templates/'.$extRoutes[1].'/Assets/'.$extRoutes[3].'/'.$filename;
-            //var_dump($ext, $file, $mimes[$ext]);
             if(file_exists($file)){
                 header('Content-Type: '. $mimes[$ext]);
                 header('Content-Disposition: inline; filename="'.$extRoutes[4].'";');
