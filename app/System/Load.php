@@ -2,7 +2,7 @@
 
 class Load {
 
-    static function View($viewFile, $viewVars = array(), $sidebarFile = "", $template = DEFAULT_TEMPLATE){
+    static function View($viewFile, $viewVars = array(), $sidebarFile = "", $template = DEFAULT_TEMPLATE, $useHeadFoot = true){
         (empty($template)) ? $template = DEFAULT_TEMPLATE : "";
         extract($viewVars);
 
@@ -29,17 +29,20 @@ class Load {
             ($sidebarLocation == "Right" || $sidebarLocation == "right") ? $rightSidebar = $sidebarFile : "";
             ($sidebarLocation == "Left" || $sidebarLocation == "left") ? $leftSidebar = $sidebarFile : "";
         }
+
         /* Setup Template Files */
-        $templateHeader = APPDIR."Templates/".$template."/Header.php";
-        $templateFooter = APPDIR."Templates/".$template."/Footer.php";
+        if($useHeadFoot == true){
+            $templateHeader = APPDIR."Templates/".$template."/Header.php";
+            $templateFooter = APPDIR."Templates/".$template."/Footer.php";
+        }
 
         /* todo - setup a file checker that sends error to log file or something if something is missing */
 
-        require_once $templateHeader;
+        (isset($templateHeader)) ? require_once $templateHeader : "";
         (isset($leftSidebar)) ? require_once $leftSidebar : "";
         require_once $viewFile;
         (isset($rightSidebar)) ? require_once $rightSidebar : "";
-        require_once $templateFooter;
+        (isset($templateFooter)) ? require_once $templateFooter : "";
     }
 
 }

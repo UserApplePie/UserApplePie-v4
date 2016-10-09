@@ -1,7 +1,7 @@
 <?php namespace App\Models;
 
 use App\System\Models,
-    App\System\Libraries\Database;
+    Libs\Database;
 
 class Home extends Models {
 

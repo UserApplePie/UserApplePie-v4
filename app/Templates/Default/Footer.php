@@ -1,4 +1,4 @@
-<?php use App\System\Libraries\Assets; ?>
+<?php use Libs\Assets; ?>
 
                 <div class='col-lg-12 col-md-12 col-sm-12'>
                     <!-- Footer (sticky) -->
@@ -7,7 +7,7 @@
                             <div class='navbar-text'>
 
                                 <!-- Footer links / text -->
-                                <a href='http://www.userapplepie.com' title='View UserApplePie Website' ALT='UserApplePie' target='_blank'>UserApplePie v3</a>
+                                <a href='http://www.userapplepie.com' title='View UserApplePie Website' ALT='UserApplePie' target='_blank'>UserApplePie v4</a>
 
                                 <!-- Display Copywrite stuff with auto year -->
                                 <Br> &copy; <?php echo date("Y") ?> <?php echo SITE_TITLE;?>.
@@ -25,6 +25,7 @@
             'https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js'
         ])?>
         <?=(isset($js)) ? $js : ""?>
+        <?php if(isset($ownjs)){ foreach ($ownjs as $eachownjs) { echo "$eachownjs"; } } ?>
         <?=(isset($footer)) ? $footer : ""?>
     </body>
 </html>

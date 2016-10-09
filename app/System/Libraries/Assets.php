@@ -1,4 +1,4 @@
-<?php namespace App\System\Libraries;
+<?php namespace Libs;
 
 use App\System\Error;
 
@@ -31,7 +31,8 @@ class Assets {
                 'jpeg' => 'image/jpg',
                 'gif' => 'image/gif',
                 'png' => 'image/png',
-                'css' => 'text/css'
+                'css' => 'text/css',
+                'js' => 'application/javascript'
             );
             $filename = $extRoutes[4];
 

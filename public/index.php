@@ -10,7 +10,7 @@ define('ROOTDIR', realpath(__DIR__.'/../').'/');
 /** Define Current Version of UAP **/
 define('UAPVersion', 'v4.0.0');
 
-/** load Composer Autoloader */
+/* load Composer Autoloader */
 if (file_exists(ROOTDIR.'vendor/autoload.php')) {
     require ROOTDIR.'vendor/autoload.php';
 } else {
@@ -20,10 +20,14 @@ if (file_exists(ROOTDIR.'vendor/autoload.php')) {
     exit;
 }
 
+/* Start the Sesstion */
+session_start();
+
+/* Error Settings */
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-/** Make sure Config File Exists **/
+/* Make sure Config File Exists */
 if (is_readable(APPDIR.'Config.php')) {
 
   /* Load the Site Config */

@@ -1,4 +1,4 @@
-<?php namespace App\System\Libraries;
+<?php namespace Libs;
 
 /*
 ** Database Class
