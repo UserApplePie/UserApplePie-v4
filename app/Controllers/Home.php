@@ -18,7 +18,12 @@ class Home extends Controller {
         $data['bodyText'] .= "<br>$one - $two<br>";
 
         /** Check to see if user is logged in **/
-        $data['isLoggedIn'] = $this->auth->isLogged();
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+          //** User is logged in - Get their data **/
+          $u_id = $this->auth->user_info();
+          $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+          $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+        }
 
         Load::View("Home::Home", $data, "Home::Sidebar::Right");
     }
@@ -35,7 +40,12 @@ class Home extends Controller {
         $data['bodyText'] .= "$testout2<br>";
 
         /** Check to see if user is logged in **/
-        $data['isLoggedIn'] = $this->auth->isLogged();
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+          //** User is logged in - Get their data **/
+          $u_id = $this->auth->user_info();
+          $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+          $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+        }
 
         Load::View("Home::About", $data, "Home::Sidebar::Left");
     }
@@ -46,7 +56,12 @@ class Home extends Controller {
         $data['bodyText'] .= "<br>This content can be changed in <code>/app/Views/Home/Contact.php</code>";
 
         /** Check to see if user is logged in **/
-        $data['isLoggedIn'] = $this->auth->isLogged();
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+          //** User is logged in - Get their data **/
+          $u_id = $this->auth->user_info();
+          $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+          $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+        }
 
         Load::View("Home::Contact", $data, "Home::Sidebar::Right");
     }

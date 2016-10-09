@@ -9,18 +9,18 @@
 
 namespace App\Controllers;
 
-use Core\View,
-  Core\Controller,
-  Libs\Session,
-  Libs\Csrf,
-  Libs\Request,
-  Libs\Auth\Auth as AuthHelper,
-  App\Models\Users as Users,
-  App\Models\Members as MembersModel,
-  Libs\ErrorMessages,
-  Libs\SuccessMessages,
-  Libs\SimpleImage,
-  Core\Error;
+use App\System\Controller,
+    App\System\Load,
+    Libs\Session,
+    Libs\Csrf,
+    Libs\Request,
+    Libs\Auth\Auth as AuthHelper,
+    App\Models\Users as Users,
+    App\Models\Members as MembersModel,
+    Libs\ErrorMessages,
+    Libs\SuccessMessages,
+    Libs\SimpleImage,
+    App\System\Error;
 
 define('USERS_PAGEINATOR_LIMIT', '20');  // Sets up users listing page limit
 
@@ -77,10 +77,7 @@ class Members extends Controller
     			<li class='active'>".$data['title']."</li>
         ";
 
-        View::renderTemplate('header', $data);
-        View::render('Members/Member-Stats-Sidebar', $data);
-        View::render('Members/Members', $data);
-        View::renderTemplate('footer', $data);
+        Load::View("Members/Members", $data, "Members/Member-Stats-Sidebar::Left");
     }
 
     /**
@@ -111,10 +108,7 @@ class Members extends Controller
     			<li class='active'>".$data['title']."</li>
         ";
 
-        View::renderTemplate('header', $data);
-        View::render('Members/Member-Stats-Sidebar', $data);
-        View::render('Members/Members', $data);
-        View::renderTemplate('footer', $data);
+        Load::View("Members/Members", $data, "Members/Member-Stats-Sidebar::Left");
     }
 
     /**
@@ -145,9 +139,7 @@ class Members extends Controller
         			<li class='active'>".$data['title']."</li>
             ";
 
-            View::renderTemplate('header', $data);
-            View::render('Members/View-Profile', $data);
-            View::renderTemplate('footer', $data);
+            Load::View("Members/View-Profile", $data);
         }
         else
             Error::profileError();
@@ -223,10 +215,8 @@ class Members extends Controller
         			<li class='active'>".$data['title']."</li>
             ";
 
-            View::renderTemplate('header', $data);
-            View::render('Members/Member-Account-Sidebar', $data);
-            View::render('Members/Edit-Profile', $data);
-            View::renderTemplate('footer', $data);
+            Load::View("Members/Edit-Profile", $data, "Members/Member-Account-Sidebar::Left");
+
         }else{
           /** User Not logged in - kick them out **/
           \Libs\ErrorMessages::push($this->language->get('user_not_logged_in'), 'Login');
@@ -257,10 +247,7 @@ class Members extends Controller
     			<li class='active'>".$data['title']."</li>
         ";
 
-        View::renderTemplate('header', $data);
-        View::render('Members/Member-Account-Sidebar', $data);
-        View::render('Members/Account-Settings', $data);
-        View::renderTemplate('footer', $data);
+        Load::View("Members/Account-Settings", $data, "Members/Member-Account-Sidebar::Left");
     }
 
     /**
@@ -316,9 +303,6 @@ class Members extends Controller
     			<li class='active'>".$data['title']."</li>
         ";
 
-        View::renderTemplate('header', $data);
-        View::render('Members/Member-Account-Sidebar', $data);
-        View::render('Members/Privacy-Settings', $data);
-        View::renderTemplate('footer', $data);
+        Load::View("Members/Privacy-Settings", $data, "Members/Member-Account-Sidebar::Left");
     }
 }

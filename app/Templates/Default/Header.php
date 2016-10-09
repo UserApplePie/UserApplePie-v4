@@ -61,13 +61,13 @@ use Libs\Assets,
   					<li><a href="<?=DIR?>Register"><?=Language::show('register_button', 'Auth');?></a></li>
   				<?php }else{ ?>
 							<li class='dropdown'>
-								<a href='#' title='<?php echo $data['currentUserData'][0]->username; ?>' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>
-								<span class='glyphicon glyphicon-user' aria-hidden='true'></span> <?php echo $data['currentUserData'][0]->username; ?>
+								<a href='#' title='<?php echo $currentUserData[0]->username; ?>' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>
+								<span class='glyphicon glyphicon-user' aria-hidden='true'></span> <?php echo $currentUserData[0]->username; ?>
 								<?php
 									/* Check to see if Private Message Module is installed, if it is show link */
 									if(file_exists('../app/Modules/Messages/messages.module.php')){
 										// Check to see if there are any unread messages in inbox
-										$notifi_count = \Helpers\CurrentUserData::getUnreadMessages($data['currentUserData'][0]->userID);
+										$notifi_count = \Helpers\CurrentUserData::getUnreadMessages($currentUserData[0]->userID);
 										if($notifi_count >= "1"){
 										echo "<span class='badge'>".$notifi_count."</span>";
 										}
@@ -81,8 +81,8 @@ use Libs\Assets,
 													<div class="col-lg-4 col-md-4" align="center">
 														<div class="col-centered" align="center">
 														<?php // Check to see if user has a profile image
-															if(!empty($data['currentUserData'][0]->userImage)){
-																echo "<img src='".SITEURL.$data['currentUserData'][0]->userImage."' class='img-responsive'>";
+															if(!empty($currentUserData[0]->userImage)){
+																echo "<img src='".SITE_URL.$currentUserData[0]->userImage."' class='img-responsive'>";
 															}else{
 																echo "<span class='glyphicon glyphicon-user icon-size'></span>";
 															}
@@ -90,10 +90,10 @@ use Libs\Assets,
 														</div>
 													</div>
 													<div class="col-lg-8 col-md-8">
-														<p class="text-left"><strong><h5><?php echo $data['currentUserData'][0]->username; if(isset($data['currentUserData'][0]->firstName)){echo "  <small>".$data['currentUserData'][0]->firstName."</small>";}; if(isset($data['currentUserData'][0]->lastName)){echo "  <small>".$data['currentUserData'][0]->lastName."</small>";} ?></h5></strong></p>
-														<p class="text-left small"><?php echo $data['currentUserData'][0]->email; ?></p>
+														<p class="text-left"><strong><h5><?php echo $currentUserData[0]->username; if(isset($currentUserData[0]->firstName)){echo "  <small>".$currentUserData[0]->firstName."</small>";}; if(isset($currentUserData[0]->lastName)){echo "  <small>".$currentUserData[0]->lastName."</small>";} ?></h5></strong></p>
+														<p class="text-left small"><?php echo $currentUserData[0]->email; ?></p>
 														<p class="text-left">
-															<a href='<?php echo DIR."Profile/".$data['currentUserData'][0]->username; ?>' title='View Your Profile' class='btn btn-primary btn-block btn-xs'> <span class='glyphicon glyphicon-user' aria-hidden='true'></span> <?=Language::show('uap_view_profile', 'Welcome');?></a>
+															<a href='<?php echo DIR."Profile/".$currentUserData[0]->username; ?>' title='View Your Profile' class='btn btn-primary btn-block btn-xs'> <span class='glyphicon glyphicon-user' aria-hidden='true'></span> <?=Language::show('uap_view_profile', 'Welcome');?></a>
 														</p>
 													</div>
 												</div>
@@ -110,14 +110,14 @@ use Libs\Assets,
 											if(file_exists('../app/Modules/Messages/messages.module.php')){
 												echo "<a href='".DIR."Messages' title='Private Messages' class='btn btn-danger btn-block btn-xs'> <span class='glyphicon glyphicon-envelope' aria-hidden='true'></span> ".Language::show('uap_private_messages', 'Welcome');
 													// Check to see if there are any unread messages in inbox
-													$new_msg_count = \Helpers\CurrentUserData::getUnreadMessages($data['currentUserData'][0]->userID);
+													$new_msg_count = \Helpers\CurrentUserData::getUnreadMessages($currentUserData[0]->userID);
 													if($new_msg_count >= "1"){
 														echo "<span class='badge'>".$new_msg_count."</span>";
 													}
 												echo " </a>";
 											}
 										?>
-										<?php if($data['isAdmin'] == 'true'){ // Display Admin Panel Links if User Is Admin ?>
+										<?php if($isAdmin == 'true'){ // Display Admin Panel Links if User Is Admin ?>
 											<a href='<?php echo DIR; ?>AdminPanel' title='Open Admin Panel' class='btn btn-warning btn-block btn-xs'> <span class='glyphicon glyphicon-dashboard' aria-hidden='true'></span> <?=Language::show('uap_admin_panel', 'Welcome');?></a>
 										<?php } ?>
                                 </p>
@@ -140,11 +140,11 @@ use Libs\Assets,
               <!-- BreadCrumbs -->
               <?php
               // Display Breadcrumbs if set
-              if(isset($data['breadcrumbs'])){
+              if(isset($breadcrumbs)){
                 echo "<div class='col-lg-12 col-md-12 col-sm-12'>";
                   echo "<ol class='breadcrumb'>";
                     echo "<li><a href='".DIR."'>".Language::show('uap_home', 'Welcome')."</a></li>";
-                    echo $data['breadcrumbs'];
+                    echo $breadcrumbs;
                   echo "</ol>";
                 echo "</div>";
               }

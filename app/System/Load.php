@@ -4,6 +4,7 @@ class Load {
 
     static function View($viewFile, $viewVars = array(), $sidebarFile = "", $template = DEFAULT_TEMPLATE, $useHeadFoot = true){
         (empty($template)) ? $template = DEFAULT_TEMPLATE : "";
+        $data = $viewVars;
         extract($viewVars);
 
         /* Setup Main View File */
