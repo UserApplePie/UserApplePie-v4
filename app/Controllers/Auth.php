@@ -212,6 +212,8 @@ class Auth extends Controller
               "<script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&amp;render=explicit' async defer></script>",);
         }
 
+        /** Get lang Code **/
+        $langeCode = \Libs\Language::setLang();
         /** Add JS Files requried for live checks **/
     	$data['js'] = "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>";
         $data['js'] .= "<script type='text/javascript'>
@@ -224,7 +226,7 @@ class Auth extends Controller
                           email_max: '".MAX_EMAIL_LENGTH."'
                         };
                       </script>";
-        $data['js'] .= "<script src='".Url::templatePath()."js/lang.".LANG_CODE.".js'></script>";
+        $data['js'] .= "<script src='".Url::templatePath()."js/lang.".$langeCode.".js'></script>";
     	$data['js'] .= "<script src='".Url::templatePath()."js/live_email.js'></script>";
     	$data['js'] .= "<script src='".Url::templatePath()."js/live_username_check.js'></script>";
     	$data['js'] .= "<script src='".Url::templatePath()."js/password_strength_match.js'></script>";
@@ -332,7 +334,7 @@ class Auth extends Controller
     		$data['js'] .= "<script src='".Url::templatePath()."js/password_strength_match.js'></script>";
 
 
-        Load::View('Members/Change-Password', $data, 'Members/Member-Account-Sidebar::Right');
+        Load::View('Members/Change-Password', $data, 'Members/Member-Account-Sidebar::Left');
 
     }
 
@@ -396,9 +398,7 @@ class Auth extends Controller
         $data['js'] .= "<script src='".Url::templatePath()."js/lang.".LANG_CODE.".js'></script>";
     		$data['js'] .= "<script src='".Url::templatePath()."js/live_email.js'></script>";
 
-
-        Load::View('Members/Member-Account-Sidebar', $data);
-        Load::View('Members/Change-Email', $data);
+        Load::View('Members/Change-Email', $data, 'Members/Member-Account-Sidebar::Left');
 
     }
 

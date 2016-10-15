@@ -22,7 +22,7 @@ class Assets {
         }
     }
 
-    public static function loadFile($extRoutes = null){
+    public static function loadFile($extRoutes = null, $location = null){
         /* Check to make sure a file is properly requested */
         if(isset($extRoutes)){
             $mimes = array
@@ -34,14 +34,20 @@ class Assets {
                 'css' => 'text/css',
                 'js' => 'application/javascript'
             );
-            $filename = $extRoutes[4];
+            (isset($location)) ? $filename = $extRoutes[3] : $filename = $extRoutes[4] ;
 
             $ext = strtolower(@end((explode('.', $filename))));
 
-            $file = APPDIR.'Templates/'.$extRoutes[1].'/Assets/'.$extRoutes[3].'/'.$filename;
+            if(isset($location)){
+                $file = ROOTDIR.'assets/images/'.$extRoutes[2].'/'.$filename;
+                $file = preg_replace('{/$}', '', $file);
+            }else{
+                $file = APPDIR.'Templates/'.$extRoutes[1].'/Assets/'.$extRoutes[3].'/'.$filename;
+            }
+
             if(file_exists($file)){
                 header('Content-Type: '. $mimes[$ext]);
-                header('Content-Disposition: inline; filename="'.$extRoutes[4].'";');
+                header('Content-Disposition: inline; filename="'.$filename.'";');
                 readfile($file);
             }else{
                 Error::show(404);

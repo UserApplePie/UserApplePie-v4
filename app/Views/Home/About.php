@@ -1,12 +1,13 @@
+<?php use Libs\Language; ?>
 <div class="col-lg-8 col-md-8 col-sm-8">
 	<div class="panel panel-default">
         <div class="panel-heading">
-            <h1>Welcome to UserApplePie v4</h1>
+            <h1><?php echo Language::show('uap_about', 'Welcome'); ?></h1>
         </div>
         <div class="panel-body">
             <p><?=$bodyText?></p>
-            <p><a href="../Home/" class="btn btn-primary btn-sm">Home</a>
-            <a href="../Contact/" class="btn btn-primary btn-sm">Contact</a></p>
+			<p><a href="../Home/" class="btn btn-primary btn-sm"><?php echo Language::show('openHome', 'Welcome'); ?></a>
+            <a href="../Contact/" class="btn btn-primary btn-sm"><?php echo Language::show('openContact', 'Welcome'); ?></a></p>
         </div>
     </div>
 </div>

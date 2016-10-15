@@ -1,4 +1,4 @@
-<?php use Libs\Language; ?>
+<?php use Libs\Language, Libs\Form; ?>
 
 <div class="col-lg-8 col-md-8 col-sm-8">
 	<div class="panel panel-default">

@@ -83,11 +83,25 @@ class Members extends Controller
     /**
      * Page for list of online accounts
      */
-    public function online()
+    public function online($set_order_by = 'ID-ASC', $current_page = '1')
     {
         $onlineUsers = new MembersModel();
         $data['title'] = $this->language->get('members_online_title');
         $data['welcomeMessage'] = $this->language->get('members_online_welcomemessage');
+
+        // Check for orderby selection
+        $data['orderby'] = $set_order_by;
+
+        // Set total number of rows for paginator
+        $total_num_users = count($onlineUsers->getOnlineMembers());
+        $this->pages->setTotal($total_num_users);
+
+        // Send page links to view
+        $pageFormat = DIR."Members/$set_order_by/"; // URL page where pages are
+        $data['pageLinks'] = $this->pages->pageLinks($pageFormat, null, $current_page);
+        $data['current_page_num'] = $current_page;
+
+        // Get list of online memebers
         $data['members'] = $onlineUsers->getOnlineMembers();
 
         /** Check to see if user is logged in **/

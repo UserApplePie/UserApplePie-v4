@@ -3,26 +3,36 @@
  * English language
  */
 return [
-	// Index method
-	'welcomeText' => 'Welcome',
-	'welcomeMessage' => '
-		Hello, welcome from the welcome controller! <br/>
-		This content can be changed in <code>/app/Views/Welcome/Welcome.php</code>
+	// Home method
+	'homeText' => 'Home',
+	'homeMessage' => '
+		Hello, Welcome from the Home controller! <br/>
+		This content can be changed in <code>/app/Views/Home/Home.php</code>
 	',
 
-	// Subpage method
-	'subpageText' => 'Subpage',
-	'subpageMessage' => '
-		Hello, welcome from the welcome controller and subpage method! <br/>
-		This content can be changed in <code>/app/Views/Welcome/SubPage.php</code>
+	// Contact method
+	'contactText' => 'Contact',
+	'contactMessage' => '
+		Hello, Welcome from the Home controller and Contact method! <br/>
+		This content can be changed in <code>/app/Views/Home/Contact.php</code>
+	',
+
+	// About method
+	'aboutText' => 'About',
+	'aboutMessage' => '
+		Hello, Welcome from the Home controller and About method! <br/>
+		This content can be changed in <code>/app/Views/Home/About.php</code>
 	',
 
 	// Buttons
-	'openSubPage' => 'Open subpage',
-	'backHome' => 'Home',
+	'openHome' => 'Home',
+	'openAbout' => 'About',
+	'openContact' => 'Contact',
 
 	// Global
 	'uap_home' => "Home",
+	'uap_about' => "About",
+	'uap_contact' => "Contact",
 	'uap_logout' => "Logout",
 	'uap_forum' => "Forum",
 	'uap_view_profile' => "View Profile",

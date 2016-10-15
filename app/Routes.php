@@ -18,6 +18,7 @@ class Routes {
         $routes[] = self::add('About', 'Home', 'About');
         $routes[] = self::add('Contact', 'Home', 'Contact');
         $routes[] = self::add('Templates', 'Home', 'Templates');
+        $routes[] = self::add('assets', 'Home', 'assets');
         /* End default routes */
 
         /* Auth Routing */
@@ -42,10 +43,9 @@ class Routes {
         /* End Live Checks */
 
         /* Member Routing */
-        $routes[] = self::add('Members','Members', 'members');
-        $routes[] = self::add('Members','Members', 'members', '(:any)/(:any)');
-        $routes[] = self::add('Online-Members','Members', 'online');
-        $routes[] = self::add('Profile','Members', 'viewProfile', '(:any)');
+        $routes[] = self::add('Members', 'Members', 'members', '(:any)/(:any)');
+        $routes[] = self::add('Online-Members', 'Members', 'online',  '(:any)/(:any)');
+        $routes[] = self::add('Profile', 'Members', 'viewProfile', '(:any)');
         /* End Member Routing */
 
         /* Admin Panel Routing */

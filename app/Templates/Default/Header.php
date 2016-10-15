@@ -29,7 +29,7 @@ use Libs\Assets,
         <?=(isset($css)) ? $css : ""?>
         <?=(isset($header)) ? $header : ""?>
     </head>
-    <body>&nbsp;
+    <body>
     <nav class="navbar navbar-default navbar-fixed-top">
   	<div class="container">
   		<!-- Brand and toggle get grouped for better mobile display -->

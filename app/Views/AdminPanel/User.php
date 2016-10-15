@@ -98,8 +98,8 @@ use Libs\Form,
           <h3 class='jumbotron-heading'>User Stats</h3>
         </div>
         <div class='panel-body'>
-          <b>Last Login</b>: <?php if($user_data[0]->lastlogin){ echo date("F d, Y",strtotime($user_data[0]->lastlogin)); }else{ echo "Never"; } ?><br>
-          <b>SignUp</b>: <?php echo date("F d, Y",strtotime($user_data[0]->signup)) ?>
+          <b>Last Login</b>: <?php if($user_data[0]->LastLogin){ echo date("F d, Y",strtotime($user_data[0]->LastLogin)); }else{ echo "Never"; } ?><br>
+          <b>SignUp</b>: <?php echo date("F d, Y",strtotime($user_data[0]->SignUp)) ?>
           <hr>
           <b>PM Privacy</b>: <?=$user_data[0]->privacy_pm?><br>
           <b>MassEmail Privacy</b>: <?=$user_data[0]->privacy_massemail?><br>

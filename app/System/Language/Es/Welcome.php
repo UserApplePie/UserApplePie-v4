@@ -3,26 +3,36 @@
  * Spanish language
  */
 return [
-	// Index method
-	'welcomeText' => 'Bienvenido',
-	'welcomeMessage' => '
-		Hola , bienvenido desde el controlador de bienvenida! <br/>
-		Este contenido se puede cambiar en <code>/app/Views/Welcome/Welcome.php</code>
+	// Home method
+	'homeText' => 'Bienvenido',
+	'homeMessage' => '
+		Hola, bienvenido desde el controlador principal! <br/>
+		Este contenido se puede cambiar en <code>/app/Views/Home/Home.php</code>
 	',
 
-	// Subpage method
-	'subpageText' => 'Subpágina',
-	'subpageMessage' => '
-		Hola , bienvenido a partir del método controlador y subpágina de bienvenida! <br/>
-		Este contenido se puede cambiar en <code>/app/Views/Welcome/SubPage.php</code>
+	// Contact method
+	'contactText' => 'Contacto',
+	'contactMessage' => '
+		Hola, bienvenido desde el controlador principal y el método de contacto! <br/>
+		Este contenido se puede cambiar en <code>/app/Views/Home/Contact.php</code>
+	',
+
+	// About method
+	'aboutText' => 'Acerca de',
+	'aboutMessage' => '
+		Hola, bienvenido desde el controlador principal y Acerca método! <br/>
+		Este contenido se puede cambiar en <code>/app/Views/Home/About.php</code>
 	',
 
 	// Buttons
-	'openSubPage' => 'Subpágina abierto',
-	'backHome' => 'Casa',
+	'openHome' => 'Casa',
+	'openAbout' => 'Acerca de',
+	'openContact' => 'Contacto',
 
 	// Global
 	'uap_home' => "Casa",
+	'uap_about' => 'Acerca de',
+	'uap_contact' => 'Contacto',
 	'uap_logout' => "Cerrar sesión",
 	'uap_forum' => "Foro",
 	'uap_view_profile' => "Ver perfil",

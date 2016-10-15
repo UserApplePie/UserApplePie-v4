@@ -8,8 +8,8 @@
 
 namespace App\Controllers;
 
-use Core\View,
-  Core\Controller,
+use App\System\Load,
+  App\System\Controller,
   Libs\Session,
   Libs\Url,
   Libs\SuccessMessages;

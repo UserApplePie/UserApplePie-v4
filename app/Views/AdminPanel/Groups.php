@@ -49,6 +49,9 @@ $orderby = $data['orderby'];
             else if($data['orderby'] == "ID-ASC"){
               $ob_value = "ID-DESC";
               $ob_icon = "<i class='glyphicon glyphicon-triangle-top'></i>";
+            }else{
+                $ob_value = "ID-DESC";
+                $ob_icon = "";
             }
               // Setup the order by id button
               echo "<form action='' method='post'>";
@@ -70,6 +73,9 @@ $orderby = $data['orderby'];
             else if($data['orderby'] == "UN-ASC"){
               $obu_value = "UN-DESC";
               $obu_icon = "<i class='glyphicon glyphicon-triangle-top'></i>";
+            }else{
+                $obu_value = "UN-DESC";
+                $obu_icon = "";
             }
               // Setup the order by id button
               echo "<form action='' method='post'>";

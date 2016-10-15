@@ -3,7 +3,10 @@ footer a {
     color: black;
 }
 body {
-  margin-top: 60px;
+  margin-top: 20px;
+}
+footer {
+  margin-top: 4px;
 }
 .col-centered{
   float: none;

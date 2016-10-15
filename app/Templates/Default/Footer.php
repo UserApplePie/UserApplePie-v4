@@ -1,4 +1,4 @@
-<?php use Libs\Assets; ?>
+<?php use Libs\Assets, Libs\Language; ?>
 
                 <div class='col-lg-12 col-md-12 col-sm-12'>
                     <!-- Footer (sticky) -->
@@ -7,10 +7,24 @@
                             <div class='navbar-text'>
 
                                 <!-- Footer links / text -->
-                                <a href='http://www.userapplepie.com' title='View UserApplePie Website' ALT='UserApplePie' target='_blank'>UserApplePie v4</a>
+        						<?=Language::show('uap_poweredby', 'Welcome');?> <a href='http://www.userapplepie.com' title='View UserApplePie Website' ALT='UserApplePie' target='_blank'>UserApplePie v4</a>
 
-                                <!-- Display Copywrite stuff with auto year -->
-                                <Br> &copy; <?php echo date("Y") ?> <?php echo SITE_TITLE;?>.
+        						<!-- Display Copywrite stuff with auto year -->
+        						<Br> &copy; <?php echo date("Y") ?> <?php echo SITE_TITLE;?> <?=Language::show('uap_all_rights', 'Welcome');?>.
+        							<br>
+        							<?php
+        								/** Get List of all enabled Languages **/
+        								$languages = \Libs\Language::getlangs();
+        								$cur_lang_code = \Libs\Language::setLang();
+        								foreach ($languages as $code => $info) {
+        									/** List Lang Links **/
+        									if($cur_lang_code == $code){
+        										echo "<strong>".$info['name']."</strong> ";
+        									}else{
+        										echo "<a href='".DIR."ChangeLang/".$code."' title='".$info['info']."'>".$info['name']."</a> ";
+        									}
+        								}
+        							?>
 
                             </div>
                         </div>

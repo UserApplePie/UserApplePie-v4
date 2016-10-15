@@ -21,17 +21,18 @@ class Language
     private $array;
 
     /**
+     * Variable for current language code.
+     *
+     * @var string
+     */
+    private $code;
+
+    /**
      * Check to see if user changed the language from default
      */
     public function __construct()
     {
-        if(isset($_SESSION['cur_lang'])){
-          define('LANG_CODE', $_SESSION['cur_lang']);
-        }else{
-            if(!defined('LANG_CODE')){
-                define('LANG_CODE', LANGUAGE_CODE);
-            }
-        }
+
     }
 
     /**
@@ -40,8 +41,9 @@ class Language
      * @param string $name
      * @param string $code
      */
-    public function load($name, $code = LANG_CODE)
+    public function load($name)
     {
+        $code = SELF::setLang();
         /** lang file */
         $file = APPDIR."System/Language/$code/$name.php";
 
@@ -63,8 +65,9 @@ class Language
      *
      * @return string
      */
-    public function get($value, $code = LANG_CODE)
+    public function get($value)
     {
+        $code = SELF::setLang();
         if (!empty($this->array[$code][$value])) {
             return $this->array[$code][$value];
         } elseif(!empty($this->array[LANGUAGE_CODE][$value])) {
@@ -83,8 +86,9 @@ class Language
      *
      * @return string
      */
-    public static function show($value, $name, $code = LANG_CODE)
+    public static function show($value, $name)
     {
+        $code = SELF::setLang();
         /** lang file */
         $file = APPDIR."System/Language/$code/$name.php";
 
@@ -111,17 +115,30 @@ class Language
      */
     public static function getlangs()
     {
-      /** lang list file */
-      $file = APPDIR."System/Language/LangList.php";
-      /** check if is readable */
-      if (is_readable($file)) {
+        $code = SELF::setLang();
+        /** lang list file */
+        $file = APPDIR."System/Language/LangList.php";
+        /** check if is readable */
+        if (is_readable($file)) {
           /** require file */
           $array = include($file);
           return $array;
-      } else {
+        } else {
           /** display error */
           echo \Libs\ErrorMessages::display_raw("Could not load language file '$code/$name.php'");
           die;
-      }
+        }
+    }
+
+    public static function setLang()
+    {
+        if(isset($_SESSION['cur_lang'])){
+            $code = $_SESSION['cur_lang'];
+        }else{
+            if(!isset($code)){
+                $code = LANGUAGE_CODE;
+            }
+        }
+        return $code;
     }
 }

@@ -111,6 +111,7 @@ class Form
      */
     public static function input($params = array())
     {
+        (isset($params['label'])) ? $params['label'] = $params['label'] : $params['label'] = '';
         $o = (isset($params['label']))      ? " <label class='control-label' for='{$params['label']}'>{$params['label']}</label> ": '';
         $o .= '<input ';
         $o .= (isset($params['type']))      ? " type='{$params['type']}'"                   : 'type="text"';

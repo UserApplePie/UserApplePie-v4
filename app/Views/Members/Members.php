@@ -58,7 +58,7 @@
         <?php
             foreach($data['members'] as $member){
                 echo "<tr>
-                        <td><a href='".DIR."profile/{$member->username}'> {$member->username}</a></td>
+                        <td><a href='".DIR."Profile/{$member->username}'> {$member->username}</a></td>
                         <td>{$member->firstName}</td>
                         <td><font color='{$member->groupFontColor}' style='font-weight:{$member->groupFontWeight}'>{$member->groupName}</font></td></tr>";
             }

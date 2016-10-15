@@ -9,15 +9,14 @@
 
 namespace App\Controllers;
 
-use Core\Controller;
-use Core\View;
-use Core\Router;
-use Libs\Auth\Auth;
-use Libs\Csrf;
-use Libs\Request;
-use App\Models\AdminPanel as AdminPanelModel;
-use Core\Error;
-use App\Models\Members as MembersModel;
+use App\System\Controller,
+    App\System\Load,
+    Libs\Auth\Auth,
+    Libs\Csrf,
+    Libs\Request,
+    App\Models\AdminPanel as AdminPanelModel,
+    App\System\Error,
+    App\Models\Members as MembersModel;
 
 define('USERS_PAGEINATOR_LIMIT', '20');  // Sets up users listing page limit
 
@@ -67,7 +66,7 @@ class AdminPanel extends Controller{
     $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=UAP');
     preg_match("/UAP (.*) UAP/i", $html, $match);
     $cur_uap_version = UAPVersion;
-    if($cur_uap_version != $match[1]){ $data['cur_uap_version'] = $match[1]; }
+    if($cur_uap_version < $match[1]){ $data['cur_uap_version'] = $match[1]; }
 
     /** Check to see if Forum Plugin is Installed  **/
     if(file_exists('../app/Modules/Forum/forum.module.php')){
@@ -76,7 +75,7 @@ class AdminPanel extends Controller{
       $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=Forum');
       preg_match("/UAP-Forum (.*) UAP-Forum/i", $html, $match);
       $cur_uap_forum_version = UAPForumVersion;
-      if($cur_uap_forum_version != $match[1]){ $data['cur_uap_forum_version'] = $match[1]; }
+      if($cur_uap_forum_version < $match[1]){ $data['cur_uap_forum_version'] = $match[1]; }
     }else{
       $forum_status = "NOT Installed";
     }
@@ -89,7 +88,7 @@ class AdminPanel extends Controller{
       $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=Messages');
       preg_match("/UAP-Messages (.*) UAP-Messages/i", $html, $match);
       $cur_uap_messages_version = UAPMessagesVersion;
-      if($cur_uap_messages_version != $match[1]){ $data['cur_uap_messages_version'] = $match[1]; }
+      if($cur_uap_messages_version < $match[1]){ $data['cur_uap_messages_version'] = $match[1]; }
     }else{
       $msg_status = "NOT Installed";
     }
@@ -115,10 +114,7 @@ class AdminPanel extends Controller{
       \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
     }
 
-    View::renderTemplate('header', $data, 'AdminPanel');
-    View::render('AdminPanel/AP-Sidebar', $data);
-    View::render('AdminPanel/AdminPanel', $data);
-    View::renderTemplate('footer', $data, 'AdminPanel');
+    Load::View("AdminPanel/AdminPanel", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
   }
 
   public function users($set_order_by = 'ID-ASC', $current_page = '1'){
@@ -161,10 +157,7 @@ class AdminPanel extends Controller{
       \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
     }
 
-    View::renderTemplate('header', $data, 'AdminPanel');
-    View::render('AdminPanel/AP-Sidebar', $data);
-    View::render('AdminPanel/Users', $data);
-    View::renderTemplate('footer', $data, 'AdminPanel');
+    Load::View("AdminPanel/Users", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
   }
 
   public function user($id){
@@ -318,10 +311,7 @@ class AdminPanel extends Controller{
       \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
     }
 
-    View::renderTemplate('header', $data, 'AdminPanel');
-    View::render('AdminPanel/AP-Sidebar', $data);
-    View::render('AdminPanel/User', $data);
-    View::renderTemplate('footer', $data, 'AdminPanel');
+    Load::View("AdminPanel/User", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
   }
 
   // Setup Groups Page
@@ -383,10 +373,7 @@ class AdminPanel extends Controller{
       \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
     }
 
-    View::renderTemplate('header', $data, 'AdminPanel');
-    View::render('AdminPanel/AP-Sidebar', $data);
-    View::render('AdminPanel/Groups', $data);
-    View::renderTemplate('footer', $data, 'AdminPanel');
+    Load::View("AdminPanel/Groups", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
   }
 
   // Setup Group Page
@@ -500,10 +487,7 @@ class AdminPanel extends Controller{
       \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
     }
 
-    View::renderTemplate('header', $data, 'AdminPanel');
-    View::render('AdminPanel/AP-Sidebar', $data);
-    View::render('AdminPanel/Group', $data);
-    View::renderTemplate('footer', $data, 'AdminPanel');
+    Load::View("AdminPanel/Group", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
   }
 
   /**
@@ -539,9 +523,9 @@ class AdminPanel extends Controller{
       <li class='active'><i class='fa fa-fw fa-user'></i>".$data['title']."</li>
     ";
 
-    $data['subject'] = $_SESSION['subject'];
+    (isset($_SESSION['subject'])) ? $data['subject'] = $_SESSION['subject'] : $data['subject'] = "";
     unset($_SESSION['subject']);
-    $data['content'] = $_SESSION['content'];
+    (isset($_SESSION['content'])) ? $data['content'] = $_SESSION['content'] : $data['content'] = "";
     unset($_SESSION['content']);
 
     // Check to make sure admin is trying to create group
@@ -581,10 +565,7 @@ class AdminPanel extends Controller{
       }
     }
 
-    View::renderTemplate('header', $data, 'AdminPanel');
-    View::render('AdminPanel/AP-Sidebar', $data);
-    View::render('AdminPanel/MassEmail', $data);
-    View::renderTemplate('footer', $data, 'AdminPanel');
+    Load::View("AdminPanel/MassEmail", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
   }
 
 }
