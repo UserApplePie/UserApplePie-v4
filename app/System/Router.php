@@ -17,7 +17,13 @@ class Router {
     function __construct(){
         $this->routes = Routes::all();
         $route = $this->findRoute();
-        $controller = "App\\Controllers\\".$route['controller'];
+        $crc_array = array();
+        $crc_array = explode("\\", $route['controller']);
+        if($crc_array[0] == "Plugins"){
+            $controller = "App\\".$route['controller'];
+        }else{
+            $controller = "App\\Controllers\\".$route['controller'];
+        }
         if(class_exists($controller)){
             $controller = new $controller();
             if(method_exists($controller, $route["method"])){

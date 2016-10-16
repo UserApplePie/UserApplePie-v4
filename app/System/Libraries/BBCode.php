@@ -5,7 +5,7 @@ class BBCode
 {
 
     // Convert BBCode to HTML Output
-    public function getHtml($str){
+    public static function getHtml($str){
       $bb[] = "#\[b\](.*?)\[/b\]#si";
       $html[] = "<b>\\1</b>";
       $bb[] = "#\[i\](.*?)\[/i\]#si";

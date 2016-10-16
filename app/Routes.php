@@ -10,6 +10,9 @@
 
 class Routes {
 
+    private $forum;
+    private $forum_on_off;
+
     static function setRoutes(){
         $routes = array();
 
@@ -60,6 +63,31 @@ class Routes {
         /* Language Code Change */
         $routes[] = self::add('ChangeLang', 'ChangeLang', 'index', '(:any)');
         /* End Language Code Change Routing */
+
+        /* Forum Plugin Routing */
+        $forum = new \App\Plugins\Forum\Models\Forum();
+        $forum_on_off = $forum->globalForumSetting('forum_on_off');
+        if($forum_on_off == 'Enabled'){
+            $routes[] = self::add('Forum', 'Plugins\Forum\Controllers\Forum', 'forum');
+            $routes[] = self::add('Topics', 'Plugins\Forum\Controllers\Forum','topics','(:num)/(:num)');
+            $routes[] = self::add('Topic', 'Plugins\Forum\Controllers\Forum','topic','(:num)/(:num)');
+            $routes[] = self::add('NewTopic', 'Plugins\Forum\Controllers\Forum','newtopic','(:num)');
+            $routes[] = self::add('AdminPanel-Forum-Settings', 'Plugins\Forum\Controllers\ForumAdmin','forum_settings');
+            $routes[] = self::add('AdminPanel-Forum-Categories', 'Plugins\Forum\Controllers\ForumAdmin','forum_categories','(:any)/(:any)/(:any)');
+            $routes[] = self::add('AdminPanel-Forum-Blocked-Content', 'Plugins\Forum\Controllers\ForumAdmin','forum_blocked');
+            $routes[] = self::add('SearchForum', 'Plugins\Forum\Controllers\Forum','forumSearch','(:any)/(:num)');
+        }
+        /* End Forum Plugin Routing */
+
+        /* Messages Plugin Routing */
+        $routes[] = self::add('Messages', 'Plugins\Messages\Controllers\Messages', 'messages');
+        $routes[] = self::add('ViewMessage', 'Plugins\Messages\Controllers\Messages', 'view', '(:any)');
+        $routes[] = self::add('MessagesInbox', 'Plugins\Messages\Controllers\Messages', 'inbox', '(:any)');
+        $routes[] = self::add('MessagesOutbox/(:any)', 'Plugins\Messages\Controllers\Messages', 'outbox', '(:any)');
+        $routes[] = self::add('NewMessage', 'Plugins\Messages\Controllers\Messages', 'newmessage', '(:any)/(:any)');
+        /* Messages Plugin Routing */
+
+        /* Send the routes to system */
         return $routes;
     }
 

@@ -75,7 +75,8 @@ class CurrentUserData
     self::$db = Database::get();
     	$data = self::$db->select("SELECT username FROM ".PREFIX."users WHERE userID = :userID",
     		array(':userID' => $where_id));
-    	return $data[0]->username;
+        (isset($data[0]->username)) ? $username = $data[0]->username : $username = "Guest";
+    	return $username;
     }
 
   /**
@@ -100,6 +101,7 @@ class CurrentUserData
           $usergroup[] = " <font color='$row->groupFontColor' weight='$row->groupFontWeight'>$row->groupName</font> ";
         }
       }
+      (isset($usergroup)) ? $usergroup = $usergroup : $usergroup[] = "";
     return $usergroup;
   }
 
@@ -110,7 +112,8 @@ class CurrentUserData
     self::$db = Database::get();
 		$data = self::$db->select("SELECT userImage FROM ".PREFIX."users WHERE userID = :userID",
 			array(':userID' => $where_id));
-		return $data[0]->userImage;
+        (isset($data[0]->userImage)) ? $userImage = $data[0]->userImage : $userImage = "";
+		return $userImage;
 	}
 
   /**
@@ -120,7 +123,8 @@ class CurrentUserData
     self::$db = Database::get();
 		$data = self::$db->select("SELECT SignUp FROM ".PREFIX."users WHERE userID = :userID",
 			array(':userID' => $where_id));
-		return date("F d, Y",strtotime($data[0]->SignUp));
+        (isset($data[0]->SignUp)) ? $SignUp = date("F d, Y",strtotime($data[0]->SignUp)) : $SignUp = "";
+		return $SignUp;
 	}
 
   /**
@@ -130,12 +134,12 @@ class CurrentUserData
     self::$db = Database::get();
 		$data = self::$db->select("SELECT signature FROM ".PREFIX."users WHERE userID = :userID",
 			array(':userID' => $where_id));
-		$signature_data = BBCode::getHtml($data[0]->signature);
+        (isset($data[0]->signature)) ? $signature_data = BBCode::getHtml($data[0]->signature) : $signature_data = "";
     return $signature_data;
 	}
 
   // Gets total number of unread messages from database for selected user
-  public function getUnreadMessages($where_id){
+  public static function getUnreadMessages($where_id){
     if(ctype_digit($where_id)){
       self::$db = Database::get();
 			$data = self::$db->select("
@@ -169,7 +173,7 @@ class CurrentUserData
    * Get all members that are activated with info
    * @return array
    */
-  public function getMembers()
+  public static function getMembers()
   {
     self::$db = Database::get();
     return count(self::$db->select("
@@ -204,7 +208,7 @@ class CurrentUserData
    * Get all info on members that are online
    * @return array
    */
-  public function getOnlineMembers()
+  public static function getOnlineMembers()
   {
     self::$db = Database::get();
     return count(self::$db->select("

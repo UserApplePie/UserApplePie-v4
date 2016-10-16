@@ -41,7 +41,7 @@ class ForumStats
    *
    * @return array returns all recent forum posts
    */
-  public function forum_recent_posts(){
+  public static function forum_recent_posts(){
     self::$db = Database::get();
 		$data = self::$db->select("
       SELECT sub.*

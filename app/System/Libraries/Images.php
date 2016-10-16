@@ -70,6 +70,7 @@ class Images
       AND forumTopicReplyID = :topic_reply_id
     ",
     array(':topic_id' => $topic_id, ':topic_reply_id' => $topic_reply_id));
-    return $data[0]->imageLocation;
+    (isset($data[0]->imageLocation)) ? $imageLocation = $data[0]->imageLocation : $imageLocation = "";
+    return $imageLocation;
   }
 }

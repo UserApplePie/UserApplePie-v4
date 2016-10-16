@@ -74,7 +74,7 @@ use Libs\ErrorMessages,
 	</div><!--/.row-->
 	<div class="row">
 		<?php
-		// Setup the Error and Success Messages Helpers
+		// Setup the Error and Success Messages Libs
 		// Display Success and Error Messages if any
 		echo ErrorMessages::display();
 		echo SuccessMessages::display();

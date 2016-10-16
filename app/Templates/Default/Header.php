@@ -50,7 +50,7 @@ use Libs\Assets,
   				<li><a href="<?=DIR?>"><?=Language::show('uap_home', 'Welcome');?></a></li>
 					<?php
 						/* Check to see if Private Message Module is installed, if it is show link */
-						if(file_exists('../app/Modules/Forum/forum.module.php')){
+						if(file_exists('../app/Plugins/Forum/Controllers/Forum.php')){
 							echo "<li><a href='".DIR."Forum' title='Forum'> ".Language::show('uap_forum', 'Welcome')." </a></li>";
 						}
 					?>
@@ -65,9 +65,9 @@ use Libs\Assets,
 								<span class='glyphicon glyphicon-user' aria-hidden='true'></span> <?php echo $currentUserData[0]->username; ?>
 								<?php
 									/* Check to see if Private Message Module is installed, if it is show link */
-									if(file_exists('../app/Modules/Messages/messages.module.php')){
+									if(file_exists('../app/Plugins/Messages/Controllers/Messages.php')){
 										// Check to see if there are any unread messages in inbox
-										$notifi_count = \Helpers\CurrentUserData::getUnreadMessages($currentUserData[0]->userID);
+										$notifi_count = \Libs\CurrentUserData::getUnreadMessages($currentUserData[0]->userID);
 										if($notifi_count >= "1"){
 										echo "<span class='badge'>".$notifi_count."</span>";
 										}
@@ -107,10 +107,10 @@ use Libs\Assets,
 										<a href='<?=DIR?>Account-Settings' title='Change Your Account Settings' class='btn btn-info btn-block btn-xs'> <span class='glyphicon glyphicon-briefcase' aria-hidden='true'></span> <?=Language::show('uap_account_settings', 'Welcome');?></a>
 										<?php
 											/* Check to see if Private Message Module is installed, if it is show link */
-											if(file_exists('../app/Modules/Messages/messages.module.php')){
+											if(file_exists('../app/Plugins/Messages/Controllers/Messages.php')){
 												echo "<a href='".DIR."Messages' title='Private Messages' class='btn btn-danger btn-block btn-xs'> <span class='glyphicon glyphicon-envelope' aria-hidden='true'></span> ".Language::show('uap_private_messages', 'Welcome');
 													// Check to see if there are any unread messages in inbox
-													$new_msg_count = \Helpers\CurrentUserData::getUnreadMessages($currentUserData[0]->userID);
+													$new_msg_count = \Libs\CurrentUserData::getUnreadMessages($currentUserData[0]->userID);
 													if($new_msg_count >= "1"){
 														echo "<span class='badge'>".$new_msg_count."</span>";
 													}
