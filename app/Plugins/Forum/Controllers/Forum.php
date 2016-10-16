@@ -391,6 +391,9 @@ use App\System\Controller,
   			} // End token check
   		} // End post check
 
+        // Output errors if any
+        if(!empty($error)){ $data['error'] = $error; };
+
       // Update and Get Views Data
       $data['PageViews'] = PageViews::views('true', $id, 'Forum_Topic', $u_id);
 
@@ -509,6 +512,9 @@ use App\System\Controller,
             }// End Form Complete Check
   			}
   		}
+
+        // Output errors if any
+        if(!empty($error)){ $data['error'] = $error; };
 
       // Get Recent Posts List for Sidebar
       $data['forum_recent_posts'] = $this->model->forum_recent_posts();

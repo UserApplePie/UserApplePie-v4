@@ -3,7 +3,7 @@
 // Message New Displays form for user to create a new message to send
 // Also works with message reply
 
-use Core\Language,
+use Libs\Language,
   Libs\ErrorMessages,
   Libs\SuccessMessages,
   Core\Error,
@@ -21,8 +21,12 @@ use Core\Language,
 			<p><?php echo $data['welcome_message'] ?></p>
 
 <?php
-  // Check to see if message form is disabled
-  if($data['hide_form'] != "true"){
+    // Check to see if message form is disabled
+    if(empty($data['hide_form'])){ $data['hide_form'] = ""; }
+    if($data['hide_form'] != "true"){
+        if(empty($data['to_username'])){ $data['to_username'] = ""; }
+        if(empty($data['subject'])){ $data['subject'] = ""; }
+        if(empty($data['content'])){ $data['content'] = ""; }
 ?>
 
 			<?php echo Form::open(array('method' => 'post')); ?>

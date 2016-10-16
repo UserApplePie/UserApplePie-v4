@@ -2,11 +2,12 @@
 
 // Display a given message as requested by post from inbox or outbox
 
-use Core\Language,
+use Libs\Language,
   Libs\ErrorMessages,
   Libs\SuccessMessages,
   Libs\Form;
 
+if(empty($data['msg_error'])){ $data['msg_error'] = ""; }
 if($data['msg_error'] == 'true'){$panelclass = "panel-danger";}else{$panelclass = "panel-default";}
 
 ?>

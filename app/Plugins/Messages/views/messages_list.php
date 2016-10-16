@@ -3,7 +3,7 @@
 // Displays a list of all message for current user
 // Only displays From Subject, Status, Date Read, Date Sent
 
-use Core\Language,
+use Libs\Language,
   Libs\ErrorMessages,
   Libs\SuccessMessages,
   Libs\Form;

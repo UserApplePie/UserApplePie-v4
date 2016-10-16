@@ -962,10 +962,10 @@ class Forum extends Models {
         $mail = new \Libs\PhpMailer\Mail();
         $mail->setFrom(SITEEMAIL, EMAIL_FROM_NAME);
         $mail->addAddress($email_data[0]->email);
-        $mail_subject = SITETITLE . " - Forum - ".$email_from_data[0]->username." replied to {$topic_title}";
+        $mail_subject = SITE_TITLE . " - Forum - ".$email_from_data[0]->username." replied to {$topic_title}";
         $mail->subject($mail_subject);
         $body = "Hello ".$email_data[0]->username."<br/><br/>";
-        $body .= SITETITLE . " - Forum Notification<br/>
+        $body .= SITE_TITLE . " - Forum Notification<br/>
                               <br/>
 															Category: $topic_cat<br/>
 															Topic: $topic_title<br/>
@@ -975,7 +975,7 @@ class Forum extends Models {
 															************************<br/>
 															$reply_content<br/>
 															************************<br/>";
-        $body .= "You may check the reply at: <b><a href=\"" . SITEURL . "/Topic/$id\">" . SITETITLE . " Forum - $topic_title</a></b>";
+        $body .= "You may check the reply at: <b><a href=\"" . SITE_URL . "/Topic/$id\">" . SITE_TITLE . " Forum - $topic_title</a></b>";
         $mail->body($body);
         $mail->send();
       }

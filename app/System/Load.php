@@ -2,6 +2,10 @@
 
 class Load {
 
+    /*
+    ** Load View
+    ** Loads files needed to display a page.
+    */
     static function View($viewFile, $viewVars = array(), $sidebarFile = "", $template = DEFAULT_TEMPLATE, $useHeadFoot = true){
         (empty($template)) ? $template = DEFAULT_TEMPLATE : "";
         $data = $viewVars;
@@ -39,6 +43,7 @@ class Load {
 
         /* todo - setup a file checker that sends error to log file or something if something is missing */
 
+        /* Load files needed to make the page work */
         (isset($templateHeader)) ? require_once $templateHeader : "";
         (isset($leftSidebar)) ? require_once $leftSidebar : "";
         require_once $viewFile;
@@ -46,6 +51,10 @@ class Load {
         (isset($templateFooter)) ? require_once $templateFooter : "";
     }
 
+    /*
+    ** Load Plugin View
+    ** Loads files needed to display a plugin page.
+    */
     static function ViewPlugin($viewFile, $viewVars = array(), $sidebarFile = "", $pluginFolder = "", $template = DEFAULT_TEMPLATE, $useHeadFoot = true){
         (empty($template)) ? $template = DEFAULT_TEMPLATE : "";
         $data = $viewVars;
@@ -83,6 +92,7 @@ class Load {
 
         /* todo - setup a file checker that sends error to log file or something if something is missing */
 
+        /* Load files needed to make the page work */
         (isset($templateHeader)) ? require_once $templateHeader : "";
         (isset($leftSidebar)) ? require_once $leftSidebar : "";
         require_once $viewFile;

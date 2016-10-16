@@ -2,7 +2,7 @@
 
   // View to display message sidebar
 
-  use Core\Language;
+  use Libs\Language;
 
 ?>
 

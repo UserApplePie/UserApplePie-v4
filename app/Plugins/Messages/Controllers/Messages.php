@@ -58,7 +58,6 @@ class Messages extends Controller{
 
     // Setup Breadcrumbs
 		$data['breadcrumbs'] = "
-			<li><a href='".DIR."'>Home</a></li>
 			<li class='active'>Private Messages</li>
 		";
 
@@ -199,6 +198,9 @@ class Messages extends Controller{
                   <b>Warning!</b> Your Inbox is Almost Full!";
     }
 
+    // Output errors if any
+    if(isset($error)){ $data['error'] = $error; };
+
     // Let view know inbox is in use
     $data['inbox'] = "true";
     // What box are we showing
@@ -206,7 +208,6 @@ class Messages extends Controller{
 
     // Setup Breadcrumbs
 		$data['breadcrumbs'] = "
-			<li><a href='".DIR."'>Home</a></li>
 			<li><a href='".DIR."Messages'>Private Messages</a></li>
 			<li class='active'>".$data['title']."</li>
 		";
@@ -310,9 +311,11 @@ class Messages extends Controller{
     // What box are we showing
     $data['what_box'] = "Outbox";
 
+    // Output errors if any
+    if(isset($error)){ $data['error'] = $error; };
+
     // Setup Breadcrumbs
 		$data['breadcrumbs'] = "
-			<li><a href='".DIR."'>Home</a></li>
 			<li><a href='".DIR."Messages'>Private Messages</a></li>
 			<li class='active'>".$data['title']."</li>
 		";
@@ -360,7 +363,6 @@ class Messages extends Controller{
     }
     // Setup Breadcrumbs
 		$data['breadcrumbs'] = "
-			<li><a href='".DIR."'>Home</a></li>
 			<li><a href='".DIR."Messages'>Private Messages</a></li>
 			<li class='active'>".$data['title']."</li>
 		";
@@ -374,28 +376,31 @@ class Messages extends Controller{
 
 	}
 
-  // New Message - Displays form to create a new message or reply
+    /*
+    ** New Message
+    ** Displays form to create a new message or reply
+    */
 	public function newmessage($to_user = NULL, $subject = NULL){
 
-    /** Check to see if user is logged in **/
-    if($data['isLoggedIn'] = $this->auth->isLogged()){
-      //** User is logged in - Get their data **/
-      $u_id = $this->auth->user_info();
-      $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
-      $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
-    }else{
-      /** User Not logged in - kick them out **/
-      \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
-    }
+        /** Check to see if user is logged in **/
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+            //** User is logged in - Get their data **/
+            $u_id = $this->auth->user_info();
+            $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+            $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+        }else{
+            /** User Not logged in - kick them out **/
+            ErrorMessages::push('You are Not Logged In', 'Login');
+        }
 
-    // Check to see if user is over quota
-    // Disable New Message Form is they are
-    if($this->model->checkMessageQuota($u_id)){
-      // user is over limit, disable new message form
-      $data['hide_form'] = "true";
-      $error[] = "<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
-                  <b>Your Outbox is Full!</b>  You Can NOT send any messages!";
-    }
+        // Check to see if user is over quota
+        // Disable New Message Form is they are
+        if($this->model->checkMessageQuota($u_id)){
+        // user is over limit, disable new message form
+        $data['hide_form'] = "true";
+            $error[] = "<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
+                      <b>Your Outbox is Full!</b>  You Can NOT send any messages!";
+        }
 
 		// Check to make sure user is trying to send new message
 		if(isset($_POST['submit'])){
@@ -406,106 +411,102 @@ class Messages extends Controller{
 				$to_username = Request::post('to_username');
 				$subject = Request::post('subject');
 				$content = Request::post('content');
-        $reply = Request::post('reply');
-        // Check to see if this is coming from a reply button
-        if($reply != "true"){
-          // Check to make sure user completed all required fields in form
-          if(empty($to_username)){
-            // Username field is empty
-            $error[] = 'Username Field is Blank!';
-          }
-          if(empty($subject)){
-            // Subject field is empty
-            $error[] = 'Subject Field is Blank!';
-          }
-          if(empty($content)){
-            // Username field is empty
-            $error[] = 'Message Content Field is Blank!';
-          }
-          // Check for errors before sending message
-          if(count($error) == 0){
-            // Get the userID of to username
-            $to_userID = $this->model->getUserIDFromUsername($to_username);
-            // Check to make sure user exists in Database
-            if(isset($to_userID)){
-              // Check to see if to user's inbox is not full
-              if($this->model->checkMessageQuotaToUser($to_userID)){
-        				// Run the Activation script
-        				if($this->model->sendmessage($to_userID, $u_id, $subject, $content)){
-        					// Success
-                  SuccessMessages::push('You Have Successfully Sent a Private Message', 'Messages');
-                  $data['hide_form'] = "true";
-        				}else{
-        					// Fail
-                  $error[] = 'Message Send Failed';
-        				}
-              }else{
-                // To user's inbox is full.  Let sender know message was not sent
-                $error[] = '<b>${to_username}&#39;s Inbox is Full!</b>  Sorry, Message was NOT sent!';
-              }
-            }else{
-              // User does not exist
-              $error[] = 'Message Send Failed - To User Does Not Exist';
-            }
-          }// End Form Complete Check
-        }else{
-          // Get data from reply $_POST
-          $subject = Request::post('subject');
-          $content = Request::post('content');
-          $date_sent = Request::post('date_sent');
-          // Add Reply details to subject ex: RE:
-          $data['subject'] = "RE: ".$subject;
-          // Clean up content so it looks pretty
-          $content_reply = "&#10;&#10;&#10;&#10; ##########";
-          $content_reply .= "&#10; # PREVIOUS MESSAGE";
-          $content_reply .= "&#10; # From: $to_username";
-          $content_reply .= "&#10; # Sent: $date_sent ";
-          $content_reply .= "&#10; ########## &#10;&#10;";
-          $content_reply .= $content;
-          $content_reply = str_replace("<br />", " ", $content_reply);
-          $data['content'] = $content_reply;
-        }// End Reply Check
+                $reply = Request::post('reply');
+
+                // Check to see if this is coming from a reply button
+                if($reply != "true"){
+                    // Check to make sure user completed all required fields in form
+                    if(empty($to_username)){
+                        // Username field is empty
+                        $error[] = 'Username Field is Blank!';
+                    }
+                    if(empty($subject)){
+                        // Subject field is empty
+                        $error[] = 'Subject Field is Blank!';
+                    }
+                    if(empty($content)){
+                        // Username field is empty
+                        $error[] = 'Message Content Field is Blank!';
+                    }
+                    // Check for errors before sending message
+                    if(count($error) == 0){
+                        // Get the userID of to username
+                        $to_userID = $this->model->getUserIDFromUsername($to_username);
+                        // Check to make sure user exists in Database
+                        if(isset($to_userID)){
+                            // Check to see if to user's inbox is not full
+                            if($this->model->checkMessageQuotaToUser($to_userID)){
+			                    // Run the Activation script
+                                if($this->model->sendmessage($to_userID, $u_id, $subject, $content)){
+                                    // Success
+                                    SuccessMessages::push('You Have Successfully Sent a Private Message', 'Messages');
+                                    $data['hide_form'] = "true";
+		                        }else{
+                                    // Fail
+                                    $error[] = 'Message Send Failed';
+                                }
+                            }else{
+                                // To user's inbox is full.  Let sender know message was not sent
+                                $error[] = '<b>${to_username}&#39;s Inbox is Full!</b>  Sorry, Message was NOT sent!';
+                            }
+                        }else{
+                            // User does not exist
+                            $error[] = 'Message Send Failed - To User Does Not Exist';
+                        }
+                    }// End Form Complete Check
+                }else{
+                    // Get data from reply $_POST
+                    $subject = Request::post('subject');
+                    $content = Request::post('content');
+                    $date_sent = Request::post('date_sent');
+                    // Add Reply details to subject ex: RE:
+                    $data['subject'] = "RE: ".$subject;
+                    // Clean up content so it looks pretty
+                    $content_reply = "&#10;&#10;&#10;&#10; ##############################";
+                    $content_reply .= "&#10; # PREVIOUS MESSAGE";
+                    $content_reply .= "&#10; # From: $to_username";
+                    $content_reply .= "&#10; # Sent: $date_sent ";
+                    $content_reply .= "&#10; ############################## &#10;&#10;";
+                    $content_reply .= $content;
+                    $content_reply = str_replace("<br />", " ", $content_reply);
+                    $data['content'] = $content_reply;
+                }// End Reply Check
 			}
 		}
 
-    // Check to see if there were any errors, if so then auto load form data
-    if(count($error) > 0){
-      // Auto Fill form to make things eaiser for user
-      $data['subject'] = Request::post('subject');
-      $data['content'] = Request::post('content');
-    }
+        // Check to see if there were any errors, if so then auto load form data
+        if(empty($error)){ $error = ""; }
+        if(count($error) > 0 && !isset($data['subject']) && !isset($data['content'])){
+            // Auto Fill form to make things eaiser for user
+            $data['subject'] = Request::post('subject');
+            $data['content'] = Request::post('content');
+            // Output errors if any
+            if(!empty($error)){ $data['error'] = $error; };
+        }
 
-		// Collect Data for view
-		$data['title'] = "My Private Message";
-		$data['welcome_message'] = "Welcome to Your Private Message Creator";
-	  $data['csrf_token'] = Csrf::makeToken('messages');
+        // Collect Data for view
+        $data['title'] = "My Private Message";
+        $data['welcome_message'] = "Welcome to Your Private Message Creator";
+        $data['csrf_token'] = Csrf::makeToken('messages');
 
-    // Check to see if username is in url or post
-    if(isset($to_user)){
-      $data['to_username'] = $to_user;
-    }else{
-      $data['to_username'] = Request::post('to_username');
-    }
+        // Check to see if username is in url or post
+        if(isset($to_user)){
+            $data['to_username'] = $to_user;
+        }else{
+            $data['to_username'] = Request::post('to_username');
+        }
 
-    // Check to see if username is in url or post
-    if(isset($subject)){
-      $data['subject'] = $subject;
-    }else{
-      $data['subject'] = Request::post('subject');
-    }
-
-    // Setup Breadcrumbs
+        // Setup Breadcrumbs
 		$data['breadcrumbs'] = "
-			<li><a href='".DIR."'>Home</a></li>
 			<li><a href='".DIR."Messages'>Private Messages</a></li>
 			<li class='active'>".$data['title']."</li>
 		";
 
-    // Get requested message data
-    //$data['message'] = $this->model->getMessage($m_id);
+        // Get requested message data
+        //$data['message'] = $this->model->getMessage($m_id);
 
-    // Check for new messages in inbox
-    $data['new_messages_inbox'] = $this->model->getUnreadMessages($u_id);
+        // Check for new messages in inbox
+        $data['new_messages_inbox'] = $this->model->getUnreadMessages($u_id);
 
         /* Send data to view */
         Load::ViewPlugin("message_new", $data, "messages_sidebar::Left", "Messages");
