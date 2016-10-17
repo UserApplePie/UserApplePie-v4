@@ -15,7 +15,7 @@ class Config {
      define('DIR', '/');
 
     /* Define Site Url Address */
-    define('SITE_URL', 'http://localhost/');
+    define('SITE_URL', 'http://uap4demo.userapplepie.com/');
 
     /* Define Site Title */
     define('SITE_TITLE', 'UAP4');
@@ -51,17 +51,17 @@ class Config {
     /**
      * Database name.
      */
-    define('DB_NAME', 'uap4_demo');
+    define('DB_NAME', 'uap4_dbname');
     /**
      * Database username.
      */
-    define('DB_USER', 'uap4_demo');
+    define('DB_USER', 'uap4_dbuser');
     /**
      * Database password.
      */
-    define('DB_PASS', 'dbpass');
+    define('DB_PASS', 'uap4_dbpass');
     /**
-     * PREFER to be used in database calls default is uap3_
+     * PREFER to be used in database calls default is uap4_
      */
     define('PREFIX', 'uap4_');
 
@@ -167,3 +167,11 @@ class Config {
   }
 
 }
+
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+//////////////////UAP////////////////////////////////
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////

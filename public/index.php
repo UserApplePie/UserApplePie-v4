@@ -37,7 +37,12 @@ if (is_readable(APPDIR.'Config.php')) {
   new \App\System\Router();
 
 } else {
-    echo "<h1>Update and Rename Example-Config.php to Config.php</h1>";
-    echo "<p>Make sure to rename <code>/app/Example-Config.php</code> to <code>/app/Config.php</code> for this application to start working.</p>";
-    echo "<p>Read the README for details.</p>";
+    /** No Config Setup, Start Install */
+    if (file_exists(APPDIR.'Install/Install.php')) {
+        require APPDIR.'Install/Install.php';
+    } else {
+        echo "<h1>Update and Rename Example-Config.php to Config.php</h1>";
+        echo "<p>Make sure to rename <code>/app/Example-Config.php</code> to <code>/app/Config.php</code> for this application to start working.</p>";
+        echo "<p>Read the README for details.</p>";
+    }
 }
