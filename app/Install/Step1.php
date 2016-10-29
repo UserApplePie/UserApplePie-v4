@@ -121,10 +121,10 @@ if(folder_writable('assets/images/profile-pics/')){
 
 <div class='panel panel-info'>
 	<div class='panel-heading'>
-		<h3>UAP 3 Installation</h3>
+		<h3>UAP 4 Installation</h3>
 	</div>
 	<div class='panel-body'>
-		Welcome to the UAP 3 Installation Process.  <br>
+		Welcome to the UAP 4 Installation Process.  <br>
 		First we are going to check and make sure you have everything needed to install. <br>
 		<br>
 

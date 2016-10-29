@@ -20,7 +20,7 @@ if(!$copy_file){
 
 <div class='panel panel-info'>
 	<div class='panel-heading'>
-		<h3>UAP 3 Installation Step 4</h3>
+		<h3>UAP 4 Installation Step 4</h3>
 	</div>
 	<div class='panel-body'>
 		UserApplePie 4 Has Successfully Installed on your Server.  <br>

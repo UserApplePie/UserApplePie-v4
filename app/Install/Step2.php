@@ -101,7 +101,7 @@ if(isset($_POST['submit'])){
 	if(isset($_GET['update_config_file_refresh'])){
 		if($_GET['update_config_file_refresh'] == "true"){
 			echo "<div class='well'><center>";
-			echo "<img src='uap3logo_wait_animation.gif'>";
+			echo "<img src='uap4logo_wait_animation.gif'>";
 			echo "<h3>Please Wait While The Config File Is Updated!</h3></center></div>";
 			echo "<meta http-equiv='refresh' content='5; url=/?install_step=2&update_config_file=true'>";
 		}
@@ -113,7 +113,7 @@ if(isset($_POST['submit'])){
 
 <div class='panel panel-info'>
 	<div class='panel-heading'>
-		<h3>System Settings</h3>
+		<h3>UAP 4 System Settings</h3>
 	</div>
 	<div class='panel-body'>
 		Now we are going to setup all the settings needed to create your Config.php file.  <br>

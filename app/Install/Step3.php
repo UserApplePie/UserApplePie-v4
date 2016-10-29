@@ -7,7 +7,7 @@
 
 <div class='panel panel-info'>
 	<div class='panel-heading'>
-		<h3>Create Database</h3>
+		<h3>UAP 4 Database Creation</h3>
 	</div>
 	<div class='panel-body'>
 		Now we are going to Import data to the Database.  <br>

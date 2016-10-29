@@ -6,10 +6,10 @@
 					<div class='navbar-text'>
 
 						<!-- Footer links / text -->
-						Powered By <a href='http://www.userapplepie.com' title='View UserApplePie Website' ALT='UserApplePie' target='_blank'>UserApplePie v3</a>
+						Powered By <a href='http://www.userapplepie.com' title='View UserApplePie Website' ALT='UserApplePie' target='_blank'>UserApplePie v4</a>
 
 						<!-- Display Copywrite stuff with auto year -->
-						<Br> &copy; 2016 UAP V3.0 All Rights Reserved.
+						<Br> &copy; 2016 UAP V4 All Rights Reserved.
 					</div>
 				</div>
 			</footer>
