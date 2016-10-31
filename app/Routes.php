@@ -53,6 +53,7 @@ class Routes {
 
         /* Admin Panel Routing */
         $routes[] = self::add('AdminPanel', 'AdminPanel', 'Dashboard');
+        $routes[] = self::add('AdminPanel-Settings', 'AdminPanel', 'Settings');
         $routes[] = self::add('AdminPanel-Users', 'AdminPanel', 'Users', '(:any)/(:any)');
         $routes[] = self::add('AdminPanel-User', 'AdminPanel', 'User', '(:any)');
         $routes[] = self::add('AdminPanel-Groups', 'AdminPanel', 'Groups');

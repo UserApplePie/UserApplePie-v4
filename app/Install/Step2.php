@@ -28,13 +28,10 @@ if(isset($_GET['update_config_file']) && $_GET['update_config_file'] == "true"){
 
 /** Check to see if user is submitting data **/
 if(isset($_POST['submit'])){
-	/** Update Site Title in Config **/
-	if(!empty($_REQUEST['SITE_TITLE'])){
-		update_config(SITE_TITLE, $_REQUEST['SITE_TITLE']);
-	}
 	/** Update Site URL in Config **/
 	if(!empty($_REQUEST['SITE_URL'])){
-		update_config(SITE_URL, $_REQUEST['SITE_URL']);
+		$site_url = rtrim($_REQUEST['SITE_URL'], '/') . '/';
+		update_config(SITE_URL, $site_url);
 	}
 	/** Update Site Prefix in Config **/
 	if(!empty($_REQUEST['PREFIX'])){
@@ -56,38 +53,7 @@ if(isset($_POST['submit'])){
 	if(!empty($_REQUEST['DB_PASS'])){
 		update_config(DB_PASS, $_REQUEST['DB_PASS']);
 	}
-	/** Update Email Username in Config **/
-	if(!empty($_REQUEST['EMAIL_USERNAME'])){
-		update_config(EMAIL_USERNAME, $_REQUEST['EMAIL_USERNAME']);
-	}
-	/** Update Email Password in Config **/
-	if(!empty($_REQUEST['EMAIL_PASSWORD'])){
-		update_config(EMAIL_PASSWORD, $_REQUEST['EMAIL_PASSWORD']);
-	}
-	/** Update Email From Name in Config **/
-	if(!empty($_REQUEST['EMAIL_FROM_NAME'])){
-		update_config(EMAIL_FROM_NAME, $_REQUEST['EMAIL_FROM_NAME']);
-	}
-	/** Update Email Host Address in Config **/
-	if(!empty($_REQUEST['EMAIL_HOST'])){
-		update_config(EMAIL_HOST, $_REQUEST['EMAIL_HOST']);
-	}
-	/** Update Email Host Address Port in Config **/
-	if(!empty($_REQUEST['EMAIL_PORT'])){
-		update_config(EMAIL_PORT, $_REQUEST['EMAIL_PORT']);
-	}
-	/** Update Email Host Security Type in Config **/
-	if(!empty($_REQUEST['EMAIL_STMP_SECURE'])){
-		update_config(EMAIL_STMP_SECURE, $_REQUEST['EMAIL_STMP_SECURE']);
-	}
-	/** Update reCAPTCHA public key in Config **/
-	if(!empty($_REQUEST['RECAP_PUBLIC_KEY'])){
-		update_config(RECAP_PUBLIC_KEY, $_REQUEST['RECAP_PUBLIC_KEY']);
-	}
-	/** Update reCAPTCHA secret key in Config **/
-	if(!empty($_REQUEST['RECAP_PRIVATE_KEY'])){
-		update_config(RECAP_PRIVATE_KEY, $_REQUEST['RECAP_PRIVATE_KEY']);
-	}
+
 
 	/** Config File Has been Updated. Refreash Page with success message **/
 	SuccessMessages::push('You Have Successfully Updated The Config File! Please Double Check The Data!', '?install_step=2&update_config_file_refresh=true');
@@ -126,10 +92,6 @@ if(isset($_POST['submit'])){
 					<h3>Site Settings</h3>
 				</div>
 				<div class='panel-body'>
-					<div class="form-group">
-						<label for="SITE_TITLE">Website Title</label><span class="label label-danger pull-right">Required</span>
-						<input type="text" class="form-control" name="SITE_TITLE" id="SITE_TITLE" placeholder="<?=SITE_TITLE?>" value="<?php if(!empty($_REQUEST['SITE_TITLE'])){echo $_REQUEST['SITE_TITLE'];} ?>">
-					</div>
 					<div class="form-group">
 						<label for="SITE_URL">Website URL</label><span class="label label-danger pull-right">Required</span>
 						<input type="text" class="form-control" name="SITE_URL" id="SITE_URL" placeholder="<?=SITE_URL?>" value="<?php if(!empty($_REQUEST['SITE_URL'])){echo $_REQUEST['SITE_URL'];} ?>">
@@ -179,75 +141,6 @@ if(isset($_POST['submit'])){
 							echo "</div>";
 						}
 					?>
-			</div>
-			<!-- Email Settings -->
-			<div class='panel panel-default'>
-				<div class='panel-heading'>
-					<h3>Site Email Settings</h3>
-					<a name='email'></a>
-				</div>
-				<div class='panel-body'>
-					<div class="form-group">
-						<label for="EMAIL_USERNAME">Username</label><span class="label label-danger pull-right">Required</span>
-						<input type="text" class="form-control" name="EMAIL_USERNAME" id="EMAIL_USERNAME" placeholder="<?=EMAIL_USERNAME?>" value="<?php if(!empty($_REQUEST['EMAIL_USERNAME'])){echo $_REQUEST['EMAIL_USERNAME'];} ?>">
-					</div>
-					<div class="form-group">
-						<label for="EMAIL_PASSWORD">Password</label><span class="label label-danger pull-right">Required</span>
-						<input type="text" class="form-control" name="EMAIL_PASSWORD" id="EMAIL_PASSWORD" placeholder="<?=EMAIL_PASSWORD?>" value="<?php if(!empty($_REQUEST['EMAIL_PASSWORD'])){echo $_REQUEST['EMAIL_PASSWORD'];} ?>">
-					</div>
-					<div class="form-group">
-						<label for="EMAIL_FROM_NAME">From Name</label><span class="label label-danger pull-right">Required</span>
-						<input type="text" class="form-control" name="EMAIL_FROM_NAME" id="EMAIL_FROM_NAME" placeholder="<?=EMAIL_FROM_NAME?>" value="<?php if(!empty($_REQUEST['EMAIL_FROM_NAME'])){echo $_REQUEST['EMAIL_FROM_NAME'];} ?>">
-					</div>
-					<div class="form-group">
-						<label for="EMAIL_HOST">Host</label><span class="label label-danger pull-right">Required</span>
-						<input type="text" class="form-control" name="EMAIL_HOST" id="EMAIL_HOST" placeholder="<?=EMAIL_HOST?>" value="<?php if(!empty($_REQUEST['EMAIL_HOST'])){echo $_REQUEST['EMAIL_HOST'];} ?>">
-					</div>
-					<div class="form-group">
-						<label for="EMAIL_PORT">Port</label><span class="label label-danger pull-right">Required</span>
-						<input type="text" class="form-control" name="EMAIL_PORT" id="EMAIL_PORT" placeholder="<?=EMAIL_PORT?>" value="<?php if(!empty($_REQUEST['EMAIL_PORT'])){echo $_REQUEST['EMAIL_PORT'];} ?>">
-					</div>
-					<div class="form-group">
-						<label for="EMAIL_STMP_SECURE">Security Type</label><span class="label label-danger pull-right">Required</span>
-						<input type="text" class="form-control" name="EMAIL_STMP_SECURE" id="EMAIL_STMP_SECURE" placeholder="<?=EMAIL_STMP_SECURE?>" value="<?php if(!empty($_REQUEST['EMAIL_STMP_SECURE'])){echo $_REQUEST['EMAIL_STMP_SECURE'];} ?>">
-					</div>
-				</div>
-					<?php
-						(isset($_GET['test_email'])) ? $test_email = $_GET['test_email'] : $test_email = "" ;
-						if($updated_config || $test_email == "true"){
-							echo "<div class='panel-footer'>";
-							echo "<b>Email Status:</b>";
-							if($test_email == "true"){
-								require ROOTDIR.'app/Install/email_check.php';
-								$updated_config = true;
-							}else{
-								echo "<a href='/?install_step=2&test_email=true#email'>Send Test Email to ".EMAIL_USERNAME."</a>";
-							}
-							echo "</div>";
-						}
-					?>
-			</div>
-			<!-- Google reCAPTCHA Settings -->
-			<div class='panel panel-default'>
-				<div class='panel-heading'>
-					<h3>Google reCAPTCHA Settings</h3>
-				</div>
-				<div class='panel-body'>
-					<div class="form-group">
-						<label for="RECAP_PUBLIC_KEY">Public Key</label><span class="label label-danger pull-right">Required</span>
-						<input type="text" class="form-control" name="RECAP_PUBLIC_KEY" id="RECAP_PUBLIC_KEY" placeholder="<?=RECAP_PUBLIC_KEY?>" value="<?php if(!empty($_REQUEST['RECAP_PUBLIC_KEY'])){echo $_REQUEST['RECAP_PUBLIC_KEY'];} ?>">
-					</div>
-					<div class="form-group">
-						<label for="RECAP_PRIVATE_KEY">Private Key</label><span class="label label-danger pull-right">Required</span>
-						<input type="text" class="form-control" name="RECAP_PRIVATE_KEY" id="RECAP_PRIVATE_KEY" placeholder="<?=RECAP_PRIVATE_KEY?>" value="<?php if(!empty($_REQUEST['RECAP_PRIVATE_KEY'])){echo $_REQUEST['RECAP_PRIVATE_KEY'];} ?>">
-					</div>
-				</div>
-				<div class='panel-footer'>
-					<b>reCAPTCHA Test:</b> reCAPTCHA should be display_nolanged below if your keys are correct.
-						<div class="g-recaptcha" data-sitekey="<?=RECAP_PUBLIC_KEY?>"></div>
-					<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-				</div>
 			</div>
 			<!-- Save to Config Button -->
 			<button class="btn btn-primary btn-lg" name="submit" type="submit">Update Config File</button>

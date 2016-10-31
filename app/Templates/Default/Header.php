@@ -19,6 +19,8 @@ use Libs\Assets,
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <title><?=SITE_TITLE?><?=(isset($pageTitle)) ? " - ".$pageTitle : "" ?></title>
+        <meta name="keywords" content="<?=SITE_KEYWORDS?>">
+        <meta name="description" content="<?=SITE_DESCRIPTION?>">
         <?=Assets::css([
             'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
             'https://bootswatch.com/cerulean/bootstrap.css',

@@ -11,7 +11,10 @@
 	</div>
 	<div class='panel-body'>
 		Congratulations! <br>
+		<Br>
 		Looks like everything is ready to go. <Br>
+		<Br>
+		Make sure to sign up as the first user for your UAP4 install.  Once signed in you can update the site settings in the Admin Panel.<br><Br>
 		Click Save and Finalize Install to Finish Up Install! <br>
 		<br>
 

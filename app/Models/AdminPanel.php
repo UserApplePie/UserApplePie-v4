@@ -14,6 +14,33 @@
 
 class AdminPanel extends Models {
 
+    /* Get Site Settings From Database */
+    public function getSettings($setting){
+        $settings_data = $this->db->select("
+            SELECT
+                setting_data
+            FROM
+                ".PREFIX."settings
+            WHERE
+                setting_title = :setting
+        ",
+        array(':setting' => $setting));
+        return $settings_data[0]->setting_data;
+    }
+
+    /* Update Site Setting Data */
+  	public function updateSetting($setting_title, $setting_data){
+  		/* Update Setting Data */
+  		$query = $this->db->update(PREFIX.'settings', array('setting_data' => $setting_data), array('setting_title' => $setting_title));
+  		$count = count($query);
+  		if($count > 0){
+  			return true;
+  		}else{
+  			return false;
+  		}
+  	}
+
+
   // Get list of all users
   public function getUsers($orderby, $limit = null){
 

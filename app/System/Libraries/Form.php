@@ -42,8 +42,6 @@ class Form
         $o .= (isset($params['role']))      ? " role='{$params['role']}'"                 : '';
         $o .= (isset($params['autocomplete'])) ? " autocomplete='{$params['autocomplete']}'" : '';
         $o .= '>';
-        //Create a token append the form name to the end of the token name if provided
-        $o .= "\n<input type='hidden' name='csrfToken".ucwords(isset($params['name']))."' value='".Csrf::makeToken('csrfToken'.ucwords(isset($params['name'])))."'>\n";
         return $o."\n";
     }
 

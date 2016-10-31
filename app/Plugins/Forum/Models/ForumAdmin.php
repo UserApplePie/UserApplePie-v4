@@ -1,6 +1,6 @@
 <?php
-/**  
-* UserApplePie v3 Forum Plugin
+/**
+* UserApplePie v4 Forum Plugin
 * @author David (DaVaR) Sargent
 * @email davar@thedavar.net
 * @website http://www.userapplepie.com
@@ -10,11 +10,11 @@
 
 /** Admin Panel Forum Admin Models **/
 
-namespace App\Modules\Forum\Models;
+namespace App\Plugins\Forum\Models;
 
-use Core\Model;
+use App\System\Models;
 
-class ForumAdmin extends Model {
+class ForumAdmin extends Models {
 
   /**
    * catMainList

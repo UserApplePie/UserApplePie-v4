@@ -1,5 +1,8 @@
 <?php
-
+/*
+** UserApplePie v4
+** http://www.userapplepie.com
+*/
 
 /* Define the absolute paths for configured directories */
 define('APPDIR', realpath(__DIR__.'/../app/').'/');
@@ -32,6 +35,9 @@ if (is_readable(APPDIR.'Config.php')) {
 
   /* Load the Site Config */
   new \App\Config();
+
+  /* Load Site Settings From Database */
+  new \App\System\LoadSiteSettings();
 
   /* Load the Page Router */
   new \App\System\Router();

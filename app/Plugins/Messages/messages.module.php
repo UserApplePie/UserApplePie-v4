@@ -1,6 +1,6 @@
 <?php
 /**
-* UserApplePie v3 Messages Plugin
+* UserApplePie v4 Messages Plugin
 * @author David (DaVaR) Sargent
 * @email davar@thedavar.net
 * @website http://www.userapplepie.com

@@ -35,7 +35,7 @@ class Auth {
      * @return bool
      */
     public function login($username, $password,$remember) {
-        if (!Cookie::get("auth_session")) {
+        if (!Cookie::get(SESSION_PREFIX."auth_session")) {
             $attcount = $this->getAttempt($_SERVER['REMOTE_ADDR']);
 
             if ($attcount[0]->count >= MAX_ATTEMPTS) {
@@ -134,7 +134,7 @@ class Auth {
      * Logs out an user, deletes all sessions and destroys the cookies
      */
     public function logout() {
-        $auth_session = Cookie::get("auth_session");
+        $auth_session = Cookie::get(SESSION_PREFIX."auth_session");
         if ($auth_session != '') {
             $this->deleteSession($auth_session);
         }
@@ -145,7 +145,7 @@ class Auth {
      * @return boolean
      */
     public function isLogged() {
-        $auth_session = Cookie::get("auth_session"); //get hash from browser
+        $auth_session = Cookie::get(SESSION_PREFIX."auth_session"); //get hash from browser
         //check if session is valid
         return ($auth_session != '' && $this->sessionIsValid($auth_session));
     }
@@ -156,7 +156,7 @@ class Auth {
      */
     public function currentSessionInfo() {
         if ($this->isLogged()) {
-            $auth_session = Cookie::get("auth_session"); //get hash from browser
+            $auth_session = Cookie::get(SESSION_PREFIX."auth_session"); //get hash from browser
             return $this->sessionInfo($auth_session);
         }
     }
@@ -172,9 +172,9 @@ class Auth {
         if ($count == 0) {
             // Hash doesn't exist
             $this->errormsg[] = $this->language->get('sessioninfo_invalid');
-            //setcookie("auth_session", $hash, time() - 3600, '/');
-            Cookie::destroy('auth_session', $hash); //check if destroys deletes only a specific hash
-            //   \Libs\Cookie::set("auth_session", $hash, time() - 3600, "/",$_SERVER["HTTP_HOST"]);
+            //setcookie(SESSION_PREFIX."auth_session", $hash, time() - 3600, '/');
+            Cookie::destroy(SESSION_PREFIX.'auth_session', $hash); //check if destroys deletes only a specific hash
+            //   \Libs\Cookie::set(SESSION_PREFIX."auth_session", $hash, time() - 3600, "/",$_SERVER["HTTP_HOST"]);
             return false;
         } else {
             // Hash exists
@@ -197,9 +197,9 @@ class Auth {
         $count = count($session);
         if ($count == 0) {
             //hash did not exists deleting cookie
-            Cookie::destroy("auth_session", $hash);
-            //Cookie::destroy("auth_session", $hash, '');
-            //setcookie("auth_session", $hash, time() - 3600, "/");
+            Cookie::destroy(SESSION_PREFIX."auth_session", $hash);
+            //Cookie::destroy(SESSION_PREFIX."auth_session", $hash, '');
+            //setcookie(SESSION_PREFIX."auth_session", $hash, time() - 3600, "/");
             $this->logActivity('UNKNOWN', "AUTH_CHECKSESSION", "User session cookie deleted - Hash ({$hash}) didn't exist");
             return false;
         } else {
@@ -209,8 +209,8 @@ class Auth {
             if ($_SERVER['REMOTE_ADDR'] != $db_ip) {
                 //hash exists but ip is changed, delete session and hash
                 $this->authorize->deleteSession($username);
-                Cookie::destroy("auth_session", $hash);
-                //setcookie("auth_session", $hash, time() - 3600, "/");
+                Cookie::destroy(SESSION_PREFIX."auth_session", $hash);
+                //setcookie(SESSION_PREFIX."auth_session", $hash, time() - 3600, "/");
                 $this->logActivity($username, "AUTH_CHECKSESSION", "User session cookie deleted - IP Different ( DB : {$db_ip} / Current : " . $_SERVER['REMOTE_ADDR'] . " )");
                 return false;
             } else {
@@ -219,8 +219,8 @@ class Auth {
                 if ($currentdate > $expiredate) {
                     //session has expired delete session and cookies
                     $this->authorize->deleteSession($username);
-                    Cookie::destroy("auth_session", $hash);
-                    //setcookie("auth_session", $hash, time() - 3600, "/");
+                    Cookie::destroy(SESSION_PREFIX."auth_session", $hash);
+                    //setcookie(SESSION_PREFIX."auth_session", $hash, time() - 3600, "/");
                     $this->logActivity($username, "AUTH_CHECKSESSION", "User session cookie deleted - Session expired ( Expire date : {$db_expiredate} )");
                 } else {
                     //all ok
@@ -305,7 +305,7 @@ class Auth {
         $expiretime = strtotime($expiredate);
         $info = array("uid" => $uid, "username" => $username, "hash" => $hash, "expiredate" => $expiredate, "ip" => $ip);
         $this->authorize->addIntoDB("sessions", $info);
-        Cookie::set('auth_session', $hash, $expiretime, "/", FALSE);
+        Cookie::set(SESSION_PREFIX.'auth_session', $hash, $expiretime, "/", FALSE);
     }
 
     /**
@@ -325,7 +325,7 @@ class Auth {
             // Hash exists, Delete all sessions for that username :
             $this->authorize->deleteSession($username);
             $this->logActivity($username, "AUTH_LOGOUT", "User session cookie deleted - Database session deleted - Hash ({$hash})");
-            Cookie::destroy("auth_session", $hash);
+            Cookie::destroy(SESSION_PREFIX."auth_session", $hash);
         }
     }
 
@@ -338,7 +338,7 @@ class Auth {
      * @return boolean If succesfully registered true false otherwise
      */
     public function directRegister($username, $password, $verifypassword, $email) {
-        if (!Cookie::get('auth_session')) {
+        if (!Cookie::get(SESSION_PREFIX.'auth_session')) {
             // Input Verification :
             if (strlen($username) == 0) {
                 $this->errormsg[] = $this->language->get('register_username_empty');
@@ -435,7 +435,7 @@ class Auth {
      * @return boolean
      */
     public function register($username, $password, $verifypassword, $email) {
-        if (!Cookie::get('auth_session')) {
+        if (!Cookie::get(SESSION_PREFIX.'auth_session')) {
             // Input Verification :
             if (strlen($username) == 0) {
                 $this->errormsg[] = $this->language->get('register_username_empty');
@@ -1031,7 +1031,7 @@ class Auth {
      */
     public function resendActivation($email)
     {
-        if (!Cookie::get('auth_session')) {
+        if (!Cookie::get(SESSION_PREFIX.'auth_session')) {
             // Input Verification :
             if (strlen($email) == 0) {
                 $auth_error[] = $this->language->get('register_email_empty');

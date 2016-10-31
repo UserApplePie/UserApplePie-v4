@@ -7,7 +7,7 @@
 -- Server version: 5.5.47-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.14
 
--- UserApplePie v3.0.4
+-- UserApplePie v4.0.4
 
 -- Instructions
 -- Import this file to your mySQL database
@@ -367,3 +367,33 @@ INSERT INTO `uap4_forum_settings` (`id`, `setting_title`, `setting_value`, `sett
 (3, 'forum_description', 'Welcome to the Forum', ''),
 (4, 'forum_topic_limit', '20', ''),
 (5, 'forum_topic_reply_limit', '10', '');
+
+--
+-- Table structure for table `uap4_settings`
+--
+
+CREATE TABLE `uap4_settings` (
+  `setting_id` int(10) NOT NULL AUTO_INCREMENT,
+  `setting_title` varchar(255) DEFAULT NULL,
+  `setting_data` text,
+  PRIMARY KEY (`setting_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `uap4_settings`
+--
+
+INSERT INTO `uap4_settings` (`setting_id`, `setting_title`, `setting_data`) VALUES
+(1, 'site_title', 'My UAP4 Web Site'),
+(2, 'site_description', 'Welcome to My UAP4 Web Site'),
+(3, 'site_keywords', 'UAP, UserApplePie'),
+(4, 'site_user_activation', 'false'),
+(5, 'site_email_username', ''),
+(6, 'site_email_password', ''),
+(7, 'site_email_fromname', ''),
+(8, 'site_email_host', ''),
+(9, 'site_email_port', ''),
+(10, 'site_email_smtp', ''),
+(11, 'site_email_site', ''),
+(12, 'site_recapcha_public', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'),
+(13, 'site_recapcha_private', '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');

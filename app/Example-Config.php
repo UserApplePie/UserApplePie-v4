@@ -17,9 +17,6 @@ class Config {
     /* Define Site Url Address */
     define('SITE_URL', 'http://uap4demo.userapplepie.com/');
 
-    /* Define Site Title */
-    define('SITE_TITLE', 'UAP4');
-
     /* Define Controller */
     define('DEFAULT_CONTROLLER', 'Home');
 
@@ -51,80 +48,27 @@ class Config {
     /**
      * Database name.
      */
-    define('DB_NAME', 'uap4_dbname');
+    define('DB_NAME', 'uap4_demo');
     /**
      * Database username.
      */
-    define('DB_USER', 'uap4_dbuser');
+    define('DB_USER', 'uap4_demo');
     /**
      * Database password.
      */
-    define('DB_PASS', 'uap4_dbpass');
+    define('DB_PASS', 'h8rLE2LM5UYiYMPC');
     /**
      * PREFER to be used in database calls default is uap4_
      */
     define('PREFIX', 'uap4_');
 
-    /********************
-     *                  *
-     *      EMAIL       *
-     *     uses SMTP    *
-     ********************/
-     /**
-     * SMTP Email Username
-     */
-     define('EMAIL_USERNAME', 'noreply@userapplepie.com');
 
-     /**
-     * SMTP Email Password
-     */
-     define('EMAIL_PASSWORD', 'emailpass');
-
-     /**
-     * SMTP Email sent from whom? a name
-     */
-     define('EMAIL_FROM_NAME','UAP NoReply');
-
-     /**
-     * SMTP Email host
-     * Example : Google (smtp.gmail.com), Yahoo (smtp.mail.yahoo.com)
-     */
-     define('EMAIL_HOST','localhost');
-
-     /**
-     * SMTP Email port
-     * default : 25 (https://www.arclab.com/en/kb/email/list-of-smtp-and-pop3-servers-mailserver-list.html)
-     */
-     define('EMAIL_PORT', '25');
-
-     /**
-     * SMTP Email authentication
-     * default : ssl
-     * choices : ssl, tls, (leave it empty)
-     */
-     define('EMAIL_STMP_SECURE','');
-
-     /**
-      * Optionall set a site email address.
-      */
-     define('SITEEMAIL', 'noreply@userapplepie.com');
-
-    /********************
-     *                  *
-     *     RECAPTCHA    *
-     *                  *
-     ********************/
-    // reCAPCHA site key provided by google for testing purposes
-    define("RECAP_PUBLIC_KEY", '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI');
-    // reCAPCHA secret key provided by google for testing purposes
-    define("RECAP_PRIVATE_KEY", '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
     /*****************
      *                *
      *     Account    *
      *                *
      *****************/
-    // Account needs email activation, false=no true=yes
-    define("ACCOUNT_ACTIVATION",false);
+
     // Max attempts for login before user is locked out
     define("MAX_ATTEMPTS", 5);
     // How long a user is locked out after they reach the max attempts
@@ -171,6 +115,9 @@ class Config {
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 //////////////////UAP////////////////////////////////
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////

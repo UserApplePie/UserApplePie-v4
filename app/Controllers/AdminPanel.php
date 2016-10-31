@@ -117,6 +117,121 @@ class AdminPanel extends Controller{
     Load::View("AdminPanel/AdminPanel", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
   }
 
+    /*
+    ** Admin Panel Site Settings
+    ** Allows admins to change all site settings except database
+    */
+    public function settings(){
+        /* Get data for dashboard */
+        $data['current_page'] = $_SERVER['REQUEST_URI'];
+        $data['title'] = "Settings";
+        $data['welcomeMessage'] = "Welcom to the Admin Panel Site Settings!";
+
+        /** Check to see if user is logged in **/
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+            /** User is logged in - Get their data **/
+            $u_id = $this->auth->user_info();
+            $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+            if($data['isAdmin'] = $this->user->checkIsAdmin($u_id) == 'false'){
+                /** User Not Admin - kick them out **/
+                \Libs\ErrorMessages::push('You are Not Admin', '');
+            }
+        }else{
+            /** User Not logged in - kick them out **/
+            \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
+        }
+
+        /* Check to see if Admin is submiting form data */
+        if(isset($_POST['submit'])){
+            /* Check to make sure the csrf token is good */
+            if (Csrf::isTokenValid('settings')) {
+                /* Check to make sure Admin is updating settings */
+                if($_POST['update_settings'] == "true"){
+                    /* Get data sbmitted by form */
+                    $site_title = Request::post('site_title');
+                    $site_description = Request::post('site_description');
+                    $site_keywords = Request::post('site_keywords');
+                    $site_user_activation = Request::post('site_user_activation');
+                    $site_email_username = Request::post('site_email_username');
+                    $site_email_password = Request::post('site_email_password');
+                    $site_email_fromname = Request::post('site_email_fromname');
+                    $site_email_host = Request::post('site_email_host');
+                    $site_email_port = Request::post('site_email_port');
+                    $site_email_smtp = Request::post('site_email_smtp');
+                    $site_email_site = Request::post('site_email_site');
+                    $site_recapcha_public = Request::post('site_recapcha_public');
+                    $site_recapcha_private = Request::post('site_recapcha_private');
+
+                    if($this->model->updateSetting('site_title', $site_title)){}else{ $errors[] = 'Site Title Error'; }
+                    if($this->model->updateSetting('site_description', $site_description)){}else{ $errors[] = 'Site Description Error'; }
+                    if($this->model->updateSetting('site_keywords', $site_keywords)){}else{ $errors[] = 'Site Keywords Error'; }
+                    if($this->model->updateSetting('site_user_activation', $site_user_activation)){}else{ $errors[] = 'Site User Activation Error'; }
+                    if($this->model->updateSetting('site_email_username', $site_email_username)){}else{ $errors[] = 'Site Email Username Error'; }
+                    if($this->model->updateSetting('site_email_password', $site_email_password)){}else{ $errors[] = 'Site Email Password Error'; }
+                    if($this->model->updateSetting('site_email_fromname', $site_email_fromname)){}else{ $errors[] = 'Site Email From Name Error'; }
+                    if($this->model->updateSetting('site_email_host', $site_email_host)){}else{ $errors[] = 'Site Email Host Error'; }
+                    if($this->model->updateSetting('site_email_port', $site_email_port)){}else{ $errors[] = 'Site Email Port Error'; }
+                    if($this->model->updateSetting('site_email_smtp', $site_email_smtp)){}else{ $errors[] = 'Site Email SMTP Auth Error'; }
+                    if($this->model->updateSetting('site_email_site', $site_email_site)){}else{ $errors[] = 'Site Email Error'; }
+                    if($this->model->updateSetting('site_recapcha_public', $site_recapcha_public)){}else{ $errors[] = 'Site reCAPCHA Public Error'; }
+                    if($this->model->updateSetting('site_recapcha_private', $site_recapcha_private)){}else{ $errors[] = 'Site reCAPCHA Private Error'; }
+
+                    // Run the update profile script
+                    if(count($errors) == 0){
+                        // Success
+                        \Libs\SuccessMessages::push('You Have Successfully Updated Site Settings', 'AdminPanel-Settings');
+                    }else{
+                        // Error
+                        if(isset($errors)){
+                            $error_data = "<hr>";
+                            foreach($errors as $row){
+                                $error_data .= " - ".$row."<br>";
+                            }
+                        }else{
+                            $error_data = "";
+                        }
+                        /* Error Message Display */
+                        \Libs\ErrorMessages::push('Error Updating Site Settings'.$error_data, 'AdminPanel-Settings');
+                    }
+                }else{
+                    /* Error Message Display */
+                    \Libs\ErrorMessages::push('Error Updating Site Settings', 'AdminPanel-Settings');
+                }
+            }else{
+                /* Error Message Display */
+                \Libs\ErrorMessages::push('Error Updating Site Settings', 'AdminPanel-Settings');
+            }
+        }
+
+        /* Get Settings Data */
+        $data['site_title'] = $this->model->getSettings('site_title');
+        $data['site_description'] = $this->model->getSettings('site_description');
+        $data['site_keywords'] = $this->model->getSettings('site_keywords');
+        $data['site_user_activation'] = $this->model->getSettings('site_user_activation');
+        $data['site_email_username'] = $this->model->getSettings('site_email_username');
+        $data['site_email_password'] = $this->model->getSettings('site_email_password');
+        $data['site_email_fromname'] = $this->model->getSettings('site_email_fromname');
+        $data['site_email_host'] = $this->model->getSettings('site_email_host');
+        $data['site_email_port'] = $this->model->getSettings('site_email_port');
+        $data['site_email_smtp'] = $this->model->getSettings('site_email_smtp');
+        $data['site_email_site'] = $this->model->getSettings('site_email_site');
+        $data['site_recapcha_public'] = $this->model->getSettings('site_recapcha_public');
+        $data['site_recapcha_private'] = $this->model->getSettings('site_recapcha_private');
+
+        /* Setup Token for Form */
+        $data['csrfToken'] = Csrf::makeToken('settings');
+
+        /* Setup Breadcrumbs */
+        $data['breadcrumbs'] = "
+          <li><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+          <li class='active'><i class='fa fa-fw fa-dashboard'></i> ".$data['title']."</li>
+        ";
+
+        Load::View("AdminPanel/Settings", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
+    }
+
+
+
   public function users($set_order_by = 'ID-ASC', $current_page = '1'){
 
     // Check for orderby selection

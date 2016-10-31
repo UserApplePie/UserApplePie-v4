@@ -79,7 +79,12 @@ class Load {
                 $sidebarFile .= ".php";
             }
             $sidebarFile = str_replace("::", "/", $sidebarFile);
-            $sidebarFile = APPDIR."Plugins/".$pluginFolder."/Views/".$sidebarFile;
+            if($esbfc[0] == 'AdminPanel'){
+                $sidebarLocation = $esbfc[2];
+                $sidebarFile = APPDIR."Views/AdminPanel/".$esbfc[1].".php";
+            }else{
+                $sidebarFile = APPDIR."Plugins/".$pluginFolder."/Views/".$sidebarFile;
+            }
             ($sidebarLocation == "Right" || $sidebarLocation == "right") ? $rightSidebar = $sidebarFile : "";
             ($sidebarLocation == "Left" || $sidebarLocation == "left") ? $leftSidebar = $sidebarFile : "";
         }

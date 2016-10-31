@@ -1,6 +1,6 @@
 <?php
-/**  
-* UserApplePie v3 Forum Plugin
+/**
+* UserApplePie v4 Forum Plugin
 * @author David (DaVaR) Sargent
 * @email davar@thedavar.net
 * @website http://www.userapplepie.com
@@ -10,15 +10,14 @@
 
 /** Forum Admin Panel Controller **/
 
-namespace App\Modules\Forum\Controllers;
+namespace App\Plugins\Forum\Controllers;
 
-use Core\Controller;
-use Core\View;
-use Core\Router;
-use Libs\Auth\Auth;
-use Libs\Csrf;
-use Libs\Request;
-use App\Models\AdminPanel as AdminPanelModel;
+use App\System\Controller,
+    App\System\Load,
+    Libs\Auth\Auth,
+    Libs\Csrf,
+    Libs\Request,
+    App\Models\AdminPanel as AdminPanelModel;
 
 class ForumAdmin extends Controller{
 
@@ -28,7 +27,7 @@ class ForumAdmin extends Controller{
 
   public function __construct(){
     parent::__construct();
-    $this->forum = new \App\Modules\Forum\Models\ForumAdmin();
+    $this->forum = new \App\Plugins\Forum\Models\ForumAdmin();
     $this->model = new AdminPanelModel();
   }
 
@@ -51,7 +50,7 @@ class ForumAdmin extends Controller{
       /** User Not logged in - kick them out **/
       \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
     }
-    
+
     // Check to make sure admin is trying to update user profile
 		if(isset($_POST['submit'])){
 			// Check to make sure the csrf token is good
@@ -214,10 +213,7 @@ class ForumAdmin extends Controller{
       <li class='active'><i class='glyphicon glyphicon-cog'></i> ".$data['title']."</li>
     ";
 
-    View::renderTemplate('header', $data, 'AdminPanel');
-    View::render('AdminPanel/AP-Sidebar', $data);
-    View::renderModule('Forum/views/forum_settings', $data);
-    View::renderTemplate('footer', $data, 'AdminPanel');
+    Load::ViewPlugin("forum_settings", $data, "AdminPanel::AP-Sidebar::Left", "Forum", "AdminPanel");
   }
 
   /**
@@ -609,10 +605,7 @@ class ForumAdmin extends Controller{
     // Setup CSRF token
     $data['csrf_token'] = Csrf::makeToken('ForumAdmin');
 
-    View::renderTemplate('header', $data, 'AdminPanel');
-    View::render('AdminPanel/AP-Sidebar', $data);
-    View::renderModule('Forum/views/forum_categories', $data);
-    View::renderTemplate('footer', $data, 'AdminPanel');
+    Load::ViewPlugin("forum_categories", $data, "AdminPanel::AP-Sidebar::Left", "Forum", "AdminPanel");
   }
 
   public function forum_blocked(){
@@ -647,10 +640,7 @@ class ForumAdmin extends Controller{
       <li class='active'><i class='glyphicon glyphicon-remove-sign'></i> ".$data['title']."</li>
     ";
 
-    View::renderTemplate('header', $data, 'AdminPanel');
-    View::render('AdminPanel/AP-Sidebar', $data);
-    View::renderModule('Forum/views/forum_blocked', $data);
-    View::renderTemplate('footer', $data, 'AdminPanel');
+    Load::ViewPlugin("forum_blocked", $data, "AdminPanel::AP-Sidebar::Left", "Forum", "AdminPanel");
 
   }
 
