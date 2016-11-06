@@ -99,29 +99,30 @@ class Forum extends Models {
      *
      * @return array returns all recent forum posts
      */
-    public function forum_recent_posts(){
+    public function forum_recent_posts($limit = "10"){
       $data = $this->db->select("
-        SELECT sub.*
-        FROM
-        (SELECT
-          fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
-          fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
-          fp.forum_content as forum_content, fp.forum_edit_date as forum_edit_date,
-          fp.forum_timestamp as forum_timestamp, fpr.id as id,
-          fpr.fpr_post_id as fpr_post_id, fpr.fpr_id as fpr_id,
-          fpr.fpr_user_id as fpr_user_id, fpr.fpr_title as fpr_title,
-          fpr.fpr_content as fpr_content, fpr.fpr_edit_date as fpr_edit_date,
-          fpr.fpr_timestamp as fpr_timestamp,
-          GREATEST(fp.forum_timestamp, COALESCE(fpr.fpr_timestamp, '00-00-00 00:00:00')) AS tstamp
-          FROM ".PREFIX."forum_posts fp
-          LEFT JOIN ".PREFIX."forum_posts_replys fpr
-          ON fp.forum_post_id = fpr.fpr_post_id
-          WHERE fp.allow = 'TRUE'
-          ORDER BY fpr.fpr_timestamp DESC
-        ) sub
-        GROUP BY forum_post_id
-        ORDER BY tstamp DESC
-        LIMIT 10
+        SELECT sub1.* FROM (
+            SELECT sub2.* FROM (
+                SELECT
+                    fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
+                    fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
+                    fp.forum_edit_date as forum_edit_date,
+                    fp.forum_timestamp as forum_timestamp, fpr.id as id,
+                    fpr.fpr_post_id as fpr_post_id, fpr.fpr_id as fpr_id,
+                    fpr.fpr_user_id as fpr_user_id, fpr.fpr_title as fpr_title,
+                    fpr.fpr_edit_date as fpr_edit_date,
+                    fpr.fpr_timestamp as fpr_timestamp,
+                    GREATEST(fp.forum_timestamp, COALESCE(fpr.fpr_timestamp, '00-00-00 00:00:00')) AS tstamp
+                    FROM ".PREFIX."forum_posts fp
+                    LEFT JOIN ".PREFIX."forum_posts_replys fpr
+                    ON fp.forum_post_id = fpr.fpr_post_id
+                    WHERE fp.allow = 'TRUE'
+            ) sub2
+                ORDER BY tstamp DESC
+                LIMIT $limit
+        ) sub1
+            GROUP BY forum_post_id
+            ORDER BY tstamp DESC
       ");
       return $data;
     }
@@ -198,34 +199,36 @@ class Forum extends Models {
      */
     public function forum_topics($where_id, $limit = null){
       $data = $this->db->select("
-      SELECT
-        sub.*,
-        fpr_post_id,
-        fpr_user_id AS LR_UserID,
-        fpr_timestamp AS LR_TimeStamp,
-        COUNT(fpr_post_id) AS total_topic_replys
-      FROM
-      (SELECT
-        fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
-        fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
-        fp.forum_content as forum_content, fp.forum_edit_date as forum_edit_date,
-        fp.forum_timestamp as forum_timestamp,
-        fp.forum_status as forum_status, fpr.id as id,
-        fpr.fpr_post_id as fpr_post_id, fpr.fpr_id as fpr_id,
-        fpr.fpr_user_id as fpr_user_id, fpr.fpr_title as fpr_title,
-        fpr.fpr_content as fpr_content, fpr.fpr_edit_date as fpr_edit_date,
-        fpr.fpr_timestamp as fpr_timestamp,
-        GREATEST(fp.forum_timestamp, COALESCE(fpr.fpr_timestamp, '00-00-00 00:00:00')) AS tstamp
-        FROM ".PREFIX."forum_posts fp
-        LEFT JOIN ".PREFIX."forum_posts_replys fpr
-        ON fp.forum_post_id = fpr.fpr_post_id
-        WHERE fp.forum_id = :where_id
-        AND fp.allow = 'TRUE'
-        ORDER BY tstamp DESC
-      ) sub
-      GROUP BY forum_post_id
-      ORDER BY tstamp DESC
-      $limit
+          SELECT
+              sub1.*,
+              fpr_post_id,
+              fpr_user_id AS LR_UserID,
+              fpr_timestamp AS LR_TimeStamp,
+              COUNT(fpr_post_id) AS total_topic_replys
+          FROM (
+              SELECT sub2.* FROM (
+                  SELECT
+                      fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
+                      fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
+                      fp.forum_edit_date as forum_edit_date,
+                      fp.forum_timestamp as forum_timestamp,
+                      fp.forum_status as forum_status, fpr.id as id,
+                      fpr.fpr_post_id as fpr_post_id, fpr.fpr_id as fpr_id,
+                      fpr.fpr_user_id as fpr_user_id, fpr.fpr_title as fpr_title,
+                      fpr.fpr_edit_date as fpr_edit_date,
+                      fpr.fpr_timestamp as fpr_timestamp,
+                      GREATEST(fp.forum_timestamp, COALESCE(fpr.fpr_timestamp, '00-00-00 00:00:00')) AS tstamp
+                      FROM ".PREFIX."forum_posts fp
+                      LEFT JOIN ".PREFIX."forum_posts_replys fpr
+                      ON fp.forum_post_id = fpr.fpr_post_id
+                      WHERE fp.forum_id = :where_id
+                      AND fp.allow = 'TRUE'
+              ) sub2
+                  ORDER BY tstamp DESC
+                  $limit
+          ) sub1
+              GROUP BY forum_post_id
+              ORDER BY tstamp DESC
       ",
       array(':where_id' => $where_id));
       return $data;
@@ -594,7 +597,10 @@ class Forum extends Models {
         AND forumTopicReplyID IS NULL
       ",
       array(':topic_id' => $topic_id));
-      return $data[0]->imageLocation;
+      $count = count($data);
+      if($count > 0){
+          return $data[0]->imageLocation;
+      }
     }
 
     /**
@@ -1039,5 +1045,34 @@ class Forum extends Models {
       array(':search' => '%'.$search.'%'));
       return $data;
     }
+
+    /**
+    * forum_tracker
+    *
+    * updates/adds forum user tracking informatinon
+    * tracking information used to track if a user has
+    * viewed a new topic or reply
+    *
+    * @param int $user_id = User's ID
+    * @param int $post_id = Forum Post ID
+    *
+    */
+
+    public function forum_tracker($user_id = "", $post_id = "", $forum_id = ""){
+        /* Make sure there is a user id and post id */
+        if(!empty($user_id) && !empty($post_id) && !empty($forum_id)){
+            /* Check to see is user has a record for post_id */
+            $check_table = count($this->db->select("SELECT * FROM ".PREFIX."forum_tracker WHERE user_id=:user_id AND post_id=:post_id AND forum_id=:forum_id",array(":user_id"=>$user_id, ":post_id"=>$post_id, 'forum_id'=>$forum_id)));
+            $current_date = date("Y-m-d H:i:s");
+            if($check_table == 0){
+                /* No Data for user - Create new entry */
+                return $this->db->insert(PREFIX.'forum_tracker', array('user_id' => $user_id, 'post_id' => $post_id, 'forum_id' => $forum_id, 'last_visit' => $current_date));
+            }else{
+                /* Data found for user - Update current date */
+                return $this->db->update(PREFIX.'forum_tracker', array('last_visit' => $current_date), array('user_id' => $user_id, 'post_id' => $post_id, 'forum_id' => $forum_id));
+            }
+        }
+    }
+
 
 }

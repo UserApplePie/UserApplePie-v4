@@ -368,6 +368,8 @@ INSERT INTO `uap4_forum_settings` (`id`, `setting_title`, `setting_value`, `sett
 (4, 'forum_topic_limit', '20', ''),
 (5, 'forum_topic_reply_limit', '10', '');
 
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `uap4_settings`
 --
@@ -378,6 +380,8 @@ CREATE TABLE `uap4_settings` (
   `setting_data` text,
   PRIMARY KEY (`setting_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
 
 --
 -- Dumping data for table `uap4_settings`
@@ -397,3 +401,18 @@ INSERT INTO `uap4_settings` (`setting_id`, `setting_title`, `setting_data`) VALU
 (11, 'site_email_site', ''),
 (12, 'site_recapcha_public', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'),
 (13, 'site_recapcha_private', '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `uap4_forum_tracker`
+--
+
+CREATE TABLE `uap4_forum_tracker` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `post_id` int(11) DEFAULT NULL,
+  `forum_id` int(11) DEFAULT NULL,
+  `last_visit` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+  ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

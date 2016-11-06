@@ -1111,7 +1111,7 @@ class Auth {
         /* Get Current User's Groups */
         $user_groups = $this->authorize->getUserGroups($where_id);
         // Make sure user is logged in
-        if(isset($where_id)){
+        if(!empty($where_id)){
         	// Get user's group status
         	foreach($user_groups as $user_group_data){
         		$cu_groupID[] = $user_group_data->groupID;
@@ -1138,7 +1138,7 @@ class Auth {
         /* Get Current User's Groups */
         $user_groups = $this->authorize->getUserGroups($where_id);
         // Make sure user is logged in
-        if(isset($where_id)){
+        if(!empty($where_id)){
         	// Get user's group status
         	foreach($user_groups as $user_group_data){
         		$cu_groupID[] = $user_group_data->groupID;
@@ -1165,7 +1165,7 @@ class Auth {
         /* Get Current User's Groups */
         $user_groups = $this->authorize->getUserGroups($where_id);
         // Make sure user is logged in
-        if(isset($where_id)){
+        if(!empty($where_id)){
         	// Get user's group status
         	foreach($user_groups as $user_group_data){
         		$cu_groupID[] = $user_group_data->groupID;

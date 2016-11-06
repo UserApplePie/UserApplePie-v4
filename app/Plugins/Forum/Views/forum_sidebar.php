@@ -64,7 +64,6 @@ foreach($data['forum_recent_posts'] as $row_rp)
   $f_p_title = $row_rp->forum_title;
   $f_p_timestamp = $row_rp->forum_timestamp;
   $f_p_user_id = $row_rp->forum_user_id;
-  $tstamp = $row_rp->tstamp;
   $f_p_user_name = CurrentUserData::getUserName($f_p_user_id);
 
   $f_p_title = stripslashes($f_p_title);

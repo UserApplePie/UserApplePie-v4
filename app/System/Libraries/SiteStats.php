@@ -3,7 +3,7 @@
  * Site Stats Helper
  *
  * @author David "DaVaR" Sargent - davar@thedavar.net
- * @version 3.0.4
+ * @version 4.0.0
  * @date May 5, 2016
  */
 

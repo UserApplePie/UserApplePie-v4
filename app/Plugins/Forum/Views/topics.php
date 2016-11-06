@@ -18,7 +18,8 @@ use App\System\Language,
   Libs\CurrentUserData,
   Libs\PageViews,
   Libs\Sweets,
-  Libs\Images;
+  Libs\Images,
+  Libs\ForumStats;
 
 ?>
 <div class='col-lg-8 col-md-8'>
@@ -61,6 +62,7 @@ use App\System\Language,
           $f_p_status = $row2->forum_status;
           $tstamp = $row2->tstamp;
           $f_p_user_name = CurrentUserData::getUserName($f_p_user_id);
+          $has_user_read = ForumStats::checkUserRead($data['current_userID'], $f_p_id, $tstamp);
 
           $f_p_title = stripslashes($f_p_title);
                   echo "<tr><td>";
@@ -70,6 +72,12 @@ use App\System\Language,
                       // Add text to blank Topic Titles
                       if(empty($f_p_title)){ $f_p_title = "Oops! Title is Missing for this Topic."; }
                       echo "<h4>";
+                        // Display icon that lets user know if they have read this topic or not
+                        if($has_user_read){
+                            echo "<span class='glyphicon glyphicon-star' aria-hidden='true'></span> ";
+                        }else{
+                            echo "<span class='glyphicon glyphicon-star-empty' aria-hidden='true' style='color: #DDD'></span> ";
+                        }
                       echo "<a href='".DIR."Topic/$f_p_id/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
                       echo "</h4>";
                       echo "<div class='text small'>";

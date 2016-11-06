@@ -55,6 +55,8 @@ use App\System\Controller,
             $u_id = $this->auth->user_info();
             $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
             $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+        }else{
+            $u_id = "";
         }
 
     	// Collect Data for view
@@ -66,6 +68,9 @@ use App\System\Controller,
 
         // Get list of all forum categories
         $data['forum_titles'] = $this->model->forum_titles();
+
+        // Output current user's ID
+        $data['current_userID'] = $u_id;
 
         // Get Recent Posts List for Sidebar
         $data['forum_recent_posts'] = $this->model->forum_recent_posts();
@@ -89,6 +94,8 @@ use App\System\Controller,
         $u_id = $this->auth->user_info();
         $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
         $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+      }else{
+          $u_id = "";
       }
 
       // Get Requested Topic's Title and Description
@@ -140,6 +147,8 @@ use App\System\Controller,
             $u_id = $this->auth->user_info();
             $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
             $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+        }else{
+            $u_id = "";
         }
 
         // Get Cat ID for this topic
@@ -198,6 +207,9 @@ use App\System\Controller,
         }else{
             $data['is_user_subscribed'] = true;
         }
+
+        // Track user activity for current topic
+        $data['update_tracking'] = $this->model->forum_tracker($u_id,$id,$topic_forum_id);
 
         // Set total number of messages for paginator
         $total_num_replys = $this->model->getTotalReplys($id);
@@ -423,6 +435,8 @@ use App\System\Controller,
         $u_id = $this->auth->user_info();
         $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
         $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+      }else{
+          $u_id = "";
       }
 
       // Output Current User's ID
@@ -542,6 +556,8 @@ use App\System\Controller,
         $u_id = $this->auth->user_info();
         $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
         $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+      }else{
+          $u_id = "";
       }
 
   		// Collect Data for view
@@ -564,6 +580,7 @@ use App\System\Controller,
         $this->pagesTopic->setTotal($total_num_topics);
 
         // Send page links to view
+        (isset($id)) ? $id = $id : $id = "";
         $pageFormat = DIR."SearchForum/$search/$id/"; // URL page where pages are
         $data['pageLinks'] = $this->pagesTopic->pageLinks($pageFormat, null, $current_page);
 

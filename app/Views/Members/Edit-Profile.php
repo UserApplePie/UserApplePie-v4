@@ -47,7 +47,7 @@
                 </div>
 								<?php
 									/* Check to see if Private Message Module is installed, if it is show link */
-									if(file_exists('../app/Modules/Forum/forum.module.php')){
+									if(file_exists('../app/Plugins/Forum/Controllers/Forum.php')){
 								?>
 									<div class="form-group">
 	                    <label for="signature"><?=Language::show('edit_profile_forum_sign', 'Members'); ?>: </label>

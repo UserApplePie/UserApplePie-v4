@@ -1,5 +1,5 @@
 <?php
-/**  
+/**
 * UserApplePie v4 Forum Plugin
 * @author David (DaVaR) Sargent
 * @email davar@thedavar.net
@@ -13,7 +13,8 @@
 use Core\Language,
   Libs\ErrorMessages,
   Libs\SuccessMessages,
-  Libs\Form;
+  Libs\Form,
+  Libs\ForumStats;
 
 ?>
 
@@ -49,24 +50,33 @@ use Core\Language,
         						$f_id2 = $row2->forum_id;
         						$cat_order_id = $row2->forum_order_cat;
 
+                                $has_user_read = ForumStats::checkUserReadCat($data['current_userID'], $f_id2);
+
         						$f_des = stripslashes($f_des);
         						$f_cat = stripslashes($f_cat);
 
         						echo "<div class='media'>";
-        							echo "<div class='media-body'>";
+    							echo "<div class='media-body'>";
         								// Display Link To View Topics for Category.
-                        echo "<h4><a href='".DIR."Topics/$f_id2/' title='$f_cat' ALT='$f_cat'>$f_cat</a></h4>";
-        							echo "</div>";
+                                    echo "<h4>";
+                                    // Display icon that lets user know if they have read this topic or not
+                                    if($has_user_read){
+                                        echo "<span class='glyphicon glyphicon-star' aria-hidden='true'></span> ";
+                                    }else{
+                                        echo "<span class='glyphicon glyphicon-star-empty' aria-hidden='true' style='color: #DDD'></span> ";
+                                    }
+                                    echo "<a href='".DIR."Topics/$f_id2/' title='$f_cat' ALT='$f_cat'>$f_cat</a></h4>";
+    							echo "</div>";
 
 
-        								// Displays when on mobile device
-        								echo "<button href='#Bar$f_id2' class='btn btn-default btn-sm visible-xs' data-toggle='collapse' style='position: absolute; top: 3px; right: 3px'>";
-        									echo "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>";
-        								echo "</button>";
+								// Displays when on mobile device
+								echo "<button href='#Bar$f_id2' class='btn btn-default btn-sm visible-xs' data-toggle='collapse' style='position: absolute; top: 3px; right: 3px'>";
+									echo "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>";
+								echo "</button>";
 
-        								echo "<div id='Bar$f_id2' class='collapse hidden-sm hidden-md hidden-lg'>";
-        								echo "<div style='text-align: center'>";
-        									// Display total number of topics for this category
+								echo "<div id='Bar$f_id2' class='collapse hidden-sm hidden-md hidden-lg'>";
+								echo "<div style='text-align: center'>";
+									// Display total number of topics for this category
                           echo "<div class='btn btn-info btn-xs' style='margin-top: 5px'>";
                           echo "Topics <span class='badge'>$row2->total_topics_display</span>";
                           echo "</div>";

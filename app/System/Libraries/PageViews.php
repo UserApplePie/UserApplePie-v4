@@ -31,7 +31,7 @@ class PageViews
  *
  * @return string returns views count
  */
-  public static function views($addView = null, $view_id = null, $view_location = null, $view_owner_userid = "0"){
+  public static function views($addView = null, $view_id = null, $view_location = null, $view_owner_userid = "0", $view_sec_id = ""){
     // Get data from server
     // Get current user's IP address
     $view_user_ip = $_SERVER['REMOTE_ADDR'];
