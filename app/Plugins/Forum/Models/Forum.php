@@ -79,7 +79,7 @@ class Forum extends Models {
             ".PREFIX."forum_posts AS t
             ON a.forum_id = t.forum_id
           LEFT OUTER JOIN
-            ".PREFIX."forum_posts_replys AS r
+            ".PREFIX."forum_post_replies AS r
             ON a.forum_id = r.fpr_id
           WHERE
             a.forum_name = 'forum'
@@ -101,8 +101,7 @@ class Forum extends Models {
      */
     public function forum_recent_posts($limit = "10"){
       $data = $this->db->select("
-        SELECT sub1.* FROM (
-            SELECT sub2.* FROM (
+            SELECT sub.* FROM (
                 SELECT
                     fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
                     fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
@@ -112,17 +111,14 @@ class Forum extends Models {
                     fpr.fpr_user_id as fpr_user_id, fpr.fpr_title as fpr_title,
                     fpr.fpr_edit_date as fpr_edit_date,
                     fpr.fpr_timestamp as fpr_timestamp,
-                    GREATEST(fp.forum_timestamp, COALESCE(fpr.fpr_timestamp, '00-00-00 00:00:00')) AS tstamp
-                    FROM ".PREFIX."forum_posts fp
-                    LEFT JOIN ".PREFIX."forum_posts_replys fpr
-                    ON fp.forum_post_id = fpr.fpr_post_id
-                    WHERE fp.allow = 'TRUE'
-            ) sub2
+                GREATEST(fp.forum_timestamp, COALESCE(fpr.fpr_timestamp, '00-00-00 00:00:00')) AS tstamp
+                FROM ".PREFIX."forum_posts fp
+                LEFT JOIN ".PREFIX."forum_post_replies fpr
+                ON fp.forum_post_id = fpr.fpr_post_id
+                WHERE fp.allow = 'TRUE'
                 ORDER BY tstamp DESC
-                LIMIT $limit
-        ) sub1
+            ) sub
             GROUP BY forum_post_id
-            ORDER BY tstamp DESC
       ");
       return $data;
     }
@@ -219,9 +215,9 @@ class Forum extends Models {
                       fpr.fpr_timestamp as fpr_timestamp,
                       GREATEST(fp.forum_timestamp, COALESCE(fpr.fpr_timestamp, '00-00-00 00:00:00')) AS tstamp
                       FROM ".PREFIX."forum_posts fp
-                      LEFT JOIN ".PREFIX."forum_posts_replys fpr
+                      LEFT JOIN ".PREFIX."forum_post_replies fpr
                       ON fp.forum_post_id = fpr.fpr_post_id
-                      WHERE fp.forum_id = :where_id
+                      WHERE forum_id = :where_id
                       AND fp.allow = 'TRUE'
               ) sub2
                   ORDER BY tstamp DESC
@@ -489,7 +485,7 @@ class Forum extends Models {
         SELECT
           *
         FROM
-          ".PREFIX."forum_posts_replys
+          ".PREFIX."forum_post_replies
         WHERE
           fpr_post_id = :where_id
         ORDER BY
@@ -515,7 +511,7 @@ class Forum extends Models {
         SELECT
           *
         FROM
-          ".PREFIX."forum_posts_replys
+          ".PREFIX."forum_post_replies
         WHERE
           fpr_post_id = :where_id
         ORDER BY
@@ -662,7 +658,7 @@ class Forum extends Models {
       // Check for email subscription status
       if($subscribe == true){$subscribe = "true";}else{$subscribe = "false";}
       // Update messages table
-      $query = $this->db->insert(PREFIX.'forum_posts_replys', array('fpr_post_id' => $fpr_post_id, 'fpr_user_id' => $fpr_user_id, 'fpr_id' => $fpr_id, 'fpr_content' => $fpr_content, 'subscribe_email' => $subscribe));
+      $query = $this->db->insert(PREFIX.'forum_post_replies', array('fpr_post_id' => $fpr_post_id, 'fpr_user_id' => $fpr_user_id, 'fpr_id' => $fpr_id, 'fpr_content' => $fpr_content, 'subscribe_email' => $subscribe));
       $count = count($query);
       // Check to make sure Topic was Created
       if($count > 0){
@@ -684,7 +680,7 @@ class Forum extends Models {
     public function lastTopicReplyID($where_id){
       $data = $this->db->select("
         SELECT id
-        FROM ".PREFIX."forum_posts_replys
+        FROM ".PREFIX."forum_post_replies
         WHERE fpr_post_id = :where_id
         ORDER BY id DESC
         LIMIT 1
@@ -705,7 +701,7 @@ class Forum extends Models {
      */
     public function updateTopicReply($id, $fpr_content){
       // Update messages table
-      $query = $this->db->update(PREFIX.'forum_posts_replys', array('fpr_content' => $fpr_content, 'fpr_edit_date' => date('Y-m-d H:i:s')), array('id' => $id));
+      $query = $this->db->update(PREFIX.'forum_post_replies', array('fpr_content' => $fpr_content, 'fpr_edit_date' => date('Y-m-d H:i:s')), array('id' => $id));
       $count = count($query);
       // Check to make sure Topic was Created
       if($count > 0){
@@ -727,7 +723,7 @@ class Forum extends Models {
     public function getReplyOwner($where_id){
       $data = $this->db->select("
         SELECT fpr_user_id
-        FROM ".PREFIX."forum_posts_replys
+        FROM ".PREFIX."forum_post_replies
         WHERE id = :where_id
         LIMIT 1
       ",
@@ -797,7 +793,7 @@ class Forum extends Models {
     public function updateReplyHideStatus($id, $setting, $user_id = "0", $reason = ""){
       // Update messages table
       $current_datetime = date("Y-m-d H:i:s");
-      $query = $this->db->update(PREFIX.'forum_posts_replys', array('allow' => $setting, 'hide_userID' => $user_id, 'hide_reason' => $reason, 'hide_timestamp' => $current_datetime), array('id' => $id));
+      $query = $this->db->update(PREFIX.'forum_post_replies', array('allow' => $setting, 'hide_userID' => $user_id, 'hide_reason' => $reason, 'hide_timestamp' => $current_datetime), array('id' => $id));
       $count = count($query);
       // Check to make sure Topic was Created
       if($count > 0){
@@ -822,7 +818,7 @@ class Forum extends Models {
       SELECT * FROM (
   			 (
   			 SELECT *
-  			 FROM ".PREFIX."forum_posts_replys
+  			 FROM ".PREFIX."forum_post_replies
   			 WHERE fpr_post_id = :post_id
   			 AND fpr_user_id = :user_id
   			 )
@@ -859,7 +855,7 @@ class Forum extends Models {
       SELECT * FROM (
   			 (
   			 SELECT *
-  			 FROM ".PREFIX."forum_posts_replys
+  			 FROM ".PREFIX."forum_post_replies
   			 WHERE fpr_post_id = :post_id
   			 AND fpr_user_id = :user_id
          AND subscribe_email = 'true'
@@ -897,7 +893,7 @@ class Forum extends Models {
     public function updateTopicSubcrition($id, $user_id, $setting){
       // Update messages table
       $query_a = $this->db->update(PREFIX.'forum_posts', array('subscribe_email' => $setting), array('forum_post_id' => $id, 'forum_user_id' => $user_id));
-      $query_b = $this->db->update(PREFIX.'forum_posts_replys', array('subscribe_email' => $setting), array('fpr_post_id' => $id, 'fpr_user_id' => $user_id));
+      $query_b = $this->db->update(PREFIX.'forum_post_replies', array('subscribe_email' => $setting), array('fpr_post_id' => $id, 'fpr_user_id' => $user_id));
       $count_a = count($query_a);
       $count_b = count($query_b);
       $count = $count_a + $count_b;
@@ -925,7 +921,7 @@ class Forum extends Models {
         SELECT * FROM (
           (
           SELECT fpr_user_id AS F_UID
-          FROM ".PREFIX."forum_posts_replys
+          FROM ".PREFIX."forum_post_replies
           WHERE fpr_post_id = :post_id
           AND subscribe_email = 'true'
           AND NOT fpr_user_id = :userID
@@ -1030,7 +1026,7 @@ class Forum extends Models {
           fpr.allow,
           'reply_post' AS post_type
         FROM
-          `".PREFIX."forum_posts_replys` fpr
+          `".PREFIX."forum_post_replies` fpr
         LEFT JOIN
           `".PREFIX."forum_posts` fp
         ON

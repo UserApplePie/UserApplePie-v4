@@ -14,7 +14,9 @@ use Core\Language,
   Libs\ErrorMessages,
   Libs\SuccessMessages,
   Libs\Form,
-  Libs\ForumStats;
+  Libs\ForumStats,
+  Libs\CurrentUserData,
+  Libs\TimeDiff;
 
 ?>
 
@@ -66,6 +68,20 @@ use Core\Language,
                                         echo "<span class='glyphicon glyphicon-star-empty' aria-hidden='true' style='color: #DDD'></span> ";
                                     }
                                     echo "<a href='".DIR."Topics/$f_id2/' title='$f_cat' ALT='$f_cat'>$f_cat</a></h4>";
+                                    echo "<div class='' style='text-align: left; font-size: x-small'>";
+                                        if($frp = ForumStats::forum_recent_posts("1", $f_id2)){
+                                            $uid1 = $frp[0]->forum_user_id;
+                                            $uid2 = $frp[0]->fpr_user_id;
+                                            $frp_topic_id = $frp[0]->forum_post_id;
+                                            $frp_tstamp = $frp[0]->tstamp;
+                                            if(empty($uid2)){ $frp_user_id = $uid1; }else{ $frp_user_id = $uid2; }
+                                            // Display Last Reply User Name
+                                            $frp_user_name = CurrentUserData::getUserName($frp_user_id);
+                                            //Display how long ago this was posted
+                                            echo " <a href='".DIR."Topic/$frp_topic_id' style='font-weight: bold'>Last Post</a> ";
+                                            echo " by <a href='".DIR."Profile/$frp_user_id' style='font-weight: bold'>$frp_user_name</a> " . TimeDiff::dateDiff("now", "$frp_tstamp", 1) . " ago ";
+                                        }
+                                    echo "</div>";
     							echo "</div>";
 
 
@@ -74,32 +90,34 @@ use Core\Language,
 									echo "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>";
 								echo "</button>";
 
-								echo "<div id='Bar$f_id2' class='collapse hidden-sm hidden-md hidden-lg'>";
-								echo "<div style='text-align: center'>";
-									// Display total number of topics for this category
-                          echo "<div class='btn btn-info btn-xs' style='margin-top: 5px'>";
-                          echo "Topics <span class='badge'>$row2->total_topics_display</span>";
-                          echo "</div>";
-        									// Display total number of topic replys for this category
-                          echo "<div class='btn btn-info btn-xs' style='margin-top: 3px'>";
-                          echo "Replies <span class='badge'>$row2->total_topic_replys_display</span>";
-                          echo "</div>";
+        								echo "<div id='Bar$f_id2' class='collapse hidden-sm hidden-md hidden-lg'>";
+        								echo "<div style='text-align: center'>";
+
+                                            // Display total number of topics for this category
+                                            echo "<div class='btn btn-info btn-xs' style='margin-top: 5px'>";
+                                            echo "Topics <span class='badge'>$row2->total_topics_display</span>";
+                                            echo "</div>";
+
+                                            // Display total number of topic replys for this category
+                                            echo "<div class='btn btn-info btn-xs' style='margin-top: 3px'>";
+                                            echo "Replies <span class='badge'>$row2->total_topic_replys_display</span>";
+                                            echo "</div>";
+
         								echo "</div>";
         								echo "</div>";
 
         								// Displays when not on mobile device
         								echo "<div class='media-right hidden-xs' style='text-align: right'>";
-                        // Display total number of topics for this category
-                        echo "<div class='btn btn-info btn-xs' style='margin-top: 5px'>";
-                        echo "Topics <span class='badge'>$row2->total_topics_display</span>";
-                        echo "</div>";
-                        echo "<br>";
-                        // Display total number of topic replys for this category
-                        echo "<div class='btn btn-info btn-xs' style='margin-top: 3px'>";
-                        echo "Replies <span class='badge'>$row2->total_topic_replys_display</span>";
-                        echo "</div>";
+                                            // Display total number of topics for this category
+                                            echo "<div class='btn btn-info btn-xs' style='margin-top: 5px'>";
+                                            echo "Topics <span class='badge'>$row2->total_topics_display</span>";
+                                            echo "</div>";
+                                            echo "<br>";
+                                            // Display total number of topic replys for this category
+                                            echo "<div class='btn btn-info btn-xs' style='margin-top: 3px'>";
+                                            echo "Replies <span class='badge'>$row2->total_topic_replys_display</span>";
+                                            echo "</div>";
         								echo "</div>";
-
         						echo "</div>";
         					echo "</ul>";
                 }

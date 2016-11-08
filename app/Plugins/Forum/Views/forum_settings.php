@@ -1,5 +1,5 @@
 <?php
-/**  
+/**
 * UserApplePie v4 Forum Plugin
 * @author David (DaVaR) Sargent
 * @email davar@thedavar.net
@@ -97,7 +97,7 @@ use Libs\Form,
   			<?php
           echo "<table class='table table-hover responsive'>";
             // Displays User's Groups they are a member of
-            if(isset($data['f_users_member_groups'])){
+            if(!empty($data['f_users_member_groups'])){
               echo "<th style='background-color: #EEE'>Groups Allowed to Post on Forum: </th>";
               foreach($data['f_users_member_groups'] as $member){
                 echo "<tr><td>";
@@ -118,7 +118,7 @@ use Libs\Form,
 
           echo "<table class='table table-hover responsive'>";
             // Displays User's Groups they are not a member of
-            if(isset($data['f_users_notmember_groups'])){
+            if(!empty($data['f_users_notmember_groups'])){
               echo "<th style='background-color: #EEE'>Groups NOT Allowed to Post on Forum: </th>";
               foreach($data['f_users_notmember_groups'] as $notmember){
                 echo "<tr><td>";
@@ -173,7 +173,7 @@ use Libs\Form,
   			<?php
           echo "<table class='table table-hover responsive'>";
             // Displays User's Groups they are a member of
-            if(isset($data['f_mods_member_groups'])){
+            if(!empty($data['f_mods_member_groups'])){
               echo "<th style='background-color: #EEE'>Groups Allowed to Moderate Forum: </th>";
               foreach($data['f_mods_member_groups'] as $member){
                 echo "<tr><td>";
@@ -194,7 +194,7 @@ use Libs\Form,
 
           echo "<table class='table table-hover responsive'>";
             // Displays User's Groups they are not a member of
-            if(isset($data['f_mods_notmember_groups'])){
+            if(!empty($data['f_mods_notmember_groups'])){
               echo "<th style='background-color: #EEE'>Groups NOT Allowed to Moderate Forum: </th>";
               foreach($data['f_mods_notmember_groups'] as $notmember){
                 echo "<tr><td>";
@@ -227,7 +227,7 @@ use Libs\Form,
   			<?php
           echo "<table class='table table-hover responsive'>";
             // Displays User's Groups they are a member of
-            if(isset($data['f_admins_member_groups'])){
+            if(!empty($data['f_admins_member_groups'])){
               echo "<th style='background-color: #EEE'>Groups Allowed to Admin Forum: </th>";
               foreach($data['f_admins_member_groups'] as $member){
                 echo "<tr><td>";
@@ -248,7 +248,7 @@ use Libs\Form,
 
           echo "<table class='table table-hover responsive'>";
             // Displays User's Groups they are not a member of
-            if(isset($data['f_admins_notmember_groups'])){
+            if(!empty($data['f_admins_notmember_groups'])){
               echo "<th style='background-color: #EEE'>Groups NOT Allowed to Admin Forum: </th>";
               foreach($data['f_admins_notmember_groups'] as $notmember){
                 echo "<tr><td>";

@@ -82,7 +82,7 @@ use App\System\Controller,
         $data['csrf_token'] = Csrf::makeToken('forum');
 
         /* Send data to view */
-        Load::ViewPlugin("forum_home", $data, "forum_sidebar::Left", "Forum");
+        Load::ViewPlugin("forum_home", $data, "forum_sidebar::Right", "Forum");
     }
 
     // Forum Topic List Display
@@ -135,7 +135,7 @@ use App\System\Controller,
       $data['csrf_token'] = Csrf::makeToken('forum');
 
         /* Send data to view */
-        Load::ViewPlugin("topics", $data, "forum_sidebar::Left", "Forum");
+        Load::ViewPlugin("topics", $data, "forum_sidebar::Right", "Forum");
     }
 
     // Forum Topic Display
@@ -184,6 +184,9 @@ use App\System\Controller,
         }else{
             $data['current_page'] = "1";
         }
+
+        // Get set ammount of replies per page
+        $data['topic_reply_limit'] = $this->forum_topic_reply_limit;
 
         // Check to see if current user is admin
         $data['is_admin'] = $this->auth->checkIsAdmin($u_id);
@@ -423,7 +426,7 @@ use App\System\Controller,
       $data['csrf_token'] = Csrf::makeToken('forum');
 
         /* Send data to view */
-        Load::ViewPlugin("topic", $data, "forum_sidebar::Left", "Forum");
+        Load::ViewPlugin("topic", $data, "forum_sidebar::Right", "Forum");
     }
 
     // Forum New Topic Form Display
@@ -544,7 +547,7 @@ use App\System\Controller,
       $data['csrf_token'] = Csrf::makeToken('forum');
 
         /* Send data to view */
-        Load::ViewPlugin("newtopic", $data, "forum_sidebar::Left", "Forum");
+        Load::ViewPlugin("newtopic", $data, "forum_sidebar::Right", "Forum");
     }
 
     /* Forum Search Function */
@@ -601,7 +604,7 @@ use App\System\Controller,
       $data['csrf_token'] = Csrf::makeToken('forum');
 
         /* Send data to view */
-        Load::ViewPlugin("searchForum", $data, "forum_sidebar::Left", "Forum");
+        Load::ViewPlugin("searchForum", $data, "forum_sidebar::Right", "Forum");
     }
 
   }

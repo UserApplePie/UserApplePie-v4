@@ -137,6 +137,8 @@ class ForumAdmin extends Controller{
       foreach ($f_users_member as $value) {
         $f_users_member_data[] = $this->model->getGroupData($value);
       }
+    }else{
+        $f_users_member_data = "";
     }
     // Push group data to view
     $data['f_users_member_groups'] = $f_users_member_data;
@@ -145,6 +147,8 @@ class ForumAdmin extends Controller{
       foreach ($f_users_notmember as $value) {
         $f_users_notmember_groups[] = $this->model->getGroupData($value);
       }
+    }else{
+        $f_users_notmember_groups = "";
     }
     // Push group data to view
     $data['f_users_notmember_groups'] = $f_users_notmember_groups;
@@ -164,6 +168,8 @@ class ForumAdmin extends Controller{
       foreach ($f_mods_member as $value) {
         $f_mods_member_data[] = $this->model->getGroupData($value);
       }
+    }else{
+        $f_mods_member_data = "";
     }
     // Push group data to view
     $data['f_mods_member_groups'] = $f_mods_member_data;
@@ -191,6 +197,8 @@ class ForumAdmin extends Controller{
       foreach ($f_admins_member as $value) {
         $f_admins_member_data[] = $this->model->getGroupData($value);
       }
+    }else{
+        $f_admins_member_data = "";
     }
     // Push group data to view
     $data['f_admins_member_groups'] = $f_admins_member_data;
@@ -598,6 +606,13 @@ class ForumAdmin extends Controller{
         <li class='active'><i class='glyphicon glyphicon-list'></i> ".$data['title']."</li>
       ";
     }
+
+    // Clean up for errors messages
+    if(!isset($data['edit_cat_main'])){ $data['edit_cat_main'] = ""; }
+    if(!isset($data['cat_sub_list'])){ $data['cat_sub_list'] = ""; }
+    if(!isset($data['cat_sub_edit'])){ $data['cat_sub_edit'] = ""; }
+    if(!isset($data['delete_cat_main'])){ $data['delete_cat_main'] = ""; }
+    if(!isset($data['delete_cat_sub'])){ $data['delete_cat_sub'] = ""; }
 
     // Get Last main cat order number
     $data['fourm_cat_main_last'] = $this->forum->getLastCatMain();

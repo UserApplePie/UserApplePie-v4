@@ -273,10 +273,10 @@ CREATE TABLE IF NOT EXISTS `uap4_forum_posts` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `uap4_forum_posts_replys`
+-- Table structure for table `uap4_forum_post_replies`
 --
 
-CREATE TABLE IF NOT EXISTS `uap4_forum_posts_replys` (
+CREATE TABLE IF NOT EXISTS `uap4_forum_post_replies` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
   `fpr_post_id` int(20) DEFAULT NULL,
   `fpr_id` int(20) DEFAULT NULL,

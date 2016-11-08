@@ -25,7 +25,7 @@ class ForumStats
 				SELECT
 					*
 				FROM
-					".PREFIX."forum_posts_replys
+					".PREFIX."forum_post_replies
 				WHERE
 			    fpr_user_id = :userID
 				",
@@ -41,7 +41,13 @@ class ForumStats
      *
      * @return array returns all recent forum posts
      */
-    public static function forum_recent_posts($limit = "10"){
+    public static function forum_recent_posts($limit = "10", $forum_id = ""){
+        // Setup to get data based on forum_id if one is set
+        if(!empty($forum_id)){
+            $forum_id_data = "AND forum_id = $forum_id";
+        }else{
+            $forum_id_data = "";
+        }
         self::$db = Database::get();
         $data = self::$db->select("
             SELECT sub1.* FROM (
@@ -57,9 +63,10 @@ class ForumStats
                         fpr.fpr_timestamp as fpr_timestamp,
                         GREATEST(fp.forum_timestamp, COALESCE(fpr.fpr_timestamp, '00-00-00 00:00:00')) AS tstamp
                         FROM ".PREFIX."forum_posts fp
-                        LEFT JOIN ".PREFIX."forum_posts_replys fpr
+                        LEFT JOIN ".PREFIX."forum_post_replies fpr
                         ON fp.forum_post_id = fpr.fpr_post_id
                         WHERE fp.allow = 'TRUE'
+                        $forum_id_data
                 ) sub2
                     ORDER BY tstamp DESC
                     LIMIT $limit
@@ -138,7 +145,7 @@ class ForumStats
                             fpr.fpr_timestamp as fpr_timestamp,
                             GREATEST(fp.forum_timestamp, COALESCE(fpr.fpr_timestamp, '00-00-00 00:00:00')) AS tstamp
                             FROM ".PREFIX."forum_posts fp
-                            LEFT JOIN ".PREFIX."forum_posts_replys fpr
+                            LEFT JOIN ".PREFIX."forum_post_replies fpr
                             ON fp.forum_post_id = fpr.fpr_post_id
                             WHERE fp.forum_id = :forum_id
                             AND fp.allow = 'TRUE'

@@ -30,14 +30,14 @@ class ForumAdmin extends Models {
           a.*,
           COUNT(DISTINCT t.forum_post_id) AS total_topics_display,
           COUNT(DISTINCT r.id) AS total_topic_replys_display,
-          COUNT(DISTINCT c.forum_id) AS total_sub_cats
+          COUNT(DISTINCT c.forum_cat) AS total_sub_cats
         FROM
           ".PREFIX."forum_cat AS a
         LEFT OUTER JOIN
           ".PREFIX."forum_posts AS t
           ON a.forum_id = t.forum_id
         LEFT OUTER JOIN
-          ".PREFIX."forum_posts_replys AS r
+          ".PREFIX."forum_post_replies AS r
           ON a.forum_id = r.fpr_id
         LEFT OUTER JOIN
           ".PREFIX."forum_cat AS c
@@ -75,7 +75,7 @@ class ForumAdmin extends Models {
           ".PREFIX."forum_posts AS t
           ON a.forum_id = t.forum_id
         LEFT OUTER JOIN
-          ".PREFIX."forum_posts_replys AS r
+          ".PREFIX."forum_post_replies AS r
           ON a.forum_id = r.fpr_id
         WHERE
           a.forum_title = :forum_title
@@ -707,7 +707,7 @@ class ForumAdmin extends Models {
    * @return boolean true/false
    */
   public function deleteTopicRepliesForumID($forum_id){
-    $data = $this->db->delete(PREFIX.'forum_posts_replys', array('fpr_id' => $forum_id), '99999999');
+    $data = $this->db->delete(PREFIX.'forum_post_replies', array('fpr_id' => $forum_id), '99999999');
     $count = count($data);
     if($count > 0){
       return true;
@@ -747,7 +747,7 @@ class ForumAdmin extends Models {
    * @return boolean true/false
    */
   public function updateTopicRepliesForumID($old_id, $new_id){
-    $data = $this->db->update(PREFIX.'forum_posts_replys', array('fpr_id' => $new_id), array('fpr_id' => $old_id));
+    $data = $this->db->update(PREFIX.'forum_post_replies', array('fpr_id' => $new_id), array('fpr_id' => $old_id));
     $count = count($data);
     if($count > 0){
       return true;
@@ -840,7 +840,7 @@ class ForumAdmin extends Models {
   public function getBlockedReplies(){
     $data = $this->db->select("
       SELECT *
-      FROM ".PREFIX."forum_posts_replys
+      FROM ".PREFIX."forum_post_replies
       WHERE allow = 'FALSE'
       ORDER BY hide_timestamp DESC
     ");

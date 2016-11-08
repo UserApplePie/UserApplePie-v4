@@ -71,8 +71,10 @@ use Core\Language,
     					echo "</div>";
     					echo "<div class='col-lg-6 col-md-6 col-sm-6' style='text-align:right'>";
     						// Display how long ago this was posted
-                $data_topic_date = $data['topic_date'];
+                            $data_topic_date = $data['topic_date'];
     						echo "<font color=green> " . TimeDiff::dateDiff("now", "$data_topic_date", 1) . " ago</font> ";
+                            // Display post number
+                            echo " <span class='label label-default'>Topic</span> ";
     					echo "</div>";
     				echo "</div>";
     			echo "</div>";
@@ -177,6 +179,12 @@ use Core\Language,
         echo "</div>";
       }
 
+        // Set starting post number
+        if($data['current_page'] <= "1"){
+            $post_num = "0";
+        }else{
+            $post_num = ($data['topic_reply_limit'] * $data['current_page']) - $data['topic_reply_limit'];
+        }
         foreach($data['topic_replys'] as $row)
       	{
           $rf_p_main_id = $row->id;
@@ -192,7 +200,7 @@ use Core\Language,
           $rf_p_hide_timestamp = $row->hide_timestamp;
           $rf_p_user_name = CurrentUserData::getUserName($rf_p_user_id);
           $rf_p_hide_user_name = CurrentUserData::getUserName($rf_p_hide_userID);
-          //$rf_p_content = stripslashes($rf_p_content);
+          $post_num ++;
 
           echo "<a class='anchor' name='topicreply$rf_p_main_id'></a>";
 
@@ -209,6 +217,8 @@ use Core\Language,
 									// Display how long ago this was posted
 									$timestart = "$rf_p_timestamp";  //Time of post
 									echo "<font color=green> " . TimeDiff::dateDiff("now", "$timestart", 1) . " ago</font> ";
+                                    // Display reply post number
+                                    echo " <span class='label label-default'>#$post_num</span> ";
 								echo "</div>";
 							echo "</div>";
 						echo "</div>";
@@ -347,7 +357,7 @@ use Core\Language,
           echo " <strong><font color='red'>Topic Locked - Replies are Disabled</font></strong> ";
         }else{
           // Display Create New Topic Reply Button if user is logged in
-          if(isset($data['current_userID'])){
+          if($data['isLoggedIn']){
 ?>
             <hr>
             <?php echo Form::open(array('method' => 'post',  'files' => '')); ?>

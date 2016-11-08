@@ -160,7 +160,7 @@ use App\System\Language,
             echo "</table>";
 
             // Display Create New Topic Button if user is logged in
-            if(isset($data['current_userID'])){
+            if($data['isLoggedIn']){
               echo "<a class='btn btn-sm btn-success' href='".DIR."NewTopic/".$data['current_topic_id']."'>";
                 echo "Create New Topic";
               echo "</a>";
