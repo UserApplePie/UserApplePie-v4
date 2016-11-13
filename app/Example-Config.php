@@ -103,6 +103,12 @@ class Config {
     // this is the same as SECURITY_DURATION but in number format
     define('WAIT_TIME', $waittime); //DO NOT MODIFY
 
+    /**
+     * Turn on custom error handling.
+     */
+    set_exception_handler('App\System\ErrorLogger::ExceptionHandler');
+    set_error_handler('App\System\ErrorLogger::ErrorHandler');
+
     /* Set timezone */
     date_default_timezone_set('America/Chicago');
 

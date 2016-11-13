@@ -28,7 +28,6 @@ session_start();
 
 /* Error Settings */
 error_reporting(E_ALL);
-ini_set("display_errors", 1);
 
 /* Make sure Config File Exists */
 if (is_readable(APPDIR.'Config.php')) {

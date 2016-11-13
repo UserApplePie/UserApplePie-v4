@@ -101,24 +101,36 @@ class Forum extends Models {
      */
     public function forum_recent_posts($limit = "10"){
       $data = $this->db->select("
-            SELECT sub.* FROM (
-                SELECT
-                    fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
-                    fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
-                    fp.forum_edit_date as forum_edit_date,
-                    fp.forum_timestamp as forum_timestamp, fpr.id as id,
-                    fpr.fpr_post_id as fpr_post_id, fpr.fpr_id as fpr_id,
-                    fpr.fpr_user_id as fpr_user_id, fpr.fpr_title as fpr_title,
-                    fpr.fpr_edit_date as fpr_edit_date,
-                    fpr.fpr_timestamp as fpr_timestamp,
-                GREATEST(fp.forum_timestamp, COALESCE(fpr.fpr_timestamp, '00-00-00 00:00:00')) AS tstamp
-                FROM ".PREFIX."forum_posts fp
-                LEFT JOIN ".PREFIX."forum_post_replies fpr
-                ON fp.forum_post_id = fpr.fpr_post_id
-                WHERE fp.allow = 'TRUE'
-                ORDER BY tstamp DESC
-            ) sub
-            GROUP BY forum_post_id
+          SELECT a.*, b.*,
+          GREATEST(a.forum_timestamp,COALESCE(b.fpr_timestamp,'0000-00-00 00:00:00')) AS tstamp
+          FROM
+          (
+            SELECT
+                fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
+                fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
+                fp.forum_edit_date as forum_edit_date,
+                fp.forum_timestamp as forum_timestamp,
+                fp.allow as forum_allow
+            FROM `".PREFIX."forum_posts` fp
+            WHERE fp.allow = 'TRUE'
+          ) a
+          LEFT JOIN
+          (
+              SELECT
+                  fpr.fpr_post_id as fpr_post_id,
+                  fpr.id as id,
+                  fpr.fpr_id as fpr_id,
+                  fpr.fpr_user_id as fpr_user_id,
+                  fpr.fpr_edit_date as fpr_edit_date,
+                  fpr.fpr_timestamp as fpr_timestamp,
+                  fpr.allow as fpr_allow
+              FROM `".PREFIX."forum_post_replies` fpr
+              WHERE fpr.allow = 'TRUE'
+              ORDER BY `fpr`.`fpr_timestamp` DESC
+          ) b
+          ON `a`.`forum_post_id` = `b`.`fpr_post_id`
+          ORDER BY tstamp DESC
+          LIMIT $limit
       ");
       return $data;
     }
