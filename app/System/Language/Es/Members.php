@@ -1,8 +1,14 @@
 <?php
 /**
- * Spanish language
- * Members Pages
- */
+* Language File
+* Members
+* Spanish Language
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
 return [
 	/** Members Global **/
 	'user_not_logged_in' => "Usted debe ser conectado para ver esa página !",

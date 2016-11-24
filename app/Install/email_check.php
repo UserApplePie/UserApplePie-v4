@@ -1,4 +1,13 @@
 <?php
+/**
+ * Sends Test E-Mail to test mail settings
+ * Currently not in use with installer
+ * Moved E-Mail settings to Admin Panel.
+ *
+ * UserApplePie
+ * @author David (DaVaR) Sargent <davar@userapplepie.com>
+ * @version 4.0.0
+ */
 
 //EMAIL MESSAGE USING PHPMAILER
 $mail = new \Helpers\PhpMailer\Mail();

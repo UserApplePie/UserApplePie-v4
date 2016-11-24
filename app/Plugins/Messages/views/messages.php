@@ -1,4 +1,11 @@
 <?php
+/**
+* UserApplePie v4 Messages View Plugin Messages Home
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
 
 // Displays a list of all message for current user
 // Only displays From Subject, Status, Date Read, Date Sent

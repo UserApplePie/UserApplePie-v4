@@ -1,4 +1,11 @@
 <?php
+/**
+* Checks reCAPTCHA to make sure keys are working
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
 
 require APPDIR.'Install/recaptcha.php';
 

@@ -1,5 +1,12 @@
 <?php
-/** UAP Install Step 5 **/
+/**
+* Install Script Step 5
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
 /** Install Success **/
 
 /** Last thing we need to do is Copy Config.example.php to Config.php **/

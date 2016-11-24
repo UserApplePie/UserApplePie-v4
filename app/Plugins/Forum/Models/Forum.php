@@ -1,12 +1,11 @@
 <?php
 /**
-* UserApplePie v4 Forum Plugin
-* @author David (DaVaR) Sargent
-* @email davar@thedavar.net
-* @website http://www.userapplepie.com
-* @version 1.0.0
-* @release_date 04/27/2016
-**/
+* UserApplePie v4 Forum Models Plugin
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
 
 /** Forum model **/
 
@@ -101,34 +100,20 @@ class Forum extends Models {
      */
     public function forum_recent_posts($limit = "10"){
       $data = $this->db->select("
-          SELECT a.*, b.*,
-          GREATEST(a.forum_timestamp,COALESCE(b.fpr_timestamp,'0000-00-00 00:00:00')) AS tstamp
-          FROM
-          (
-            SELECT
-                fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
-                fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
-                fp.forum_edit_date as forum_edit_date,
-                fp.forum_timestamp as forum_timestamp,
-                fp.allow as forum_allow
-            FROM `".PREFIX."forum_posts` fp
-            WHERE fp.allow = 'TRUE'
-          ) a
-          LEFT JOIN
-          (
-              SELECT
-                  fpr.fpr_post_id as fpr_post_id,
-                  fpr.id as id,
-                  fpr.fpr_id as fpr_id,
-                  fpr.fpr_user_id as fpr_user_id,
-                  fpr.fpr_edit_date as fpr_edit_date,
-                  fpr.fpr_timestamp as fpr_timestamp,
-                  fpr.allow as fpr_allow
-              FROM `".PREFIX."forum_post_replies` fpr
-              WHERE fpr.allow = 'TRUE'
-              ORDER BY `fpr`.`fpr_timestamp` DESC
-          ) b
-          ON `a`.`forum_post_id` = `b`.`fpr_post_id`
+          SELECT
+              fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
+              fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
+              fp.forum_edit_date as forum_edit_date,
+              fp.forum_timestamp as forum_timestamp, fpr.id as id,
+              fpr.fpr_post_id as fpr_post_id, fpr.fpr_id as fpr_id,
+              fpr.fpr_user_id as fpr_user_id, fpr.fpr_title as fpr_title,
+              fpr.fpr_edit_date as fpr_edit_date,
+              fpr.fpr_timestamp as fpr_timestamp,
+              GREATEST(fp.forum_timestamp, COALESCE(fpr.fpr_timestamp, '00-00-00 00:00:00')) AS tstamp
+              FROM ".PREFIX."forum_posts fp
+              LEFT JOIN ".PREFIX."forum_post_replies fpr
+              ON fp.forum_post_id = fpr.fpr_post_id
+              WHERE fp.allow = 'TRUE'
           ORDER BY tstamp DESC
           LIMIT $limit
       ");
@@ -551,8 +536,9 @@ class Forum extends Models {
       //$forum_content = nl2br($forum_content);
       // Update messages table
       $query = $this->db->insert(PREFIX.'forum_posts', array('forum_id' => $forum_id, 'forum_user_id' => $forum_user_id, 'forum_title' => $forum_title, 'forum_content' => $forum_content));
-      $count = count($query);
       $last_insert_id = $this->db->lastInsertId('forum_post_id');
+      $query_track = $this->db->insert(PREFIX.'forum_post_tracker', array('forum_post_id' => $last_insert_id));
+      $count = count($query, $query_track);
       // Check to make sure Topic was Created
       if($count > 0){
         return $last_insert_id;
@@ -671,7 +657,9 @@ class Forum extends Models {
       if($subscribe == true){$subscribe = "true";}else{$subscribe = "false";}
       // Update messages table
       $query = $this->db->insert(PREFIX.'forum_post_replies', array('fpr_post_id' => $fpr_post_id, 'fpr_user_id' => $fpr_user_id, 'fpr_id' => $fpr_id, 'fpr_content' => $fpr_content, 'subscribe_email' => $subscribe));
-      $count = count($query);
+      $last_insert_id = $this->db->lastInsertId('id');
+      $query_track = $this->db->insert(PREFIX.'forum_post_tracker', array('forum_post_id' => $fpr_post_id, 'forum_reply_id' => $last_insert_id));
+      $count = count($query, $query_track);
       // Check to make sure Topic was Created
       if($count > 0){
         return true;

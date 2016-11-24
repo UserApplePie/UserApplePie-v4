@@ -1,4 +1,12 @@
 <?php
+/**
+* UserApplePie v4 Messages View Plugin Message Display
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
 
 // Display a given message as requested by post from inbox or outbox
 

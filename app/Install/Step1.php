@@ -1,5 +1,13 @@
 <?php
-/** UAP Install Step 1 **/
+/**
+* Install Script Step 1
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
+
 /** System Check **/
 
 /** PHP Version Check 5.5 or Greater **/

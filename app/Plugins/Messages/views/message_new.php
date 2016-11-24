@@ -1,4 +1,11 @@
 <?php
+/**
+* UserApplePie v4 Messages View Plugin Message New
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
 
 // Message New Displays form for user to create a new message to send
 // Also works with message reply

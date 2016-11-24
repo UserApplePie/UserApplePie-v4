@@ -1,4 +1,11 @@
 <?php
+/**
+* UserApplePie v4 Messages View Plugin Message Sidebar
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
 
   // View to display message sidebar
 

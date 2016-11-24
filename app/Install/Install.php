@@ -1,9 +1,12 @@
 <?php
-
 /**
-* UAP 3 Install Script
-* @author DaVaR davar@userapplepie.com
-**/
+* Main Install Script
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
 
 /** Include the Config.example.php file to get current settings **/
 if (file_exists(ROOTDIR.'app/Example-Config.php')) {

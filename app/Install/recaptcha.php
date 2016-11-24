@@ -1,4 +1,13 @@
 <?php
+/**
+* Main reCAPTCHA file for testing keys
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
+
 //YOU NEED TO CHANGE THESE KEYS. I THEY ARE DUMMY KEYS THAT I CANNOT GUARANTEE WILL STAY LIVE
 //IF YOU USE THE DUMMY KEYS YOUR reCAPTCHA WILL RANDOMLY STOP WORKING AND THAT WILL BREAK THINGS
 

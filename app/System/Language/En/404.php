@@ -1,8 +1,13 @@
 <?php
-  /*
-   * 404 Page
-   * English Language
-   */
+/**
+* Language File
+* 404 Page
+* English Language
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
 
   return [
     '404content' => "

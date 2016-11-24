@@ -1,12 +1,11 @@
 <?php
 /**
-* UserApplePie v4 Forum Plugin
-* @author David (DaVaR) Sargent
-* @email davar@thedavar.net
-* @website http://www.userapplepie.com
-* @version 1.0.0
-* @release_date 04/27/2016
-**/
+* UserApplePie v4 Forum Admin Models Plugin
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
 
 /** Admin Panel Forum Admin Models **/
 

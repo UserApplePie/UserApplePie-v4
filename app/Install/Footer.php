@@ -1,3 +1,13 @@
+<?php
+/**
+* Footer for Install Script
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+?>
+
 	</div>
 		<div class='col-lg-12 col-md-12 col-sm-12'>
 			<!-- Footer (sticky) -->

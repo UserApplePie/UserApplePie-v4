@@ -1,7 +1,11 @@
 <?php namespace App\Controllers;
 
 /*
-** Home Pages Controller
+* Home Pages Controller
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
 */
 
 use App\System\Controller,
@@ -83,7 +87,7 @@ class Home extends Controller {
     }
 
     /* Templates Method
-    ** Used to load files within the template assets folder
+    * Used to load files within the template assets folder
     */
 
     public function Templates(){
@@ -96,7 +100,7 @@ class Home extends Controller {
     }
 
     /* Assets Method
-    ** Used to load files within the root assets folder
+    * Used to load files within the root assets folder
     */
     public function assets(){
         $extRoutes = $this->routes;

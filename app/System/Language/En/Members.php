@@ -1,8 +1,14 @@
 <?php
 /**
- * English language
- * Members Pages
- */
+* Language File
+* Members
+* English Language
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
 return [
 	/** Members Global **/
 	'user_not_logged_in' => "You must be logged in to view that page!",

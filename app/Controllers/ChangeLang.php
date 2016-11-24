@@ -2,7 +2,8 @@
 /**
  * Change Lang Controller
  *
- * @author David (DaVaR) Sargent
+ * UserApplePie
+ * @author David (DaVaR) Sargent <davar@userapplepie.com>
  * @version 4.0.0
  */
 

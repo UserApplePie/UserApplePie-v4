@@ -3,7 +3,7 @@
  * Admin Panel Controller
  *
  * UserApplePie
- * @author David (DaVaR) Sargent
+ * @author David (DaVaR) Sargent <davar@userapplepie.com>
  * @version 4.0.0
  */
 
@@ -64,16 +64,17 @@ class AdminPanel extends Controller{
 
     /** Get Current UAP Version Data From UserApplePie.com **/
     $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=UAP');
-    preg_match("/UAP (.*) UAP/i", $html, $match);
+    preg_match("/UAP v(.*) UAP/i", $html, $match);
     $cur_uap_version = UAPVersion;
     if($cur_uap_version < $match[1]){ $data['cur_uap_version'] = $match[1]; }
 
     /** Check to see if Forum Plugin is Installed  **/
-    if(file_exists('../app/Modules/Forum/forum.module.php')){
+    if(file_exists('../app/Plugins/Forum/Controllers/Forum.php')){
       $forum_status = "Installed";
       /** Get Current UAP Version Data From UserApplePie.com **/
       $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=Forum');
-      preg_match("/UAP-Forum (.*) UAP-Forum/i", $html, $match);
+      preg_match("/UAP-Forum v(.*) UAP-Forum/i", $html, $match);
+      require_once('../app/Plugins/Forum/ForumVersion.php');
       $cur_uap_forum_version = UAPForumVersion;
       if($cur_uap_forum_version < $match[1]){ $data['cur_uap_forum_version'] = $match[1]; }
     }else{
@@ -82,11 +83,12 @@ class AdminPanel extends Controller{
     $data['apd_plugin_forum'] = $forum_status;
 
     /** Check to see if Private Messages Plugin is Installed **/
-    if(file_exists('../app/Modules/Messages/messages.module.php')){
+    if(file_exists('../app/Plugins/Messages/Controllers/Messages.php')){
       $msg_status = "Installed";
       /** Get Current UAP Version Data From UserApplePie.com **/
       $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=Messages');
-      preg_match("/UAP-Messages (.*) UAP-Messages/i", $html, $match);
+      preg_match("/UAP-Messages v(.*) UAP-Messages/i", $html, $match);
+      require_once('../app/Plugins/Messages/MessagesVersion.php');
       $cur_uap_messages_version = UAPMessagesVersion;
       if($cur_uap_messages_version < $match[1]){ $data['cur_uap_messages_version'] = $match[1]; }
     }else{

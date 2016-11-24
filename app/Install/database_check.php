@@ -1,4 +1,11 @@
 <?php
+/**
+ * Checks mySQL database settings.
+ *
+ * UserApplePie
+ * @author David (DaVaR) Sargent <davar@userapplepie.com>
+ * @version 4.0.0
+ */
 
 try {
   $conn = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASS);

@@ -1,4 +1,12 @@
 <?php
+/**
+* UserApplePie v4 Messages Controller Plugin
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
 namespace App\Plugins\Messages\Controllers;
 
 use App\System\Controller,

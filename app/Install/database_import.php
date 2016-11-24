@@ -1,4 +1,12 @@
 <?php
+/**
+ * Imports Table(s) Data to Database
+ *
+ * UserApplePie
+ * @author David (DaVaR) Sargent <davar@userapplepie.com>
+ * @version 4.0.0
+ */
+
 
 /** Test The Database Settings and Make sure it works **/
 try {

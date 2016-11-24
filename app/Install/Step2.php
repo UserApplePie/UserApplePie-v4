@@ -1,8 +1,16 @@
 <?php
+/**
+* Install Script Step 2
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
+
 // TODO
 // Firgure out a better way to run the tests/or have a refreash of some sort.
 
-/** UAP Install Step 2 **/
 /** System Settings **/
 
 use Libs\ErrorMessages,

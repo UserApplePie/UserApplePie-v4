@@ -1,6 +1,12 @@
 <?php
 
-
+/**
+* Header for Install Script
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
 
 /** Check to see where the user is at within the install **/
 if(isset($_GET['install_step'])){

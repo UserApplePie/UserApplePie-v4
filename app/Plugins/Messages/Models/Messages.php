@@ -1,6 +1,11 @@
 <?php
-
-// Message Model Class Database Goods
+/**
+* UserApplePie v4 Messages Models Plugin
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
 
 namespace App\Plugins\Messages\Models;
 

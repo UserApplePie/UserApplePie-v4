@@ -1,8 +1,13 @@
 <?php
-/** UAP Install Step 3 **/
+/**
+* Install Script Step 3
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
 /** Create Database **/
-
-
 ?>
 
 <div class='panel panel-info'>

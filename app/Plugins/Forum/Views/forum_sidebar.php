@@ -1,12 +1,11 @@
 <?php
 /**
- * Forum Recent Posts Side Bar View
- *
- * @author David "DaVaR" Sargent - davar@thedavar.net
- * @version 2.0
- * @date Jan 13, 2016
- * @date updated Jan 13, 2016
- */
+* UserApplePie v4 Forum View Plugin Sidebar
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
 
   use Libs\Language;
   use Libs\TimeDiff;

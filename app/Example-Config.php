@@ -56,7 +56,7 @@ class Config {
     /**
      * Database password.
      */
-    define('DB_PASS', 'h8rLE2LM5UYiYMPC');
+    define('DB_PASS', 'db_password');
     /**
      * PREFER to be used in database calls default is uap4_
      */
