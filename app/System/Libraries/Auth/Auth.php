@@ -376,23 +376,23 @@ class Auth {
                 $query = $this->authorize->getAccountInfo($username);
                 $count = count($query);
                 if ($count != 0) {
-                    //ya existe el usuario
+                    // Username already exists
                     $this->logActivity("UNKNOWN", "AUTH_REGISTER_FAIL", "Username ({$username}) already exists");
                     $this->errormsg[] = $this->language->get('register_username_exist');
                     return false;
                 } else {
-                    //usuario esta libre
+                    // Check to see if E-Mail exists
                     $query = $this->authorize->getAccountInfoEmail($email);
                     $count = count($query);
                     if ($count != 0) {
-                        //ya existe el email
+                        // Email Alread Exists
                         $this->logActivity("UNKNOWN", "AUTH_REGISTER_FAIL", "Email ({$email}) already exists");
                         $this->errormsg[] = $this->language->get('register_email_exist');
                         return false;
                     } else {
-                        //todo bien continua con register
+                        // Everything looks good, sign user up
                         $password = $this->hashPass($password);
-                        $activekey = $this->randomKey(RANDOM_KEY_LENGTH); //genera una randomkey para activacion enviar por email
+                        $activekey = $this->randomKey(RANDOM_KEY_LENGTH); // Create a random key for account activation
                         $info = array("username" => $username, "password" => $password, "email" => $email, "activekey" => $activekey, "userImage"=>"/assets/images/profile-pics/default-".rand(1,5).".jpg");
                         $user_id = $this->authorize->addIntoDB("users", $info);
 
@@ -401,8 +401,8 @@ class Auth {
 
                         $this->logActivity($username, "AUTH_REGISTER_SUCCESS", "Account created");
                         $this->successmsg[] = $this->language->get('register_success');
-                        //activar usuario directamente
-                        $this->activateAccount($username, $activekey); //se ignora la activekey ya que es directo
+                        // Everything looks good.  Now activate account
+                        $this->activateAccount($username, $activekey); // Activates User's Account
                         return true;
                     }
                 }
@@ -418,7 +418,7 @@ class Auth {
 								}
 								/* Error Message Display */
 								ErrorMessages::push($this->language->get('register_error')." ".$error_data, 'Register');
-                return false; //algun error
+                				return false; // Return Error
             }
         } else {
             // User is logged in
