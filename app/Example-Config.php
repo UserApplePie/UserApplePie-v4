@@ -57,11 +57,11 @@ class Config {
     /**
      * Database name.
      */
-    define('DB_NAME', 'uap4_demo');
+    define('DB_NAME', 'uap4_demo_db');
     /**
      * Database username.
      */
-    define('DB_USER', 'uap4_demo');
+    define('DB_USER', 'uap4_demo_user');
     /**
      * Database password.
      */

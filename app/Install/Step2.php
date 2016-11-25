@@ -127,7 +127,7 @@ if(isset($_POST['submit'])){
 					</div>
 					<div class="form-group">
 						<label for="DB_PASS">Password</label><span class="label label-danger pull-right">Required</span>
-						<input type="text" class="form-control" name="DB_PASS" id="DB_PASS" placeholder="<?=DB_PASS?>" value="<?php if(!empty($_REQUEST['DB_PASS'])){echo $_REQUEST['DB_PASS'];} ?>">
+						<input type="password" class="form-control" name="DB_PASS" id="DB_PASS" placeholder="<?=DB_PASS?>" value="<?php if(!empty($_REQUEST['DB_PASS'])){echo $_REQUEST['DB_PASS'];} ?>">
 					</div>
 					<div class="form-group">
 						<label for="PREFIX">Prefix</label><span class="label label-danger pull-right">Required</span>
