@@ -169,17 +169,24 @@ class Auth extends Controller
                     $verifypassword = Request::post('passwordc');
                     $email = Request::post('email');
 
+                    // Get Account Activation Setting
+                    $account_activation = ACCOUNT_ACTIVATION;
+
                     // Register with our without email verification
-                    $registered = ACCOUNT_ACTIVATION ?
-                        $this->auth->directRegister($username, $password, $verifypassword, $email) :
-                        $this->auth->register($username, $password, $verifypassword, $email);
+                    if($account_activation == "true"){
+                        $registered = $this->auth->register($username, $password, $verifypassword, $email);
+                    }else{
+                        $registered = $this->auth->directRegister($username, $password, $verifypassword, $email);
+                    }
 
                     if ($registered) {
-                        $data['message'] = ACCOUNT_ACTIVATION ?
-                            $this->language->get('register_success_noact') : 
-                            $this->language->get('register_success');
-                            // Success Message Display
-                            SuccessMessages::push($data['message'], 'Register');
+                        if($account_activation == "true"){
+                            $data['message'] = $this->language->get('register_success');
+                        }else{
+                            $data['message'] = $this->language->get('register_success_noact');
+                        }
+                        // Success Message Display
+                        SuccessMessages::push($data['message'], 'Register');
                     }
                     else{
                         // Error Message Display
