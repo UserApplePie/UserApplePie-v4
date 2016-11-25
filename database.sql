@@ -416,3 +416,16 @@ CREATE TABLE `uap4_forum_tracker` (
   `last_visit` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
   ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+  -- --------------------------------------------------------
+
+  --
+  -- Table structure for table `uap4_forum_post_tracker`
+  --
+
+  CREATE TABLE `uap4_forum_post_tracker` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `forum_post_id` int(11) DEFAULT NULL,
+    `forum_reply_id` int(11) DEFAULT NULL,
+    `tracker_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 COMMENT='Keeps track of all forum posts and replies for better sort';

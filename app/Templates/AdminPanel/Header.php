@@ -1,4 +1,12 @@
 <?php
+/**
+* Admin Panel Header
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
 use Libs\ErrorMessages,
 	Libs\SuccessMessages,
 	Libs\PageFunctions,

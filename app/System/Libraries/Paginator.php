@@ -1,11 +1,13 @@
 <?php
 /**
- * PHP Pagination Class
- *
- * @author David Carr - dave@daveismyname.com
- * @version 2.2
- * @date updated Sept 19, 2015
- */
+* PHP Pagination Plugin
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*
+* @author David Carr - dave@daveismyname.com
+*/
 namespace Libs;
 /**
  * Split records into multiple pages.

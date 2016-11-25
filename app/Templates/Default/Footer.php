@@ -1,4 +1,14 @@
-<?php use Libs\Assets, Libs\Language; ?>
+<?php
+/**
+* Default Footer
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
+use Libs\Assets, Libs\Language;
+?>
 
                 <div class='col-lg-12 col-md-12 col-sm-12'>
                     <!-- Footer (sticky) -->

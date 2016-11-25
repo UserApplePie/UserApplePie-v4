@@ -1,14 +1,13 @@
 <?php
 /**
- * Page Views Helper
- * Displays current view count for given Page
- * Automaticly adds view count to db when enabled
- *
- * @author David "DaVaR" Sargent - davar@thedavar.net
- * @version 2.2
- * @date Jan 14, 2016
- * @date updated Jan 14, 2016
- */
+* Page Views Plugin
+* Displays current view count for given Page
+* Automaticly adds view count to db when enabled
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
 
 namespace Libs;
 

@@ -1,10 +1,14 @@
 <?php namespace App\System;
 
 /*
-** System Router
+** System Router Class
 ** The goal of the router is to handle all the url requests.
 ** When you type in ?page=About it will load the About function that
 ** contains which model and view to load.
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
 */
 
 use App\System\Error,

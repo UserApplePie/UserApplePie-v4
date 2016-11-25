@@ -1,13 +1,12 @@
 <?php
 /**
- * Sweets Helper
+ * Sweets Plugin
  * Displays current sweet count for given Page
  * Automaticly adds sweet count to db when enabled
  *
- * @author David "DaVaR" Sargent - davar@thedavar.net
- * @version 2.2
- * @date Jan 14, 2016
- * @date updated Jan 14, 2016
+ * UserApplePie
+ * @author David (DaVaR) Sargent <davar@userapplepie.com>
+ * @version 4.0.0
  */
 
 namespace Libs;

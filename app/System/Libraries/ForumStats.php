@@ -1,4 +1,12 @@
 <?php
+/**
+* Forum Stats Plugin
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
 namespace Libs;
 
 use Libs\Database;
@@ -50,8 +58,6 @@ class ForumStats
         }
         self::$db = Database::get();
         $data = self::$db->select("
-            SELECT sub1.* FROM (
-                SELECT sub2.* FROM (
                     SELECT
                         fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
                         fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
@@ -67,14 +73,62 @@ class ForumStats
                         ON fp.forum_post_id = fpr.fpr_post_id
                         WHERE fp.allow = 'TRUE'
                         $forum_id_data
-                ) sub2
                     ORDER BY tstamp DESC
                     LIMIT $limit
-            ) sub1
-                GROUP BY forum_post_id
-                ORDER BY tstamp DESC
         ");
         return $data;
+    }
+
+    /**
+     * forum_recent_posts_data
+     *
+     * get data for requested forum post.
+     *
+     * @return array returns all recent forum posts
+     */
+    public function forum_recent_posts_data($forum_post_id = NULL, $forum_reply_id = NULL){
+        self::$db = Database::get();
+        if(isset($forum_reply_id)){
+            $data = self::$db->select("
+              SELECT
+                  fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
+                  fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
+                  fp.forum_edit_date as forum_edit_date,
+                  fp.forum_timestamp as forum_timestamp,
+                  fp.forum_status as forum_status, fpr.id as id,
+                  fpr.fpr_post_id as fpr_post_id, fpr.fpr_id as fpr_id,
+                  fpr.fpr_user_id as fpr_user_id, fpr.fpr_title as fpr_title,
+                  fpr.fpr_edit_date as fpr_edit_date,
+                  fpr.fpr_timestamp as fpr_timestamp
+              FROM ".PREFIX."forum_posts fp
+              LEFT JOIN ".PREFIX."forum_post_replies fpr
+              ON fp.forum_post_id = fpr.fpr_post_id
+              WHERE fp.forum_post_id = :forum_post_id
+              AND fpr.id = :forum_reply_id
+              AND fp.allow = 'TRUE'
+              LIMIT 1
+            ", array(':forum_post_id' => $forum_post_id, ':forum_reply_id' => $forum_reply_id));
+        }else{
+            $data = self::$db->select("
+              SELECT
+                  fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
+                  fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
+                  fp.forum_edit_date as forum_edit_date,
+                  fp.forum_timestamp as forum_timestamp,
+                  fp.forum_status as forum_status, fpr.id as id,
+                  fpr.fpr_post_id as fpr_post_id, fpr.fpr_id as fpr_id,
+                  fpr.fpr_user_id as fpr_user_id, fpr.fpr_title as fpr_title,
+                  fpr.fpr_edit_date as fpr_edit_date,
+                  fpr.fpr_timestamp as fpr_timestamp
+              FROM ".PREFIX."forum_posts fp
+              LEFT JOIN ".PREFIX."forum_post_replies fpr
+              ON fp.forum_post_id = fpr.fpr_post_id
+              WHERE fp.forum_post_id = :forum_post_id
+              AND fp.allow = 'TRUE'
+              LIMIT 1
+            ", array(':forum_post_id' => $forum_post_id));
+        }
+      return $data;
     }
 
     /**

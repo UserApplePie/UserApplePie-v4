@@ -1,4 +1,12 @@
 <?php
+/**
+* Default Header
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
 use Libs\Assets,
     Libs\Language,
     Libs\SuccessMessages,

@@ -1,6 +1,10 @@
 <?php
 /**
- * Inflector Helper
+ * Inflector Plugin
+ *
+ * UserApplePie
+ * @author David (DaVaR) Sargent <davar@userapplepie.com>
+ * @version 4.0.0
  *
  * @author Virgil-Adrian Teaca - virgil@giulianaeassociati.com
  * @version 1.0

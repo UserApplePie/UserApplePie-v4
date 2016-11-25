@@ -1,12 +1,11 @@
 <?php
 /**
- * Images Helper
- *
- * @author David "DaVaR" Sargent - davar@thedavar.net
- * @version 2.0
- * @date Mar 5, 2016
- * @date updated Mar 5, 2016
- */
+* Images Plugin
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
 
 namespace Libs;
 

@@ -1,9 +1,13 @@
 <?php
 /**
- * Language - simple language handler.
- *
- * @author Bartek Kuśmierczuk - contact@qsma.pl - http://qsma.pl
- * @version 3.0
+* Language Plugin
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*
+* @author Bartek Kuśmierczuk - contact@qsma.pl - http://qsma.pl
+* @version 3.0
  */
 
 namespace Libs;

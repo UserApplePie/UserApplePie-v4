@@ -1,12 +1,16 @@
 <?php
+/**
+ * Auth Cookie Class
+ *
+ * UserApplePie
+ * @author David (DaVaR) Sargent <davar@userapplepie.com>
+ * @version 4.0.0
+ *
+ * @author Jhobanny Morillo <geomorillo@yahoo.com>
+ */
 
 namespace Libs\Auth;
 
-/**
- * Simple cookie class
- * @author Jhobanny Morillo <geomorillo@yahoo.com>
- * @date June 10, 2015
- */
 class Cookie {
 
     const FourYears = 126144000;

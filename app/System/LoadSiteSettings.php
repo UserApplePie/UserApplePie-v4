@@ -1,4 +1,13 @@
-<?php namespace App\System;
+<?php
+/**
+* System Site Settings Class
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
+namespace App\System;
 
 use App\Models\AdminPanel as Model;
 

@@ -1,11 +1,11 @@
 <?php
 /**
- * Success Message Helper
- *
- * @author DaVaR - davar@userapplepie.com
- * @version 1.0
- * @date Jan 25 2016
- */
+* Success Messages Plguin
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
 
 namespace Libs;
 

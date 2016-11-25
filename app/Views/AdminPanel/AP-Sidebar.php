@@ -1,3 +1,13 @@
+<?php
+/**
+* Admin Panel Sidebar View
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+?>
+
 <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
   <ul class="nav menu">
     <li <?php if($title == "Dashboard"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel"><i class='glyphicon glyphicon-cog'></i> Dashboard</a></li>

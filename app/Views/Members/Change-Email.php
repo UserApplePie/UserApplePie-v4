@@ -1,4 +1,14 @@
-<?php use Libs\Language, Libs\Form; ?>
+<?php 
+/**
+* Account Change E-Mail View
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
+use Libs\Language, Libs\Form;
+?>
 
 <div class="col-lg-8 col-md-8 col-sm-8">
 	<div class="panel panel-default">

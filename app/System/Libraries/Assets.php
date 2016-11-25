@@ -1,4 +1,13 @@
-<?php namespace Libs;
+<?php
+/**
+* Assets Plugin
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
+namespace Libs;
 
 use App\System\Error;
 

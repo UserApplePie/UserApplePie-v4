@@ -1,7 +1,10 @@
 <?php
-/*
-** UserApplePie v4
-** http://www.userapplepie.com
+/**
+* Site Index File
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
 */
 
 /* Define the absolute paths for configured directories */
@@ -11,7 +14,7 @@ define('PUBLICDIR', realpath(__DIR__).'/');
 define('ROOTDIR', realpath(__DIR__.'/../').'/');
 
 /** Define Current Version of UAP **/
-define('UAPVersion', 'v4.0.0');
+define('UAPVersion', '4.0.0');
 
 /* load Composer Autoloader */
 if (file_exists(ROOTDIR.'vendor/autoload.php')) {

@@ -1,8 +1,11 @@
 <?php
 /**
- * Create the members view
- */
-
+* Admin Panel Settings View
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
 use Libs\Form,
     Libs\ErrorMessages,
     Libs\SuccessMessages,

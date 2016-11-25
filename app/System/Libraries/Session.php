@@ -1,14 +1,13 @@
 <?php
 /**
- * Session Class
- *
- * Nova Framework
- * @author David Carr - dave@daveismyname.com
- * @version 3.0
- * UserApplePie
- * @author David (DaVaR) Sargent
- * @version 4.0.0
- */
+* Session Plugin
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*
+* @author David Carr - dave@daveismyname.com
+*/
 
 namespace Libs;
 

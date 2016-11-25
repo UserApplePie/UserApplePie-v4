@@ -1,5 +1,13 @@
 <?php
 /**
+* SimpleImage Plugin
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
+/**
  * @package     SimpleImage class
  * @version     2.6.0
  * @author      Cory LaViska for A Beautiful Site, LLC (http://www.abeautifulsite.net/)

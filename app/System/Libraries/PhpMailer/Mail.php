@@ -2,11 +2,8 @@
 /**
  * Mail Helper
  *
- * Nova Framework
- * @author David Carr - dave@daveismyname.com
- * @version 3.0
  * UserApplePie
- * @author David (DaVaR) Sargent
+ * @author David (DaVaR) Sargent <davar@userapplepie.com>
  * @version 4.0.0
  */
 

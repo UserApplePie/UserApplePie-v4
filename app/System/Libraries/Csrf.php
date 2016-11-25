@@ -1,7 +1,11 @@
 <?php
 
 /**
- * Cross Site Request Forgery helper.
+ * Cross Site Request Forgery Plugin.
+ *
+ * UserApplePie
+ * @author David (DaVaR) Sargent <davar@userapplepie.com>
+ * @version 4.0.0
  *
  * @author jimgwhit
  * @version 3.0

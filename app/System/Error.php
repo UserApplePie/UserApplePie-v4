@@ -1,4 +1,13 @@
-<?php namespace App\System;
+<?php
+/**
+* System Error Class
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
+namespace App\System;
 
 use App\System\Controller,
     App\System\Load,

@@ -1,12 +1,18 @@
-<?php namespace App;
+<?php
+/**
+* System Routes
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
 
-
+namespace App;
 
 /*
 * Router::run($url, $controller, $method, $params);
+* Router::run('Home', 'Home', 'Home', '');
 */
-
-//Router::run('Home', 'Home', 'Home', '');
 
 class Routes {
 

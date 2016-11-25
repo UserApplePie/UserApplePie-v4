@@ -1,4 +1,14 @@
-<?php use Libs\Assets, Libs\Url; ?>
+<?php
+/**
+* Admin Panel Footer
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
+
+use Libs\Assets, Libs\Url;
+?>
 	</div>
 </div>
 

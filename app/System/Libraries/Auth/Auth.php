@@ -1,8 +1,12 @@
 <?php
 
 /**
- * Auth class for simple mvc framework
- * @version 1.7
+ * Auth Class Plugin for UAP
+ *
+ * UserApplePie
+ * @author David (DaVaR) Sargent <davar@userapplepie.com>
+ * @version 4.0.0
+ *
  * @author Jhobanny Morillo <geomorillo@yahoo.com>
  */
 

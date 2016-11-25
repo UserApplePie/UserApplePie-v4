@@ -1,11 +1,11 @@
 <?php
 /**
- * Site Stats Helper
- *
- * @author David "DaVaR" Sargent - davar@thedavar.net
- * @version 4.0.0
- * @date May 5, 2016
- */
+* Site Stats Plugin
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
 
 namespace Libs;
 

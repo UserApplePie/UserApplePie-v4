@@ -1,5 +1,17 @@
-<?php namespace App\System;
+<?php
+/**
+* System Load Class
+*
+* UserApplePie
+* @author David (DaVaR) Sargent <davar@userapplepie.com>
+* @version 4.0.0
+*/
 
+namespace App\System;
+
+/**
+* Load Class Loads Views Based on settings in Controllers
+*/
 class Load {
 
     /*
