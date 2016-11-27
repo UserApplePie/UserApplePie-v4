@@ -393,7 +393,7 @@ class Auth {
                         // Everything looks good, sign user up
                         $password = $this->hashPass($password);
                         $activekey = $this->randomKey(RANDOM_KEY_LENGTH); // Create a random key for account activation
-                        $info = array("username" => $username, "password" => $password, "email" => $email, "activekey" => $activekey, "userImage"=>"/assets/images/profile-pics/default-".rand(1,5).".jpg");
+                        $info = array("username" => $username, "password" => $password, "email" => $email, "activekey" => $activekey, "userImage"=>"default-".rand(1,5).".jpg");
                         $user_id = $this->authorize->addIntoDB("users", $info);
 
                         $info = array('userID' => $user_id, 'groupID' => 1);
@@ -490,7 +490,7 @@ class Auth {
                         // Email address isn't already used
                         $password = $this->hashPass($password);
                         $activekey = $this->randomKey(RANDOM_KEY_LENGTH);
-                        $info = array("username" => $username, "password" => $password, "email" => $email, "activekey" => $activekey, "userImage"=>"/assets/images/profile-pics/default-".rand(1,5).".jpg");
+                        $info = array("username" => $username, "password" => $password, "email" => $email, "activekey" => $activekey, "userImage"=>"default-".rand(1,5).".jpg");
                         $user_id = $this->authorize->addIntoDB("users", $info);
 
                         $info = array('userID' => $user_id, 'groupID' => 1);

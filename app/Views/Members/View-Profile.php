@@ -17,12 +17,15 @@ use Libs\Language;
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-8 col-lg-8" align="center">
+                    <div class="col-md-12 col-lg-12" align="center">
                       <?php if(!empty($data['profile']->userImage)){ ?>
-                        <img alt="<?php echo $data['profile']->username; ?>'s Profile Picture" src="<?php echo SITE_URL.$data['profile']->userImage; ?>" class="img-circle img-responsive">
+                        <img alt="<?php echo $data['profile']->username; ?>'s Profile Picture" src="<?php echo SITE_URL.IMG_DIR_PROFILE.$data['profile']->userImage; ?>" class="img-rounded img-responsive">
                         <?php }else{ ?>
           								<span class='glyphicon glyphicon-user icon-size'></span>
           							<?php } ?>
+                        <?php if($currentUserData[0]->username == $data['profile']->username){
+                            echo " <Br><a href='".DIR."Edit-Profile' title='".Language::show('mem_act_edit_profile', 'Members')."' class='btn btn-danger btn-block btn-xs'>".Language::show('mem_act_edit_profile', 'Members')."</a> ";
+                        } ?>
                     </div>
                 </div>
             </div>
@@ -33,7 +36,7 @@ use Libs\Language;
                             <tbody>
                               <?php
                                 /* Check to see if Private Message Module is installed, if it is show link */
-                                if(file_exists('../app/Modules/Messages/messages.module.php')){
+                                if(file_exists(ROOTDIR.'app/Modules/Messages/messages.module.php')){
                                   echo "<tr><td>PM</td><td><a href='".SITE_URL."/NewMessage/".$data['profile']->username."' class='btn btn-xs btn-default'>".Language::show('members_profile_sendmsg', 'Members')."</a></td></tr>";
                                 }
                               ?>

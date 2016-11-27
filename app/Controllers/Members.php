@@ -177,24 +177,27 @@ class Members extends Controller
                     $signature = nl2br(strip_tags(Request::post('signature')));
                     $picture = file_exists($_FILES['profilePic']['tmp_name']) || is_uploaded_file($_FILES['profilePic']['tmp_name']) ? $_FILES ['profilePic'] : array ();
                     $userImage = Request::post('oldImg');
-
+                    // Check to see if an image is being uploaded
                     if(sizeof($picture)>0){
-							        $check = getimagesize ( $picture['tmp_name'] );
+                        // Set the User's Profile Image Directory
+                        $img_dir_profile = IMG_DIR_PROFILE.$username[0]->username.'/';
+				        $check = getimagesize ( $picture['tmp_name'] );
+                        // Check to make sure image is good
+						if($picture['size'] < 5000000 && $check && ($check['mime'] == "image/jpeg" || $check['mime'] == "image/png" || $check['mime'] == "image/gif")){
+							if(!file_exists(ROOTDIR.$img_dir_profile))
+								mkdir(ROOTDIR.$img_dir_profile,0777,true);
 
-        							if($picture['size'] < 5000000 && $check && ($check['mime'] == "image/jpeg" || $check['mime'] == "image/png" || $check['mime'] == "image/gif")){
-        								if(!file_exists('../assets/images/profile-pics'))
-        									mkdir('../assets/images/profile-pics',0777,true);
-
-        								$image = new SimpleImage($picture['tmp_name']);
-        								$dir = '/assets/images/profile-pics/'.$username[0]->username.'.jpg';
-        								$image->best_fit(400,300)->save("..".$dir);
-        								$userImage = $dir;
-        							}else{
-                        // Error Message Display
-                        ErrorMessages::push($this->language->get('edit_profile_photo_error'), 'Edit-Profile');
-                      }
+							$image = new SimpleImage($picture['tmp_name']);
+                            $rand_string = substr(str_shuffle(md5(time())), 0, 10);
+                            $img_name = $username[0]->username.'_PROFILE_'.$rand_string.'.jpg';
+							$dir = $img_dir_profile.$img_name;
+							$image->best_fit(400,300)->save(ROOTDIR.$dir);
+						}else{
+                            // Error Message Display
+                            ErrorMessages::push($this->language->get('edit_profile_photo_error'), 'Edit-Profile');
+                        }
                     }
-                    $onlineUsers->updateProfile($u_id, $firstName, $lastName, $gender, $website, $userImage, $aboutMe, $signature);
+                    $onlineUsers->updateProfile($u_id, $firstName, $lastName, $gender, $website, $username[0]->username.'/'.$img_name, $aboutMe, $signature);
                     // Success Message Display
                     SuccessMessages::push($this->language->get('edit_profile_success'), 'Edit-Profile');
                 }

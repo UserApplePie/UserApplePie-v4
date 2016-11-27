@@ -26,7 +26,7 @@ use Libs\ErrorMessages,
 		<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 		<meta name='viewport' content='width=device-width, initial-scale=1'>
     <title><?php echo $title.' - '.SITE_TITLE.' Admin Panel';?></title>
-		<link rel='shortcut icon' href='<?php echo Url::templatePath(); ?>images/favicon.ico'>
+		<link rel='shortcut icon' href='<?=Url::templatePath()?>images/favicon.ico'>
     <?=Assets::css([
         'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css',
 		'https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css',

@@ -1,6 +1,6 @@
 <?php
 /**
-* UserApplePie v4 Forum View Plugin Topic 
+* UserApplePie v4 Forum View Plugin Topic
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
@@ -87,7 +87,7 @@ use Core\Language,
             $user_signup_display = CurrentUserData::getSignUp($data['topic_creator']);
             $user_total_posts = ForumStats::getTotalPosts($data['topic_creator']);
             if(!empty($user_image_display)){
-              echo "<img src='".SITE_URL.$user_image_display."' class='img-responsive' style='margin-bottom: 2px'>";
+              echo "<img src='".SITE_URL.IMG_DIR_PROFILE.$user_image_display."' class='img-responsive' style='margin-bottom: 2px'>";
             }else{
               echo "<span class='glyphicon glyphicon-user icon-size' style='margin-bottom: 2px'></span>";
             }
@@ -133,7 +133,7 @@ use Core\Language,
             if(!empty($data['forum_topic_images'])){
               echo "<hr style='margin-bottom: 0px'><font size='1'><i>Image Attachments</i></font>";
               echo "<hr style='margin-top: 0px'>";
-              echo "<div align='center' style='margin-bottom: 8px'><a href='".DIR."{$data['forum_topic_images']}' target='_blank'><img src='".DIR."{$data['forum_topic_images']}' height='100px'></a></div>";
+              echo "<div align='center' style='margin-bottom: 8px'><a href='".SITE_URL."{$data['forum_topic_images']}' target='_blank'><img src='".DIR."{$data['forum_topic_images']}' height='100px'></a></div>";
             }
           echo "</div>";
   			echo "</div>";
@@ -231,7 +231,7 @@ use Core\Language,
                 $user_signup_display = CurrentUserData::getSignUp($rf_p_user_id);
                 $user_total_posts = ForumStats::getTotalPosts($rf_p_user_id);
                 if(!empty($user_image_display)){
-                  echo "<img src='".SITE_URL.$user_image_display."' class='img-responsive' style='margin-bottom: 2px'>";
+                  echo "<img src='".SITE_URL.IMG_DIR_PROFILE.$user_image_display."' class='img-responsive' style='margin-bottom: 2px'>";
                 }else{
                   echo "<span class='glyphicon glyphicon-user icon-size' style='margin-bottom: 2px'></span>";
                 }
@@ -283,7 +283,7 @@ use Core\Language,
                   if(!empty($check_for_image)){
                     echo "<hr style='margin-bottom: 0px'><font size='1'><i>Image Attachments</i></font>";
                     echo "<hr style='margin-top: 0px'>";
-                    echo "<div align='center' style='margin-bottom: 8px'><a href='".DIR."{$check_for_image}' target='_blank'><img src='".DIR."{$check_for_image}' height='100px'></a></div>";
+                    echo "<div align='center' style='margin-bottom: 8px'><a href='".SITE_URL."{$check_for_image}' target='_blank'><img src='".SITE_URL."{$check_for_image}' height='100px'></a></div>";
                   }
                 }else{
                   // Mod/Admin has disallowed this reply.  Show message

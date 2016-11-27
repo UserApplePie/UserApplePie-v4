@@ -104,7 +104,7 @@ class Home extends Controller {
     */
     public function assets(){
         $extRoutes = $this->routes;
-        if(sizeof($extRoutes) == '4'){
+        if(sizeof($extRoutes) == '4' || sizeof($extRoutes) == '5'){
             Assets::loadFile($extRoutes, 'assets');
         }else{
             Error::show(404);

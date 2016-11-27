@@ -44,7 +44,7 @@ use Libs\Language, Libs\Form;
 	                <input id="oldImg" name="oldImg" type="hidden" value="<?php echo $data['profile']->userImage; ?>"">
 	                <div class="form-group">
 	                    <label for="email"><?=Language::show('members_profile_cur_photo', 'Members'); ?>: </label>
-	                    <img alt="User Pic" src="<?php echo SITE_URL.$data['profile']->userImage; ?>" class="img-circle img-responsive">
+	                    <img alt="User Pic" src="<?php echo SITE_URL.IMG_DIR_PROFILE.$data['profile']->userImage; ?>" class="img-circle img-responsive">
 	                </div>
                 <?php } ?>
                 <div class="form-group">
@@ -57,7 +57,7 @@ use Libs\Language, Libs\Form;
                 </div>
 								<?php
 									/* Check to see if Private Message Module is installed, if it is show link */
-									if(file_exists('../app/Plugins/Forum/Controllers/Forum.php')){
+									if(file_exists(ROOTDIR.'app/Plugins/Forum/Controllers/Forum.php')){
 								?>
 									<div class="form-group">
 	                    <label for="signature"><?=Language::show('edit_profile_forum_sign', 'Members'); ?>: </label>

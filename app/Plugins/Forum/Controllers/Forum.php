@@ -320,21 +320,21 @@ use App\System\Controller,
                         $check = getimagesize ( $picture['tmp_name'] );
                         // Get file size for db
                         $file_size = $picture['size'];
+                        $img_dir_forum_reply = IMG_DIR_FORUM_REPLY;
                         // Make sure image size is not too large
                         if($picture['size'] < 5000000 && $check && ($check['mime'] == "image/jpeg" || $check['mime'] == "image/png" || $check['mime'] == "image/gif")){
-                          if(!file_exists('../assets/images/forum-pics')){
-                            mkdir('../assets/images/forum-pics',0777,true);
+                          if(!file_exists(ROOTDIR.$img_dir_forum_reply)){
+                            mkdir(ROOTDIR.$img_dir_forum_reply,0777,true);
                           }
                           // Upload the image to server
                           $image = new SimpleImage($picture['tmp_name']);
                           $new_image_name = "forum-image-topic-reply-uid{$u_id}-fid{$id}-ftid{$reply_id}";
-                          $dir = '../assets/images/forum-pics/'.$new_image_name.'.gif';
-                          $image->best_fit(400,300)->save($dir);
-                          $forumImage = $dir;
+                          $img_name = $new_image_name.'.gif';
+                          $image->best_fit(400,300)->save(ROOTDIR.$img_dir_forum_reply.$img_name);
                           // Make sure image was Successfull
-                          if($forumImage){
+                          if($img_name){
                             // Add new image to database
-                            if($this->model->sendNewImage($u_id, $new_image_name, $dir, $file_size, $topic_forum_id, $id, $reply_id)){
+                            if($this->model->sendNewImage($u_id, $img_name, $img_dir_forum_reply, $file_size, $topic_forum_id, $id, $reply_id)){
                               $img_success = "<br> Image Successfully Uploaded";
                             }else{
                               $img_success = "<br> No Image Uploaded";
@@ -491,27 +491,27 @@ use App\System\Controller,
                       $check = getimagesize ( $picture['tmp_name'] );
                       // Get file size for db
                       $file_size = $picture['size'];
+                      // Get the Img Forum Topic Directory
+                      $img_dir_forum_topic = IMG_DIR_FORUM_TOPIC;
                       // Make sure image size is not too large
                       if($picture['size'] < 5000000 && $check && ($check['mime'] == "image/jpeg" || $check['mime'] == "image/png" || $check['mime'] == "image/gif")){
-                        if(!file_exists('../assets/images/forum-pics')){
-                          mkdir('../assets/images/forum-pics',0777,true);
-                        }
-                        // Upload the image to server
-                        $image = new SimpleImage($picture['tmp_name']);
-                        $new_image_name = "forum-image-topic-uid{$u_id}-fid{$id}-ftid{$new_topic}";
-                        $dir = '../assets/images/forum-pics/'.$new_image_name.'.gif';
-                        $image->best_fit(400,300)->save($dir);
-                        $forumImage = $dir;
-                        var_dump($forumImage);
-                        // Make sure image was Successfull
-                        if($forumImage){
-                          // Add new image to database
-                          if($this->model->sendNewImage($u_id, $new_image_name, $dir, $file_size, $id, $new_topic)){
-                            $img_success = "<br> Image Successfully Uploaded";
-                          }else{
-                            $img_success = "<br> No Image Uploaded";
+                          if(!file_exists(ROOTDIR.$img_dir_forum_topic)){
+                            mkdir(ROOTDIR.$img_dir_forum_topic,0777,true);
                           }
-                        }
+                          // Upload the image to server
+                          $image = new SimpleImage($picture['tmp_name']);
+                          $new_image_name = "forum-image-topic-reply-uid{$u_id}-fid{$id}-ftid{$reply_id}";
+                          $img_name = $new_image_name.'.gif';
+                          $image->best_fit(400,300)->save(ROOTDIR.$img_dir_forum_topic.$img_name);
+                          // Make sure image was Successfull
+                          if($img_name){
+                            // Add new image to database
+                            if($this->model->sendNewImage($u_id, $img_name, $img_dir_forum_topic, $file_size, $id, $new_topic)){
+                              $img_success = "<br> Image Successfully Uploaded";
+                            }else{
+                              $img_success = "<br> No Image Uploaded";
+                            }
+                          }
                       }else{
                         $img_success = "<br> Image was NOT uploaded because the file size was too large!";
                       }

@@ -113,6 +113,16 @@ class Config {
     define('WAIT_TIME', $waittime); //DO NOT MODIFY
 
     /**
+     * Image Settings
+     */
+    // User's Profile Image Directory
+    define('IMG_DIR_PROFILE', 'assets/images/profile-pics/');
+    // Forum Topic Replies Image Directory
+    define('IMG_DIR_FORUM_TOPIC', 'assets/images/forum-pics/topics/');
+    // Forum Topic Replies Image Directory
+    define('IMG_DIR_FORUM_REPLY', 'assets/images/forum-pics/replies/');
+
+    /**
      * Turn on custom error handling.
      */
     set_exception_handler('App\System\ErrorLogger::ExceptionHandler');

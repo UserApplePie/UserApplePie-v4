@@ -585,7 +585,7 @@ class Forum extends Models {
      */
     public function getForumImagesTopic($topic_id){
       $data = $this->db->select("
-        SELECT imageLocation
+        SELECT imageName, imageLocation
         FROM ".PREFIX."forum_images
         WHERE forumTopicID = :topic_id
         AND forumTopicReplyID IS NULL
@@ -593,7 +593,7 @@ class Forum extends Models {
       array(':topic_id' => $topic_id));
       $count = count($data);
       if($count > 0){
-          return $data[0]->imageLocation;
+          return $data[0]->imageLocation.$data[0]->imageName;
       }
     }
 

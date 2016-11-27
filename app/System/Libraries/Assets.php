@@ -43,12 +43,20 @@ class Assets {
                 'css' => 'text/css',
                 'js' => 'application/javascript'
             );
-            (isset($location)) ? $filename = $extRoutes[3] : $filename = $extRoutes[4] ;
+            if(isset($extRoutes[4])){
+                (isset($location)) ? $filename = $extRoutes[4] : $filename = $extRoutes[4] ;
+            }else{
+                (isset($location)) ? $filename = $extRoutes[3] : $filename = $extRoutes[4] ;
+            }
 
             $ext = strtolower(@end((explode('.', $filename))));
 
             if(isset($location)){
-                $file = ROOTDIR.'assets/images/'.$extRoutes[2].'/'.$filename;
+                if(isset($extRoutes[4])){
+                    $file = ROOTDIR.'assets/images/'.$extRoutes[2].'/'.$extRoutes[3].'/'.$filename;
+                }else{
+                    $file = ROOTDIR.'assets/images/'.$extRoutes[2].'/'.$filename;
+                }
                 $file = preg_replace('{/$}', '', $file);
             }else{
                 $file = APPDIR.'Templates/'.$extRoutes[1].'/Assets/'.$extRoutes[3].'/'.$filename;

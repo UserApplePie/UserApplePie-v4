@@ -19,7 +19,7 @@
 
     <?php
       /* Check to see if Forum Plugin is installed. If so then show forum admin links */
-      if(file_exists('../app/Plugins/Forum/Controllers/ForumAdmin.php')){
+      if(file_exists(ROOTDIR.'app/Plugins/Forum/Controllers/ForumAdmin.php')){
     ?>
       <ul class="nav menu">
         <li class="sidebar-title">Forum</li>

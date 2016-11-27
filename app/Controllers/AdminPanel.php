@@ -69,12 +69,12 @@ class AdminPanel extends Controller{
     if($cur_uap_version < $match[1]){ $data['cur_uap_version'] = $match[1]; }
 
     /** Check to see if Forum Plugin is Installed  **/
-    if(file_exists('../app/Plugins/Forum/Controllers/Forum.php')){
+    if(file_exists(ROOTDIR.'app/Plugins/Forum/Controllers/Forum.php')){
       $forum_status = "Installed";
       /** Get Current UAP Version Data From UserApplePie.com **/
       $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=Forum');
       preg_match("/UAP-Forum v(.*) UAP-Forum/i", $html, $match);
-      require_once('../app/Plugins/Forum/ForumVersion.php');
+      require_once(ROOTDIR.'app/Plugins/Forum/ForumVersion.php');
       $cur_uap_forum_version = UAPForumVersion;
       if($cur_uap_forum_version < $match[1]){ $data['cur_uap_forum_version'] = $match[1]; }
     }else{
@@ -83,12 +83,12 @@ class AdminPanel extends Controller{
     $data['apd_plugin_forum'] = $forum_status;
 
     /** Check to see if Private Messages Plugin is Installed **/
-    if(file_exists('../app/Plugins/Messages/Controllers/Messages.php')){
+    if(file_exists(ROOTDIR.'app/Plugins/Messages/Controllers/Messages.php')){
       $msg_status = "Installed";
       /** Get Current UAP Version Data From UserApplePie.com **/
       $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=Messages');
       preg_match("/UAP-Messages v(.*) UAP-Messages/i", $html, $match);
-      require_once('../app/Plugins/Messages/MessagesVersion.php');
+      require_once(ROOTDIR.'app/Plugins/Messages/MessagesVersion.php');
       $cur_uap_messages_version = UAPMessagesVersion;
       if($cur_uap_messages_version < $match[1]){ $data['cur_uap_messages_version'] = $match[1]; }
     }else{
