@@ -27,14 +27,14 @@ use Libs\Language, Libs\Form;
 				<!-- Password 1 -->
 				<div class='input-group' style='width: 80%; margin-bottom: 25px'>
 					<span class='input-group-addon'><i class='glyphicon glyphicon-lock'></i></span>
-					<?php echo Form::input(array('id' => 'passwordInput', 'type' => 'password', 'name' => 'password', 'class' => 'form-control', 'placeholder' => Language::show('password', 'Members'))); ?>
+					<?php echo Form::input(array('id' => 'passwordInput', 'type' => 'password', 'name' => 'password', 'class' => 'form-control', 'placeholder' => Language::show('new_password', 'Members'))); ?>
 					<span id='password01' class='input-group-addon'></span>
 				</div>
 
 				<!-- Password 2 -->
 				<div class='input-group' style='width: 80%; margin-bottom: 25px'>
 					<span class='input-group-addon'><i class='glyphicon glyphicon-lock'></i></span>
-					<?php echo Form::input(array('id' => 'confirmPasswordInput', 'type' => 'password', 'name' => 'passwordc', 'class' => 'form-control', 'placeholder' => Language::show('confirm_password', 'Members'))); ?>
+					<?php echo Form::input(array('id' => 'confirmPasswordInput', 'type' => 'password', 'name' => 'passwordc', 'class' => 'form-control', 'placeholder' => Language::show('confirm_new_password', 'Members'))); ?>
 					<span id='password02' class='input-group-addon'></span>
 				</div>
 

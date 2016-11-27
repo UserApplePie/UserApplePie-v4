@@ -36,7 +36,7 @@ class Members extends Models
      * Get all members that are activated with info
      * @return array
      */
-    public function getMembers($orderby, $limit = null)
+    public function getMembers($orderby, $limit = null, $search = null)
     {
         // Set default orderby if one is not set
         if($orderby == "UG-DESC"){
@@ -52,12 +52,15 @@ class Members extends Models
           $run_order = "u.userID ASC";
         }
 
-        $users = $this->db->select("
+        if(isset($search)){
+            // Load users that match search criteria and are active
+            $users = $this->db->select("
 				SELECT
 					u.userID,
 					u.username,
 					u.firstName,
-          u.lastName,
+                    u.lastName,
+                    u.userImage,
 					u.isactive,
 					ug.userID,
 					ug.groupID,
@@ -74,12 +77,48 @@ class Members extends Models
 					".PREFIX."groups g
 					ON ug.groupID = g.groupID
 				WHERE
+                    (u.username LIKE :search OR u.firstName LIKE :search OR u.lastName LIKE :search)
+                AND
 					u.isactive = true
 				GROUP BY
 					u.userID
-        ORDER BY
-          $run_order
-        $limit");
+                ORDER BY
+                    $run_order
+                    $limit
+            ", array(':search' => '%'.$search.'%'));
+        }else{
+            // Load all active site members
+            $users = $this->db->select("
+                SELECT
+                    u.userID,
+                    u.username,
+                    u.firstName,
+                    u.lastName,
+                    u.userImage,
+                    u.isactive,
+                    ug.userID,
+                    ug.groupID,
+                    g.groupID,
+                    g.groupName,
+                    g.groupFontColor,
+                    g.groupFontWeight
+                FROM
+                    ".PREFIX."users u
+                LEFT JOIN
+                    ".PREFIX."users_groups ug
+                    ON u.userID = ug.userID
+                LEFT JOIN
+                    ".PREFIX."groups g
+                    ON ug.groupID = g.groupID
+                WHERE
+                    u.isactive = true
+                GROUP BY
+                    u.userID
+                ORDER BY
+                    $run_order
+                $limit
+            ");
+        }
 
         return $users;
     }
@@ -100,6 +139,31 @@ class Members extends Models
           WHERE
   					isactive = true
           ");
+      return count($data);
+    }
+
+    /**
+    * getTotalMembersSearch
+    *
+    * Gets total count of users found in search
+    *
+    * @return int count
+    */
+    public function getTotalMembersSearch($search = null){
+      $data = $this->db->select("
+            SELECT
+                username,
+                firstName,
+                lastName
+            FROM
+                ".PREFIX."users
+            WHERE
+                (username LIKE :search OR firstName LIKE :search OR lastName LIKE :search)
+            AND
+  			    isactive = true
+            GROUP BY
+                userID
+          ", array(':search' => '%'.$search.'%'));
       return count($data);
     }
 

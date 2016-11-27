@@ -44,7 +44,7 @@ use Libs\Language, Libs\Form;
 	                <input id="oldImg" name="oldImg" type="hidden" value="<?php echo $data['profile']->userImage; ?>"">
 	                <div class="form-group">
 	                    <label for="email"><?=Language::show('members_profile_cur_photo', 'Members'); ?>: </label>
-	                    <img alt="User Pic" src="<?php echo SITE_URL.IMG_DIR_PROFILE.$data['profile']->userImage; ?>" class="img-circle img-responsive">
+	                    <img alt="User Pic" src="<?php echo SITE_URL.IMG_DIR_PROFILE.$data['profile']->userImage; ?>" class="img-rounded img-responsive">
 	                </div>
                 <?php } ?>
                 <div class="form-group">

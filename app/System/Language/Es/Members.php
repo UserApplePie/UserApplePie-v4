@@ -40,6 +40,13 @@ return [
 	'members_profile_signup' => "Inscrito",
 	'members_profile_allabout' => "Todo sobre",
 
+	/** Members Search Page **/
+	'members_search_title' => "Miembros Buscar",
+	'search_found' => "Búsqueda encontrada",
+	'matches_for' => "Partidos para",
+	'search' => "Buscar",
+	'search_members' => "Buscar Miembros",
+
 	/** Members Account Settings Pages **/
 	'mem_act_settings_title' => "Configuraciones de la cuenta",
 	'mem_act_settings_welcomemessage' => "Bienvenido a la configuración de su cuenta . Disfruta!",
@@ -64,7 +71,9 @@ return [
 	/** Change Email/Password Pages **/
 	'current_password' => "Contraseña actual",
 	'password' => "Contraseña",
-	'confirm_password' => "Confirmar contraseña",
+	'confirm_password' => "Confirmar Contraseña",
+	'new_password' => "Nueva Contraseña",
+	'confirm_new_password' => "Confirmar Nueva Contraseña",
 	'change_password_button' => "Actualizar mi contraseña",
 	'change_email_button' => "Actualización de la dirección de correo electrónico",
 
