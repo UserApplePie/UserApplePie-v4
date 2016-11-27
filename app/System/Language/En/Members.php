@@ -40,6 +40,13 @@ return [
 	'members_profile_signup' => "Signed Up",
 	'members_profile_allabout' => "All About",
 
+	/** Members Search Page **/
+	'members_search_title' => "Members Search",
+	'search_found' => "Search Found",
+	'matches_for' => "Matches For",
+	'search' => "Search",
+	'search_members' => "Search Members",
+
 	/** Members Account Settings Pages **/
 	'mem_act_settings_title' => "Account Settings",
 	'mem_act_settings_welcomemessage' => "Welcome to your account settings. Enjoy!",
@@ -65,6 +72,8 @@ return [
 	'current_password' => "Current Password",
 	'password' => "Password",
 	'confirm_password' => "Confirm Password",
+	'new_password' => "New Password",
+	'confirm_new_password' => "Confirm New Password",
 	'change_password_button' => "Update My Password",
 	'change_email_button' => "Update E-Mail Address",
 

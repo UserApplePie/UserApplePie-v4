@@ -38,26 +38,51 @@ class Members extends Controller
     /**
      * Page for list of activated accounts
      */
-    public function members($set_order_by = 'ID-ASC', $current_page = '1')
+    public function members($set_order_by = 'ID-ASC', $current_page = '1', $search = null)
     {
+        // Load the members model
         $onlineUsers = new MembersModel();
-        $data['title'] = $this->language->get('members_title');
-        $data['welcomeMessage'] = $this->language->get('members_welcomemessage');
+
+        // Let sidebar Know we are on the members page
+        $data['members_page'] = true;
 
         // Check for orderby selection
         $data['orderby'] = $set_order_by;
 
-        // Set total number of rows for paginator
-        $total_num_users = $onlineUsers->getTotalMembers();
-        $this->pages->setTotal($total_num_users);
+        // Check to see if member is searching for a user
+        if(isset($search)){
+            // Set total number of rows for paginator
+            $total_num_users = $onlineUsers->getTotalMembersSearch($search);
+            $this->pages->setTotal($total_num_users);
+        }else{
+            // Set total number of rows for paginator
+            $total_num_users = $onlineUsers->getTotalMembers();
+            $this->pages->setTotal($total_num_users);
+        }
 
         // Send page links to view
         $pageFormat = DIR."Members/$set_order_by/"; // URL page where pages are
         $data['pageLinks'] = $this->pages->pageLinks($pageFormat, null, $current_page);
         $data['current_page_num'] = $current_page;
 
-        // Get list of members
-        $data['members'] = $onlineUsers->getMembers($data['orderby'], $this->pages->getLimit($current_page, USERS_PAGEINATOR_LIMIT));
+        // Check to see if member is searching for a user
+        if(isset($search)){
+            // Display Search Info
+            $data['title'] = $this->language->get('members_search_title');
+            $data['welcomeMessage'] = $this->language->get('search_found').' '.$total_num_users.' '.$this->language->get('matches_for').': '.$search;
+            // Get list of members that match search criteria
+            $data['members'] = $onlineUsers->getMembers($data['orderby'], $this->pages->getLimit($current_page, USERS_PAGEINATOR_LIMIT), $search);
+            // Let the view know user is searching
+            $data['search'] = $search;
+        }else{
+            // Display all members
+            $data['title'] = $this->language->get('members_title');
+            $data['welcomeMessage'] = $this->language->get('members_welcomemessage');
+            // Get list of members
+            $data['members'] = $onlineUsers->getMembers($data['orderby'], $this->pages->getLimit($current_page, USERS_PAGEINATOR_LIMIT));
+            // Let the view know user is searching
+            $data['search'] = false;
+        }
 
         /** Check to see if user is logged in **/
         if($data['isLoggedIn'] = $this->auth->isLogged()){
@@ -175,29 +200,42 @@ class Members extends Controller
                     $website = strip_tags(preg_replace('#^https?://#', '', Request::post('website')));
                     $aboutMe = nl2br(strip_tags(Request::post('aboutMe')));
                     $signature = nl2br(strip_tags(Request::post('signature')));
-                    $picture = file_exists($_FILES['profilePic']['tmp_name']) || is_uploaded_file($_FILES['profilePic']['tmp_name']) ? $_FILES ['profilePic'] : array ();
                     $userImage = Request::post('oldImg');
                     // Check to see if an image is being uploaded
-                    if(sizeof($picture)>0){
-                        // Set the User's Profile Image Directory
-                        $img_dir_profile = IMG_DIR_PROFILE.$username[0]->username.'/';
-				        $check = getimagesize ( $picture['tmp_name'] );
-                        // Check to make sure image is good
-						if($picture['size'] < 5000000 && $check && ($check['mime'] == "image/jpeg" || $check['mime'] == "image/png" || $check['mime'] == "image/gif")){
-							if(!file_exists(ROOTDIR.$img_dir_profile))
-								mkdir(ROOTDIR.$img_dir_profile,0777,true);
-
-							$image = new SimpleImage($picture['tmp_name']);
-                            $rand_string = substr(str_shuffle(md5(time())), 0, 10);
-                            $img_name = $username[0]->username.'_PROFILE_'.$rand_string.'.jpg';
-							$dir = $img_dir_profile.$img_name;
-							$image->best_fit(400,300)->save(ROOTDIR.$dir);
-						}else{
-                            // Error Message Display
-                            ErrorMessages::push($this->language->get('edit_profile_photo_error'), 'Edit-Profile');
+                    if(!empty($_FILES['profilePic']['tmp_name'])){
+                        $picture = file_exists($_FILES['profilePic']['tmp_name']) || is_uploaded_file($_FILES['profilePic']['tmp_name']) ? $_FILES ['profilePic'] : array ();
+                        if(sizeof($picture)>0){
+                            // Set the User's Profile Image Directory
+                            $img_dir_profile = IMG_DIR_PROFILE.$username[0]->username.'/';
+    				        $check = getimagesize ( $picture['tmp_name'] );
+                            // Check to make sure image is good
+    						if($picture['size'] < 5000000 && $check && ($check['mime'] == "image/jpeg" || $check['mime'] == "image/png" || $check['mime'] == "image/gif")){
+                                // Check to see if Img Upload Directory Exists, if not create it
+    							if(!file_exists(ROOTDIR.$img_dir_profile))
+    								mkdir(ROOTDIR.$img_dir_profile,0777,true);
+                                // Format new image and upload it to server
+    							$image = new SimpleImage($picture['tmp_name']);
+                                $rand_string = substr(str_shuffle(md5(time())), 0, 10);
+                                $img_name = $username[0]->username.'_PROFILE_'.$rand_string.'.jpg';
+    							$dir = $img_dir_profile.$img_name;
+    							$image->best_fit(400,300)->save(ROOTDIR.$dir);
+                                if(file_exists(ROOTDIR.$dir) && (strpos($userImage, ".") !== false)){
+                                    if(file_exists(ROOTDIR.IMG_DIR_PROFILE.$userImage)) {
+                                        unlink(ROOTDIR.IMG_DIR_PROFILE.$userImage);
+                                    }
+                                }
+    						}else{
+                                // Error Message Display
+                                ErrorMessages::push($this->language->get('edit_profile_photo_error'), 'Edit-Profile');
+                            }
                         }
                     }
-                    $onlineUsers->updateProfile($u_id, $firstName, $lastName, $gender, $website, $username[0]->username.'/'.$img_name, $aboutMe, $signature);
+                    if(!empty($img_name)){
+                        $db_image = $username[0]->username.'/'.$img_name;
+                    }else{
+                        $db_image = $userImage;
+                    }
+                    $onlineUsers->updateProfile($u_id, $firstName, $lastName, $gender, $website, $db_image, $aboutMe, $signature);
                     // Success Message Display
                     SuccessMessages::push($this->language->get('edit_profile_success'), 'Edit-Profile');
                 }
