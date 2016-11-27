@@ -48,7 +48,7 @@ UserApplePie is on packagist [https://packagist.org/packages/userapplepie/uap-us
 Install from terminal now by using:
 
 ```
-composer create-project userapplepie/uap-user-management foldername v4.0.0-beta
+composer create-project userapplepie/uap-user-management foldername dev-master
 ```
 
 The foldername is the desired folder to be created.
