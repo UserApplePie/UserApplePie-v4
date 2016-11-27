@@ -21,10 +21,14 @@ use Libs\Language;
                       <?php if(!empty($data['profile']->userImage)){ ?>
                         <img alt="<?php echo $data['profile']->username; ?>'s Profile Picture" src="<?php echo SITE_URL.IMG_DIR_PROFILE.$data['profile']->userImage; ?>" class="img-rounded img-responsive">
                         <?php }else{ ?>
-          								<span class='glyphicon glyphicon-user icon-size'></span>
-          							<?php } ?>
+							<span class='glyphicon glyphicon-user icon-size'></span>
+						<?php } ?>
+                        <Br>
+                        <?php if($data['isAdmin'] == 'true'){
+                            echo " <a href='".SITE_URL."AdminPanel-User/".$data['profile']->userID."' title='Admin - Edit User' class='btn btn-warning btn-block btn-xs'>Admin - Edit User</a> ";
+                        } ?>
                         <?php if($currentUserData[0]->username == $data['profile']->username){
-                            echo " <Br><a href='".DIR."Edit-Profile' title='".Language::show('mem_act_edit_profile', 'Members')."' class='btn btn-danger btn-block btn-xs'>".Language::show('mem_act_edit_profile', 'Members')."</a> ";
+                            echo " <a href='".SITE_URL."Edit-Profile' title='".Language::show('mem_act_edit_profile', 'Members')."' class='btn btn-danger btn-block btn-xs'>".Language::show('mem_act_edit_profile', 'Members')."</a> ";
                         } ?>
                     </div>
                 </div>
