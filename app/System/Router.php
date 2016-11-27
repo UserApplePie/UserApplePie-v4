@@ -43,7 +43,7 @@ class Router {
                         /** Check to see if argument is any **/
                         if($value == "(:any)"){
                             if(isset($params[$key])){
-                                if(preg_match('/^[A-Za-z0-9_-]*$/', $params[$key])){
+                                if(preg_match('#^[^/]+(?:\?.*)?$#i', $params[$key])){
                                     $new_params[] = $params[$key];
                                 }else{
                                     $error_check = true;
@@ -53,7 +53,17 @@ class Router {
                         /** Check to see if argument is a number **/
                         if($value == "(:num)"){
                             if(isset($params[$key])){
-                                if(preg_match('/^[1-9][0-9]{0,15}$/', $params[$key])){
+                                if(preg_match('#^-?[0-9]+(?:\?.*)?$#i', $params[$key])){
+                                    $new_params[] = $params[$key];
+                                }else{
+                                    $error_check = true;
+                                }
+                            }
+                        }
+                        /** Check to see if argument is all **/
+                        if($value == "(:all)"){
+                            if(isset($params[$key])){
+                                if(preg_match('#^.*(?:\?.*)?$#i', $params[$key])){
                                     $new_params[] = $params[$key];
                                 }else{
                                     $error_check = true;
