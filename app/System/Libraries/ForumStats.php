@@ -29,7 +29,7 @@ class ForumStats
 			    forum_user_id = :userID
 				",
 			array(':userID' => $where_id));
-    $data2 = self::$db->select("
+        $data2 = self::$db->select("
 				SELECT
 					*
 				FROM
@@ -38,7 +38,7 @@ class ForumStats
 			    fpr_user_id = :userID
 				",
 			array(':userID' => $where_id));
-      $total = count($data) + count($data2);
+        $total = count($data) + count($data2);
 		return $total;
 	}
 
@@ -151,16 +151,13 @@ class ForumStats
                     FROM ".PREFIX."forum_tracker
                     WHERE user_id = :user_id
                     AND post_id = :post_id
+                    AND last_visit > :post_timestamp
                 LIMIT 1
-            ", array('user_id' => $user_id, ':post_id' => $post_id));
+            ", array('user_id' => $user_id, ':post_id' => $post_id, ':post_timestamp' => $post_timestamp));
             /* Check to see if any data */
             $count = count($data);
             if($count > 0){
-                if($data[0]->last_visit < $post_timestamp){
-                    return true;
-                }else{
-                    return false;
-                }
+                return false;
             }else{
                 return true;
             }

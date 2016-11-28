@@ -541,6 +541,8 @@ class Forum extends Models {
       $count = count($query, $query_track);
       // Check to make sure Topic was Created
       if($count > 0){
+          // Run post count group checker
+          self::newMemberPostsChecker($forum_user_id);
         return $last_insert_id;
       }else{
         return false;
@@ -662,6 +664,8 @@ class Forum extends Models {
       $count = count($query, $query_track);
       // Check to make sure Topic was Created
       if($count > 0){
+        // Run post count group checker
+        self::newMemberPostsChecker($fpr_user_id);
         return true;
       }else{
         return false;
@@ -1070,5 +1074,30 @@ class Forum extends Models {
         }
     }
 
+
+    /**
+     * newMemberPostsChecker
+     *
+     * Check to see if user has posted enough times to
+     * change their group status from New Member to Member
+     *
+     * @param int user_id
+     * @param int posts_count
+     */
+    public function newMemberPostsChecker($user_id = null){
+        if(FORUM_POSTS_GROUP_CHANGE_ENABLE == 'true'){
+            $posts_count = \Libs\ForumStats::getTotalPosts($user_id);
+            if(isset($user_id) && isset($posts_count)){
+                // Check if user is in the New Member Group
+        		$new_member_group = count($this->db->select("SELECT *	FROM ".PREFIX."users_groups WHERE userID = :userID AND groupID = 1", array(':userID' => $user_id)));
+                if($new_member_group == 1){
+                    $forum_posts_group_change = FORUM_POSTS_GROUP_CHANGE;
+                    if($posts_count >= $forum_posts_group_change){
+                        return $this->db->update(PREFIX."users_groups", array('groupID' => '2'), array('userID' => $user_id));
+                    }
+                }
+            }
+        }
+    }
 
 }

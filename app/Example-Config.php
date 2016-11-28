@@ -113,6 +113,16 @@ class Config {
     define('WAIT_TIME', $waittime); //DO NOT MODIFY
 
     /**
+    * Forum Settings
+    */
+    // Enable or Disable the auto member group updater
+    define('FORUM_POSTS_GROUP_CHANGE_ENABLE', 'true');
+    // Sets how many posts a user must make to forum to
+    // change their group from New Member to Member
+    // Default 15
+    define('FORUM_POSTS_GROUP_CHANGE', '15');
+
+    /**
      * Image Settings
      */
     // User's Profile Image Directory
