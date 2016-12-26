@@ -88,6 +88,7 @@ CREATE TABLE IF NOT EXISTS `uap4_users` (
   `userID` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(30) DEFAULT NULL,
   `password` varchar(128) DEFAULT NULL,
+  `pass_change_timestamp` datetime DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `firstName` varchar(100) DEFAULT NULL,
   `lastName` varchar(100) DEFAULT NULL,
