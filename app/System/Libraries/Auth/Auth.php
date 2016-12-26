@@ -393,7 +393,7 @@ class Auth {
                         // Everything looks good, sign user up
                         $password = $this->hashPass($password);
                         $activekey = $this->randomKey(RANDOM_KEY_LENGTH); // Create a random key for account activation
-                        $info = array("username" => $username, "password" => $password, "email" => $email, "activekey" => $activekey, "userImage"=>"default-".rand(1,5).".jpg");
+                        $info = array("username" => $username, "password" => $password, "email" => $email, "activekey" => $activekey, "userImage"=>"default-".rand(1,5).".jpg", "pass_change_timestamp" => date("Y-m-d H:i:s"));
                         $user_id = $this->authorize->addIntoDB("users", $info);
 
                         $info = array('userID' => $user_id, 'groupID' => 1);
@@ -490,7 +490,7 @@ class Auth {
                         // Email address isn't already used
                         $password = $this->hashPass($password);
                         $activekey = $this->randomKey(RANDOM_KEY_LENGTH);
-                        $info = array("username" => $username, "password" => $password, "email" => $email, "activekey" => $activekey, "userImage"=>"default-".rand(1,5).".jpg");
+                        $info = array("username" => $username, "password" => $password, "email" => $email, "activekey" => $activekey, "userImage"=>"default-".rand(1,5).".jpg", "pass_change_timestamp" => date("Y-m-d H:i:s"));
                         $user_id = $this->authorize->addIntoDB("users", $info);
 
                         $info = array('userID' => $user_id, 'groupID' => 1);
@@ -710,7 +710,7 @@ class Auth {
                 $db_currpass = $query[0]->password;
                 $verify_password = \Libs\Password::verify($currpass, $db_currpass);
                 if ($verify_password) {
-                    $info = array("password" => $newpass);
+                    $info = array("password" => $newpass, "pass_change_timestamp" => date("Y-m-d H:i:s"));
                     $where = array("username" => $username);
                     $this->authorize->updateInDB('users',$info,$where);
                     $this->logActivity($username, "AUTH_CHANGEPASS_SUCCESS", "Password changed");
