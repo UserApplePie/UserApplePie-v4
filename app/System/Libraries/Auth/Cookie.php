@@ -13,8 +13,6 @@ namespace Libs\Auth;
 
 class Cookie {
 
-    const FourYears = 126144000;
-
     public static function exists($key) {
         if (isset($_COOKIE[$key])) {
             return true;
@@ -23,18 +21,11 @@ class Cookie {
         }
     }
 
-    public static function set($key, $value, $expiry = self::FourYears, $path = "/", $domain = false) {
+    public static function set($key, $value, $expiry = "", $path = "/", $domain = false) {
         $retval = false;
         if (!headers_sent()) {
             if ($domain === false)
                 $domain = $_SERVER['HTTP_HOST'];
-
-            if ($expiry === -1)
-                $expiry = 1893456000; // Lifetime = 2030-01-01 00:00:00
-            elseif (is_numeric($expiry))
-                $expiry += time();
-            else
-                $expiry = strtotime($expiry);
 
             $retval = @setcookie($key, $value, $expiry, $path, $domain);
             if ($retval)
