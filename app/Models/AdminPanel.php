@@ -204,6 +204,25 @@ class AdminPanel extends Models {
     return $group_data;
   }
 
+  // Check to see how many groups user is a member of
+  public function checkUserGroupsCount($userID){
+    $data = $this->db->select("
+        SELECT
+          userID
+        FROM
+          ".PREFIX."users_groups
+        WHERE
+          userID = :userID
+        ",
+        array(':userID' => $userID));
+      $count = count($data);
+      if($count <= 1){
+        return false;
+      }else{
+        return true;
+      }
+  }
+
   // Remove given user from group
   public function removeFromGroup($userID, $groupID){
     $data = $this->db->delete(PREFIX.'users_groups', array('userID' => $userID, 'groupID' => $groupID));

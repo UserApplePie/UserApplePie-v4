@@ -321,43 +321,49 @@ class AdminPanel extends Controller{
 
 			// Check to make sure the csrf token is good
 			if (Csrf::isTokenValid('user')) {
-        if($_POST['update_profile'] == "true"){
-  				// Catch password inputs using the Request helper
-          $au_id = Request::post('au_id');
-          $au_username = Request::post('au_username');
-          $au_email = Request::post('au_email');
-  				$au_firstName = Request::post('au_firstName');
-          $au_lastName = Request::post('au_lastName');
-  				$au_gender = Request::post('au_gender');
-  				$au_website = Request::post('au_website');
-  				$au_userImage = Request::post('au_userImage');
-  				$au_aboutme = Request::post('au_aboutme');
-          $au_signature = Request::post('au_signature');
+                if($_POST['update_profile'] == "true"){
+                    // Catch password inputs using the Request helper
+                    $au_id = Request::post('au_id');
+                    $au_username = Request::post('au_username');
+                    $au_email = Request::post('au_email');
+                    $au_firstName = Request::post('au_firstName');
+                    $au_lastName = Request::post('au_lastName');
+                    $au_gender = Request::post('au_gender');
+                    $au_website = Request::post('au_website');
+                    $au_userImage = Request::post('au_userImage');
+                    $au_aboutme = Request::post('au_aboutme');
+                    $au_signature = Request::post('au_signature');
 
-  				// Run the update profile script
-  				if($this->model->updateProfile($au_id, $au_username, $au_firstName, $au_lastName, $au_email, $au_gender, $au_website, $au_userImage, $au_aboutme, $au_signature)){
-  					// Success
-            \Libs\SuccessMessages::push('You Have Successfully Updated User Profile', 'AdminPanel-User/'.$au_id);
-  				}else{
-  					// Fail
-  					$error[] = "Profile Update Failed";
-  				}
-        }
+                    // Run the update profile script
+                    if($this->model->updateProfile($au_id, $au_username, $au_firstName, $au_lastName, $au_email, $au_gender, $au_website, $au_userImage, $au_aboutme, $au_signature)){
+                        // Success
+                        \Libs\SuccessMessages::push('You Have Successfully Updated User Profile', 'AdminPanel-User/'.$au_id);
+                    }else{
+                        /** User Update Fail. Show Error **/
+                        \Libs\ErrorMessages::push('Profile Update Failed!', 'AdminPanel-User/'.$au_id);
+                    }
+                }
 
-        // Check to see if admin is removing user from group
-        if($_POST['remove_group'] == "true"){
-          // Get data from post
-          $au_userID = Request::post('au_userID');
-          $au_groupID = Request::post('au_groupID');
-          // Updates current user's group
-  				if($this->model->removeFromGroup($au_userID, $au_groupID)){
-  					// Success
-            \Libs\SuccessMessages::push('You Have Successfully Removed User From Group', 'AdminPanel-User/'.$au_userID);
-  				}else{
-  					// Fail
-  					$error[] = "Remove From Group Failed";
-  				}
-        }
+                // Check to see if admin is removing user from group
+                if($_POST['remove_group'] == "true"){
+                    // Get data from post
+                    $au_userID = Request::post('au_userID');
+                    $au_groupID = Request::post('au_groupID');
+                    // Check to make sure Admin is not trying to remove user's last group
+                    if($this->model->checkUserGroupsCount($au_userID)){
+                        // Updates current user's group
+                        if($this->model->removeFromGroup($au_userID, $au_groupID)){
+                        	// Success
+                            \Libs\SuccessMessages::push('You Have Successfully Removed User From Group', 'AdminPanel-User/'.$au_userID);
+                        }else{
+                            /** User Update Fail. Show Error **/
+                            \Libs\ErrorMessages::push('Remove From Group Failed!', 'AdminPanel-User/'.$au_userID);
+                        }
+                    }else{
+                        /** User Update Fail. Show Error **/
+                        \Libs\ErrorMessages::push('User Must Be a Member of at least ONE Group!', 'AdminPanel-User/'.$au_userID);
+                    }
+                }
 
         // Check to see if admin is adding user to group
         if($_POST['add_group'] == "true"){
@@ -369,8 +375,8 @@ class AdminPanel extends Controller{
   					// Success
             \Libs\SuccessMessages::push('You Have Successfully Added User to Group', 'AdminPanel-User/'.$au_userID);
   				}else{
-  					// Fail
-  					$error[] = "Add to Group Failed";
+                    /** User Update Fail. Show Error **/
+                    \Libs\ErrorMessages::push('Add to Group Failed!', 'AdminPanel-User/'.$au_id);
   				}
         }
 
@@ -382,8 +388,8 @@ class AdminPanel extends Controller{
   					// Success
             \Libs\SuccessMessages::push('You Have Successfully Activated User', 'AdminPanel-User/'.$au_id);
   				}else{
-  					// Fail
-  					$error[] = "Activate User Failed";
+                    /** User Update Fail. Show Error **/
+                    \Libs\ErrorMessages::push('Activate User Failed!', 'AdminPanel-User/'.$au_id);
   				}
         }
 
@@ -395,8 +401,8 @@ class AdminPanel extends Controller{
   					// Success
             \Libs\SuccessMessages::push('You Have Successfully Deactivated User', 'AdminPanel-User/'.$au_id);
   				}else{
-  					// Fail
-  					$error[] = "Deactivate User Failed";
+                    /** User Update Fail. Show Error **/
+                    \Libs\ErrorMessages::push('Deactivate User Failed!', 'AdminPanel-User/'.$au_id);
   				}
         }
 
