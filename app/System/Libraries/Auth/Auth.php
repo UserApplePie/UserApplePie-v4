@@ -498,6 +498,7 @@ class Auth {
                         //EMAIL MESSAGE USING PHPMAILER
                         $mail = new \Libs\PhpMailer\Mail();
                         $mail->addAddress($email);
+			$mail->setFrom(SITEEMAIL, EMAIL_FROM_NAME);
                         $mail->subject(SITE_TITLE. " - EMAIL VERIFICATION");
                         $body = $this->language->get('regi_email_hello')." {$username}<br/><br/>";
                         $body .= $this->language->get('regi_email_recently_registered')." ".SITE_TITLE."<br/>";
