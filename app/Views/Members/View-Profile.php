@@ -39,9 +39,24 @@ use Libs\Language;
                         <table class="table table-striped">
                             <tbody>
                               <?php
-                                /* Check to see if Private Message Module is installed, if it is show link */
-                                if(file_exists(ROOTDIR.'app/Modules/Messages/messages.module.php')){
-                                  echo "<tr><td>PM</td><td><a href='".SITE_URL."/NewMessage/".$data['profile']->username."' class='btn btn-xs btn-default'>".Language::show('members_profile_sendmsg', 'Members')."</a></td></tr>";
+                                /** Make sure User Is Logged In **/
+                                if($isLoggedIn){
+                                    /* Check to see if Private Message Plugin is installed, if it is show link */
+                                    if(file_exists(ROOTDIR.'app/Plugins/Messages/Controllers/Messages.php')){
+                                      echo "<tr><td>PM</td><td><a href='".SITE_URL."NewMessage/".$data['profile']->username."' class='btn btn-xs btn-default'>".Language::show('members_profile_sendmsg', 'Members')."</a></td></tr>";
+                                    }
+                                    /* Check to see if Friends Plugin is installed, if it is show link */
+                                    if(file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php') && $currentUserData[0]->username != $data['profile']->username){
+                                        /** Check to see if users are friends or if a request is pending **/
+                                        $friends_status = \Libs\CurrentUserData::getFriendStatus($currentUserData[0]->userID, $data['profile']->userID);
+                                        if($friends_status == "Friends"){
+                                            echo "<tr><td>".Language::show('Friend', 'Friends')."</td><td> ".Language::show('your_friend', 'Friends')." </td></tr>";
+                                        }else if($friends_status == "Pending"){
+                                            echo "<tr><td>".Language::show('Friend', 'Friends')."</td><td> ".Language::show('pending_approval', 'Friends')." </td></tr>";
+                                        }else{
+                                            echo "<tr><td>".Language::show('Friend', 'Friends')."</td><td><a href='".SITE_URL."AddFriend/".$data['profile']->username."' class='btn btn-xs btn-default'>".Language::show('send_friend_request', 'Friends')."</a></td></tr>";
+                                        }
+                                    }
                                 }
                               ?>
                               <tr><td><?=Language::show('members_profile_firstname', 'Members'); ?></td><td><?php echo $data['profile']->firstName; ?></td></tr>

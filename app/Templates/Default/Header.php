@@ -52,37 +52,45 @@ use Libs\Assets,
   				<span class="icon-bar"></span>
   			</button>
 			<img class='navbar-brand' src='<?php echo Url::templatePath(); ?>images/logo.gif'>
-  			<a class="navbar-brand" href="<?=DIR?>"><?=SITE_TITLE?></a>
+  			<a class="navbar-brand" href="<?=SITE_URL?>"><?=SITE_TITLE?></a>
   		</div>
 
   		<!-- Collect the nav links, forms, and other content for toggling -->
   		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
   			<ul class="nav navbar-nav">
-  				<li><a href="<?=DIR?>"><?=Language::show('uap_home', 'Welcome');?></a></li>
+  				<li><a href="<?=SITE_URL?>"><?=Language::show('uap_home', 'Welcome');?></a></li>
 					<?php
 						/* Check to see if Private Message Module is installed, if it is show link */
 						if(file_exists(ROOTDIR.'app/Plugins/Forum/Controllers/Forum.php')){
-							echo "<li><a href='".DIR."Forum' title='Forum'> ".Language::show('uap_forum', 'Welcome')." </a></li>";
+							echo "<li><a href='".SITE_URL."Forum' title='Forum'> ".Language::show('uap_forum', 'Welcome')." </a></li>";
 						}
 					?>
   			</ul>
   			<ul class="nav navbar-nav navbar-right">
   				<?php if(!$isLoggedIn){ ?>
-  					<li><a href="<?=DIR?>Login"><?=Language::show('login_button', 'Auth');?></a></li>
-  					<li><a href="<?=DIR?>Register"><?=Language::show('register_button', 'Auth');?></a></li>
+  					<li><a href="<?=SITE_URL?>Login"><?=Language::show('login_button', 'Auth');?></a></li>
+  					<li><a href="<?=SITE_URL?>Register"><?=Language::show('register_button', 'Auth');?></a></li>
   				<?php }else{ ?>
 							<li class='dropdown'>
 								<a href='#' title='<?php echo $currentUserData[0]->username; ?>' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>
 								<span class='glyphicon glyphicon-user' aria-hidden='true'></span> <?php echo $currentUserData[0]->username; ?>
 								<?php
-									/* Check to see if Private Message Module is installed, if it is show link */
+                                    /** Check to see if Friends Plugin is installed, if it is show link **/
+                                    if(file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php')){
+                                        /** Check to see if there are any pending friend request for current user **/
+                                        $notifi_count_fr = \Libs\CurrentUserData::getFriendRequests($currentUserData[0]->userID);
+                                    }
+									/** Check to see if Private Message Plugin is installed, if it is show link **/
 									if(file_exists(ROOTDIR.'app/Plugins/Messages/Controllers/Messages.php')){
-										// Check to see if there are any unread messages in inbox
+										/** Check to see if there are any unread messages in inbox **/
 										$notifi_count = \Libs\CurrentUserData::getUnreadMessages($currentUserData[0]->userID);
-										if($notifi_count >= "1"){
-										echo "<span class='badge'>".$notifi_count."</span>";
-										}
 									}
+                                    if($notifi_count_fr >= "1" || $notifi_count >= "1"){
+                                        $notifi_total = $notifi_count_fr + $notifi_count;
+                                        if($notifi_total >= "1"){
+                                        echo "<span class='badge'>".$notifi_total."</span>";
+                                        }
+                                    }
 								?>
 								<span class='caret'></span> </a>
 									<ul class='dropdown-menu'>
@@ -104,7 +112,7 @@ use Libs\Assets,
 														<p class="text-left"><strong><h5><?php echo $currentUserData[0]->username; if(isset($currentUserData[0]->firstName)){echo "  <small>".$currentUserData[0]->firstName."</small>";}; if(isset($currentUserData[0]->lastName)){echo "  <small>".$currentUserData[0]->lastName."</small>";} ?></h5></strong></p>
 														<p class="text-left small"><?php echo $currentUserData[0]->email; ?></p>
 														<p class="text-left">
-															<a href='<?php echo DIR."Profile/".$currentUserData[0]->username; ?>' title='View Your Profile' class='btn btn-primary btn-block btn-xs'> <span class='glyphicon glyphicon-user' aria-hidden='true'></span> <?=Language::show('uap_view_profile', 'Welcome');?></a>
+															<a href='<?php echo SITE_URL."Profile/".$currentUserData[0]->username; ?>' title='View Your Profile' class='btn btn-primary btn-block btn-xs'> <span class='glyphicon glyphicon-user' aria-hidden='true'></span> <?=Language::show('uap_view_profile', 'Welcome');?></a>
 														</p>
 													</div>
 												</div>
@@ -115,12 +123,22 @@ use Libs\Assets,
                           <div class="row">
                               <div class="col-lg-12">
                                   <p>
-										<a href='<?=DIR?>Account-Settings' title='Change Your Account Settings' class='btn btn-info btn-block btn-xs'> <span class='glyphicon glyphicon-briefcase' aria-hidden='true'></span> <?=Language::show('uap_account_settings', 'Welcome');?></a>
+										<a href='<?=SITE_URL?>Account-Settings' title='Change Your Account Settings' class='btn btn-info btn-block btn-xs'> <span class='glyphicon glyphicon-briefcase' aria-hidden='true'></span> <?=Language::show('uap_account_settings', 'Welcome');?></a>
 										<?php
-											/* Check to see if Private Message Module is installed, if it is show link */
+                                            /** Check to see if Friends Plugin is installed, if it is show link **/
+                                            if(file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php')){
+                                                echo "<a href='".SITE_URL."Friends' title='Friends' class='btn btn-danger btn-block btn-xs'> <span class='glyphicon glyphicon-user' aria-hidden='true'></span> ".Language::show('uap_friends', 'Welcome');
+                                                    /** Check to see if there are any pending friend requests **/
+                                                    $new_friend_count = \Libs\CurrentUserData::getFriendRequests($currentUserData[0]->userID);
+                                                    if($new_friend_count >= "1"){
+                                                        echo "<span class='badge'>".$new_friend_count."</span>";
+                                                    }
+                                                echo " </a>";
+                                            }
+											/** Check to see if Private Message Plugin is installed, if it is show link **/
 											if(file_exists(ROOTDIR.'app/Plugins/Messages/Controllers/Messages.php')){
-												echo "<a href='".DIR."Messages' title='Private Messages' class='btn btn-danger btn-block btn-xs'> <span class='glyphicon glyphicon-envelope' aria-hidden='true'></span> ".Language::show('uap_private_messages', 'Welcome');
-													// Check to see if there are any unread messages in inbox
+												echo "<a href='".SITE_URL."Messages' title='Private Messages' class='btn btn-danger btn-block btn-xs'> <span class='glyphicon glyphicon-envelope' aria-hidden='true'></span> ".Language::show('uap_private_messages', 'Welcome');
+													/** Check to see if there are any unread messages in inbox **/
 													$new_msg_count = \Libs\CurrentUserData::getUnreadMessages($currentUserData[0]->userID);
 													if($new_msg_count >= "1"){
 														echo "<span class='badge'>".$new_msg_count."</span>";
@@ -129,7 +147,7 @@ use Libs\Assets,
 											}
 										?>
 										<?php if($isAdmin == 'true'){ // Display Admin Panel Links if User Is Admin ?>
-											<a href='<?php echo DIR; ?>AdminPanel' title='Open Admin Panel' class='btn btn-warning btn-block btn-xs'> <span class='glyphicon glyphicon-dashboard' aria-hidden='true'></span> <?=Language::show('uap_admin_panel', 'Welcome');?></a>
+											<a href='<?php echo SITE_URL; ?>AdminPanel' title='Open Admin Panel' class='btn btn-warning btn-block btn-xs'> <span class='glyphicon glyphicon-dashboard' aria-hidden='true'></span> <?=Language::show('uap_admin_panel', 'Welcome');?></a>
 										<?php } ?>
                                 </p>
                             </div>
@@ -137,7 +155,7 @@ use Libs\Assets,
                     </div>
 									</li>
 								</ul>
-							<li><a href='<?php echo DIR; ?>Logout'><?=Language::show('uap_logout', 'Welcome');?></a></li>
+							<li><a href='<?php echo SITE_URL; ?>Logout'><?=Language::show('uap_logout', 'Welcome');?></a></li>
   				<?php }?>
   			</ul>
   		</div><!-- /.navbar-collapse -->
@@ -154,7 +172,7 @@ use Libs\Assets,
               if(isset($breadcrumbs)){
                 echo "<div class='col-lg-12 col-md-12 col-sm-12'>";
                   echo "<ol class='breadcrumb'>";
-                    echo "<li><a href='".DIR."'>".Language::show('uap_home', 'Welcome')."</a></li>";
+                    echo "<li><a href='".SITE_URL."'>".Language::show('uap_home', 'Welcome')."</a></li>";
                     echo $breadcrumbs;
                   echo "</ol>";
                 echo "</div>";

@@ -72,27 +72,45 @@ class Routes {
         /* End Language Code Change Routing */
 
         /* Forum Plugin Routing */
-        $forum = new \App\Plugins\Forum\Models\Forum();
-        $forum_on_off = $forum->globalForumSetting('forum_on_off');
-        if($forum_on_off == 'Enabled'){
-            $routes[] = self::add('Forum', 'Plugins\Forum\Controllers\Forum', 'forum');
-            $routes[] = self::add('Topics', 'Plugins\Forum\Controllers\Forum','topics','(:num)/(:num)');
-            $routes[] = self::add('Topic', 'Plugins\Forum\Controllers\Forum','topic','(:num)/(:num)');
-            $routes[] = self::add('NewTopic', 'Plugins\Forum\Controllers\Forum','newtopic','(:num)');
-            $routes[] = self::add('AdminPanel-Forum-Settings', 'Plugins\Forum\Controllers\ForumAdmin','forum_settings');
-            $routes[] = self::add('AdminPanel-Forum-Categories', 'Plugins\Forum\Controllers\ForumAdmin','forum_categories','(:any)/(:any)/(:any)');
-            $routes[] = self::add('AdminPanel-Forum-Blocked-Content', 'Plugins\Forum\Controllers\ForumAdmin','forum_blocked');
-            $routes[] = self::add('SearchForum', 'Plugins\Forum\Controllers\Forum','forumSearch','(:any)/(:num)');
+        /** Check to see if Forum Plugin is installed, if it is show link **/
+        if(file_exists(ROOTDIR.'app/Plugins/Forum/Controllers/Forum.php')){
+            $forum = new \App\Plugins\Forum\Models\Forum();
+            $forum_on_off = $forum->globalForumSetting('forum_on_off');
+            if($forum_on_off == 'Enabled'){
+                $routes[] = self::add('Forum', 'Plugins\Forum\Controllers\Forum', 'forum');
+                $routes[] = self::add('Topics', 'Plugins\Forum\Controllers\Forum','topics','(:num)/(:num)');
+                $routes[] = self::add('Topic', 'Plugins\Forum\Controllers\Forum','topic','(:num)/(:num)');
+                $routes[] = self::add('NewTopic', 'Plugins\Forum\Controllers\Forum','newtopic','(:num)');
+                $routes[] = self::add('AdminPanel-Forum-Settings', 'Plugins\Forum\Controllers\ForumAdmin','forum_settings');
+                $routes[] = self::add('AdminPanel-Forum-Categories', 'Plugins\Forum\Controllers\ForumAdmin','forum_categories','(:any)/(:any)/(:any)');
+                $routes[] = self::add('AdminPanel-Forum-Blocked-Content', 'Plugins\Forum\Controllers\ForumAdmin','forum_blocked');
+                $routes[] = self::add('SearchForum', 'Plugins\Forum\Controllers\Forum','forumSearch','(:any)/(:num)');
+            }
         }
         /* End Forum Plugin Routing */
 
         /* Messages Plugin Routing */
-        $routes[] = self::add('Messages', 'Plugins\Messages\Controllers\Messages', 'messages');
-        $routes[] = self::add('ViewMessage', 'Plugins\Messages\Controllers\Messages', 'view', '(:any)');
-        $routes[] = self::add('MessagesInbox', 'Plugins\Messages\Controllers\Messages', 'inbox', '(:any)');
-        $routes[] = self::add('MessagesOutbox/(:any)', 'Plugins\Messages\Controllers\Messages', 'outbox', '(:any)');
-        $routes[] = self::add('NewMessage', 'Plugins\Messages\Controllers\Messages', 'newmessage', '(:any)/(:any)');
-        /* Messages Plugin Routing */
+        /** Check to see if Private Messages Plugin is installed, if it is show link **/
+        if(file_exists(ROOTDIR.'app/Plugins/Messages/Controllers/Messages.php')){
+            $routes[] = self::add('Messages', 'Plugins\Messages\Controllers\Messages', 'messages');
+            $routes[] = self::add('ViewMessage', 'Plugins\Messages\Controllers\Messages', 'view', '(:any)');
+            $routes[] = self::add('MessagesInbox', 'Plugins\Messages\Controllers\Messages', 'inbox', '(:any)');
+            $routes[] = self::add('MessagesOutbox/(:any)', 'Plugins\Messages\Controllers\Messages', 'outbox', '(:any)');
+            $routes[] = self::add('NewMessage', 'Plugins\Messages\Controllers\Messages', 'newmessage', '(:any)/(:any)');
+        }
+        /* End Messages Plugin Routing */
+
+        /* Friends Plugin Routing */
+        /** Check to see if Friends Plugin is installed, if it is show link **/
+        if(file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php')){
+            $routes[] = self::add('Friends', 'Plugins\Friends\Controllers\Friends', 'friends', '(:any)/(:any)/(:any)');
+            $routes[] = self::add('FriendRequests', 'Plugins\Friends\Controllers\Friends', 'friendrequests');
+            $routes[] = self::add('UnFriend', 'Plugins\Friends\Controllers\Friends', 'unfriend', '(:any)');
+            $routes[] = self::add('AddFriend', 'Plugins\Friends\Controllers\Friends', 'addfriend', '(:any)');
+            $routes[] = self::add('ApproveFriend', 'Plugins\Friends\Controllers\Friends', 'approvefriend', '(:any)');
+            $routes[] = self::add('CancelFriend', 'Plugins\Friends\Controllers\Friends', 'cancelfriend', '(:any)');
+        }
+        /* End Friends Plugin Routing */
 
         /* Send the routes to system */
         return $routes;

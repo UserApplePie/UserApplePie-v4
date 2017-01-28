@@ -248,4 +248,123 @@ class CurrentUserData
         u.userID ASC, g.groupID DESC"));
   }
 
+    /**
+    *
+    *
+    *
+    */
+    public static function getFriendRequests($where_id){
+        if(ctype_digit($where_id)){
+            self::$db = Database::get();
+            $data = self::$db->select("
+                SELECT
+                *
+                FROM
+                ".PREFIX."friends
+                WHERE
+                uid2 = :userID
+                AND
+                status2 = :status2
+                ",
+                array(':userID' => $where_id, ':status2' => '0'));
+            $count = count($data);
+            if($count > 0){
+                return $count;
+            }else{
+                $count = "0";
+                return $count;
+            }
+            return $count;
+        }else{
+            $count = "0";
+            return $count;
+        }
+    }
+
+    /**
+    *
+    *
+    *
+    */
+    public static function getFriendStatus($userID,$friend_id){
+        self::$db = Database::get();
+        $count = count(self::$db->select("
+            SELECT
+                *
+            FROM
+                ".PREFIX."friends
+            WHERE
+            (
+                (uid1 = :userID AND uid2 = :friend_id)
+            OR
+                (uid2 = :userID AND uid1 = :friend_id)
+            )
+            AND
+            (
+                status1 = 1 AND status2 = 1
+            )
+            GROUP BY
+                uid1, uid2
+            ORDER BY
+                id
+            ASC
+        ",
+        array(':userID' => $userID, ':friend_id' => $friend_id)));
+        if($count > 0){
+            /** Users are friends **/
+            return "Friends";
+        }else{
+            /** Check for pending friend requests **/
+            $count2 = count(self::$db->select("
+                SELECT
+                    *
+                FROM
+                    ".PREFIX."friends
+                WHERE
+                (
+                    (uid1 = :userID AND uid2 = :friend_id)
+                    OR
+                    (uid2 = :userID AND uid1 = :friend_id)
+                )
+                AND
+                (
+                    status1 = 1 AND status2 = 0
+                )
+            ",
+            array(':userID' => $userID, ':friend_id' => $friend_id)));
+            if($count2 > 0){
+                return "Pending";
+            }else{
+                return "None";
+            }
+        }
+    }
+
+    /**
+    *
+    *
+    *
+    */
+    public static function getFriendsCount($userID){
+        self::$db = Database::get();
+        return count(self::$db->select("
+            SELECT
+                *
+            FROM
+                ".PREFIX."friends
+            WHERE
+            (
+                uid1 = :userID
+            OR
+                uid2 = :userID
+            )
+            AND
+            (
+                status1 = 1 AND status2 = 1
+            )
+            GROUP BY
+                uid1, uid2
+        ", array(':userID' => $userID)));
+    }
+
 }

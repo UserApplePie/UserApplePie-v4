@@ -96,6 +96,20 @@ class AdminPanel extends Controller{
     }
     $data['apd_plugin_message'] = $msg_status;
 
+    /** Check to see if Friends Plugin is Installed **/
+    if(file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php')){
+      $friends_status = "Installed";
+      /** Get Current UAP Version Data From UserApplePie.com **/
+      $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=Friends');
+      preg_match("/UAP-Friends v(.*) UAP-Friends/i", $html, $match);
+      require_once(ROOTDIR.'app/Plugins/Friends/FriendsVersion.php');
+      $cur_uap_friends_version = UAPFriendsVersion;
+      if($cur_uap_friends_version < $match[1]){ $data['cur_uap_friends_version'] = $match[1]; }
+    }else{
+      $friends_status = "NOT Installed";
+    }
+    $data['apd_plugin_friends'] = $friends_status;
+
     // Setup Breadcrumbs
     $data['breadcrumbs'] = "
       <li><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>

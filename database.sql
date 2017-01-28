@@ -144,13 +144,13 @@ CREATE TABLE IF NOT EXISTS `uap4_users_online` (
 
 CREATE TABLE IF NOT EXISTS `uap4_sitelogs` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `membername` varchar(255) NOT NULL DEFAULT '',
-  `refer` varchar(255) NOT NULL DEFAULT '',
-  `useragent` varchar(255) NOT NULL DEFAULT '',
-  `cfile` varchar(255) NOT NULL DEFAULT '',
-  `uri` varchar(255) NOT NULL DEFAULT '',
-  `ipaddy` varchar(255) NOT NULL DEFAULT '',
-  `server` varchar(255) NOT NULL DEFAULT '',
+  `membername` varchar(255) DEFAULT NULL,
+  `refer` varchar(255) DEFAULT NULL,
+  `useragent` varchar(255) DEFAULT NULL,
+  `cfile` varchar(255) DEFAULT NULL,
+  `uri` varchar(255) DEFAULT NULL,
+  `ipaddy` varchar(255) DEFAULT NULL,
+  `server` varchar(255) DEFAULT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 PACK_KEYS=0 AUTO_INCREMENT=1 ;
