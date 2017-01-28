@@ -7,7 +7,7 @@
 * @version 4.0.0
 */
 
-if(isset($cur_uap_version) || isset($cur_uap_messages_version) || isset($cur_uap_forum_version)){
+if(isset($cur_uap_version) || isset($cur_uap_messages_version) || isset($cur_uap_forum_version) || isset($cur_uap_friends_version)){
 	echo "<div class='col-lg-12 col-md-12 col-sm-12'>";
 	echo "<div class='alert alert-danger'>";
 		if(isset($cur_uap_version)){
@@ -24,6 +24,11 @@ if(isset($cur_uap_version) || isset($cur_uap_messages_version) || isset($cur_uap
 			echo "<br><b>New Update Released for UAP Forum Plugin! <br>";
 			echo "New Version:</b> $cur_uap_forum_version <br>";
 			echo "<b>Current Version:</b> ".UAPForumVersion."<br>";
+		}
+		if(isset($cur_uap_friends_version)){
+			echo "<br><b>New Update Released for UAP Friends Plugin! <br>";
+			echo "New Version:</b> $cur_uap_friends_version <br>";
+			echo "<b>Current Version:</b> ".UAPFriendsVersion."<br>";
 		}
 		echo "<hr>Visit <a href='http://www.userapplepie.com' target='_blank'>www.UserApplePie.com</a> For Updates";
 	echo "</div>";
@@ -141,6 +146,7 @@ if(isset($cur_uap_version) || isset($cur_uap_messages_version) || isset($cur_uap
 				<ul class='list-group'>
 						<li class='list-group-item'><span class='pull-left'>Forum Plugin:</span><span class='pull-right'><?=$apd_plugin_forum?></span><div class='clearfix'></div></li>
 						<li class='list-group-item'><span class='pull-left'>Private Messages Plugin:</span><span class='pull-right'><?=$apd_plugin_message?></span><div class='clearfix'></div></li>
+						<li class='list-group-item'><span class='pull-left'>Friends Plugin:</span><span class='pull-right'><?=$apd_plugin_friends?></span><div class='clearfix'></div></li>
 				</ul>
 			</div>
 		</div>

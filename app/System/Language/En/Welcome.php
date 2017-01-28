@@ -49,6 +49,7 @@ return [
 	'uap_success' => "Success",
 	'uap_error' => "Error",
 	'uap_pages_displaying' => "Displaying",
+	'uap_friends' => "Friends",
 
 	// Lang Change Success Message
 	'lang_change_success' => "You have successfully change the site language.",

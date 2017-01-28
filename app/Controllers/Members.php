@@ -54,15 +54,17 @@ class Members extends Controller
             // Set total number of rows for paginator
             $total_num_users = $onlineUsers->getTotalMembersSearch($search);
             $this->pages->setTotal($total_num_users);
+            $search_url = "/".$search;
         }else{
             // Set total number of rows for paginator
             $total_num_users = $onlineUsers->getTotalMembers();
             $this->pages->setTotal($total_num_users);
+            $search_url = "";
         }
 
         // Send page links to view
-        $pageFormat = DIR."Members/$set_order_by/"; // URL page where pages are
-        $data['pageLinks'] = $this->pages->pageLinks($pageFormat, null, $current_page);
+        $pageFormat = SITE_URL."Members/$set_order_by/"; // URL page where pages are
+        $data['pageLinks'] = $this->pages->pageLinks($pageFormat, $search_url, $current_page);
         $data['current_page_num'] = $current_page;
 
         // Check to see if member is searching for a user
@@ -122,7 +124,7 @@ class Members extends Controller
         $this->pages->setTotal($total_num_users);
 
         // Send page links to view
-        $pageFormat = DIR."Members/$set_order_by/"; // URL page where pages are
+        $pageFormat = SITE_URL."Members/$set_order_by/"; // URL page where pages are
         $data['pageLinks'] = $this->pages->pageLinks($pageFormat, null, $current_page);
         $data['current_page_num'] = $current_page;
 
@@ -266,7 +268,7 @@ class Members extends Controller
 
             /** Setup Breadcrumbs **/
         		$data['breadcrumbs'] = "
-              <li><a href='".DIR."Account-Settings'>".$this->language->get('mem_act_settings_title')."</a></li>
+              <li><a href='".SITE_URL."Account-Settings'>".$this->language->get('mem_act_settings_title')."</a></li>
         			<li class='active'>".$data['title']."</li>
             ";
 
@@ -354,7 +356,7 @@ class Members extends Controller
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
-          <li><a href='".DIR."Account-Settings'>".$this->language->get('mem_act_settings_title')."</a></li>
+          <li><a href='".SITE_URL."Account-Settings'>".$this->language->get('mem_act_settings_title')."</a></li>
     			<li class='active'>".$data['title']."</li>
         ";
 
