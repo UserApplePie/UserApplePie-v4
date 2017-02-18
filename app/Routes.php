@@ -32,7 +32,7 @@ class Routes {
 
         /* Auth Routing */
         $routes[] = self::add('Register', 'Auth', 'register');
-        $routes[] = self::add('activate', 'Auth', 'activate', '(:any)/(:any)/(:any)/(:any)');
+        $routes[] = self::add('Activate', 'Auth', 'activate', '(:any)/(:any)/(:any)/(:any)');
         $routes[] = self::add('Forgot-Password', 'Auth', 'forgotPassword');
         $routes[] = self::add('ResetPassword', 'Auth', 'resetPassword', '(:any)/(:any)/(:any)/(:any)');
         $routes[] = self::add('Resend-Activation-Email', 'Auth', 'resendActivation');
