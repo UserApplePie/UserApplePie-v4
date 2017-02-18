@@ -350,7 +350,9 @@ class Auth {
                 $this->errormsg[] = $this->language->get('register_username_long');
             } elseif (strlen($username) < MIN_USERNAME_LENGTH) {
                 $this->errormsg[] = $this->language->get('register_username_short');
-            }
+            } elseif (!preg_match("/^[a-zA-Z\p{Cyrillic}0-9]+$/u", $username)) {
+				$this->errormsg[] = $this->language->get('Username is Invalid');
+			}
             if (strlen($password) == 0) {
                 $this->errormsg[] = $this->language->get('register_password_empty');
             } elseif (strlen($password) > MAX_PASSWORD_LENGTH) {
@@ -447,7 +449,9 @@ class Auth {
                 $this->errormsg[] = $this->language->get('register_username_long');
             } elseif (strlen($username) < MIN_USERNAME_LENGTH) {
                 $this->errormsg[] = $this->language->get('register_username_short');
-            }
+            } elseif (!preg_match("/^[a-zA-Z\p{Cyrillic}0-9]+$/u", $username)) {
+				$this->errormsg[] = $this->language->get('Username is Invalid');
+			}
             if (strlen($password) == 0) {
                 $this->errormsg[] = $this->language->get('register_password_empty');
             } elseif (strlen($password) > MAX_PASSWORD_LENGTH) {
@@ -498,7 +502,7 @@ class Auth {
                         //EMAIL MESSAGE USING PHPMAILER
                         $mail = new \Libs\PhpMailer\Mail();
                         $mail->addAddress($email);
-						            $mail->setFrom(SITEEMAIL, EMAIL_FROM_NAME);
+						$mail->setFrom(SITEEMAIL, EMAIL_FROM_NAME);
                         $mail->subject(SITE_TITLE. " - EMAIL VERIFICATION");
                         $body = $this->language->get('regi_email_hello')." {$username}<br/><br/>";
                         $body .= $this->language->get('regi_email_recently_registered')." ".SITE_TITLE."<br/>";

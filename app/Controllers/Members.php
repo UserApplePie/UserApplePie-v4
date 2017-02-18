@@ -237,6 +237,27 @@ class Members extends Controller
                     }else{
                         $db_image = $userImage;
                     }
+                    /* Check to make sure First Name does not have any html char in it */
+                    if($firstName != strip_tags($firstName)){
+                        /* Error Message Display */
+                        ErrorMessages::push($this->language->get('edit_profile_firstname_error'), 'Edit-Profile');
+                    }
+                    /* Check to make sure Last Name does not have any html char in it */
+                    if($lastName != strip_tags($lastName)){
+                        /* Error Message Display */
+                        ErrorMessages::push($this->language->get('edit_profile_lastname_error'), 'Edit-Profile');
+                    }
+                    /* Check to make sure Website url is valid */
+                    if (!empty($website)){
+                        if (filter_var('http://'.$website, FILTER_VALIDATE_URL) === FALSE) {
+                            /* Error Message Display */
+                            ErrorMessages::push($this->language->get('edit_profile_website_error'), 'Edit-Profile');
+                        }
+                    }
+                    /* Clean Up Aboutme and Signature from using HTML */
+                    $aboutMe = strip_tags($aboutMe, "<br>");
+                    $signature = strip_tags($signature, "<br>");
+
                     $onlineUsers->updateProfile($u_id, $firstName, $lastName, $gender, $website, $db_image, $aboutMe, $signature);
                     // Success Message Display
                     SuccessMessages::push($this->language->get('edit_profile_success'), 'Edit-Profile');
