@@ -61,6 +61,7 @@ return [
 	'register_username_empty' => "Campo nombre usuario está vacio !",
 	'register_username_short' => "Nombre de usuario demasiado corto !",
 	'register_username_long' => "Nombre e usuario demasiado largo !",
+	'register_username_invalid' => "Nombre de usuario invalido !",
 	'register_password_empty' => "Campo contraseña está vacio !",
 	'register_password_short' => "Contraseña es demasiado corta !",
 	'register_password_long' => "Contraseña es demasiado larga !",

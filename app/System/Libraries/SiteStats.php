@@ -28,19 +28,31 @@ class SiteStats
     /** The filename of the currently executing script, relative to the document root. **/
     $cfile = $_SERVER['PHP_SELF'];
     /** Prints the exact path and filename relative to the DOCUMENT_ROOT of your site. **/
-		$uri = $_SERVER['REQUEST_URI'];
+	$uri = $_SERVER['REQUEST_URI'];
     /** Contains the IP address of the user requesting the PHP script from the server. **/
-		$ipaddy = $_SERVER['REMOTE_ADDR'];
+	$ipaddy = $_SERVER['REMOTE_ADDR'];
     /** Get Server Name Site is Accessed On. **/
     $server = $_SERVER['SERVER_NAME'];
 
-    self::$db = Database::get();
-    self::$db->insert(
-      PREFIX.'sitelogs',
-        array('membername' => $username, 'refer' => $refer,
-              'useragent' => $useragent, 'cfile' => $cfile,
-              'uri' => $uri, 'ipaddy' => $ipaddy,
-              'server' => $server));
+    // List of Pages that user should never get logged
+    $no_log_pages = array("Templates", "assets");
+    //Remove the extra forward slash from link
+    $cur_page_a = ltrim($uri, DIR);
+    // Get first part of the url (page name)
+    $cur_page_b = explode('/', $cur_page_a);
+
+    // Check to see if we should log as a previous page
+    if(strpos ($uri,"." ) === FALSE){
+        if(!in_array($cur_page_b[0], $no_log_pages)){
+            self::$db = Database::get();
+            self::$db->insert(
+              PREFIX.'sitelogs',
+                array('membername' => $username, 'refer' => $refer,
+                      'useragent' => $useragent, 'cfile' => $cfile,
+                      'uri' => $uri, 'ipaddy' => $ipaddy,
+                      'server' => $server));
+        }
+    }
   }
 
   /**

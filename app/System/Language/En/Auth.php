@@ -61,6 +61,7 @@ return [
 	'register_username_empty' => "Username field is empty!",
 	'register_username_short' => "Username is too short!",
 	'register_username_long' => "Username is too long!",
+	'register_username_invalid' => "UserName is Invalid!",
 	'register_password_empty' => "Password field is empty!",
 	'register_password_short' => "Password is too short!",
 	'register_password_long' => "Password is too long!",

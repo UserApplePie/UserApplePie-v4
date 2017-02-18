@@ -146,9 +146,9 @@ CREATE TABLE IF NOT EXISTS `uap4_sitelogs` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `membername` varchar(255) DEFAULT NULL,
   `refer` varchar(255) DEFAULT NULL,
-  `useragent` varchar(255) DEFAULT NULL,
+  `useragent` text,
   `cfile` varchar(255) DEFAULT NULL,
-  `uri` varchar(255) DEFAULT NULL,
+  `uri` text,
   `ipaddy` varchar(255) DEFAULT NULL,
   `server` varchar(255) DEFAULT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -431,3 +431,18 @@ CREATE TABLE `uap4_forum_tracker` (
     `tracker_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`)
   ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 COMMENT='Keeps track of all forum posts and replies for better sort';
+
+  -- --------------------------------------------------------
+
+--
+-- Table structure for table `uap4_friends`
+--
+
+CREATE TABLE `uap4_friends` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid1` int(15) DEFAULT NULL,
+  `uid2` int(15) DEFAULT NULL,
+  `status1` varchar(4) NOT NULL DEFAULT '0',
+  `status2` varchar(4) NOT NULL DEFAULT '0',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
