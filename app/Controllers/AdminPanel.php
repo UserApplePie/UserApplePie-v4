@@ -16,7 +16,8 @@ use App\System\Controller,
     Libs\Request,
     App\Models\AdminPanel as AdminPanelModel,
     App\System\Error,
-    App\Models\Members as MembersModel;
+    App\Models\Members as MembersModel,
+    App\Routes;
 
 define('USERS_PAGEINATOR_LIMIT', '20');  // Sets up users listing page limit
 
@@ -31,7 +32,7 @@ class AdminPanel extends Controller{
     $this->pages = new \Libs\Paginator(USERS_PAGEINATOR_LIMIT);  // How many rows per page
   }
 
-  public function dashboard(){
+  public function Dashboard(){
     // Get data for dashboard
     $data['current_page'] = $_SERVER['REQUEST_URI'];
     $data['title'] = "Dashboard";
@@ -137,7 +138,7 @@ class AdminPanel extends Controller{
     ** Admin Panel Site Settings
     ** Allows admins to change all site settings except database
     */
-    public function settings(){
+    public function Settings(){
         /* Get data for dashboard */
         $data['current_page'] = $_SERVER['REQUEST_URI'];
         $data['title'] = "Settings";
@@ -248,7 +249,7 @@ class AdminPanel extends Controller{
 
 
 
-  public function users($set_order_by = 'ID-ASC', $current_page = '1'){
+  public function Users($set_order_by = 'ID-ASC', $current_page = '1'){
 
     // Check for orderby selection
     $data['orderby'] = $set_order_by;
@@ -291,7 +292,7 @@ class AdminPanel extends Controller{
     Load::View("AdminPanel/Users", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
   }
 
-  public function user($id){
+  public function User($id){
 
     // Check for orderby selection
     $data['orderby'] = Request::post('orderby');
@@ -452,7 +453,7 @@ class AdminPanel extends Controller{
   }
 
   // Setup Groups Page
-  public function groups(){
+  public function Groups(){
 
     // Check for orderby selection
     $data['orderby'] = Request::post('orderby');
@@ -514,7 +515,7 @@ class AdminPanel extends Controller{
   }
 
   // Setup Group Page
-  public function group($id){
+  public function Group($id){
 
     // Check for orderby selection
     $data['orderby'] = Request::post('orderby');
@@ -705,4 +706,244 @@ class AdminPanel extends Controller{
     Load::View("AdminPanel/MassEmail", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
   }
 
+    /**
+    * System Routes Function
+    * Allows Admin Quickly Find and Add new routes
+    * Searches for all Classes and Methods within
+    * Controller folders
+    **/
+    public function SystemRoutes(){
+
+        /** Check to see if user is logged in **/
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+            /** User is logged in - Get their data **/
+            $u_id = $this->auth->user_info();
+            $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+            if($data['isAdmin'] = $this->user->checkIsAdmin($u_id) == 'false'){
+                /** User Not Admin - kick them out **/
+                \Libs\ErrorMessages::push('You are Not Admin', '');
+            }
+        }else{
+            /** User Not logged in - kick them out **/
+            \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
+        }
+
+        /** Setup Title and Welcome Message **/
+        $data['title'] = "System Routes";
+        $data['welcomeMessage'] = "Welcome to the System Routes.  In order for any page to work on this system, it must be setup here.";
+
+        /** Setup Breadcrumbs **/
+        $data['breadcrumbs'] = "
+          <li><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+          <li class='active'><i class='fa fa-fw fa-user'></i>".$data['title']."</li>
+        ";
+
+
+        function checkCoreRoutes($class, $method){
+            $auto_cm = array("controller" => $class,"method" => $method);
+
+            /** Get Core Routes **/
+            $core_routes = Routes::all();
+            foreach ($core_routes as $cr) {
+                if($class == $cr[controller] && $method == $cr[method]){
+                    $match[] = true;
+                }
+            }
+            $match_count = count($match);
+            if($match_count > 0){
+                return false;
+            }else{
+                return true;
+            }
+        }
+
+        /** Check the following Directory for classes and methods **/
+        $directory = APPDIR.'Controllers';
+        $scanned_directory = array_diff(scandir($directory), array('..', '.'));
+
+        /** Extract the methods from the classes **/
+        foreach ($scanned_directory as $filename) {
+            /** Remove the .php from the files names to get Class Names **/
+            $class = str_replace('.php', '', str_replace('-', ' ', $filename));
+            /** Get array of class methods **/
+            $class_methods = get_class_methods('App\\Controllers\\'.$class);
+            /** Remove blank and __construct methods from array **/
+            if($class_methods[0] == ""){
+                unset($class_methods[0]);
+            }
+            if($class_methods[0] == "__construct"){
+                unset($class_methods[0]);
+            }
+            if($class_methods[1] == "__construct"){
+                unset($class_methods[1]);
+            }
+
+            foreach ($class_methods as $method) {
+                if(checkCoreRoutes($class, $method)){
+                    $routes[] = array(
+                        "controller" => $class,
+                        "method" => $method
+                    );
+                }
+            }
+        }
+
+        /** Check all plugin folders for Controllers **/
+        $plugins_directory = APPDIR.'Plugins';
+        foreach(glob($plugins_directory.'/*', GLOB_ONLYDIR) as $dir) {
+            $dirname = basename($dir);
+            $directory = $plugins_directory.'/'.$dirname.'/Controllers';
+            $scanned_directory = array_diff(scandir($directory), array('..', '.'));
+
+            /** Extract the methods from the classes **/
+            foreach ($scanned_directory as $filename) {
+                /** Remove the .php from the files names to get Class Names **/
+                $class = str_replace('.php', '', str_replace('-', ' ', $filename));
+                /** Get array of class methods **/
+                $class_methods = get_class_methods('App\\Plugins\\'.$dirname.'\\Controllers\\'.$class);
+                /** Remove blank and __construct methods from array **/
+                if($class_methods[0] == ""){
+                    unset($class_methods[0]);
+                }
+                if($class_methods[0] == "__construct"){
+                    unset($class_methods[0]);
+                }
+                if($class_methods[1] == "__construct"){
+                    unset($class_methods[1]);
+                }
+
+                foreach ($class_methods as $method) {
+                    $plugin_class = "Plugins\\".$dirname."\\Controllers\\".$class;
+                    if(checkCoreRoutes($plugin_class, $method)){
+                        $routes[] = array(
+                            "controller" => $plugin_class,
+                            "method" => $method
+                        );
+                    }
+                }
+            }
+        }
+
+
+        /** Set new_routes default blank **/
+        $new_routes = null;
+
+        /** Check database to see if all routes are included. **/
+        if(isset($routes)){
+            foreach ($routes as $single_route) {
+                /** Check to see if route exist in database **/
+                if($this->model->checkForRoute($single_route['controller'], $single_route['method'])){
+                    /** Controller and Modthod Already Exist **/
+                    /** Might have it do soemthing later... **/
+                }else{
+                    /** Controller and Method Do Not Exist in Database **/
+                    /** Add Controller and Method to Database **/
+                    if($this->model->addRoute($single_route['controller'], $single_route['method'])){
+                        $new_routes[] = $single_route['controller']." - ".$single_route['method']."<Br>";
+                    }
+                }
+            }
+        }
+
+        /** Check to see if any new routes were added to database **/
+        $new_routes_count = count($new_routes);
+        if($new_routes_count > 0){
+            /** Format New Rutes for Success Message **/
+            $new_routes_display = implode(" ", $new_routes);
+            /** Success **/
+            \Libs\SuccessMessages::push('New Routes Have Been Added to Database!<Br><br>'.$new_routes_display, 'AdminPanel-SystemRoutes');
+        }
+
+        $data['all_routes'] = $routes;
+
+        /** Get list of System Routes from Database **/
+        $data['system_routes'] = $this->model->getAllRoutes();
+
+        /** Load The View **/
+        Load::View("AdminPanel/SystemRoutes", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
+
+    }
+
+
+
+    /**
+    * System Route Function
+    * Allows Admin Edit System Route
+    **/
+    public function SystemRoute($id){
+
+        /** Check to see if user is logged in **/
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+            /** User is logged in - Get their data **/
+            $u_id = $this->auth->user_info();
+            $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+            if($data['isAdmin'] = $this->user->checkIsAdmin($u_id) == 'false'){
+                /** User Not Admin - kick them out **/
+                \Libs\ErrorMessages::push('You are Not Admin', '');
+            }
+        }else{
+            /** User Not logged in - kick them out **/
+            \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
+        }
+
+        /** Setup Title and Welcome Message **/
+        $data['title'] = "System Route";
+        $data['welcomeMessage'] = "Welcome to the System Route.  Use Caustion when Editing System Route, it can break your site.";
+        $data['csrfToken'] = Csrf::makeToken('route');
+
+        /** Setup Breadcrumbs **/
+        $data['breadcrumbs'] = "
+          <li><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+          <li class='active'><i class='fa fa-fw fa-user'></i>".$data['title']."</li>
+        ";
+
+        /** Check to see if Admin is updating System Route **/
+    	if(isset($_POST['submit'])){
+    		// Check to make sure the csrf token is good
+    		if (Csrf::isTokenValid('route')) {
+                // Check for update group
+                if($_POST['update_route'] == "true"){
+      				// Catch password inputs using the Request helper
+                    $id = Request::post('id');
+                    $controller = Request::post('controller');
+                    $method = Request::post('method');
+                    $url = Request::post('url');
+                    $arguments = Request::post('arguments');
+                    $enable = Request::post('enable');
+
+      				// Run the update group script
+      				if($this->model->updateRoute($id, $controller, $method, $url, $arguments, $enable)){
+      					// Success
+                        \Libs\SuccessMessages::push('You Have Successfully Updated Controller '.$controller, 'AdminPanel-SystemRoute/'.$id);
+      				}else{
+      					// Fail
+      					$error[] = "Route Update Failed";
+      				}
+                }
+                //Check for delete route
+                if($_POST['delete_route'] == "true"){
+                    // Check to see what Route Admin is going to delete
+                    $id = Request::post('id');
+
+                    // Delete the Route
+                    if($this->model->deleteRoute($id)){
+                        // Success
+                        \Libs\SuccessMessages::push('You Have Successfully Deleted a Route', 'AdminPanel-SystemRoutes');
+                    }else{
+                        // Fail
+                        $error[] = "Route Delete Failed";
+                    }
+                }
+            }
+    	}
+
+
+
+        /** Get System Route from Database **/
+        $data['system_route'] = $this->model->getRoute($id);
+
+        /** Load The View **/
+        Load::View("AdminPanel/SystemRoute", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
+
+    }
 }

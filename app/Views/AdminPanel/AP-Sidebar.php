@@ -12,6 +12,7 @@
   <ul class="nav menu">
     <li <?php if($title == "Dashboard"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel"><i class='glyphicon glyphicon-cog'></i> Dashboard</a></li>
     <li <?php if($title == "Settings"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel-Settings"><i class='glyphicon glyphicon-cog'></i> Settings</a></li>
+    <li <?php if($title == "System Route" || $title == "System Routes"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel-SystemRoutes"><i class='glyphicon glyphicon-cog'></i> System Routes</a></li>
     <li <?php if($title == "Users" || $title == "User"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel-Users"><i class='glyphicon glyphicon-user'></i> Users</a></li>
     <li <?php if($title == "Groups" || $title == "Group"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel-Groups"><i class='glyphicon glyphicon-tower'></i> Groups</a></li>
     <li <?php if($title == "Mass Email"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel-MassEmail"><i class='glyphicon glyphicon-envelope'></i> Mass Email</a></li>
