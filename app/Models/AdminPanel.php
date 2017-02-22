@@ -462,7 +462,7 @@ class AdminPanel extends Models {
      * @return boolean returns true/false
      */
     public function addRoute($controller, $method){
-      $data = $this->db->insert(PREFIX.'routes', array('controller' => $controller, 'method' => $method));
+      $data = $this->db->insert(PREFIX.'routes', array('controller' => $controller, 'method' => $method, 'url' => $method));
       $count = count($data);
       if($count > 0){
         return true;
