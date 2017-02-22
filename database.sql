@@ -447,3 +447,27 @@ CREATE TABLE `uap4_friends` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `uap4_routes`
+--
+
+CREATE TABLE `uap4_routes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `controller` varchar(255) DEFAULT NULL,
+  `method` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `arguments` varchar(255) DEFAULT NULL,
+  `enable` int(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `uap4_routes`
+--
+
+INSERT INTO `uap4_routes` (`id`, `controller`, `method`, `url`, `arguments`, `enable`) VALUES
+(1, 'Home', 'About', 'About', '', 1),
+(2, 'Home', 'Contact', 'Contact', '', 1);

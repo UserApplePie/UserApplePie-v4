@@ -422,4 +422,132 @@ class AdminPanel extends Models {
 		}
   }
 
+
+
+    /**
+    * checkForRoute
+    *
+    * Checks database for controller and method
+    *
+    * @return int count
+    */
+    public function checkForRoute($controller, $method){
+        $data = $this->db->select("
+            SELECT
+                *
+            FROM
+                ".PREFIX."routes
+            WHERE
+                controller = :controller
+            AND
+                method = :method
+        ", array(':controller' => $controller, ':method' => $method));
+      $count = count($data);
+      if($count > 0){
+          return true;
+      }else{
+          return false;
+      }
+    }
+
+
+    /**
+     * addRoute
+     *
+     * adds new Route To Database
+     *
+     * @param string $controller Controller Class Name
+     * @param string $method Method Name
+     *
+     * @return boolean returns true/false
+     */
+    public function addRoute($controller, $method){
+      $data = $this->db->insert(PREFIX.'routes', array('controller' => $controller, 'method' => $method));
+      $count = count($data);
+      if($count > 0){
+        return true;
+      }else{
+        return false;
+      }
+    }
+
+    /**
+     * getAllRoutes
+     *
+     * gets all system routes from database
+     *
+     * @return string array
+     */
+    public function getAllRoutes(){
+        $system_routes = $this->db->select("
+          SELECT
+            *
+          FROM
+            ".PREFIX."routes
+          ");
+        return $system_routes;
+    }
+
+
+    /**
+    * checkForRoute
+    *
+    * Checks database for controller and method
+    *
+    * @return int count
+    */
+    public function getRoute($id){
+        $data = $this->db->select("
+            SELECT
+                *
+            FROM
+                ".PREFIX."routes
+            WHERE
+                id = :id
+            LIMIT 1
+        ", array(':id' => $id));
+      $count = count($data);
+      if($count > 0){
+          return $data;
+      }else{
+          return false;
+      }
+    }
+
+    /**
+     * updateRoute
+     *
+     * adds new Route To Database
+     *
+     * @return boolean returns true/false
+     */
+  	public function updateRoute($id, $controller, $method, $url, $arguments, $enable){
+  		$query = $this->db->update(PREFIX.'routes', array('controller' => $controller, 'method' => $method, 'url' => $url, 'arguments' => $arguments, 'enable' => $enable), array('id' => $id));
+  		$count = count($query);
+  		if($count > 0){
+  			return true;
+  		}else{
+  			return false;
+  		}
+  	}
+
+    /**
+     * deleteRoute
+     *
+     * Remove Route from Database
+     *
+     * @param int $id Route ID
+     *
+     * @return boolean returns true/false
+     */
+    public function deleteRoute($id){
+      $data = $this->db->delete(PREFIX.'routes', array('id' => $id));
+      $count = count($data);
+      if($count > 0){
+        return true;
+      }else{
+        return false;
+      }
+    }
+
 }
