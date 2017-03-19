@@ -26,7 +26,7 @@ if (file_exists(ROOTDIR.'vendor/autoload.php')) {
     exit;
 }
 
-/* Start the Sesstion */
+/* Start the Session */
 session_start();
 
 /* Error Settings */
