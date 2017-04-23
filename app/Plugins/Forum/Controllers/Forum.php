@@ -80,6 +80,11 @@ use App\System\Controller,
         	";
         $data['csrf_token'] = Csrf::makeToken('forum');
 
+        /* Get user's forum groups data */
+        $data['group_forum_perms_post'] = $this->model->group_forum_perms($u_id, "users");
+        $data['group_forum_perms_mod'] = $this->model->group_forum_perms($u_id, "mods");
+        $data['group_forum_perms_admin'] = $this->model->group_forum_perms($u_id, "admins");
+
         /* Send data to view */
         Load::ViewPlugin("forum_home", $data, "forum_sidebar::Right", "Forum");
     }
@@ -132,6 +137,11 @@ use App\System\Controller,
 
       // Ready the token!
       $data['csrf_token'] = Csrf::makeToken('forum');
+
+      /* Get user's forum groups data */
+      $data['group_forum_perms_post'] = $this->model->group_forum_perms($u_id, "users");
+      $data['group_forum_perms_mod'] = $this->model->group_forum_perms($u_id, "mods");
+      $data['group_forum_perms_admin'] = $this->model->group_forum_perms($u_id, "admins");
 
         /* Send data to view */
         Load::ViewPlugin("topics", $data, "forum_sidebar::Right", "Forum");
@@ -424,6 +434,11 @@ use App\System\Controller,
       // Ready the token!
       $data['csrf_token'] = Csrf::makeToken('forum');
 
+      /* Get user's forum groups data */
+      $data['group_forum_perms_post'] = $this->model->group_forum_perms($u_id, "users");
+      $data['group_forum_perms_mod'] = $this->model->group_forum_perms($u_id, "mods");
+      $data['group_forum_perms_admin'] = $this->model->group_forum_perms($u_id, "admins");
+
         /* Send data to view */
         Load::ViewPlugin("topic", $data, "forum_sidebar::Right", "Forum");
     }
@@ -545,6 +560,11 @@ use App\System\Controller,
       // Ready the token!
       $data['csrf_token'] = Csrf::makeToken('forum');
 
+      /* Get user's forum groups data */
+      $data['group_forum_perms_post'] = $this->model->group_forum_perms($u_id, "users");
+      $data['group_forum_perms_mod'] = $this->model->group_forum_perms($u_id, "mods");
+      $data['group_forum_perms_admin'] = $this->model->group_forum_perms($u_id, "admins");
+
         /* Send data to view */
         Load::ViewPlugin("newtopic", $data, "forum_sidebar::Right", "Forum");
     }
@@ -601,6 +621,11 @@ use App\System\Controller,
   			<li class='active'>".$this->forum_title."</li>
   		";
       $data['csrf_token'] = Csrf::makeToken('forum');
+
+      /* Get user's forum groups data */
+      $data['group_forum_perms_post'] = $this->model->group_forum_perms($u_id, "users");
+      $data['group_forum_perms_mod'] = $this->model->group_forum_perms($u_id, "mods");
+      $data['group_forum_perms_admin'] = $this->model->group_forum_perms($u_id, "admins");
 
         /* Send data to view */
         Load::ViewPlugin("searchForum", $data, "forum_sidebar::Right", "Forum");
