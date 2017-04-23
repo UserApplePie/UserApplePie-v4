@@ -356,7 +356,7 @@ use Core\Language,
           echo " <strong><font color='red'>Topic Locked - Replies are Disabled</font></strong> ";
         }else{
           // Display Create New Topic Reply Button if user is logged in
-          if($data['isLoggedIn']){
+          if($data['isLoggedIn'] && $group_forum_perms_post){
 ?>
             <hr>
             <?php echo Form::open(array('method' => 'post',  'files' => '')); ?>
@@ -427,7 +427,7 @@ use Core\Language,
 
         // Display Admin Lock/UnLock Button
         // Check if Admin
-        if($data['is_admin'] == true || $data['is_mod'] == true){
+        if($group_forum_perms_mod == true || $group_forum_perms_admin == true){
           echo "<br>";
           echo Form::open(array('method' => 'post'));
             if($data['topic_status'] == 2){
@@ -451,7 +451,7 @@ use Core\Language,
       }
       // Display Admin Hide/UnHide Button
       // Check if Admin
-      if($data['is_admin'] == true || $data['is_mod'] == true){
+      if($group_forum_perms_mod == true || $group_forum_perms_admin == true){
         echo "<hr>";
         echo Form::open(array('method' => 'post'));
           if($data['topic_allow'] == "FALSE"){
@@ -471,4 +471,23 @@ use Core\Language,
 				?>
 		</div>
 	</div>
+
+    <?php
+        /* Get Forum Permissions Data */
+        $gfp_post = $group_forum_perms_post ? "can" : "cannot";
+        $gfp_mod = $group_forum_perms_mod ? "can" : "cannot";
+        $gfp_admin = $group_forum_perms_admin ? "<b>can</b> <a href='".SITE_URL."AdminPanel-Forum-Settings'>administrate</a>" : "<b>cannot</b> administrate";
+    ?>
+
+    <div class='panel panel-default'>
+        <div class='panel-heading'>
+            <b>Forum Permissions</b>
+        </div>
+        <div class='panel-body'>
+            You <b><?php echo $gfp_post; ?></b> post in this forum.<Br>
+            You <b><?php echo $gfp_mod; ?></b> moderate this forum.<br>
+            You <?php echo $gfp_admin; ?> this forum.<br>
+        </div>
+    </div>
+
 </div>

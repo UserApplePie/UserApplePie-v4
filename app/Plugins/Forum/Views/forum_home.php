@@ -127,4 +127,23 @@ use Core\Language,
 				?>
 		</div>
 	</div>
+
+    <?php
+        /* Get Forum Permissions Data */
+        $gfp_post = $group_forum_perms_post ? "can" : "cannot";
+        $gfp_mod = $group_forum_perms_mod ? "can" : "cannot";
+        $gfp_admin = $group_forum_perms_admin ? "<b>can</b> <a href='".SITE_URL."AdminPanel-Forum-Settings'>administrate</a>" : "<b>cannot</b> administrate";
+    ?>
+
+    <div class='panel panel-default'>
+        <div class='panel-heading'>
+            <b>Forum Permissions</b>
+        </div>
+        <div class='panel-body'>
+            You <b><?php echo $gfp_post; ?></b> post in this forum.<Br>
+            You <b><?php echo $gfp_mod; ?></b> moderate this forum.<br>
+            You <?php echo $gfp_admin; ?> this forum.<br>
+        </div>
+    </div>
+
 </div>

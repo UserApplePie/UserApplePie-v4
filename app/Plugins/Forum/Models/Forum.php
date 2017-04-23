@@ -1100,4 +1100,55 @@ class Forum extends Models {
         }
     }
 
+    /**
+     * user_forum_perms
+     *
+     * Check to which groups can do stuff on the forum
+     *
+     * @param id user_id
+     * @param string forum_group
+     *
+     * @return array group permissions
+     */
+    public function group_forum_perms($user_id = null, $forum_group = null){
+        if(isset($user_id)){
+            /* Get user's groups */
+            $user_groups = $this->db->select("
+                SELECT
+                  userID, groupID
+                FROM
+                  ".PREFIX."users_groups
+                WHERE
+                  userID = :userID
+                ",
+              array(':userID' => $user_id));
+
+            $match[] = null;
+
+            /* Check to see if user's groups match any of the forum groups */
+            foreach ($user_groups as $ug) {
+                $data = count($this->db->select("
+                    SELECT *
+                    FROM ".PREFIX."forum_groups
+                    WHERE groupID = :groupID
+                    AND forum_group = :forum_group
+                ",
+                array(':groupID' => $ug->groupID, ':forum_group' => $forum_group)));
+                if($data > 0){
+                    $match[] = true;
+                }
+            }
+
+            /* Check to see if user is part of group */
+            if (in_array(true, $match)) {
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            /* No user data */
+            return false;
+        }
+    }
+
 }
