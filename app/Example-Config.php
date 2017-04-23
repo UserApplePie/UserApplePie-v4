@@ -24,7 +24,7 @@ class Config {
      define('DIR', '/');
 
     /* Define Site Url Address */
-    define('SITE_URL', 'http://uap4demo.userapplepie.com/');
+    define('SITE_URL', 'https://uap4demo.userapplepie.com/');
 
     /* Define Controller */
     define('DEFAULT_CONTROLLER', 'Home');
@@ -57,17 +57,17 @@ class Config {
     /**
      * Database name.
      */
-    define('DB_NAME', 'uap4_demo_db');
+    define('DB_NAME', 'db_name');
     /**
      * Database username.
      */
-    define('DB_USER', 'uap4_demo_user');
+    define('DB_USER', 'db_username');
     /**
      * Database password.
      */
     define('DB_PASS', 'db_password');
     /**
-     * PREFER to be used in database calls default is uap4_
+     * PREFIX to be used in database calls default is uap4_
      */
     define('PREFIX', 'uap4_');
 

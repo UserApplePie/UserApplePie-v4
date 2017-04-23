@@ -55,7 +55,7 @@ if(isset($database_working)){
     {
         // Change the prefix if not default
         $set_prefix = PREFIX;
-        $default_prefix = "uap3_";
+        $default_prefix = "uap4_";
         if($set_prefix != $default_prefix){
           $templine = str_replace($default_prefix, $set_prefix, $templine);
         }
