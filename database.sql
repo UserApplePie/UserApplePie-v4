@@ -464,6 +464,8 @@ CREATE TABLE `uap4_routes` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
 --
 -- Dumping data for table `uap4_routes`
 --
@@ -471,3 +473,18 @@ CREATE TABLE `uap4_routes` (
 INSERT INTO `uap4_routes` (`id`, `controller`, `method`, `url`, `arguments`, `enable`) VALUES
 (1, 'Home', 'About', 'About', '', 1),
 (2, 'Home', 'Contact', 'Contact', '', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Dumping data for table `uap4_test_forum_groups`
+--
+
+INSERT INTO `uap4_test_forum_groups` (`id`, `forum_group`, `groupID`) VALUES
+(1, 'users', 1),
+(2, 'users', 2),
+(3, 'users', 3),
+(4, 'users', 4),
+(5, 'mods', 3),
+(6, 'mods', 4),
+(7, 'admins', 4);
