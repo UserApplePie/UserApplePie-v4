@@ -92,7 +92,7 @@ class Home extends Controller {
 
     public function Templates(){
         $extRoutes = $this->routes;
-        if(sizeof($extRoutes) == '5'){
+        if(sizeof($extRoutes) == '5' || sizeof($extRoutes) == '6'){
             Assets::loadFile($extRoutes);
         }else{
             Error::show(404);
@@ -104,7 +104,7 @@ class Home extends Controller {
     */
     public function assets(){
         $extRoutes = $this->routes;
-        if(sizeof($extRoutes) == '4' || sizeof($extRoutes) == '5'){
+        if(sizeof($extRoutes) == '4' || sizeof($extRoutes) == '5' || sizeof($extRoutes) == '6'){
             Assets::loadFile($extRoutes, 'assets');
         }else{
             Error::show(404);

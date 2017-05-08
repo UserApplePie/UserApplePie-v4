@@ -43,7 +43,10 @@ class Assets {
                 'css' => 'text/css',
                 'js' => 'application/javascript'
             );
-            if(isset($extRoutes[4])){
+
+            if(isset($extRoutes[5])){
+                (isset($location)) ? $filename = $extRoutes[5] : $filename = $extRoutes[5] ;
+            }else if(isset($extRoutes[4])){
                 (isset($location)) ? $filename = $extRoutes[4] : $filename = $extRoutes[4] ;
             }else{
                 (isset($location)) ? $filename = $extRoutes[3] : $filename = $extRoutes[4] ;
@@ -53,13 +56,17 @@ class Assets {
 
             if(isset($location)){
                 if(isset($extRoutes[4])){
-                    $file = ROOTDIR.'assets/images/'.$extRoutes[2].'/'.$extRoutes[3].'/'.$filename;
+                    $file = ROOTDIR.'assets/'.$extRoutes[1].'/'.$extRoutes[2].'/'.$extRoutes[3].'/'.$filename;
                 }else{
-                    $file = ROOTDIR.'assets/images/'.$extRoutes[2].'/'.$filename;
+                    $file = ROOTDIR.'assets/'.$extRoutes[1].'/'.$extRoutes[2].'/'.$filename;
                 }
                 $file = preg_replace('{/$}', '', $file);
             }else{
-                $file = APPDIR.'Templates/'.$extRoutes[1].'/Assets/'.$extRoutes[3].'/'.$filename;
+                if(isset($extRoutes[5])){
+                    $file = APPDIR.'Templates/'.$extRoutes[1].'/Assets/'.$extRoutes[3].'/'.$extRoutes[4].'/'.$filename;
+                }else{
+                    $file = APPDIR.'Templates/'.$extRoutes[1].'/Assets/'.$extRoutes[3].'/'.$filename;
+                }
             }
 
             if(file_exists($file)){
