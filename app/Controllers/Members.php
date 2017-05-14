@@ -222,8 +222,12 @@ class Members extends Controller
     							$dir = $img_dir_profile.$img_name;
     							$image->best_fit(400,300)->save(ROOTDIR.$dir);
                                 if(file_exists(ROOTDIR.$dir) && (strpos($userImage, ".") !== false)){
-                                    if(file_exists(ROOTDIR.IMG_DIR_PROFILE.$userImage)) {
-                                        unlink(ROOTDIR.IMG_DIR_PROFILE.$userImage);
+                                    if($userImage == 'default-1.jpg' || $userImage == 'default-2.jpg' || $userImage == 'default-3.jpg' || $userImage == 'default-4.jpg' || $userImage == 'default-5.jpg'){
+                                        // Do Nothing
+                                    }else{
+                                        if(file_exists(ROOTDIR.IMG_DIR_PROFILE.$userImage)) {
+                                            unlink(ROOTDIR.IMG_DIR_PROFILE.$userImage);
+                                        }
                                     }
                                 }
     						}else{

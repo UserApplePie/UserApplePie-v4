@@ -480,7 +480,7 @@ INSERT INTO `uap4_routes` (`id`, `controller`, `method`, `url`, `arguments`, `en
 -- Dumping data for table `uap4_test_forum_groups`
 --
 
-INSERT INTO `uap4_test_forum_groups` (`id`, `forum_group`, `groupID`) VALUES
+INSERT INTO `uap4_forum_groups` (`id`, `forum_group`, `groupID`) VALUES
 (1, 'users', 1),
 (2, 'users', 2),
 (3, 'users', 3),
