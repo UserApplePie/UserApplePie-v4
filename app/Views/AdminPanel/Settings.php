@@ -27,19 +27,19 @@ use Libs\Form,
     			<!-- Site Title -->
     			<div class='input-group' style='margin-bottom: 25px'>
     				<span class='input-group-addon'><i class='glyphicon glyphicon-globe'></i> Site Title</span>
-    				<?php echo Form::input(array('type' => 'text', 'name' => 'site_title', 'class' => 'form-control', 'value' => $site_title, 'placeholder' => 'Site Title', 'maxlength' => '60')); ?>
+    				<?php echo Form::input(array('type' => 'text', 'name' => 'site_title', 'class' => 'form-control', 'value' => $site_title, 'placeholder' => 'Site Title', 'maxlength' => '255')); ?>
     			</div>
 
                 <!-- Site Description -->
                 <div class='input-group' style='margin-bottom: 25px'>
                     <span class='input-group-addon'><i class='glyphicon glyphicon-globe'></i> Site Description</span>
-                    <?php echo Form::input(array('type' => 'text', 'name' => 'site_description', 'class' => 'form-control', 'value' => $site_description, 'placeholder' => 'Site Description' , 'maxlength' => '160')); ?>
+                    <?php echo Form::input(array('type' => 'text', 'name' => 'site_description', 'class' => 'form-control', 'value' => $site_description, 'placeholder' => 'Site Description' , 'maxlength' => '255')); ?>
                 </div>
 
                 <!-- Site Keywords -->
     			<div class='input-group' style='margin-bottom: 25px'>
     				<span class='input-group-addon'><i class='glyphicon glyphicon-globe'></i> Site Keywords</span>
-    				<?php echo Form::input(array('type' => 'text', 'name' => 'site_keywords', 'class' => 'form-control', 'value' => $site_keywords, 'placeholder' => 'Site Keywords', 'maxlength' => '100')); ?>
+    				<?php echo Form::input(array('type' => 'text', 'name' => 'site_keywords', 'class' => 'form-control', 'value' => $site_keywords, 'placeholder' => 'Site Keywords', 'maxlength' => '255')); ?>
     			</div>
 
     				<!-- CSRF Token -->
