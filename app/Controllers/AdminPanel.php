@@ -64,7 +64,7 @@ class AdminPanel extends Controller{
     $data['totalPageViews'] = \Libs\SiteStats::getTotalViews();
 
     /** Get Current UAP Version Data From UserApplePie.com **/
-    $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=UAP');
+    $html = file_get_contents('https://www.userapplepie.com/uapversion.php?getversion=UAP');
     preg_match("/UAP v(.*) UAP/i", $html, $match);
     $cur_uap_version = UAPVersion;
     if($cur_uap_version < $match[1]){ $data['cur_uap_version'] = $match[1]; }
@@ -73,7 +73,7 @@ class AdminPanel extends Controller{
     if(file_exists(ROOTDIR.'app/Plugins/Forum/Controllers/Forum.php')){
       $forum_status = "Installed";
       /** Get Current UAP Version Data From UserApplePie.com **/
-      $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=Forum');
+      $html = file_get_contents('https://www.userapplepie.com/uapversion.php?getversion=Forum');
       preg_match("/UAP-Forum v(.*) UAP-Forum/i", $html, $match);
       require_once(ROOTDIR.'app/Plugins/Forum/ForumVersion.php');
       $cur_uap_forum_version = UAPForumVersion;
@@ -87,7 +87,7 @@ class AdminPanel extends Controller{
     if(file_exists(ROOTDIR.'app/Plugins/Messages/Controllers/Messages.php')){
       $msg_status = "Installed";
       /** Get Current UAP Version Data From UserApplePie.com **/
-      $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=Messages');
+      $html = file_get_contents('https://www.userapplepie.com/uapversion.php?getversion=Messages');
       preg_match("/UAP-Messages v(.*) UAP-Messages/i", $html, $match);
       require_once(ROOTDIR.'app/Plugins/Messages/MessagesVersion.php');
       $cur_uap_messages_version = UAPMessagesVersion;
@@ -101,7 +101,7 @@ class AdminPanel extends Controller{
     if(file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php')){
       $friends_status = "Installed";
       /** Get Current UAP Version Data From UserApplePie.com **/
-      $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=Friends');
+      $html = file_get_contents('https://www.userapplepie.com/uapversion.php?getversion=Friends');
       preg_match("/UAP-Friends v(.*) UAP-Friends/i", $html, $match);
       require_once(ROOTDIR.'app/Plugins/Friends/FriendsVersion.php');
       $cur_uap_friends_version = UAPFriendsVersion;
