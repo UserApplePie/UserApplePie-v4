@@ -70,6 +70,12 @@ class AdminPanel extends Controller{
     }
 
     /** Get Current UAP Version Data From UserApplePie.com **/
+<<<<<<< HEAD
+    $html = file_get_contents('https://www.userapplepie.com/uapversion.php?getversion=UAP');
+    preg_match("/UAP v(.*) UAP/i", $html, $match);
+    $cur_uap_version = UAPVersion;
+    if($cur_uap_version < $match[1]){ $data['cur_uap_version'] = $match[1]; }
+=======
     $check_url = 'https://www.userapplepie.com/uapversion.php?getversion=UAP';
     if(UR_exists($check_url)){
       $html = file_get_contents($check_url);
@@ -77,11 +83,19 @@ class AdminPanel extends Controller{
       $cur_uap_version = UAPVersion;
       if($cur_uap_version < $match[1]){ $data['cur_uap_version'] = $match[1]; }
     }
+>>>>>>> staging
 
     /** Check to see if Forum Plugin is Installed  **/
     if(file_exists(ROOTDIR.'app/Plugins/Forum/Controllers/Forum.php')){
       $forum_status = "Installed";
       /** Get Current UAP Version Data From UserApplePie.com **/
+<<<<<<< HEAD
+      $html = file_get_contents('https://www.userapplepie.com/uapversion.php?getversion=Forum');
+      preg_match("/UAP-Forum v(.*) UAP-Forum/i", $html, $match);
+      require_once(ROOTDIR.'app/Plugins/Forum/ForumVersion.php');
+      $cur_uap_forum_version = UAPForumVersion;
+      if($cur_uap_forum_version < $match[1]){ $data['cur_uap_forum_version'] = $match[1]; }
+=======
       $check_url = 'https://www.userapplepie.com/uapversion.php?getversion=Forum';
       if(UR_exists($check_url)){
         $html = file_get_contents($check_url);
@@ -90,6 +104,7 @@ class AdminPanel extends Controller{
         $cur_uap_forum_version = UAPForumVersion;
         if($cur_uap_forum_version < $match[1]){ $data['cur_uap_forum_version'] = $match[1]; }
       }
+>>>>>>> staging
     }else{
       $forum_status = "NOT Installed";
     }
@@ -99,6 +114,13 @@ class AdminPanel extends Controller{
     if(file_exists(ROOTDIR.'app/Plugins/Messages/Controllers/Messages.php')){
       $msg_status = "Installed";
       /** Get Current UAP Version Data From UserApplePie.com **/
+<<<<<<< HEAD
+      $html = file_get_contents('https://www.userapplepie.com/uapversion.php?getversion=Messages');
+      preg_match("/UAP-Messages v(.*) UAP-Messages/i", $html, $match);
+      require_once(ROOTDIR.'app/Plugins/Messages/MessagesVersion.php');
+      $cur_uap_messages_version = UAPMessagesVersion;
+      if($cur_uap_messages_version < $match[1]){ $data['cur_uap_messages_version'] = $match[1]; }
+=======
       $check_url = 'https://www.userapplepie.com/uapversion.php?getversion=Messages';
       if(UR_exists($check_url)){
         $html = file_get_contents($check_url);
@@ -107,6 +129,7 @@ class AdminPanel extends Controller{
         $cur_uap_messages_version = UAPMessagesVersion;
         if($cur_uap_messages_version < $match[1]){ $data['cur_uap_messages_version'] = $match[1]; }
       }
+>>>>>>> staging
     }else{
       $msg_status = "NOT Installed";
     }
@@ -116,6 +139,13 @@ class AdminPanel extends Controller{
     if(file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php')){
       $friends_status = "Installed";
       /** Get Current UAP Version Data From UserApplePie.com **/
+<<<<<<< HEAD
+      $html = file_get_contents('https://www.userapplepie.com/uapversion.php?getversion=Friends');
+      preg_match("/UAP-Friends v(.*) UAP-Friends/i", $html, $match);
+      require_once(ROOTDIR.'app/Plugins/Friends/FriendsVersion.php');
+      $cur_uap_friends_version = UAPFriendsVersion;
+      if($cur_uap_friends_version < $match[1]){ $data['cur_uap_friends_version'] = $match[1]; }
+=======
       $check_url = 'https://www.userapplepie.com/uapversion.php?getversion=Friends';
       if(UR_exists($check_url)){
         $html = file_get_contents($check_url);
@@ -124,6 +154,7 @@ class AdminPanel extends Controller{
         $cur_uap_friends_version = UAPFriendsVersion;
         if($cur_uap_friends_version < $match[1]){ $data['cur_uap_friends_version'] = $match[1]; }
       }
+>>>>>>> staging
     }else{
       $friends_status = "NOT Installed";
     }
