@@ -5,7 +5,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 /** Check to see where the user is at within the install **/
@@ -67,8 +67,8 @@ if(isset($_GET['install_step'])){
 
 			<div class='col-lg-12 col-md-12 col-sm-12'>
 
-				<div class='panel panel-primary'>
-          <div class='panel-heading'>
+				<div class='card border-primary mb-3'>
+          <div class='card-header h4'>
 						<div class='row'>
               <div class='col-lg-12 col-md-12 col-sm-12' align='center'>
                 <h3>UserApplePie v4 Installation</h3>

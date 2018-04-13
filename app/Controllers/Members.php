@@ -4,7 +4,7 @@
  *
  * UserApplePie
  * @author David (DaVaR) Sargent <davar@userapplepie.com>
- * @version 4.0.1
+ * @version 4.2.0
  */
 
 namespace App\Controllers;
@@ -101,7 +101,7 @@ class Members extends Controller
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
-    			<li class='active'>".$data['title']."</li>
+    			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
         Load::View("Members/Members", $data, "Members/Member-Stats-Sidebar::Left");
@@ -146,7 +146,7 @@ class Members extends Controller
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
-    			<li class='active'>".$data['title']."</li>
+    			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
         Load::View("Members/Members", $data, "Members/Member-Stats-Sidebar::Left");
@@ -177,7 +177,7 @@ class Members extends Controller
 
             /** Setup Breadcrumbs **/
         		$data['breadcrumbs'] = "
-        			<li class='active'>".$data['title']."</li>
+        			<li class='breadcrumb-item active'>".$data['title']."</li>
             ";
 
             Load::View("Members/View-Profile", $data);
@@ -293,8 +293,8 @@ class Members extends Controller
 
             /** Setup Breadcrumbs **/
         		$data['breadcrumbs'] = "
-              <li><a href='".SITE_URL."Account-Settings'>".$this->language->get('mem_act_settings_title')."</a></li>
-        			<li class='active'>".$data['title']."</li>
+              <li class='breadcrumb-item'><a href='".SITE_URL."Account-Settings'>".$this->language->get('mem_act_settings_title')."</a></li>
+        			<li class='breadcrumb-item active'>".$data['title']."</li>
             ";
 
             Load::View("Members/Edit-Profile", $data, "Members/Member-Account-Sidebar::Left");
@@ -326,7 +326,7 @@ class Members extends Controller
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
-    			<li class='active'>".$data['title']."</li>
+    			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
         Load::View("Members/Account-Settings", $data, "Members/Member-Account-Sidebar::Left");
@@ -381,8 +381,8 @@ class Members extends Controller
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
-          <li><a href='".SITE_URL."Account-Settings'>".$this->language->get('mem_act_settings_title')."</a></li>
-    			<li class='active'>".$data['title']."</li>
+          <li class='breadcrumb-item'><a href='".SITE_URL."Account-Settings'>".$this->language->get('mem_act_settings_title')."</a></li>
+    			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
         Load::View("Members/Privacy-Settings", $data, "Members/Member-Account-Sidebar::Left");

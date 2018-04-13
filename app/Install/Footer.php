@@ -4,14 +4,14 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 ?>
 
 	</div>
 		<div class='col-lg-12 col-md-12 col-sm-12'>
 			<!-- Footer (sticky) -->
-			<footer class='navbar navbar-default'>
+			<footer class='navbar navbar-secondary'>
 				<div class='container'>
 					<div class='navbar-text'>
 

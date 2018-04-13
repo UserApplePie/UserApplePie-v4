@@ -18,17 +18,17 @@ $(document).ready(function()
               /*$("#resultun").html(data);*/
 			if(data == 'OK')
 			{
-			   $("#resultemail").html("<i class='glyphicon glyphicon-ok text-success'></i>");
+			   $("#resultemail").html("<i class='fas fa-check text-success'></i>");
 			   $("#resultemail2").html("");
 			}
 			if(data == 'BAD')
 			{
-			   $("#resultemail").html("<i class='glyphicon glyphicon-remove text-danger'></i>");
+			   $("#resultemail").html("<i class='fas fa-times text-danger'></i>");
 			   $("#resultemail2").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + lang.email_invalid + "</div>");
 			}
 			if(data == 'INUSE')
 			{
-			   $("#resultemail").html("<i class='glyphicon glyphicon-remove text-danger'></i>");
+			   $("#resultemail").html("<i class='fas fa-times text-danger'></i>");
 			   $("#resultemail2").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + lang.email_inuse + "</div>");
 			}
         }
@@ -38,7 +38,7 @@ $(document).ready(function()
   }
   else
   {
-   $("#resultemail").html("<i class='glyphicon glyphicon-remove text-danger'></i>");
+   $("#resultemail").html("<i class='fas fa-times text-danger'></i>");
    $("#resultemail2").html("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + lang.email_char_count + "</div>");
   }
  });

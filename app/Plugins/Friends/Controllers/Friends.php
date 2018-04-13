@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 namespace App\Plugins\Friends\Controllers;
@@ -87,7 +87,7 @@ class Friends extends Controller {
 
         /** Setup Breadcrumbs **/
         $data['breadcrumbs'] = "
-          <li class='active'>My Friends</li>
+          <li class='breadcrumb-item active'>My Friends</li>
         ";
 
         /** Get List of All Current User's Friends **/
@@ -192,7 +192,7 @@ class Friends extends Controller {
 
         /** Setup Breadcrumbs **/
         $data['breadcrumbs'] = "
-          <li class='active'>My Friend Requests</li>
+          <li class='breadcrumb-item active'>My Friend Requests</li>
         ";
 
         /** Setup form token! **/

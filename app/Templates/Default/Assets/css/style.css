@@ -3,10 +3,13 @@ footer a {
     color: black;
 }
 body {
-  margin-top: 20px;
+  padding-top: 80px;
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
 }
 footer {
-  margin-top: 4px;
+  margin-top: 20px;
+  margin-bottom: 0px;
 }
 .col-centered{
   float: none;
@@ -17,6 +20,10 @@ footer {
   width: 305px;
   padding: 10px;
   padding-bottom: 0px;
+}
+.navbar-login-text
+{
+  color: #000000;
 }
 .navbar-login-session
 {
@@ -38,4 +45,10 @@ pre.code {
 	font-size:11px;
 	width:100%;
 	overflow:auto;
+}
+.footer {
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+  background-color: #f5f5f5;
 }

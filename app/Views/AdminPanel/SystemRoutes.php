@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 use Libs\Language,
@@ -14,11 +14,11 @@ use Libs\Language,
 
 
 <div class='col-lg-12 col-md-12 col-sm-12'>
-	<div class='panel panel-default'>
-		<div class='panel-heading'>
+	<div class='card mb-3'>
+		<div class='card-header h4'>
 			System Routes
 		</div>
-        <div class='panel-body'>
+        <div class='card-body'>
             <?=$welcomeMessage?>
         </div>
 		<table class='table table-hover responsive'>
@@ -40,7 +40,7 @@ use Libs\Language,
                             echo "<td>$row->arguments</td>";
                             echo "<td>$row->enable</td>";
                             echo "<td align='right'>";
-                            echo "<a href='".DIR."AdminPanel-SystemRoute/$row->id' class='btn btn-xs btn-primary'><span class='glyphicon glyphicon-pencil'></span></a>";
+                            echo "<a href='".DIR."AdminPanel-SystemRoute/$row->id' class='btn btn-xs btn-primary'><span class='fas fa-pencil'></span></a>";
                             echo "</td>";
                         echo "</tr>";
 					}

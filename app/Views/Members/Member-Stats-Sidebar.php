@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 use Libs\Language;
@@ -19,12 +19,14 @@ function process()
   }
 </script>
 
+
+
 <div class="col-lg-4 col-md-4 col-sm-4">
-    <div class='panel panel-default'>
-        <div class='panel-heading'>
-            <h3><?=Language::show('members_user_stats', 'Members'); ?></h3>
+    <div class='card mb-3'>
+        <div class='card-header h4'>
+            <?=Language::show('members_user_stats', 'Members'); ?>
         </div>
-        <ul class="list-group">
+        <ul class="list-group list-group-flush">
             <li class="list-group-item"><a href="<?php echo DIR; ?>Members"><?=Language::show('members_title', 'Members'); ?>: <?php echo $data['activatedAccounts']; ?></a></li>
             <li class="list-group-item"><a href="<?php echo DIR; ?>Online-Members"><?=Language::show('members_online_title', 'Members'); ?>: <?php echo $data['onlineAccounts']; ?></a></li>
         </ul>
@@ -34,16 +36,16 @@ function process()
     // Display Search Members Form
     if($members_page){
 ?>
-        <div class='panel panel-default'>
+        <div class='card mb-3'>
           <form onSubmit="return process();" class="form" method="post">
-          <div class='panel-heading' style='font-weight: bold'>
+          <div class='card-header h4'>
             <?=Language::show('search_members', 'Members'); ?>
           </div>
-          <div class='panel-body'>
+          <div class='card-body'>
             <div class="form-group">
               <input type="forumSearch" class="form-control" id="forumSearch" placeholder="<?=Language::show('search_members', 'Members'); ?>" value="<?php if(isset($data['search'])){ echo $data['search']; } ?>">
             </div>
-            <button type="submit" class="btn btn-default"><?=Language::show('search', 'Members'); ?></button>
+            <button type="submit" class="btn btn-secondary"><?=Language::show('search', 'Members'); ?></button>
           </div>
           </form>
         </div>

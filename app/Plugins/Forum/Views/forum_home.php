@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 /** Forum Home Page View **/
@@ -21,11 +21,11 @@ use Core\Language,
 
 <div class='col-lg-8 col-md-8'>
 
-	<div class='panel panel-default'>
-		<div class='panel-heading'>
+	<div class='card mb-3'>
+		<div class='card-header h4'>
 			<h3 class='jumbotron-heading'><?php echo $data['title'] ?></h3>
 		</div>
-		<div class='panel-body'>
+		<div class='card-body'>
 			<p><?php echo $data['welcome_message'] ?></p>
 				<?php
         foreach($data['forum_categories'] as $row)
@@ -34,14 +34,14 @@ use Core\Language,
       		$f_id = $row->forum_id;
       		$f_order_title = $row->forum_order_title;
 
-      		echo "<div class='panel panel-default'>";
-      			echo "<div class='panel-heading' style='font-weight: bold'>";
+      		echo "<div class='card mb-3'>";
+      			echo "<div class='card-header h4' style='font-weight: bold'>";
 
               // Title Output
               echo "$f_title";
 
       			echo "</div>";
-      			echo "<ul class='list-group'>";
+      			echo "<ul class='list-group list-group-flush'>";
       				foreach($data['forum_titles'] as $row2)
       				{
                 if($f_title == $row2->forum_title){
@@ -62,9 +62,9 @@ use Core\Language,
                                     echo "<h4>";
                                     // Display icon that lets user know if they have read this topic or not
                                     if($has_user_read){
-                                        echo "<span class='glyphicon glyphicon-star' aria-hidden='true'></span> ";
+                                        echo "<span class='fas fa-star' aria-hidden='true'></span> ";
                                     }else{
-                                        echo "<span class='glyphicon glyphicon-star-empty' aria-hidden='true' style='color: #DDD'></span> ";
+                                        echo "<span class='far fa-star' aria-hidden='true' style='color: #DDD'></span> ";
                                     }
                                     echo "<a href='".DIR."Topics/$f_id2/' title='$f_cat' ALT='$f_cat'>$f_cat</a></h4>";
                                     echo "<div class='' style='text-align: left; font-size: x-small'>";
@@ -85,12 +85,13 @@ use Core\Language,
 
 
 								// Displays when on mobile device
-								echo "<button href='#Bar$f_id2' class='btn btn-default btn-sm visible-xs' data-toggle='collapse' style='position: absolute; top: 3px; right: 3px'>";
-									echo "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>";
+								echo "<button href='#Bar$f_id2' class='btn btn-secondary btn-sm d-block d-sm-none' data-toggle='collapse' style='position: absolute; top: 3px; right: 3px'>";
+									echo "<span class='fas fa-plus' aria-hidden='true'></span>";
 								echo "</button>";
 
-        								echo "<div id='Bar$f_id2' class='collapse hidden-sm hidden-md hidden-lg'>";
-        								echo "<div style='text-align: center'>";
+        								echo "<div id='Bar$f_id2' class='collapse d-sm-none'>";
+                            echo "<div class='col-12'>";
+        								        echo "<div style='text-align: center'>";
 
                                             // Display total number of topics for this category
                                             echo "<div class='btn btn-info btn-xs' style='margin-top: 5px'>";
@@ -102,11 +103,12 @@ use Core\Language,
                                             echo "Replies <span class='badge'>$row2->total_topic_replys_display</span>";
                                             echo "</div>";
 
-        								echo "</div>";
+        								        echo "</div>";
+                            echo "</div>";
         								echo "</div>";
 
         								// Displays when not on mobile device
-        								echo "<div class='media-right hidden-xs' style='text-align: right'>";
+        								echo "<div class='media-right d-none d-sm-block' style='text-align: right'>";
                                             // Display total number of topics for this category
                                             echo "<div class='btn btn-info btn-xs' style='margin-top: 5px'>";
                                             echo "Topics <span class='badge'>$row2->total_topics_display</span>";
@@ -135,11 +137,11 @@ use Core\Language,
         $gfp_admin = $group_forum_perms_admin ? "<b>can</b> <a href='".SITE_URL."AdminPanel-Forum-Settings'>administrate</a>" : "<b>cannot</b> administrate";
     ?>
 
-    <div class='panel panel-default'>
-        <div class='panel-heading'>
+    <div class='card mb-3'>
+        <div class='card-header h4'>
             <b>Forum Permissions</b>
         </div>
-        <div class='panel-body'>
+        <div class='card-body'>
             You <b><?php echo $gfp_post; ?></b> post in this forum.<Br>
             You <b><?php echo $gfp_mod; ?></b> moderate this forum.<br>
             You <?php echo $gfp_admin; ?> this forum.<br>

@@ -4,22 +4,23 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 use Libs\Language;
 ?>
 
 <div class="col-lg-8 col-md-8 col-sm-8">
-	<div class="panel panel-default">
-        <div class="panel-heading">
-            <h1><?php echo Language::show('uap_home', 'Welcome'); ?></h1>
+	<div class="card mb-3">
+        <div class="card-header h4">
+            <?php echo Language::show('uap_home', 'Welcome'); ?>
         </div>
-        <div class="panel-body">
-			<center><img src='<?=SITE_URL?>/Templates/<?=DEFAULT_TEMPLATE?>/Assets/images/uap3logolg.gif' class='img-responsive' /></center>
-            <p><?=$bodyText?></p>
-            <p><a href="../About/" class="btn btn-primary btn-sm"><?php echo Language::show('openAbout', 'Welcome'); ?></a>
-            <a href="../Contact/" class="btn btn-primary btn-sm"><?php echo Language::show('openContact', 'Welcome'); ?></a></p>
+        <div class="card-body">
+						<center><img src='<?=SITE_URL?>/Templates/<?=DEFAULT_TEMPLATE?>/Assets/images/uap3logolg.gif' class='img-fluid' /></center>
+            <?=$bodyText?><br>
+            <a href="../About/" class="btn btn-primary btn-sm"><?php echo Language::show('openAbout', 'Welcome'); ?></a>
+            <a href="../Contact/" class="btn btn-primary btn-sm"><?php echo Language::show('openContact', 'Welcome'); ?></a>
         </div>
     </div>
 </div>
+<br><br>

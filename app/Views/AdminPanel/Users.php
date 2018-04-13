@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 use Libs\Language,
@@ -15,8 +15,8 @@ $orderby = $data['orderby'];
 
 ?>
 <div class='col-lg-12 col-md-12 col-sm-12'>
-	<div class='panel panel-default'>
-		<div class='panel-heading'>
+	<div class='card mb-3'>
+		<div class='card-header h4'>
 			<?php echo $data['title'] ?>
 		</div>
 			<table class='table table-hover responsive'>
@@ -29,11 +29,11 @@ $orderby = $data['orderby'];
               }
               else if($data['orderby'] == "ID-DESC"){
                 $ob_value = "ID-ASC";
-                $ob_icon = "<i class='glyphicon glyphicon-triangle-bottom'></i>";
+                $ob_icon = "<i class='fas fa-triangle-bottom'></i>";
               }
               else if($data['orderby'] == "ID-ASC"){
                 $ob_value = "ID-DESC";
-                $ob_icon = "<i class='glyphicon glyphicon-triangle-top'></i>";
+                $ob_icon = "<i class='fas fa-triangle-top'></i>";
               }else{
 								$ob_value = "ID-ASC";
                 $ob_icon = "";
@@ -50,11 +50,11 @@ $orderby = $data['orderby'];
               }
               else if($data['orderby'] == "UN-DESC"){
                 $obu_value = "UN-ASC";
-                $obu_icon = "<i class='glyphicon glyphicon-triangle-bottom'></i>";
+                $obu_icon = "<i class='fas fa-triangle-bottom'></i>";
               }
               else if($data['orderby'] == "UN-ASC"){
                 $obu_value = "UN-DESC";
-                $obu_icon = "<i class='glyphicon glyphicon-triangle-top'></i>";
+                $obu_icon = "<i class='fas fa-triangle-top'></i>";
               }else{
 								$obu_value = "UN-ASC";
                 $obu_icon = "";
@@ -73,7 +73,7 @@ $orderby = $data['orderby'];
 						foreach($data['users_list'] as $row) {
 							echo "<tr>";
               echo "<td>$row->userID</td>";
-							echo "<td><button type='button' class='btn btn-default btn-xs' data-toggle='modal' data-target='#myModal-$row->userID'>$row->username</button></td>";
+							echo "<td><button type='button' class='btn btn-secondary btn-xs' data-toggle='modal' data-target='#myModal-$row->userID'>$row->username</button></td>";
 							echo "<td>$row->firstName $row->lastName</td>";
               echo "<td class='hidden-xs'>";
 								if($row->LastLogin){ echo date("M d, y",strtotime($row->LastLogin)); }else{ echo "Never"; }
@@ -82,7 +82,7 @@ $orderby = $data['orderby'];
 							echo date("M d, y",strtotime($row->SignUp));
 							echo "</td>";
 							echo "<td align='right'>";
-							echo "<a href='".DIR."AdminPanel-User/$row->userID' class='btn btn-xs btn-primary'><span class='glyphicon glyphicon-pencil'></span></a>";
+							echo "<a href='".DIR."AdminPanel-User/$row->userID' class='btn btn-xs btn-primary'><span class='fas fa-pencil'></span></a>";
 							echo "</td>";
 							echo "</tr>";
 							echo "
@@ -92,14 +92,14 @@ $orderby = $data['orderby'];
 								    <div class='modal-content'>
 								      <div class='modal-header'>
 								        <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-								        <h4 class='modal-title' id='myModalLabel'><span class='glyphicon glyphicon-user'></span> ".$row->username."&#39;s Information</h4>
+								        <h4 class='modal-title' id='myModalLabel'><span class='fas fa-user'></span> ".$row->username."&#39;s Information</h4>
 								      </div>
 								      <div class='modal-body'>
 												<div class='row'>
 							";
 													if(!empty($row->userImage)){
 														echo "<div class='col-lg-6 col-md-6 col-sm-6'>";
-														echo "<img alt='$row->username's Profile Picture' src='".SITE_URL.$row->userImage."' class='img-rounded img-responsive'>";
+														echo "<img alt='$row->username's Profile Picture' src='".SITE_URL.$row->userImage."' class='rounded img-fluid'>";
 														echo "</div>";
 														echo "<div class='col-lg-6 col-md-6 col-sm-6'>";
 													}else{
@@ -124,7 +124,7 @@ $orderby = $data['orderby'];
 								      </div>
 								      <div class='modal-footer'>
 												<a class='btn btn-primary btn-sm' href='".DIR."AdminPanel-User/$row->userID'>Edit ".$row->username."&#39;s Info</a>
-								        <button type='button' class='btn btn-default btn-sm' data-dismiss='modal'>Close</button>
+								        <button type='button' class='btn btn-secondary btn-sm' data-dismiss='modal'>Close</button>
 								      </div>
 								    </div>
 								  </div>
@@ -137,7 +137,7 @@ $orderby = $data['orderby'];
 		<?php
 			// Check to see if there is more than one page
 			if($data['pageLinks'] > "1"){
-				echo "<div class='panel-footer' style='text-align: center'>";
+				echo "<div class='card-footer text-muted' style='text-align: center'>";
 				echo $data['pageLinks'];
 				echo "</div>";
 			}

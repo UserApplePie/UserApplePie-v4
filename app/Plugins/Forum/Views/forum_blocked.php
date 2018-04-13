@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 /** Forum Categories Admin Panel View **/
@@ -17,19 +17,19 @@ use Libs\Form,
 ?>
 
 <div class='col-lg-12 col-md-12 col-sm-12'>
-	<div class='panel panel-default'>
-		<div class='panel-heading'>
+	<div class='card mb-3'>
+		<div class='card-header h4'>
 			<h3 class='jumbotron-heading'><?php echo $data['title'];  ?></h3>
 		</div>
-		<div class='panel-body'>
+		<div class='card-body'>
 			<p><?php echo $data['welcome_message'] ?></p>
     </div>
 	</div>
       <?php
         // Display List of blocked topics
         if(isset($data['blocked_topics'])){
-          echo "<div class='panel panel-danger'>";
-            echo "<div class='panel-heading'>";
+          echo "<div class='card card-danger'>";
+            echo "<div class='card-header h4'>";
               echo "Blocked Forum Topics List";
             echo "</div>";
             echo "<table class='table table-hover responsive'><tr><th>";
@@ -64,8 +64,8 @@ use Libs\Form,
 
         // Display List of blocked topics
         if(isset($data['blocked_replies'])){
-          echo "<div class='panel panel-danger'>";
-            echo "<div class='panel-heading'>";
+          echo "<div class='card card-danger'>";
+            echo "<div class='card-header h4'>";
               echo "Blocked Forum Replies List";
             echo "</div>";
             echo "<table class='table table-hover responsive'><tr><th>";

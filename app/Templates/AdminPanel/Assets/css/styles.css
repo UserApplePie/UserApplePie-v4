@@ -121,27 +121,27 @@ button:active {
 	opacity: 1;
 }
 
-.btn-default,
-.btn-default:hover,
-.btn-default:focus,
-.btn-default:active,
-.btn-default.active,
-.open > .dropdown-toggle.btn-default,
-.btn-default.disabled,
-.btn-default[disabled],
-fieldset[disabled] .btn-default,
-.btn-default.disabled:hover,
-.btn-default[disabled]:hover,
-fieldset[disabled] .btn-default:hover,
-.btn-default.disabled:focus,
-.btn-default[disabled]:focus,
-fieldset[disabled] .btn-default:focus,
-.btn-default.disabled:active,
-.btn-default[disabled]:active,
-fieldset[disabled] .btn-default:active,
-.btn-default.disabled.active,
-.btn-default[disabled].active,
-fieldset[disabled] .btn-default.active {
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active,
+.btn-secondary.active,
+.open > .dropdown-toggle.btn-secondary,
+.btn-secondary.disabled,
+.btn-secondary[disabled],
+fieldset[disabled] .btn-secondary,
+.btn-secondary.disabled:hover,
+.btn-secondary[disabled]:hover,
+fieldset[disabled] .btn-secondary:hover,
+.btn-secondary.disabled:focus,
+.btn-secondary[disabled]:focus,
+fieldset[disabled] .btn-secondary:focus,
+.btn-secondary.disabled:active,
+.btn-secondary[disabled]:active,
+fieldset[disabled] .btn-secondary:active,
+.btn-secondary.disabled.active,
+.btn-secondary[disabled].active,
+fieldset[disabled] .btn-secondary.active {
 	background-color: #e9ecf2;
 	border-color: #e9ecf2;
 	color: #1b3548;
@@ -303,7 +303,7 @@ a.bg-danger:hover {
 	border: 0;
 }
 
-.panel-heading {
+.card-header h4 {
 	font-size: 18px;
 	font-weight: 300;
 	letter-spacing: 0.025em;
@@ -311,13 +311,13 @@ a.bg-danger:hover {
 	line-height: 45px;
 }
 
-.panel-default .panel-heading {
+.card-secondary .card-header h4 {
 	background: #fff;
 	border-bottom: 1px solid #eee;
 	color: #5f6468;
 }
 
-.panel-footer {
+.card-footer text-muted {
 	background: #fff;
 	border-top: 1px solid #eee;
 }
@@ -327,26 +327,26 @@ a.bg-danger:hover {
 	position: relative;
 }
 
-.panel-widget .panel-footer {
+.panel-widget .card-footer text-muted {
 	border: 0;
 	text-align: center;
 }
 
-.panel-footer .input-group {
+.card-footer text-muted .input-group {
 	padding: 0px;
 	margin: 0 -5px;
 }
 
-.panel-footer .input-group-btn:last-child>.btn,
-.panel-footer .input-group-btn:last-child>.btn-group {
+.card-footer text-muted .input-group-btn:last-child>.btn,
+.card-footer text-muted .input-group-btn:last-child>.btn-group {
 	margin: 0;
 }
 
-.panel-widget .panel-footer a {
+.panel-widget .card-footer text-muted a {
 	color: #999;
 }
 
-.panel-widget .panel-footer a:hover {
+.panel-widget .card-footer text-muted a:hover {
 	color: #666;
 	text-decoration: none;
 }
@@ -356,18 +356,18 @@ a.bg-danger:hover {
 .panel-orange { background: #ffb53e; color: #fff; }
 .panel-red { background: #f9243f; color: #fff; }
 
-.panel-blue .panel-body p,
-.panel-teal .panel-body p,
-.panel-orange .panel-body p,
-.panel-red .panel-body p {
+.panel-blue .card-body p,
+.panel-teal .card-body p,
+.panel-orange .card-body p,
+.panel-red .card-body p {
 	color: #fff;
 	color: rgba(255, 255, 255, .8);
 }
 
-.panel-blue .panel-heading,
-.panel-teal .panel-heading,
-.panel-orange .panel-heading,
-.panel-red .panel-heading {
+.panel-blue .card-header h4,
+.panel-teal .card-header h4,
+.panel-orange .card-header h4,
+.panel-red .card-header h4 {
 	border-bottom: 1px solid rgba(255, 255, 255, .2);
 }
 
@@ -741,7 +741,7 @@ h1.page-header {
 	background: rgba(0, 0, 0, 0.25);
 }
 
-.panel-heading .glyphicon {
+.card-header h4 .glyphicon {
 	margin-right: 10px;
 }
 
@@ -773,7 +773,7 @@ h1.page-header {
 	margin: 0px;
 }
 
-.panel-body input[type=checkbox]:checked + label {
+.card-body input[type=checkbox]:checked + label {
 	text-decoration: line-through;
 	color: #777;
 }
@@ -819,7 +819,7 @@ h1.page-header {
 	margin-right: 5px;
 }
 
-.chat .panel-body {
+.chat .card-body {
 	overflow-y: scroll;
 	height: 300px;
 }
@@ -888,7 +888,7 @@ h1.page-header {
 	stroke-width: 4px;
 }
 
-.alert .glyph, .panel-heading .glyph {
+.alert .glyph, .card-header h4 .glyph {
 	width: 26px;
 	height: 26px;
 	margin: 0 10px 0 0;

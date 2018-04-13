@@ -4,7 +4,7 @@
  *
  * UserApplePie
  * @author David (DaVaR) Sargent <davar@userapplepie.com>
- * @version 4.0.1
+ * @version 4.2.0
  */
 
 namespace App\Controllers;
@@ -63,21 +63,33 @@ class AdminPanel extends Controller{
     /** Get total page views count **/
     $data['totalPageViews'] = \Libs\SiteStats::getTotalViews();
 
+    /** Function to check if the files exist (prevent errors when mother server is down) **/
+    function UR_exists($url){
+      $headers=get_headers($url);
+      return stripos($headers[0],"200 OK")?true:false;
+    }
+
     /** Get Current UAP Version Data From UserApplePie.com **/
-    $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=UAP');
-    preg_match("/UAP v(.*) UAP/i", $html, $match);
-    $cur_uap_version = UAPVersion;
-    if($cur_uap_version < $match[1]){ $data['cur_uap_version'] = $match[1]; }
+    $check_url = 'https://www.userapplepie.com/uapversion.php?getversion=UAP';
+    if(UR_exists($check_url)){
+      $html = file_get_contents($check_url);
+      preg_match("/UAP v(.*) UAP/i", $html, $match);
+      $cur_uap_version = UAPVersion;
+      if($cur_uap_version < $match[1]){ $data['cur_uap_version'] = $match[1]; }
+    }
 
     /** Check to see if Forum Plugin is Installed  **/
     if(file_exists(ROOTDIR.'app/Plugins/Forum/Controllers/Forum.php')){
       $forum_status = "Installed";
       /** Get Current UAP Version Data From UserApplePie.com **/
-      $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=Forum');
-      preg_match("/UAP-Forum v(.*) UAP-Forum/i", $html, $match);
-      require_once(ROOTDIR.'app/Plugins/Forum/ForumVersion.php');
-      $cur_uap_forum_version = UAPForumVersion;
-      if($cur_uap_forum_version < $match[1]){ $data['cur_uap_forum_version'] = $match[1]; }
+      $check_url = 'https://www.userapplepie.com/uapversion.php?getversion=Forum';
+      if(UR_exists($check_url)){
+        $html = file_get_contents($check_url);
+        preg_match("/UAP-Forum v(.*) UAP-Forum/i", $html, $match);
+        require_once(ROOTDIR.'app/Plugins/Forum/ForumVersion.php');
+        $cur_uap_forum_version = UAPForumVersion;
+        if($cur_uap_forum_version < $match[1]){ $data['cur_uap_forum_version'] = $match[1]; }
+      }
     }else{
       $forum_status = "NOT Installed";
     }
@@ -87,11 +99,14 @@ class AdminPanel extends Controller{
     if(file_exists(ROOTDIR.'app/Plugins/Messages/Controllers/Messages.php')){
       $msg_status = "Installed";
       /** Get Current UAP Version Data From UserApplePie.com **/
-      $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=Messages');
-      preg_match("/UAP-Messages v(.*) UAP-Messages/i", $html, $match);
-      require_once(ROOTDIR.'app/Plugins/Messages/MessagesVersion.php');
-      $cur_uap_messages_version = UAPMessagesVersion;
-      if($cur_uap_messages_version < $match[1]){ $data['cur_uap_messages_version'] = $match[1]; }
+      $check_url = 'https://www.userapplepie.com/uapversion.php?getversion=Messages';
+      if(UR_exists($check_url)){
+        $html = file_get_contents($check_url);
+        preg_match("/UAP-Messages v(.*) UAP-Messages/i", $html, $match);
+        require_once(ROOTDIR.'app/Plugins/Messages/MessagesVersion.php');
+        $cur_uap_messages_version = UAPMessagesVersion;
+        if($cur_uap_messages_version < $match[1]){ $data['cur_uap_messages_version'] = $match[1]; }
+      }
     }else{
       $msg_status = "NOT Installed";
     }
@@ -101,11 +116,14 @@ class AdminPanel extends Controller{
     if(file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php')){
       $friends_status = "Installed";
       /** Get Current UAP Version Data From UserApplePie.com **/
-      $html = file_get_contents('http://www.userapplepie.com/uapversion.php?getversion=Friends');
-      preg_match("/UAP-Friends v(.*) UAP-Friends/i", $html, $match);
-      require_once(ROOTDIR.'app/Plugins/Friends/FriendsVersion.php');
-      $cur_uap_friends_version = UAPFriendsVersion;
-      if($cur_uap_friends_version < $match[1]){ $data['cur_uap_friends_version'] = $match[1]; }
+      $check_url = 'https://www.userapplepie.com/uapversion.php?getversion=Friends';
+      if(UR_exists($check_url)){
+        $html = file_get_contents($check_url);
+        preg_match("/UAP-Friends v(.*) UAP-Friends/i", $html, $match);
+        require_once(ROOTDIR.'app/Plugins/Friends/FriendsVersion.php');
+        $cur_uap_friends_version = UAPFriendsVersion;
+        if($cur_uap_friends_version < $match[1]){ $data['cur_uap_friends_version'] = $match[1]; }
+      }
     }else{
       $friends_status = "NOT Installed";
     }
@@ -113,8 +131,8 @@ class AdminPanel extends Controller{
 
     // Setup Breadcrumbs
     $data['breadcrumbs'] = "
-      <li><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
-      <li class='active'><i class='fa fa-fw fa-dashboard'></i> ".$data['title']."</li>
+      <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+      <li class='breadcrumb-item active'><i class='fa fa-fw fa-dashboard'></i> ".$data['title']."</li>
     ";
 
     /** Check to see if user is logged in **/
@@ -240,8 +258,8 @@ class AdminPanel extends Controller{
 
         /* Setup Breadcrumbs */
         $data['breadcrumbs'] = "
-          <li><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
-          <li class='active'><i class='fa fa-fw fa-dashboard'></i> ".$data['title']."</li>
+          <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+          <li class='breadcrumb-item active'><i class='fa fa-fw fa-dashboard'></i> ".$data['title']."</li>
         ";
 
         Load::View("AdminPanel/Settings", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
@@ -271,8 +289,8 @@ class AdminPanel extends Controller{
 
     // Setup Breadcrumbs
     $data['breadcrumbs'] = "
-      <li><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
-      <li class='active'><i class='fa fa-fw fa-user'></i>".$data['title']."</li>
+      <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+      <li class='breadcrumb-item active'><i class='fa fa-fw fa-user'></i>".$data['title']."</li>
     ";
 
     /** Check to see if user is logged in **/
@@ -430,9 +448,9 @@ class AdminPanel extends Controller{
 
     // Setup Breadcrumbs
     $data['breadcrumbs'] = "
-      <li><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
-      <li><a href='".DIR."AdminPanel-Users'><i class='fa fa-fw fa-user'></i> Users </a></li>
-      <li class='active'><i class='fa fa-fw fa-user'></i>User - ".$data['user_data'][0]->username."</li>
+      <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+      <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Users'><i class='fa fa-fw fa-user'></i> Users </a></li>
+      <li class='breadcrumb-item active'><i class='fa fa-fw fa-user'></i>User - ".$data['user_data'][0]->username."</li>
     ";
 
     /** Check to see if user is logged in **/
@@ -467,8 +485,8 @@ class AdminPanel extends Controller{
 
     // Setup Breadcrumbs
     $data['breadcrumbs'] = "
-      <li><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
-      <li class='active'><i class='fa fa-fw fa-user'></i>".$data['title']."</li>
+      <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+      <li class='breadcrumb-item active'><i class='fa fa-fw fa-user'></i>".$data['title']."</li>
     ";
 
     // Check to make sure admin is trying to create group
@@ -606,9 +624,9 @@ class AdminPanel extends Controller{
 
     // Setup Breadcrumbs
     $data['breadcrumbs'] = "
-      <li><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
-      <li><a href='".DIR."AdminPanel-Groups'><i class='fa fa-fw fa-user'></i> Groups </a></li>
-      <li class='active'><i class='fa fa-fw fa-user'></i>Group - ".$data['g_groupName']."</li>
+      <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+      <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Groups'><i class='fa fa-fw fa-user'></i> Groups </a></li>
+      <li class='breadcrumb-item active'><i class='fa fa-fw fa-user'></i>Group - ".$data['g_groupName']."</li>
     ";
 
     /** Check to see if user is logged in **/
@@ -657,8 +675,8 @@ class AdminPanel extends Controller{
 
     // Setup Breadcrumbs
     $data['breadcrumbs'] = "
-      <li><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
-      <li class='active'><i class='fa fa-fw fa-user'></i>".$data['title']."</li>
+      <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+      <li class='breadcrumb-item active'><i class='fa fa-fw fa-user'></i>".$data['title']."</li>
     ";
 
     (isset($_SESSION['subject'])) ? $data['subject'] = $_SESSION['subject'] : $data['subject'] = "";
@@ -734,8 +752,8 @@ class AdminPanel extends Controller{
 
         /** Setup Breadcrumbs **/
         $data['breadcrumbs'] = "
-          <li><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
-          <li class='active'><i class='fa fa-fw fa-user'></i>".$data['title']."</li>
+          <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+          <li class='breadcrumb-item active'><i class='fa fa-fw fa-user'></i>".$data['title']."</li>
         ";
 
 
@@ -893,8 +911,8 @@ class AdminPanel extends Controller{
 
         /** Setup Breadcrumbs **/
         $data['breadcrumbs'] = "
-          <li><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
-          <li class='active'><i class='fa fa-fw fa-user'></i>".$data['title']."</li>
+          <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+          <li class='breadcrumb-item active'><i class='fa fa-fw fa-user'></i>".$data['title']."</li>
         ";
 
         /** Check to see if Admin is updating System Route **/

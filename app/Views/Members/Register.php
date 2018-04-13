@@ -4,48 +4,80 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 use Libs\Language, Libs\Form;
 ?>
 
 <div class="col-lg-12 col-md-12 col-sm-12">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h1><?=$title;?></h1>
+	<div class="card mb-3">
+		<div class="card-header h4">
+			<?=$title;?>
 		</div>
-		<div class="panel-body">
+		<div class="card-body">
 			<p><?=$welcomeMessage;?></p>
 
 			<?php echo Form::open(array('method' => 'post')); ?>
 
 				<!-- Username -->
-				<div class='input-group' style='width: 100%; margin-bottom: 25px'>
-					<span class='input-group-addon'><i class='glyphicon glyphicon-user'></i></span>
-					<?php echo Form::input(array('id' => 'username', 'name' => 'username', 'class' => 'form-control', 'placeholder' => Language::show('register_field_username', 'Auth'))); ?>
-					<span id='resultun' class='input-group-addon'></span>
+				<div class='form-group'>
+					<div class='form-group'>
+						<div class='input-group mb-3'>
+							<div class='input-group-prepend'>
+								<span class='input-group-text'><i class='fas fa-user'></i></span>
+							</div>
+							<?php echo Form::input(array('id' => 'username', 'name' => 'username', 'class' => 'form-control', 'placeholder' => Language::show('register_field_username', 'Auth'))); ?>
+							<div class='input-group-append'>
+								<span id='resultun' class='input-group-text'></span>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<!-- Password 1 -->
-				<div class='input-group' style='width: 100%; margin-bottom: 25px'>
-					<span class='input-group-addon'><i class='glyphicon glyphicon-lock'></i></span>
-					<?php echo Form::input(array('id' => 'passwordInput', 'type' => 'password', 'name' => 'password', 'class' => 'form-control', 'placeholder' => Language::show('register_field_password', 'Auth'))); ?>
-					<span id='password01' class='input-group-addon'></span>
+				<div class='form-group'>
+					<div class='form-group'>
+						<div class='input-group mb-3'>
+							<div class='input-group-prepend'>
+								<span class='input-group-text'><i class='fas fa-lock'></i></span>
+							</div>
+							<?php echo Form::input(array('id' => 'passwordInput', 'type' => 'password', 'name' => 'password', 'class' => 'form-control', 'placeholder' => Language::show('register_field_password', 'Auth'))); ?>
+							<div class='input-group-append'>
+								<span id='password01' class='input-group-text'></span>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<!-- Password 2 -->
-				<div class='input-group' style='width: 100%; margin-bottom: 25px'>
-					<span class='input-group-addon'><i class='glyphicon glyphicon-lock'></i></span>
-					<?php echo Form::input(array('id' => 'confirmPasswordInput', 'type' => 'password', 'name' => 'passwordc', 'class' => 'form-control', 'placeholder' => Language::show('register_field_confpass', 'Auth'))); ?>
-					<span id='password02' class='input-group-addon'></span>
+				<div class='form-group'>
+					<div class='form-group'>
+						<div class='input-group mb-3'>
+							<div class='input-group-prepend'>
+								<span class='input-group-text'><i class='fas fa-lock'></i></span>
+							</div>
+							<?php echo Form::input(array('id' => 'confirmPasswordInput', 'type' => 'password', 'name' => 'passwordc', 'class' => 'form-control', 'placeholder' => Language::show('register_field_confpass', 'Auth'))); ?>
+							<div class='input-group-append'>
+								<span id='password02' class='input-group-text'></span>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<!-- Email -->
-				<div class='input-group' style='width: 100%; margin-bottom: 25px'>
-					<span class='input-group-addon'><i class='glyphicon glyphicon-envelope'></i></span>
-					<?php echo Form::input(array('id' => 'email', 'type' => 'text', 'name' => 'email', 'class' => 'form-control', 'placeholder' => Language::show('register_field_email', 'Auth'))); ?>
-					<span id='resultemail' class='input-group-addon'></span>
+				<div class='form-group'>
+					<div class='form-group'>
+						<div class='input-group mb-3'>
+							<div class='input-group-prepend'>
+								<span class='input-group-text'><i class='fas fa-envelope'></i></span>
+							</div>
+							<?php echo Form::input(array('id' => 'email', 'type' => 'text', 'name' => 'email', 'class' => 'form-control', 'placeholder' => Language::show('register_field_email', 'Auth'))); ?>
+							<div class='input-group-append'>
+								<span id='resultemail' class='input-group-text'></span>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<!-- reCAPTCHA -->

@@ -4,18 +4,18 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 ?>
 
 <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
   <ul class="nav menu">
-    <li <?php if($title == "Dashboard"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel"><i class='glyphicon glyphicon-cog'></i> Dashboard</a></li>
-    <li <?php if($title == "Settings"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel-Settings"><i class='glyphicon glyphicon-cog'></i> Settings</a></li>
-    <li <?php if($title == "System Route" || $title == "System Routes"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel-SystemRoutes"><i class='glyphicon glyphicon-cog'></i> System Routes</a></li>
-    <li <?php if($title == "Users" || $title == "User"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel-Users"><i class='glyphicon glyphicon-user'></i> Users</a></li>
-    <li <?php if($title == "Groups" || $title == "Group"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel-Groups"><i class='glyphicon glyphicon-tower'></i> Groups</a></li>
-    <li <?php if($title == "Mass Email"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel-MassEmail"><i class='glyphicon glyphicon-envelope'></i> Mass Email</a></li>
+    <li <?php if($title == "Dashboard"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel"><i class='fas fa-cog'></i> Dashboard</a></li>
+    <li <?php if($title == "Settings"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel-Settings"><i class='fas fa-cog'></i> Settings</a></li>
+    <li <?php if($title == "System Route" || $title == "System Routes"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel-SystemRoutes"><i class='fas fa-cog'></i> System Routes</a></li>
+    <li <?php if($title == "Users" || $title == "User"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel-Users"><i class='fas fa-user'></i> Users</a></li>
+    <li <?php if($title == "Groups" || $title == "Group"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel-Groups"><i class='fas fa-tower'></i> Groups</a></li>
+    <li <?php if($title == "Mass Email"){echo "class='active'";} ?>><a href="<?php echo DIR; ?>AdminPanel-MassEmail"><i class='fas fa-envelope'></i> Mass Email</a></li>
   </ul>
 
     <?php
@@ -25,13 +25,13 @@
       <ul class="nav menu">
         <li class="sidebar-title">Forum</li>
         <li <?php if($title == "Forum Global Settings"){echo "class='active'";} ?>>
-          <a href='<?php echo DIR; ?>AdminPanel-Forum-Settings'><i class='glyphicon glyphicon-cog'></i> Global Settings</a>
+          <a href='<?php echo DIR; ?>AdminPanel-Forum-Settings'><i class='fas fa-cog'></i> Global Settings</a>
         </li>
         <li <?php if($title == "Forum Categories"){echo "class='active'";} ?>>
-          <a href='<?php echo DIR; ?>AdminPanel-Forum-Categories'><i class='glyphicon glyphicon-list'></i> Categories</a>
+          <a href='<?php echo DIR; ?>AdminPanel-Forum-Categories'><i class='fas fa-list'></i> Categories</a>
         </li>
         <li <?php if($title == "Forum Blocked Content"){echo "class='active'";} ?>>
-          <a href='<?php echo DIR; ?>AdminPanel-Forum-Blocked-Content'><i class='glyphicon glyphicon-remove-sign'></i> Blocked Content</a>
+          <a href='<?php echo DIR; ?>AdminPanel-Forum-Blocked-Content'><i class='fas fa-remove-sign'></i> Blocked Content</a>
         </li>
       </ul>
     <?php } ?>

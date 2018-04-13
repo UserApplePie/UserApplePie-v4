@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 /** Forum New Topic View **/
@@ -21,25 +21,25 @@ use Core\Language,
 
 <div class='col-lg-8 col-md-8'>
 
-	<div class='panel panel-default'>
-		<div class='panel-heading'>
+	<div class='card mb-3'>
+		<div class='card-header h4'>
 			<h3 class='jumbotron-heading'><?php echo $data['title'] ?></h3>
 		</div>
-		<div class='panel-body'>
+		<div class='card-body'>
 				<?php echo $data['welcome_message']; ?>
 
 
             <?php echo Form::open(array('method' => 'post', 'files' => '')); ?>
 
             <!-- Topic Title -->
-            <div class='input-group' style='margin-bottom: 25px'>
-              <span class='input-group-addon'><i class='glyphicon glyphicon-book'></i> </span>
+            <div class='form-group' style='margin-bottom: 25px'>
+              <span class='input-group-addon'><i class='fas fa-book'></i> </span>
               <?php echo Form::input(array('type' => 'text', 'name' => 'forum_title', 'class' => 'form-control', 'value' => $data['forum_title'], 'placeholder' => 'Topic Title', 'maxlength' => '100')); ?>
             </div>
 
             <!-- Topic Content -->
-            <div class='input-group' style='margin-bottom: 25px'>
-              <span class='input-group-addon'><i class='glyphicon glyphicon-pencil'></i> </span>
+            <div class='form-group' style='margin-bottom: 25px'>
+              <span class='input-group-addon'><i class='fas fa-pencil'></i> </span>
               <?php echo Form::textBox(array('type' => 'text', 'name' => 'forum_content', 'class' => 'form-control', 'value' => $data['forum_content'], 'placeholder' => 'Topic Content', 'rows' => '6')); ?>
             </div>
 
@@ -48,8 +48,8 @@ use Core\Language,
               if($data['is_new_user'] != true){
              ?>
                 <!-- Image Upload -->
-                <div class='input-group' style='margin-bottom: 25px'>
-                  <span class='input-group-addon'><i class='glyphicon glyphicon-picture'></i> </span>
+                <div class='form-group' style='margin-bottom: 25px'>
+                  <span class='input-group-addon'><i class='fas fa-picture'></i> </span>
                   <?php echo Form::input(array('type' => 'file', 'name' => 'forumImage', 'id' => 'forumImage', 'class' => 'form-control', 'accept' => 'image/jpeg,image/png,image/gif')); ?>
                 </div>
             <?php } ?>

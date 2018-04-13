@@ -7,7 +7,7 @@
 -- Server version: 5.5.47-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.14
 
--- UserApplePie v4.0.4
+-- UserApplePie v4.2.0
 
 -- Instructions
 -- Import this file to your mySQL database
@@ -16,7 +16,7 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 --
--- Database: `uap3`
+-- Database: `uap4`
 --
 
 -- --------------------------------------------------------

@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 use Libs\Language,
@@ -12,9 +12,9 @@ use Libs\Language,
 ?>
 
 <div class="col-lg-8 col-md-8 col-sm-8">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h1><?=$title?></h1>
+	<div class="card mb-3">
+		<div class="card-header h4">
+			<?=$title?>
 		</div>
     <table class="table table-bordered responsive">
 				<thead><tr><th colspan='4'><?=$welcomeMessage;?></th></tr></thead>
@@ -26,7 +26,7 @@ use Libs\Language,
             </tr>
         </thead>
     </table>
-    <div class='panel-body'>
+    <div class='card-body'>
         <div class='row'>
 
             <?php
@@ -46,7 +46,7 @@ use Libs\Language,
                             $member_userImage = CurrentUserData::getUserImage($friend_id);
                             echo "<div class='col-sm-6 col-md-4'>
                                     <div class='thumbnail' align='center'>
-                                        <img src=".SITE_URL.IMG_DIR_PROFILE.$member_userImage." class='img-rounded img-responsive'>
+                                        <img src=".SITE_URL.IMG_DIR_PROFILE.$member_userImage." class='rounded img-fluid'>
                                         <div class='caption'>
                                             <h4>{$member_username}</h4>
                                             <p>
@@ -77,7 +77,7 @@ use Libs\Language,
             </tr>
         </thead>
     </table>
-    <div class='panel-body'>
+    <div class='card-body'>
         <div class='row'>
 
             <?php
@@ -97,7 +97,7 @@ use Libs\Language,
                             $member_userImage = CurrentUserData::getUserImage($friend_id);
                             echo "<div class='col-sm-6 col-md-4'>
                                     <div class='thumbnail' align='center'>
-                                        <img src=".SITE_URL.IMG_DIR_PROFILE.$member_userImage." class='img-rounded img-responsive'>
+                                        <img src=".SITE_URL.IMG_DIR_PROFILE.$member_userImage." class='rounded img-fluid'>
                                         <div class='caption'>
                                             <h4>{$member_username}</h4>
                                             <p>

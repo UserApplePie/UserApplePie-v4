@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 /** Forum Topic View **/
@@ -24,8 +24,8 @@ use Core\Language,
 
 <div class='col-lg-8 col-md-8'>
 
-	<div class='panel panel-default'>
-		<div class='panel-heading'>
+	<div class='card mb-3'>
+		<div class='card-header h4'>
 			<h3 class='jumbotron-heading'><?php echo $data['title'] ?></h3>
       <?php
           // Display Locked Message if Topic has been locked by admin
@@ -42,7 +42,7 @@ use Core\Language,
           }
        ?>
 		</div>
-		<div class='panel-body'>
+		<div class='card-body'>
 			<?php
       // Check to see if topic is allowed
       if($data['topic_allow'] == "TRUE"){
@@ -57,8 +57,8 @@ use Core\Language,
         echo "<hr>";
 
         // Topic Display
-    		echo "<div class='panel panel-default'>";
-    			echo "<div class='panel-heading'>";
+    		echo "<div class='card mb-3'>";
+    			echo "<div class='card-header h4'>";
     				echo "<div class='row'>";
     					echo "<div class='col-lg-6 col-md-6 col-sm-6'>";
     						// Show user main pic
@@ -73,13 +73,13 @@ use Core\Language,
                             $data_topic_date = $data['topic_date'];
     						echo "<font color=green> " . TimeDiff::dateDiff("now", "$data_topic_date", 1) . " ago</font> ";
                             // Display post number
-                            echo " <span class='label label-default'>Topic</span> ";
+                            echo " <span class='label label-secondary'>Topic</span> ";
     					echo "</div>";
     				echo "</div>";
     			echo "</div>";
           //Format the content with bbcode
   				$data_topic_content = BBCode::getHtml($data['topic_content']);
-  			echo "<div class='panel-body forum' style='padding: 0px; overflow: hidden; height: auto;'>";
+  			echo "<div class='card-body forum' style='padding: 0px; overflow: hidden; height: auto;'>";
           echo "<div class='col-lg-3 col-md-3 col-sm-3 hidden-xs' style='padding-top: 8px; padding-bottom: 8px; float: left; padding-bottom: 1500px; margin-bottom: -1500px; text-align: left; border-right: 1px solid #cccccc;'>";
             // Display User's Stats
             // Check to see if user has a profile image
@@ -87,21 +87,21 @@ use Core\Language,
             $user_signup_display = CurrentUserData::getSignUp($data['topic_creator']);
             $user_total_posts = ForumStats::getTotalPosts($data['topic_creator']);
             if(!empty($user_image_display)){
-              echo "<img src='".SITE_URL.IMG_DIR_PROFILE.$user_image_display."' class='img-responsive' style='margin-bottom: 2px'>";
+              echo "<img src='".SITE_URL.IMG_DIR_PROFILE.$user_image_display."' class='img-fluid' style='margin-bottom: 2px'>";
             }else{
-              echo "<span class='glyphicon glyphicon-user icon-size' style='margin-bottom: 2px'></span>";
+              echo "<span class='fas fa-user icon-size' style='margin-bottom: 2px'></span>";
             }
-            echo " <strong><a href='".DIR."Profile/$f_p_user_name' class='btn btn-xs btn-default'>$f_p_user_name</a></strong> <Br>";
+            echo " <strong><a href='".DIR."Profile/$f_p_user_name' class='btn btn-xs btn-secondary'>$f_p_user_name</a></strong> <Br>";
             // Show user's membership status
             foreach(CurrentUserData::getUserGroups($data['topic_creator']) as $row){ echo "<font size='2'>".$row."</font><br>"; };
             echo "<font size='1'>";
               echo "<strong>Total Posts</strong>: $user_total_posts<br>";
               echo "<strong>Joined</strong>: $user_signup_display";
             echo "</font>";
-            echo " <a href='".DIR."Profile/$f_p_user_name' class='btn btn-xs btn-default'>Profile</a> ";
+            echo " <a href='".DIR."Profile/$f_p_user_name' class='btn btn-xs btn-secondary'>Profile</a> ";
             // Check to see if current user is logged in... if not then hide the pm button
             if(!empty($data['current_userID'])){
-              echo " <a href='".DIR."NewMessage/$f_p_user_name' class='btn btn-xs btn-default'>PM</a> ";
+              echo " <a href='".DIR."NewMessage/$f_p_user_name' class='btn btn-xs btn-secondary'>PM</a> ";
             }
           echo "</div>";
           echo "<div class='col-lg-9 col-md-9 col-sm-9' style='padding-top: 8px; padding-bottom: 8px; float: left; padding-bottom: 1500px; margin-bottom: -1500px;'>";
@@ -137,7 +137,7 @@ use Core\Language,
             }
           echo "</div>";
   			echo "</div>";
-  			echo "<div class='panel-footer'>";
+  			echo "<div class='card-footer text-muted'>";
   				echo "<div class='row'>";
   					echo "<div class='col-lg-6 col-md-6 col-sm-6' style='text-align:left'>";
   						if($data['topic_edit_date'] != NULL){
@@ -171,8 +171,8 @@ use Core\Language,
       // Display Paginator Links
       // Check to see if there is more than one page
       if($data['pageLinks'] > "1"){
-        echo "<div class='panel panel-info'>";
-          echo "<div class='panel-heading text-center'>";
+        echo "<div class='card border-info mb-3'>";
+          echo "<div class='card-header h6 text-center'>";
             echo $data['pageLinks'];
           echo "</div>";
         echo "</div>";
@@ -204,8 +204,8 @@ use Core\Language,
           echo "<a class='anchor' name='topicreply$rf_p_main_id'></a>";
 
 					// Reply Topic Display
-					echo "<div class='panel panel-info'>";
-						echo "<div class='panel-heading'>";
+					echo "<div class='card border-info mb-3'>";
+						echo "<div class='card-header h4'>";
 							echo "<div class='row'>";
 								echo "<div class='col-lg-6 col-md-6 col-sm-6'>";
 									echo " Reply By: ";
@@ -217,11 +217,11 @@ use Core\Language,
 									$timestart = "$rf_p_timestamp";  //Time of post
 									echo "<font color=green> " . TimeDiff::dateDiff("now", "$timestart", 1) . " ago</font> ";
                                     // Display reply post number
-                                    echo " <span class='label label-default'>#$post_num</span> ";
+                                    echo " <span class='label label-secondary'>#$post_num</span> ";
 								echo "</div>";
 							echo "</div>";
 						echo "</div>";
-						echo "<div class='panel-body forum' style='overflow: hidden; height: auto; padding: 0px;'>";
+						echo "<div class='card-body forum' style='overflow: hidden; height: auto; padding: 0px;'>";
 							//Format the content with bbcode
 							$rf_p_content_bb = BBCode::getHtml($rf_p_content);
               echo "<div class='col-lg-3 col-md-3 col-sm-3 hidden-xs' style='padding-top: 8px; padding-bottom: 8px; float: left; padding-bottom: 1500px; margin-bottom: -1500px; text-align: left; border-right: 1px solid #cccccc;'>";
@@ -231,21 +231,21 @@ use Core\Language,
                 $user_signup_display = CurrentUserData::getSignUp($rf_p_user_id);
                 $user_total_posts = ForumStats::getTotalPosts($rf_p_user_id);
                 if(!empty($user_image_display)){
-                  echo "<img src='".SITE_URL.IMG_DIR_PROFILE.$user_image_display."' class='img-responsive' style='margin-bottom: 2px'>";
+                  echo "<img src='".SITE_URL.IMG_DIR_PROFILE.$user_image_display."' class='img-fluid' style='margin-bottom: 2px'>";
                 }else{
-                  echo "<span class='glyphicon glyphicon-user icon-size' style='margin-bottom: 2px'></span>";
+                  echo "<span class='fas fa-user icon-size' style='margin-bottom: 2px'></span>";
                 }
-                echo " <strong><a href='".DIR."Profile/".$rf_p_user_name."' class='btn btn-xs btn-default'>$rf_p_user_name</a></strong> <Br>";
+                echo " <strong><a href='".DIR."Profile/".$rf_p_user_name."' class='btn btn-xs btn-secondary'>$rf_p_user_name</a></strong> <Br>";
                 // Show user's membership status
                 foreach(CurrentUserData::getUserGroups($rf_p_user_id) as $row){ echo "<font size='2'>".$row."</font><br>"; };
                 echo "<font size='1'>";
                   echo "<strong>Total Posts</strong>: $user_total_posts<br>";
                   echo "<strong>Joined</strong>: $user_signup_display";
                 echo "</font>";
-                echo " <a href='".DIR."Profile/$rf_p_user_name' class='btn btn-xs btn-default'>Profile</a> ";
+                echo " <a href='".DIR."Profile/$rf_p_user_name' class='btn btn-xs btn-secondary'>Profile</a> ";
                 // Check to see if current user is logged in... if not then hide the pm button
                 if(!empty($data['current_userID'])){
-                  echo " <a href='".DIR."NewMessage/$rf_p_user_name' class='btn btn-xs btn-default'>PM</a> ";
+                  echo " <a href='".DIR."NewMessage/$rf_p_user_name' class='btn btn-xs btn-secondary'>PM</a> ";
                 }
               echo "</div>";
               echo "<div class='col-lg-9 col-md-9 col-sm-9' style='padding-top: 8px; padding-bottom: 8px; float: left; padding-bottom: 1500px; margin-bottom: -1500px;'>";
@@ -293,7 +293,7 @@ use Core\Language,
                 }
               echo "</div>";
 						echo "</div>";
-						echo "<div class='panel-footer' style='text-align:right'>";
+						echo "<div class='card-footer text-muted' style='text-align:right'>";
 							echo "<div class='row'>";
 								echo "<div class='col-lg-6 col-md-6 col-sm-6' style='text-align:left'>";
 									if($rf_p_edit_date != NULL){
@@ -362,8 +362,8 @@ use Core\Language,
             <?php echo Form::open(array('method' => 'post',  'files' => '')); ?>
 
             <!-- Topic Reply Content -->
-            <div class='input-group' style='margin-bottom: 25px'>
-              <span class='input-group-addon'><i class='glyphicon glyphicon-pencil'></i> </span>
+            <div class='form-group' style='margin-bottom: 25px'>
+              <span class='input-group-addon'><i class='fas fa-pencil'></i> </span>
               <?php (isset($data['fpr_content'])) ? $data['fpr_content'] = $data['fpr_content'] : $data['fpr_content'] = ""; ?>
               <?php echo Form::textBox(array('type' => 'text', 'name' => 'fpr_content', 'class' => 'form-control', 'value' => $data['fpr_content'], 'placeholder' => 'Topic Reply Content', 'rows' => '6')); ?>
             </div>
@@ -373,8 +373,8 @@ use Core\Language,
               if($data['is_new_user'] != true){
              ?>
                 <!-- Image Upload -->
-                <div class='input-group' style='margin-bottom: 25px'>
-                  <span class='input-group-addon'><i class='glyphicon glyphicon-picture'></i> </span>
+                <div class='form-group' style='margin-bottom: 25px'>
+                  <span class='input-group-addon'><i class='fas fa-picture'></i> </span>
                   <?php echo Form::input(array('type' => 'file', 'name' => 'forumImage', 'id' => 'forumImage', 'class' => 'form-control', 'accept' => 'image/jpeg,image/png,image/gif')); ?>
                 </div>
             <?php } ?>
@@ -395,8 +395,8 @@ use Core\Language,
         // Display Paginator Links
         // Check to see if there is more than one page
         if($data['pageLinks'] > "1"){
-          echo "<div class='panel panel-info'>";
-            echo "<div class='panel-heading text-center'>";
+          echo "<div class='card border-info mb-3'>";
+            echo "<div class='card-header h6 text-center'>";
               echo $data['pageLinks'];
             echo "</div>";
           echo "</div>";
@@ -479,11 +479,11 @@ use Core\Language,
         $gfp_admin = $group_forum_perms_admin ? "<b>can</b> <a href='".SITE_URL."AdminPanel-Forum-Settings'>administrate</a>" : "<b>cannot</b> administrate";
     ?>
 
-    <div class='panel panel-default'>
-        <div class='panel-heading'>
+    <div class='card mb-3'>
+        <div class='card-header h4'>
             <b>Forum Permissions</b>
         </div>
-        <div class='panel-body'>
+        <div class='card-body'>
             You <b><?php echo $gfp_post; ?></b> post in this forum.<Br>
             You <b><?php echo $gfp_mod; ?></b> moderate this forum.<br>
             You <?php echo $gfp_admin; ?> this forum.<br>

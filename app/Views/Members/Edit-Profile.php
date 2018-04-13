@@ -4,33 +4,33 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 use Libs\Language, Libs\Form;
 ?>
 
 <div class="col-lg-8 col-md-8 col-sm-8">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h1><?=$title;?></h1>
+	<div class="card mb-3">
+		<div class="card-header h4">
+			<?=$title;?>
 		</div>
-		<div class="panel-body">
+		<div class="card-body">
         <div class="col-xs-12">
             <h4><?=Language::show('edit_profile', 'Members'); ?> <strong><?php echo $data['profile']->username; ?></strong></h4>
             <hr>
 
             <form role="form" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="firstName"><?=Language::show('members_profile_firstname', 'Members'); ?>: </label><span class="label label-danger pull-right"><?=Language::show('required', 'Members'); ?></span>
+                    <label for="firstName"><?=Language::show('members_profile_firstname', 'Members'); ?>: </label><span class="badge badge-danger float-right"><?=Language::show('required', 'Members'); ?></span>
                     <input id="firstName" type="text" class="form-control" name="firstName" placeholder="<?=Language::show('members_profile_firstname', 'Members'); ?>" value="<?php echo $data['profile']->firstName; ?>">
                 </div>
 								<div class="form-group">
-										<label for="lastName"><?=Language::show('members_profile_lastname', 'Members'); ?>: </label><span class="label label-danger pull-right"><?=Language::show('required', 'Members'); ?></span>
+										<label for="lastName"><?=Language::show('members_profile_lastname', 'Members'); ?>: </label><span class="badge badge-danger float-right"><?=Language::show('required', 'Members'); ?></span>
 										<input id="lastName" type="text" class="form-control" name="lastName" placeholder="<?=Language::show('members_profile_lastname', 'Members'); ?>" value="<?php echo $data['profile']->lastName; ?>">
 								</div>
                 <div class='form-group'>
-                    <label for="gender"><?=Language::show('members_profile_gender', 'Members'); ?>: </label><span class="label label-danger pull-right"><?=Language::show('required', 'Members'); ?></span>
+                    <label for="gender"><?=Language::show('members_profile_gender', 'Members'); ?>: </label><span class="badge badge-danger float-right"><?=Language::show('required', 'Members'); ?></span>
                     <select class='form-control' id='gender' name='gender'>
                         <option value='male' <?php if($data['profile']->gender == "Male") echo "selected";?> >Male</option>
                         <option value='female' <?php if($data['profile']->gender == "Female") echo "selected";?> >Female</option>
@@ -44,7 +44,7 @@ use Libs\Language, Libs\Form;
 	                <input id="oldImg" name="oldImg" type="hidden" value="<?php echo $data['profile']->userImage; ?>"">
 	                <div class="form-group">
 	                    <label for="email"><?=Language::show('members_profile_cur_photo', 'Members'); ?>: </label>
-	                    <img alt="User Pic" src="<?php echo SITE_URL.IMG_DIR_PROFILE.$data['profile']->userImage; ?>" class="img-rounded img-responsive">
+	                    <img alt="User Pic" src="<?php echo SITE_URL.IMG_DIR_PROFILE.$data['profile']->userImage; ?>" class="rounded img-fluid">
 	                </div>
                 <?php } ?>
                 <div class="form-group">

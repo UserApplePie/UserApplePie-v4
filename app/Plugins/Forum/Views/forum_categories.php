@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 /** Forum Categories Admin Panel View **/
@@ -16,11 +16,11 @@ use Libs\Form,
 ?>
 
 <div class='col-lg-12 col-md-12 col-sm-12'>
-	<div class='panel panel-default'>
-		<div class='panel-heading'>
+	<div class='card mb-3'>
+		<div class='card-header h4'>
 			<h3 class='jumbotron-heading'><?php echo $data['title'];  ?></h3>
 		</div>
-		<div class='panel-body'>
+		<div class='card-body'>
 			<p><?php echo $data['welcome_message'] ?></p>
     </div>
 	</div>
@@ -31,17 +31,17 @@ use Libs\Form,
               // Display form with data to edit
               if(isset($data['data_cat_main'])){
                 echo Form::open(array('method' => 'post'));
-                  echo "<div class='panel panel-primary'>";
-                    echo "<div class='panel-heading'>";
-                      echo "<i class='glyphicon glyphicon-list'></i> Update Main Category Title";
+                  echo "<div class='card border-primary mb-3'>";
+                    echo "<div class='card-header h4'>";
+                      echo "<i class='fas fa-list'></i> Update Main Category Title";
                     echo "</div>";
-                    echo "<div class='panel-body'>";
+                    echo "<div class='card-body'>";
                       echo Form::input(array('type' => 'hidden', 'name' => 'prev_forum_title', 'value' => $data['data_cat_main']));
                       echo Form::input(array('type' => 'hidden', 'name' => 'action', 'value' => 'update_cat_main_title'));
                       echo Form::input(array('type' => 'hidden', 'name' => 'token_ForumAdmin', 'value' => $data['csrf_token']));
                       echo Form::input(array('type' => 'text', 'name' => 'forum_title', 'class' => 'form-input text form-control', 'aria-describedby' => 'basic-addon1', 'value' => $data['data_cat_main'], 'placeholder' => 'Main Category Title', 'maxlength' => '100'));
                     echo "</div>";
-                    echo "<div class='panel-footer'>";
+                    echo "<div class='card-footer text-muted'>";
                       echo "<button class='btn btn-success' name='submit' type='submit'>Update Main Category Title</button>";
                     echo "</div>";
                   echo "</div>";
@@ -56,12 +56,12 @@ use Libs\Form,
               if(isset($data['cat_sub_titles'])){
                 foreach ($data['cat_sub_titles'] as $row) {
                   if(!empty($row->forum_cat)){
-                    echo "<div class='panel panel-primary'>";
-                      echo "<div class='panel-heading'>";
+                    echo "<div class='card border-primary mb-3'>";
+                      echo "<div class='card-header h4'>";
                         echo "<strong>$row->forum_cat</strong><br>";
                         echo "$row->forum_des";
                       echo "</div>";
-                      echo "<div class='panel-body'>";
+                      echo "<div class='card-body'>";
                         echo "<div class='col-lg-6 col-md-6'>";
                           // Display total number of topics for this category
                           echo " <div class='label label-warning' style='margin-top: 5px'>";
@@ -75,14 +75,14 @@ use Libs\Form,
                         echo "<div class='col-lg-6 col-md-6' style='text-align: right'>";
                           // Check to see if object is at top
                           if($row->forum_order_cat > 1){
-                            echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubUp/$row->forum_id/$row->forum_order_cat' class='btn btn-primary btn-xs' role='button'><span class='glyphicon glyphicon-triangle-top' aria-hidden='true'></span></a> ";
+                            echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubUp/$row->forum_id/$row->forum_order_cat' class='btn btn-primary btn-xs' role='button'><span class='fas fa-triangle-top' aria-hidden='true'></span></a> ";
                           }
                           // Check to see if object is at bottom
                           if($data['fourm_cat_sub_last'] != $row->forum_order_cat){
-                            echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubDown/$row->forum_id/$row->forum_order_cat' class='btn btn-primary btn-xs' role='button'><span class='glyphicon glyphicon-triangle-bottom' aria-hidden='true'></span></a> ";
+                            echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubDown/$row->forum_id/$row->forum_order_cat' class='btn btn-primary btn-xs' role='button'><span class='fas fa-triangle-bottom' aria-hidden='true'></span></a> ";
                           }
-                          echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubEdit/$row->forum_id' class='btn btn-success btn-xs' role='button'><span class='glyphicon glyphicon-cog' aria-hidden='true'></span> Edit</a> ";
-                          echo "<a href='".DIR."AdminPanel-Forum-Categories/DeleteSubCat/$row->forum_id' class='btn btn-danger btn-xs' role='button'><span class='glyphicon glyphicon-remove-circle' aria-hidden='true'></span></a> ";
+                          echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubEdit/$row->forum_id' class='btn btn-success btn-xs' role='button'><span class='fas fa-cog' aria-hidden='true'></span> Edit</a> ";
+                          echo "<a href='".DIR."AdminPanel-Forum-Categories/DeleteSubCat/$row->forum_id' class='btn btn-danger btn-xs' role='button'><span class='fas fa-remove-circle' aria-hidden='true'></span></a> ";
                         echo "</div>";
                       echo "</div>";
                     echo "</div>";
@@ -93,11 +93,11 @@ use Libs\Form,
               }
               // Display form to create new sub cat
               echo Form::open(array('method' => 'post', 'action' => DIR.'AdminPanel-Forum-Categories/CatSubList/'.$row->forum_id));
-                echo "<div class='panel panel-info'>";
-                  echo "<div class='panel-heading'>";
-                    echo "<i class='glyphicon glyphicon-list'></i> Create New Sub Category";
+                echo "<div class='card border-info mb-3'>";
+                  echo "<div class='card-header h4'>";
+                    echo "<i class='fas fa-list'></i> Create New Sub Category";
                   echo "</div>";
-                  echo "<div class='panel-body'>";
+                  echo "<div class='card-body'>";
                     echo Form::input(array('type' => 'hidden', 'name' => 'action', 'value' => 'new_cat_sub'));
                     echo Form::input(array('type' => 'hidden', 'name' => 'forum_title', 'value' => $data['cat_main_title']));
                     echo Form::input(array('type' => 'hidden', 'name' => 'token_ForumAdmin', 'value' => $data['csrf_token']));
@@ -106,7 +106,7 @@ use Libs\Form,
                     echo "<strong>Sub Cat Description:</strong>";
                     echo Form::textBox(array('type' => 'text', 'name' => 'forum_des', 'class' => 'form-input text form-control', 'aria-describedby' => 'basic-addon1', 'placeholder' => 'New Sub Category Description'));
                   echo "</div>";
-                  echo "<div class='panel-footer'>";
+                  echo "<div class='card-footer text-muted'>";
                     echo "<button class='btn btn-success' name='submit' type='submit'>Create New Sub Category</button>";
                   echo "</div>";
                 echo "</div>";
@@ -116,11 +116,11 @@ use Libs\Form,
               if(isset($data['cat_sub_data'])){
                 foreach ($data['cat_sub_data'] as $row) {
                   echo Form::open(array('method' => 'post', 'action' => DIR.'AdminPanel-Forum-Categories/CatSubEdit/'.$row->forum_id));
-                    echo "<div class='panel panel-primary'>";
-                      echo "<div class='panel-heading'>";
-                        echo "<i class='glyphicon glyphicon-list'></i> Edit Sub Category";
+                    echo "<div class='card border-primary mb-3'>";
+                      echo "<div class='card-header h4'>";
+                        echo "<i class='fas fa-list'></i> Edit Sub Category";
                       echo "</div>";
-                      echo "<div class='panel-body'>";
+                      echo "<div class='card-body'>";
                         echo Form::input(array('type' => 'hidden', 'name' => 'action', 'value' => 'edit_cat_sub'));
                         echo Form::input(array('type' => 'hidden', 'name' => 'token_ForumAdmin', 'value' => $data['csrf_token']));
                         echo "<strong>Sub Cat Title:</strong>";
@@ -128,7 +128,7 @@ use Libs\Form,
                         echo "<strong>Sub Cat Description:</strong>";
                         echo Form::textBox(array('type' => 'text', 'name' => 'forum_des', 'value' => $row->forum_des, 'class' => 'form-input text form-control', 'aria-describedby' => 'basic-addon1', 'placeholder' => 'Sub Category Description'));
                       echo "</div>";
-                      echo "<div class='panel-footer'>";
+                      echo "<div class='card-footer text-muted'>";
                         echo "<button class='btn btn-success' name='submit' type='submit'>Update Sub Category</button>";
                       echo "</div>";
                     echo "</div>";
@@ -138,11 +138,11 @@ use Libs\Form,
             }else if($data['delete_cat_main']  == true){
               // Display Delete Main Cat Form
               echo Form::open(array('method' => 'post'));
-                echo "<div class='panel panel-danger'>";
-                  echo "<div class='panel-heading'>";
+                echo "<div class='card card-danger'>";
+                  echo "<div class='card-header h4'>";
                     echo "Delete Forum Main Category: <strong>".$data['delete_cat_main_title']."</strong>";
                   echo "</div>";
-                  echo "<div class='panel-body'>";
+                  echo "<div class='card-body'>";
                     echo "What would you like to do with all Sub Categories, Topics, and Topic Replies that are connected to Main Category: <strong>".$data['delete_cat_main_title']."</strong> ?";
                     echo "<select class='form-control' id='delete_cat_main_action' name='delete_cat_main_action'>";
                       echo "<option value=''>Select What To Do With Content</option>";
@@ -155,7 +155,7 @@ use Libs\Form,
                       }
                     echo "</select>";
                   echo "</div>";
-                  echo "<div class='panel-footer'>";
+                  echo "<div class='card-footer text-muted'>";
                     echo "<button class='btn btn-danger' name='submit' type='submit'>Delete Main Category</button>";
                   echo "</div>";
                 echo "</div>";
@@ -165,11 +165,11 @@ use Libs\Form,
             }else if($data['delete_cat_sub']  == true){
               // Display Delete Sub Cat Form
               echo Form::open(array('method' => 'post'));
-                echo "<div class='panel panel-danger'>";
-                  echo "<div class='panel-heading'>";
+                echo "<div class='card card-danger'>";
+                  echo "<div class='card-header h4'>";
                     echo "Delete Forum Sub Category: <strong>".$data['delete_cat_sub_title']."</strong>";
                   echo "</div>";
-                  echo "<div class='panel-body'>";
+                  echo "<div class='card-body'>";
                     echo "What would you like to do with all Topics, and Topic Replies that are connected to Sub Category: <strong>".$data['delete_cat_sub_title']."</strong> ?";
                     echo "<select class='form-control' id='delete_cat_sub_action' name='delete_cat_sub_action'>";
                       echo "<option value=''>Select What To Do With Content</option>";
@@ -182,7 +182,7 @@ use Libs\Form,
                       }
                     echo "</select>";
                   echo "</div>";
-                  echo "<div class='panel-footer'>";
+                  echo "<div class='card-footer text-muted'>";
                     echo "<button class='btn btn-danger' name='submit' type='submit'>Delete Sub Category</button>";
                   echo "</div>";
                 echo "</div>";
@@ -193,13 +193,13 @@ use Libs\Form,
               // Display main categories for forum
               if(isset($data['cat_main'])){
                 foreach($data['cat_main'] as $row){
-                  echo "<div class='panel panel-primary'>";
-                    echo "<div class='panel-heading'>";
+                  echo "<div class='card border-primary mb-3'>";
+                    echo "<div class='card-header h4'>";
                       echo "<h3 class='panel-title'>";
                         echo $row->forum_title;
                       echo "</h3>";
                     echo "</div>";
-                    echo "<div class='panel-body'>";
+                    echo "<div class='card-body'>";
                       echo "<div class='col-lg-6 col-md-6' style='text-align: left; margin-bottom: 2px'>";
                         // Display total number of sub cats for this category
                         echo " <div class='label label-warning' style='margin-top: 5px'>";
@@ -217,15 +217,15 @@ use Libs\Form,
                       echo "<div class='col-lg-6 col-md-6' style='text-align: right; margin-bottom: 2px'>";
                         // Check to see if object is at top
                         if($row->forum_order_title > 1){
-                          echo "<a href='".DIR."AdminPanel-Forum-Categories/CatMainUp/$row->forum_order_title' class='btn btn-primary btn-xs' role='button'><span class='glyphicon glyphicon-triangle-top' aria-hidden='true'></span></a> ";
+                          echo "<a href='".DIR."AdminPanel-Forum-Categories/CatMainUp/$row->forum_order_title' class='btn btn-primary btn-xs' role='button'><span class='fas fa-triangle-top' aria-hidden='true'></span></a> ";
                         }
                         // Check to see if object is at bottom
                         if($data['fourm_cat_main_last'] != $row->forum_order_title){
-                          echo "<a href='".DIR."AdminPanel-Forum-Categories/CatMainDown/$row->forum_order_title' class='btn btn-primary btn-xs' role='button'><span class='glyphicon glyphicon-triangle-bottom' aria-hidden='true'></span></a> ";
+                          echo "<a href='".DIR."AdminPanel-Forum-Categories/CatMainDown/$row->forum_order_title' class='btn btn-primary btn-xs' role='button'><span class='fas fa-triangle-bottom' aria-hidden='true'></span></a> ";
                         }
-                        echo "<a href='".DIR."AdminPanel-Forum-Categories/CatMainEdit/$row->forum_id' class='btn btn-success btn-xs' role='button'><span class='glyphicon glyphicon-cog' aria-hidden='true'></span> Edit</a> ";
-                        echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubList/$row->forum_id' class='btn btn-info btn-xs' role='button'><span class='glyphicon glyphicon-list' aria-hidden='true'></span> Sub Categories</a> ";
-                        echo "<a href='".DIR."AdminPanel-Forum-Categories/DeleteMainCat/$row->forum_id' class='btn btn-danger btn-xs' role='button'><span class='glyphicon glyphicon-remove-circle' aria-hidden='true'></span></a> ";
+                        echo "<a href='".DIR."AdminPanel-Forum-Categories/CatMainEdit/$row->forum_id' class='btn btn-success btn-xs' role='button'><span class='fas fa-cog' aria-hidden='true'></span> Edit</a> ";
+                        echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubList/$row->forum_id' class='btn btn-info btn-xs' role='button'><span class='fas fa-list' aria-hidden='true'></span> Sub Categories</a> ";
+                        echo "<a href='".DIR."AdminPanel-Forum-Categories/DeleteMainCat/$row->forum_id' class='btn btn-danger btn-xs' role='button'><span class='fas fa-remove-circle' aria-hidden='true'></span></a> ";
                       echo "</div>";
                     echo "</div>";
                   echo "</div>";
@@ -233,16 +233,16 @@ use Libs\Form,
               }// End of isset
               // Display form to create new Main Category
               echo Form::open(array('method' => 'post', 'action' => DIR.'AdminPanel-Forum-Categories/CatMainNew/1'));
-                echo "<div class='panel panel-default'>";
-                  echo "<div class='panel-heading'>";
-                    echo "<i class='glyphicon glyphicon-list'></i> New Main Category Title";
+                echo "<div class='card mb-3'>";
+                  echo "<div class='card-header h4'>";
+                    echo "<i class='fas fa-list'></i> New Main Category Title";
                   echo "</div>";
-                  echo "<div class='panel-body'>";
+                  echo "<div class='card-body'>";
                     echo Form::input(array('type' => 'hidden', 'name' => 'action', 'value' => 'new_cat_main_title'));
                     echo Form::input(array('type' => 'hidden', 'name' => 'token_ForumAdmin', 'value' => $data['csrf_token']));
                     echo Form::input(array('type' => 'text', 'name' => 'forum_title', 'class' => 'form-input text form-control', 'aria-describedby' => 'basic-addon1', 'placeholder' => 'New Main Category Title', 'maxlength' => '100'));
                   echo "</div>";
-                  echo "<div class='panel-footer'>";
+                  echo "<div class='card-footer text-muted'>";
                     echo "<button class='btn btn-success' name='submit' type='submit'>Create New Main Category Title</button>";
                   echo "</div>";
                 echo "</div>";

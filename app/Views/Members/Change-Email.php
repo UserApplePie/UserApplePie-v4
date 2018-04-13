@@ -4,30 +4,30 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 use Libs\Language, Libs\Form;
 ?>
 
 <div class="col-lg-8 col-md-8 col-sm-8">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h1><?=$title;?></h1>
+	<div class="card mb-3">
+		<div class="card-header h4">
+			<?=$title;?>
 		</div>
-		<div class="panel-body">
+		<div class="card-body">
 			<p><?=$welcomeMessage;?></p>
 			<?php echo Form::open(array('method' => 'post')); ?>
 
 				<!-- Current Password -->
-				<div class='input-group' style='width: 80%; margin-bottom: 25px'>
-					<span class='input-group-addon'><i class='glyphicon glyphicon-lock'></i></span>
+				<div class='form-group' style='width: 80%; margin-bottom: 25px'>
+					<span class='input-group-addon'><i class='fas fa-lock'></i></span>
 					<?php echo Form::input(array('type' => 'password', 'name' => 'passwordemail', 'class' => 'form-control', 'placeholder' => Language::show('current_password', 'Members'))); ?>
 				</div>
 
 				<!-- Email -->
-				<div class='input-group' style='width: 80%; margin-bottom: 25px'>
-					<span class='input-group-addon'><i class='glyphicon glyphicon-envelope'></i></span>
+				<div class='form-group' style='width: 80%; margin-bottom: 25px'>
+					<span class='input-group-addon'><i class='fas fa-envelope'></i></span>
 					<?php echo Form::input(array('id' => 'email', 'type' => 'text', 'name' => 'newemail', 'class' => 'form-control', 'placeholder' => $data['email'])); ?>
 					<span id='resultemail' class='input-group-addon'></span>
 				</div>

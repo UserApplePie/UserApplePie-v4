@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 /** Forum controller **/
@@ -76,7 +76,7 @@ use App\System\Controller,
 
         // Setup Breadcrumbs
         	$data['breadcrumbs'] = "
-        		<li class='active'>".$this->forum_title."</li>
+        		<li class='breadcrumb-item active'>".$this->forum_title."</li>
         	";
         $data['csrf_token'] = Csrf::makeToken('forum');
 
@@ -131,8 +131,8 @@ use App\System\Controller,
 
       // Setup Breadcrumbs
   		$data['breadcrumbs'] = "
-        <li><a href='".DIR."Forum'>".$this->forum_title."</a></li>
-  			<li class='active'>".$data['title']."</li>
+        <li class='breadcrumb-item'><a href='".DIR."Forum'>".$this->forum_title."</a></li>
+  			<li class='breadcrumb-item active'>".$data['title']."</li>
   		";
 
       // Ready the token!
@@ -426,9 +426,9 @@ use App\System\Controller,
 
       // Setup Breadcrumbs
   		$data['breadcrumbs'] = "
-        <li><a href='".DIR."Forum'>".$this->forum_title."</a></li>
-        <li><a href='".DIR."Topics/$topic_forum_id'>".$data['forum_cat']."</a>
-  			<li class='active'>".$data['title']."</li>
+        <li class='breadcrumb-item'><a href='".DIR."Forum'>".$this->forum_title."</a></li>
+        <li class='breadcrumb-item'><a href='".DIR."Topics/$topic_forum_id'>".$data['forum_cat']."</a>
+  			<li class='breadcrumb-item active'>".$data['title']."</li>
   		";
 
       // Ready the token!
@@ -552,9 +552,9 @@ use App\System\Controller,
 
       // Setup Breadcrumbs
   		$data['breadcrumbs'] = "
-        <li><a href='".DIR."Forum'>".$this->forum_title."</a></li>
-        <li><a href='".DIR."Topics/$id'>".$data['forum_cat']."</a>
-  			<li class='active'>".$data['title']."</li>
+        <li class='breadcrumb-item'><a href='".DIR."Forum'>".$this->forum_title."</a></li>
+        <li class='breadcrumb-item'><a href='".DIR."Topics/$id'>".$data['forum_cat']."</a>
+  			<li class='breadcrumb-item active'>".$data['title']."</li>
   		";
 
       // Ready the token!
@@ -618,7 +618,7 @@ use App\System\Controller,
 
       // Setup Breadcrumbs
   		$data['breadcrumbs'] = "
-  			<li class='active'>".$this->forum_title."</li>
+  			<li class='breadcrumb-item active'>".$this->forum_title."</li>
   		";
       $data['csrf_token'] = Csrf::makeToken('forum');
 
