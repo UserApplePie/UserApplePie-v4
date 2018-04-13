@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 // Message New Displays form for user to create a new message to send
@@ -20,11 +20,11 @@ use Libs\Language,
 
 <div class='col-lg-8 col-md-8'>
 
-	<div class='panel panel-default'>
-		<div class='panel-heading'>
-			<h3 class='jumbotron-heading'><?php echo $data['title'] ?></h3>
+	<div class='card mb-3'>
+		<div class='card-header h4'>
+			<?php echo $data['title'] ?>
 		</div>
-		<div class='panel-body'>
+		<div class='card-body'>
 			<p><?php echo $data['welcome_message'] ?></p>
 
 <?php
@@ -39,20 +39,26 @@ use Libs\Language,
 			<?php echo Form::open(array('method' => 'post')); ?>
 
       <!-- To UserName -->
-      <div class='input-group' style='margin-bottom: 25px'>
-        <span class='input-group-addon'><i class='glyphicon glyphicon-user'></i> </span>
+      <div class='input-group mb-3' style='margin-bottom: 25px'>
+		<div class='input-group-prepend'>
+			<span class='input-group-text'><i class='fas fa-user'></i> </span>
+		</div>
         <?php echo Form::input(array('type' => 'text', 'name' => 'to_username', 'class' => 'form-control', 'value' => $data['to_username'], 'placeholder' => 'To Username', 'maxlength' => '100')); ?>
       </div>
 
       <!-- Subject -->
-      <div class='input-group' style='margin-bottom: 25px'>
-        <span class='input-group-addon'><i class='glyphicon glyphicon-book'></i> </span>
+      <div class='input-group mb-3' style='margin-bottom: 25px'>
+		<div class='input-group-prepend'>
+			<span class='input-group-text'><i class='fas fa-book'></i> </span>
+		</div>
         <?php echo Form::input(array('type' => 'text', 'name' => 'subject', 'class' => 'form-control', 'value' => urldecode($data['subject']), 'placeholder' => 'Subject', 'maxlength' => '100')); ?>
       </div>
 
       <!-- Message Content -->
-      <div class='input-group' style='margin-bottom: 25px'>
-        <span class='input-group-addon'><i class='glyphicon glyphicon-pencil'></i> </span>
+      <div class='input-group mb-3' style='margin-bottom: 25px'>
+		<div class='input-group-prepend'>
+			<span class='input-group-text'><i class='fas fa-pencil-alt'></i> </span>
+		</div>
         <?php echo Form::textBox(array('type' => 'text', 'name' => 'content', 'class' => 'form-control', 'value' => $data['content'], 'placeholder' => 'Message Content', 'rows' => '6')); ?>
       </div>
 

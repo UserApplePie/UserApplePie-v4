@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 // Displays a list of all message for current user
@@ -19,11 +19,11 @@ use Libs\Language,
 
 <div class='col-lg-8 col-md-8'>
 
-	<div class='panel panel-default'>
-		<div class='panel-heading'>
-			<h3 class='jumbotron-heading'><?php echo $data['title'] ?></h3>
+	<div class='card mb-3'>
+		<div class='card-header h4'>
+			<?php echo $data['title'] ?>
 		</div>
-		<div class='panel-body'>
+		<div class='card-body'>
 			<p><?php echo $data['welcome_message'] ?></p>
 			<table class='table table-striped table-bordered responsive'>
 				<tr>
