@@ -4,31 +4,31 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 use Libs\Form;
 ?>
 <div class='col-lg-12 col-md-12 col-sm-12'>
-	<div class="panel panel-default">
-		<div class="panel-heading">
+	<div class="card mb-3">
+		<div class="card-header h4">
 			<?=$title;?>
 		</div>
-		<div class="panel-body">
+		<div class="card-body">
 			<p><?=$welcomeMessage;?></p>
 			<hr><?php echo count($get_users_massemail_allow) ?> Users Will Be Sent This Email<hr>
 
 			<?php echo Form::open(array('method' => 'post')); ?>
 
       <!-- Subject -->
-      <div class='input-group' style='margin-bottom: 25px'>
-        <span class='input-group-addon'><i class='glyphicon glyphicon-book'></i> </span>
+      <div class='form-group' style='margin-bottom: 25px'>
+        <span class='input-group-addon'><i class='fas fa-book'></i> </span>
         <?php echo Form::input(array('type' => 'text', 'name' => 'subject', 'class' => 'form-control', 'value' => urldecode($data['subject']), 'placeholder' => 'Subject', 'maxlength' => '100')); ?>
       </div>
 
       <!-- Message Content -->
-      <div class='input-group' style='margin-bottom: 25px'>
-        <span class='input-group-addon'><i class='glyphicon glyphicon-pencil'></i> </span>
+      <div class='form-group' style='margin-bottom: 25px'>
+        <span class='input-group-addon'><i class='fas fa-pencil'></i> </span>
         <?php echo Form::textBox(array('type' => 'text', 'name' => 'content', 'class' => 'form-control', 'value' => $data['content'], 'placeholder' => 'Message Content', 'rows' => '6')); ?>
       </div>
 

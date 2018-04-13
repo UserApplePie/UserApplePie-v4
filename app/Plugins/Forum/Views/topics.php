@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 /** Forum Topics List View **/
@@ -23,16 +23,16 @@ use App\System\Language,
 ?>
 <div class='col-lg-8 col-md-8'>
 
-	<div class='panel panel-default'>
-		<div class='panel-heading'>
+	<div class='card mb-3'>
+		<div class='card-header h4'>
 			<h3 class='jumbotron-heading'><?php echo $data['title'] ?></h3>
 		</div>
-		<div class='panel-body'>
+		<div class='card-body'>
 			<p><?php echo $data['welcome_message'] ?></p>
 				<?php
         // Setup form list table stuff
 				echo "
-					<div class='panel-body hidden-xs'>
+					<div class='card-body d-none d-sm-block'>
 						<div class='row'>
 
 							<div class='col-md-7 col-sm-6'>
@@ -66,37 +66,34 @@ use App\System\Language,
           $f_p_title = stripslashes($f_p_title);
                   echo "<tr><td>";
                   echo "<div class='row'>";
-                  echo "<div class='col-md-7 col-sm-6 col-xs-12'>";
-                    echo "<div class='col-xs-10'>";
-                      // Add text to blank Topic Titles
-                      if(empty($f_p_title)){ $f_p_title = "Oops! Title is Missing for this Topic."; }
-                      echo "<h4>";
-                        // Display icon that lets user know if they have read this topic or not
-                        if($has_user_read){
-                            echo "<span class='glyphicon glyphicon-star' aria-hidden='true'></span> ";
-                        }else{
-                            echo "<span class='glyphicon glyphicon-star-empty' aria-hidden='true' style='color: #DDD'></span> ";
-                        }
-                      echo "<a href='".DIR."Topic/$f_p_id/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
-                      echo "</h4>";
-                      echo "<div class='text small'>";
-                        echo " Created by <a href='".DIR."Profile/$f_p_user_id' style='font-weight: bold'>$f_p_user_name</a> - ";
-                        //Display how long ago this was posted
-                        $timestart = "$f_p_timestamp";  //Time of post
-                        echo " " . TimeDiff::dateDiff("now", "$timestart", 1) . " ago ";
-                        // Display Locked Message if Topic has been locked by admin
-                        if($f_p_status == 2){
-                          echo " <strong><font color='red'>Topic Locked</font></strong> ";
-                        }
-                      echo "</div>";
+                  echo "<div class='d-none d-sm-block'>";
+                    echo "<div class='col-md-7 col-sm-6'>";
+
+                        // Add text to blank Topic Titles
+                        if(empty($f_p_title)){ $f_p_title = "Oops! Title is Missing for this Topic."; }
+                        echo "<h4>";
+                          // Display icon that lets user know if they have read this topic or not
+                          if($has_user_read){
+                              echo "<span class='fas fa-star' aria-hidden='true'></span> ";
+                          }else{
+                              echo "<span class='far fa-star' aria-hidden='true' style='color: #DDD'></span> ";
+                          }
+                        echo "<a href='".DIR."Topic/$f_p_id/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
+                        echo "</h4>";
+                        echo "<div class='text small'>";
+                          echo " Created by <a href='".DIR."Profile/$f_p_user_id' style='font-weight: bold'>$f_p_user_name</a> - ";
+                          //Display how long ago this was posted
+                          $timestart = "$f_p_timestamp";  //Time of post
+                          echo " " . TimeDiff::dateDiff("now", "$timestart", 1) . " ago ";
+                          // Display Locked Message if Topic has been locked by admin
+                          if($f_p_status == 2){
+                            echo " <strong><font color='red'>Topic Locked</font></strong> ";
+                          }
+                        echo "</div>";
+
                     echo "</div>";
-                    echo "<div class='col-xs-2'>
-                      <button href='#Bar${f_p_id}' class='btn btn-default visible-xs' data-toggle='collapse'>
-                        <span class='glyphicon glyphicon-plus' aria-hidden='true'></span>
-                      </button>
-                    </div>";
                   echo "</div>";
-                  echo "<div class='hidden-xs'>";
+                  echo "<div class='d-none d-sm-block'>";
                     echo "<div class='col-md-2 col-sm-3 col-xs-6'>";
                       // Display total replys
                       // Display total topic replys
@@ -128,8 +125,36 @@ use App\System\Language,
                   echo "</div>";
 
                 // For small devices hides extra info
-                echo "<div id='Bar${f_p_id}' class='collapse hidden-sm hidden-md hidden-lg'>";
-                  echo "<div class='col-xs-12'>";
+                echo "<div class='d-block d-sm-none'>";
+                  echo "<div class='col-xs-10'>";
+                      // Add text to blank Topic Titles
+                      if(empty($f_p_title)){ $f_p_title = "Oops! Title is Missing for this Topic."; }
+                      echo "<h4>";
+                        // Display icon that lets user know if they have read this topic or not
+                        if($has_user_read){
+                            echo "<span class='fas fa-star' aria-hidden='true'></span> ";
+                        }else{
+                            echo "<span class='far fa-star' aria-hidden='true' style='color: #DDD'></span> ";
+                        }
+                      echo "<a href='".DIR."Topic/$f_p_id/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
+                      echo "</h4>";
+                      echo "<div class='text small'>";
+                        echo " Created by <a href='".DIR."Profile/$f_p_user_id' style='font-weight: bold'>$f_p_user_name</a> - ";
+                        //Display how long ago this was posted
+                        $timestart = "$f_p_timestamp";  //Time of post
+                        echo " " . TimeDiff::dateDiff("now", "$timestart", 1) . " ago ";
+                        // Display Locked Message if Topic has been locked by admin
+                        if($f_p_status == 2){
+                          echo " <strong><font color='red'>Topic Locked</font></strong> ";
+                        }
+                      echo "</div>";
+                  echo "</div>";
+                  echo "<div class='col-xs-2'>
+                    <button href='#Bar${f_p_id}' class='btn btn-secondary' data-toggle='collapse'>
+                      <span class='fas fa-plus' aria-hidden='true'></span>
+                    </button>
+                  </div>";
+                  echo "<div  id='Bar${f_p_id}' class='collapse col-xs-12'>";
                     // Display total replys
                     // Display total topic replys
                     echo "<div class='btn btn-info btn-xs'>";
@@ -168,8 +193,8 @@ use App\System\Language,
             // Display Paginator Links
             // Check to see if there is more than one page
             if($data['pageLinks'] > "1"){
-              echo "<div class='panel panel-info'>";
-                echo "<div class='panel-heading text-center'>";
+              echo "<div class='card border-info mb-3'>";
+                echo "<div class='card-header h6 text-center'>";
                   echo $data['pageLinks'];
                 echo "</div>";
               echo "</div>";
@@ -186,15 +211,15 @@ use App\System\Language,
         $gfp_admin = $group_forum_perms_admin ? "<b>can</b> <a href='".SITE_URL."AdminPanel-Forum-Settings'>administrate</a>" : "<b>cannot</b> administrate";
     ?>
 
-    <div class='panel panel-default'>
-        <div class='panel-heading'>
+    <div class='card mb-3'>
+        <div class='card-header h4'>
             <b>Forum Permissions</b>
         </div>
-        <div class='panel-body'>
+        <div class='card-body'>
             You <b><?php echo $gfp_post; ?></b> post in this forum.<Br>
             You <b><?php echo $gfp_mod; ?></b> moderate this forum.<br>
             You <?php echo $gfp_admin; ?> this forum.<br>
         </div>
     </div>
-    
+
 </div>

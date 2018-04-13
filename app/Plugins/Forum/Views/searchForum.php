@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 /** Forum Topics List View **/
@@ -37,11 +37,11 @@ use Core\Language,
 ?>
 <div class='col-lg-8 col-md-8'>
 
-	<div class='panel panel-default'>
-		<div class='panel-heading'>
+	<div class='card mb-3'>
+		<div class='card-header h4'>
 			<h3 class='jumbotron-heading'><?php echo $data['title'] ?></h3>
 		</div>
-		<div class='panel-body'>
+		<div class='card-body'>
 			<p><?php echo $data['welcome_message'] ?></p>
       <div class="text-center">
         Search found <?php echo $data['results_count']; ?> matches: <?php echo $data['search_text']; ?>
@@ -52,8 +52,8 @@ use Core\Language,
       // Display Paginator Links
       // Check to see if there is more than one page
       if($data['pageLinks'] > "1"){
-        echo "<div class='panel panel-info'>";
-          echo "<div class='panel-heading text-center'>";
+        echo "<div class='card border-info mb-3'>";
+          echo "<div class='card-header h4 text-center'>";
             echo $data['pageLinks'];
           echo "</div>";
         echo "</div>";
@@ -67,8 +67,8 @@ use Core\Language,
         foreach($data['forum_topics'] as $row2)
         {
                       echo "<hr>";
-                      echo "<div class='panel panel-default'>";
-                        echo "<div class='panel-heading'>";
+                      echo "<div class='card mb-3'>";
+                        echo "<div class='card-header h4'>";
                           echo "<h4>";
                           $title = stripslashes($row2->title);
                           $title_output = highlight_search_text($title, $data['search_text']);
@@ -76,7 +76,7 @@ use Core\Language,
                           echo "<a href='".DIR."Topic/$row2->forum_post_id/' title='$title' ALT='$title'>$title_output</a>";
                           echo "</h4>";
                         echo "</div>";
-                        echo "<div class='panel-body'>";
+                        echo "<div class='card-body'>";
                           echo "<div class='row'>";
                             echo "<div class='col-lg-12 col-md-12 col-sm-12'>";
                             if(!empty($row2->content)){
@@ -87,7 +87,7 @@ use Core\Language,
                             echo "</div>";
                           echo "</div>";
                         echo "</div>";
-                      echo "<div class='panel-footer'>";
+                      echo "<div class='card-footer text-muted'>";
                         echo "<div class='text small'>";
                           $poster_username = CurrentUserData::getUserName($row2->forum_user_id);
                           echo " Posted by <a href='".DIR."Profile/$row2->forum_user_id' style='font-weight: bold'>$poster_username</a> - ";
@@ -110,8 +110,8 @@ use Core\Language,
             // Display Paginator Links
             // Check to see if there is more than one page
             if($data['pageLinks'] > "1"){
-              echo "<div class='panel panel-info'>";
-                echo "<div class='panel-heading text-center'>";
+              echo "<div class='card border-info mb-3'>";
+                echo "<div class='card-header h4 text-center'>";
                   echo $data['pageLinks'];
                 echo "</div>";
               echo "</div>";

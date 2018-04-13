@@ -4,15 +4,15 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 ?>
 
-<div class="panel panel-danger">
-    <div class="panel-heading">
+<div class="card card-danger">
+    <div class="card-header h4">
         <?=$error_code?> Error!
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <p class="lead"><?=$bodyText?></p>
     </div>
 </div>

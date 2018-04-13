@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 
@@ -85,21 +85,21 @@ if(isset($_POST['submit'])){
 		echo "</div>";
 ?>
 
-<div class='panel panel-info'>
-	<div class='panel-heading'>
+<div class='card border-info mb-3'>
+	<div class='card-header h4'>
 		<h3>UAP 4 System Settings</h3>
 	</div>
-	<div class='panel-body'>
+	<div class='card-body'>
 		Now we are going to setup all the settings needed to create your Config.php file.  <br>
 		Make sure to fill in all the required fields. <br>
 		<hr>
 		<form class="form" method="post">
 			<!-- Site Settings -->
-			<div class='panel panel-default'>
-				<div class='panel-heading'>
+			<div class='card mb-3'>
+				<div class='card-header h4'>
 					<h3>Site Settings</h3>
 				</div>
-				<div class='panel-body'>
+				<div class='card-body'>
 					<div class="form-group">
 						<label for="SITE_URL">Website URL</label><span class="label label-danger pull-right">Required</span>
 						<input type="text" class="form-control" name="SITE_URL" id="SITE_URL" placeholder="<?=SITE_URL?>" value="<?php if(!empty($_REQUEST['SITE_URL'])){echo $_REQUEST['SITE_URL'];} ?>">
@@ -107,12 +107,12 @@ if(isset($_POST['submit'])){
 				</div>
 			</div>
 			<!-- Database Settings -->
-			<div class='panel panel-default'>
-				<div class='panel-heading'>
+			<div class='card mb-3'>
+				<div class='card-header h4'>
 					<a name='database'></a>
 					<h3>Database Settings</h3>
 				</div>
-				<div class='panel-body'>
+				<div class='card-body'>
 					<div class="form-group">
 						<label for="DB_HOST">Host</label><span class="label label-danger pull-right">Required</span>
 						<input type="text" class="form-control" name="DB_HOST" id="DB_HOST" placeholder="<?=DB_HOST?>" value="<?php if(!empty($_REQUEST['DB_HOST'])){echo $_REQUEST['DB_HOST'];} ?>">
@@ -138,7 +138,7 @@ if(isset($_POST['submit'])){
 						(isset($_GET['test_db'])) ? $test_db = $_GET['test_db'] : $test_db = "" ;
 						if($updated_config || $test_db == "true"){
 						/** Test Database Settings **/
-							echo "<div class='panel-footer'>";
+							echo "<div class='card-footer text-muted'>";
 							echo "<b>Database Status:</b> ";
 							if($test_db == "true"){
 								require ROOTDIR.'app/Install/database_check.php';

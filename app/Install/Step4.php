@@ -4,17 +4,17 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 /** Finalize Install **/
 ?>
 
-<div class='panel panel-info'>
-	<div class='panel-heading'>
+<div class='card border-info mb-3'>
+	<div class='card-header h4'>
 		<h3>UAP 4 Installation Step 4</h3>
 	</div>
-	<div class='panel-body'>
+	<div class='card-body'>
 		Congratulations! <br>
 		<Br>
 		Looks like everything is ready to go. <Br>

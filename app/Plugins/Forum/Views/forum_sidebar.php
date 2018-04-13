@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
   use Libs\Language;
@@ -26,35 +26,35 @@ function process()
 
 <div class='col-lg-4 col-md-4 col-sm-4'>
 
-  <div class='panel panel-default'>
-      <div class='panel-heading'>
+  <div class='card mb-3'>
+      <div class='card-header h4'>
           <h3>Users Status</h3>
       </div>
-      <ul class="list-group">
+      <ul class="list-group list-group-flush">
           <li class="list-group-item"><a href="<?php echo DIR; ?>Members">Members: <?php echo CurrentUserData::getMembers(); ?></a></li>
           <li class="list-group-item"><a href="<?php echo DIR; ?>Online-Members">Members Online: <?php echo CurrentUserData::getOnlineMembers(); ?></a></li>
       </ul>
   </div>
 
-  <div class='panel panel-default'>
+  <div class='card mb-3'>
     <form onSubmit="return process();" class="form" method="post">
-    <div class='panel-heading' style='font-weight: bold'>
+    <div class='card-header h4' style='font-weight: bold'>
       Search Forums
     </div>
-    <div class='panel-body'>
+    <div class='card-body'>
       <div class="form-group">
         <input type="forumSearch" class="form-control" id="forumSearch" placeholder="Search Forums" value="<?php if(isset($data['search_text'])){ echo $data['search_text']; } ?>">
       </div>
-      <button type="submit" class="btn btn-default">Submit</button>
+      <button type="submit" class="btn btn-secondary">Submit</button>
     </div>
     </form>
   </div>
 
-  <div class='panel panel-default'>
-    <div class='panel-heading' style='font-weight: bold'>
+  <div class='card mb-3'>
+    <div class='card-header h4' style='font-weight: bold'>
       Forum Recent Posts
     </div>
-    <ul class='list-group'>
+    <ul class='list-group list-group-flush'>
 <?php
 foreach($data['forum_recent_posts'] as $row_rp)
 {

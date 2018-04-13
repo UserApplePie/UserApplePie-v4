@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 use Libs\Form,
@@ -15,37 +15,37 @@ use Libs\Form,
 ?>
 
 <div class='col-lg-12 col-md-12 col-sm-12'>
-	<div class='panel panel-default'>
-		<div class='panel-heading'>
+	<div class='card mb-3'>
+		<div class='card-header h4'>
 			<?php echo $data['title']." - ".$data['g_groupName']  ?>
 		</div>
-		<div class='panel-body'>
+		<div class='card-body'>
 
 			<p><?php echo $data['welcomeMessage'] ?></p>
 
 			<?php echo Form::open(array('method' => 'post')); ?>
 
 			<!-- Group Name -->
-			<div class='input-group' style='margin-bottom: 25px'>
-				<span class='input-group-addon'><i class='glyphicon glyphicon-tower'></i> Group Name</span>
+			<div class='form-group' style='margin-bottom: 25px'>
+				<span class='input-group-addon'><i class='fas fa-tower'></i> Group Name</span>
 				<?php echo Form::input(array('type' => 'text', 'name' => 'ag_groupName', 'class' => 'form-control', 'value' => $data['g_groupName'], 'placeholder' => 'Group Name', 'maxlength' => '150')); ?>
 			</div>
 
 				<!-- Group Description -->
-				<div class='input-group' style='margin-bottom: 25px'>
-					<span class='input-group-addon'><i class='glyphicon glyphicon-book'></i> Group Description</span>
+				<div class='form-group' style='margin-bottom: 25px'>
+					<span class='input-group-addon'><i class='fas fa-book'></i> Group Description</span>
 					<?php echo Form::input(array('type' => 'text', 'name' => 'ag_groupDescription', 'class' => 'form-control', 'value' => $data['g_groupDescription'], 'placeholder' => 'Group Description', 'maxlength' => '255')); ?>
 				</div>
 
 				<!-- Group Font Color -->
-				<div class='input-group' style='margin-bottom: 25px'>
-					<span class='input-group-addon'><i class='glyphicon glyphicon-lamp'></i> Group Font Color</span>
+				<div class='form-group' style='margin-bottom: 25px'>
+					<span class='input-group-addon'><i class='fas fa-lamp'></i> Group Font Color</span>
 					<?php echo Form::input(array('type' => 'text', 'name' => 'ag_groupFontColor', 'class' => 'form-control', 'value' => $data['g_groupFontColor'], 'placeholder' => 'Font Color', 'maxlength' => '20')); ?>
 				</div>
 
         <!-- Group Font Weight -->
-				<div class='input-group' style='margin-bottom: 25px'>
-					<span class='input-group-addon'><i class='glyphicon glyphicon-bold'></i> Group Font Weight</span>
+				<div class='form-group' style='margin-bottom: 25px'>
+					<span class='input-group-addon'><i class='fas fa-bold'></i> Group Font Weight</span>
           <select class='form-control' id='gender' name='ag_groupFontWeight'>
             <option value='Normal' <?php if($data['g_groupFontWeight'] == "Normal"){echo "SELECTED";}?> >Normal</option>
             <option value='Bold' <?php if($data['g_groupFontWeight'] == "Bold"){echo "SELECTED";}?> >Bold</option>

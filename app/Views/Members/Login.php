@@ -4,18 +4,18 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 use Libs\Language;
 ?>
 
 <div class="col-lg-12 col-md-12 col-sm-12">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h1><?=$title;?></h1>
+	<div class="card mb-3">
+		<div class="card-header h4">
+			<?=$title;?>
 		</div>
-		<div class="panel-body">
+		<div class="card-body">
 			<p><?=$welcomeMessage;?></p>
 
       <form class="form" method="post">
@@ -39,7 +39,7 @@ use Libs\Language;
       </form>
 
 		</div>
-		<div class="panel-footer">
+		<div class="card-footer text-muted">
 					<a class="btn btn-primary btn-sm" name="" href="<?=DIR?>Register"><?=Language::show('register_button', 'Auth')?></a>
 					<a class="btn btn-primary btn-sm" name="" href="<?=DIR?>Forgot-Password"><?=Language::show('forgotpass_button', 'Auth')?></a>
 					<a class="btn btn-primary btn-sm" name="" href="<?=DIR?>Resend-Activation-Email"><?=Language::show('resendactivation_button', 'Auth')?></a>

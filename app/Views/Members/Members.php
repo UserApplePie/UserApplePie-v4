@@ -4,15 +4,15 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 use Libs\Language;
 ?>
 
 <div class="col-lg-8 col-md-8 col-sm-8">
-	<div class="panel panel-default">
-		<div class="panel-heading">
+	<div class="card mb-3">
+		<div class="card-header h4">
 			<h1><?=$title?></h1>
 		</div>
     <table class="table table-striped table-hover table-bordered responsive">
@@ -26,10 +26,10 @@ use Libs\Language;
 						$obu_icon = "";
 					}else if($data['orderby'] == "UN-DESC"){
 						$obu_value = "UN-ASC";
-						$obu_icon = "<i class='glyphicon glyphicon-triangle-bottom'></i>";
+						$obu_icon = "<i class='fas fa-triangle-bottom'></i>";
 					}else if($data['orderby'] == "UN-ASC"){
 						$obu_value = "UN-DESC";
-						$obu_icon = "<i class='glyphicon glyphicon-triangle-top'></i>";
+						$obu_icon = "<i class='fas fa-triangle-top'></i>";
 					}else{
 						$obu_value = "UN-ASC";
 						$obu_icon = "";
@@ -52,11 +52,11 @@ use Libs\Language;
 					}
 					else if($data['orderby'] == "UG-DESC"){
 						$obg_value = "UG-ASC";
-						$obg_icon = "<i class='glyphicon glyphicon-triangle-bottom'></i>";
+						$obg_icon = "<i class='fas fa-triangle-bottom'></i>";
 					}
 					else if($data['orderby'] == "UG-ASC"){
 						$obg_value = "UG-DESC";
-						$obg_icon = "<i class='glyphicon glyphicon-triangle-top'></i>";
+						$obg_icon = "<i class='fas fa-triangle-top'></i>";
 					}else{
 						$obg_value = "UG-ASC";
 						$obg_icon = "";
@@ -71,7 +71,7 @@ use Libs\Language;
         <?php
             foreach($data['members'] as $member){
                 echo "<tr>
-                        <td width='20px'><img src=".SITE_URL.IMG_DIR_PROFILE.$member->userImage." class='img-rounded' style='height: 25px'></td>
+                        <td width='20px'><img src=".SITE_URL.IMG_DIR_PROFILE.$member->userImage." class='rounded' style='height: 25px'></td>
 						<td><a href='".DIR."Profile/{$member->username}'> {$member->username}</a></td>
                         <td>{$member->firstName}</td>
                         <td><font color='{$member->groupFontColor}' style='font-weight:{$member->groupFontWeight}'>{$member->groupName}</font></td></tr>";
@@ -82,7 +82,7 @@ use Libs\Language;
 		<?php
 			// Check to see if there is more than one page
 			if($data['pageLinks'] > "1"){
-				echo "<div class='panel-footer' style='text-align: center'>";
+				echo "<div class='card-footer text-muted' style='text-align: center'>";
 				echo $data['pageLinks'];
 				echo "</div>";
 			}

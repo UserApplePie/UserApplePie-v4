@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 
@@ -127,18 +127,18 @@ if(folder_writable('assets/images/profile-pics/')){
 
 ?>
 
-<div class='panel panel-info'>
-	<div class='panel-heading'>
+<div class='card border-info mb-3'>
+	<div class='card-header h4'>
 		<h3>UAP 4 Installation</h3>
 	</div>
-	<div class='panel-body'>
+	<div class='card-body'>
 		Welcome to the UAP 4 Installation Process.  <br>
 		First we are going to check and make sure you have everything needed to install. <br>
 		<br>
 
-		<div class="panel panel-default">
+		<div class="card mb-3">
 		  <!-- Default panel contents -->
-		  <div class="panel-heading">UserApplePie requires the following to be installed and working before installation can continue.</div>
+		  <div class="card-header h4">UserApplePie requires the following to be installed and working before installation can continue.</div>
 		  <!-- Table -->
 		  <table class="table">
 		    <th> Requirement </th><th> Version </th><th> Status </th>
@@ -149,9 +149,9 @@ if(folder_writable('assets/images/profile-pics/')){
 		  </table>
 		</div>
 
-		<div class="panel panel-default">
+		<div class="card mb-3">
 			<!-- Default panel contents -->
-			<div class="panel-heading">UserApplePie requires the following files/folders to have write permission by server.</div>
+			<div class="card-header h4">UserApplePie requires the following files/folders to have write permission by server.</div>
 			<!-- Table -->
 			<table class="table">
 				<th> Folder </th><th> Status </th>
@@ -162,9 +162,9 @@ if(folder_writable('assets/images/profile-pics/')){
 			</table>
 		</div>
 
-		<div class="panel panel-default">
+		<div class="card mb-3">
 			<!-- Default panel contents -->
-			<div class="panel-heading">Other Server Data</div>
+			<div class="card-header h4">Other Server Data</div>
 			<!-- Table -->
 			<table class="table">
 				<th> Information </th><th> More Information </th>

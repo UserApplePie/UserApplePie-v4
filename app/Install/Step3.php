@@ -4,17 +4,17 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 /** Create Database **/
 ?>
 
-<div class='panel panel-info'>
-	<div class='panel-heading'>
+<div class='card border-info mb-3'>
+	<div class='card-header h4'>
 		<h3>UAP 4 Database Creation</h3>
 	</div>
-	<div class='panel-body'>
+	<div class='card-body'>
 		Now we are going to Import data to the Database.  <br>
 		<br>
 		<b>Database Name:</b> <?=DB_NAME?><Br>

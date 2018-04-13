@@ -4,24 +4,24 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 use Libs\Language;
 ?>
 
     <div class="col-md-4 col-lg-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h4><?php echo $data['profile']->username; ?></h4>
+        <div class="card border-primary mb-3">
+            <div class="card-header h4">
+                <?php echo $data['profile']->username; ?>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <div class="row">
                     <div class="col-md-12 col-lg-12" align="center">
                       <?php if(!empty($data['profile']->userImage)){ ?>
-                        <img alt="<?php echo $data['profile']->username; ?>'s Profile Picture" src="<?php echo SITE_URL.IMG_DIR_PROFILE.$data['profile']->userImage; ?>" class="img-rounded img-responsive">
+                        <img alt="<?php echo $data['profile']->username; ?>'s Profile Picture" src="<?php echo SITE_URL.IMG_DIR_PROFILE.$data['profile']->userImage; ?>" class="rounded img-fluid">
                         <?php }else{ ?>
-							<span class='glyphicon glyphicon-user icon-size'></span>
+							<span class='fas fa-user icon-size'></span>
 						<?php } ?>
                         <Br>
                         <?php if($data['isAdmin'] == 'true'){
@@ -33,7 +33,7 @@ use Libs\Language;
                     </div>
                 </div>
             </div>
-            <div class="panel-footer">
+            <div class="card-footer">
                 <div class="row">
                     <div class=" col-md-12 col-lg-12 ">
                         <table class="table table-striped">
@@ -43,7 +43,7 @@ use Libs\Language;
                                 if($isLoggedIn){
                                     /* Check to see if Private Message Plugin is installed, if it is show link */
                                     if(file_exists(ROOTDIR.'app/Plugins/Messages/Controllers/Messages.php')){
-                                      echo "<tr><td>PM</td><td><a href='".SITE_URL."NewMessage/".$data['profile']->username."' class='btn btn-xs btn-default'>".Language::show('members_profile_sendmsg', 'Members')."</a></td></tr>";
+                                      echo "<tr><td>PM</td><td><a href='".SITE_URL."NewMessage/".$data['profile']->username."' class='btn btn-xs btn-secondary'>".Language::show('members_profile_sendmsg', 'Members')."</a></td></tr>";
                                     }
                                     /* Check to see if Friends Plugin is installed, if it is show link */
                                     if(file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php') && $currentUserData[0]->username != $data['profile']->username){
@@ -54,7 +54,7 @@ use Libs\Language;
                                         }else if($friends_status == "Pending"){
                                             echo "<tr><td>".Language::show('Friend', 'Friends')."</td><td> ".Language::show('pending_approval', 'Friends')." </td></tr>";
                                         }else{
-                                            echo "<tr><td>".Language::show('Friend', 'Friends')."</td><td><a href='".SITE_URL."AddFriend/".$data['profile']->username."' class='btn btn-xs btn-default'>".Language::show('send_friend_request', 'Friends')."</a></td></tr>";
+                                            echo "<tr><td>".Language::show('Friend', 'Friends')."</td><td><a href='".SITE_URL."AddFriend/".$data['profile']->username."' class='btn btn-xs btn-secondary'>".Language::show('send_friend_request', 'Friends')."</a></td></tr>";
                                         }
                                     }
                                 }
@@ -85,11 +85,11 @@ use Libs\Language;
     </div>
 
     <div class="col-md-8 col-lg-8">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4><?=Language::show('members_profile_allabout', 'Members'); ?> <?php echo $data['profile']->username; ?></h4>
+        <div class="card mb-3">
+            <div class="card-header h4">
+                <?=Language::show('members_profile_allabout', 'Members'); ?> <?php echo $data['profile']->username; ?>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <?php echo $data['profile']->aboutme; ?>
             </div>
         </div>

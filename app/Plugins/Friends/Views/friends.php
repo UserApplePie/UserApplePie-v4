@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 use Libs\Language,
@@ -24,9 +24,9 @@ function process()
 </script>
 
 <div class="col-lg-8 col-md-8 col-sm-8">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h1><?=$title?></h1>
+	<div class="card mb-3">
+		<div class="card-header h4">
+			<?=$title?>
 		</div>
     <table class="table table-striped table-hover table-bordered responsive">
 				<thead><tr><th colspan='4'><?=$welcomeMessage;?></th></tr></thead>
@@ -39,10 +39,10 @@ function process()
 						$obu_icon = "";
 					}else if($data['orderby'] == "UN-DESC"){
 						$obu_value = "UN-ASC";
-						$obu_icon = "<i class='glyphicon glyphicon-triangle-bottom'></i>";
+						$obu_icon = "<i class='fas fa-triangle-bottom'></i>";
 					}else if($data['orderby'] == "UN-ASC"){
 						$obu_value = "UN-DESC";
-						$obu_icon = "<i class='glyphicon glyphicon-triangle-top'></i>";
+						$obu_icon = "<i class='fas fa-triangle-top'></i>";
 					}else{
 						$obu_value = "UN-ASC";
 						$obu_icon = "";
@@ -59,7 +59,7 @@ function process()
             </tr>
         </thead>
     </table>
-    <div class='panel-body'>
+    <div class='card-body'>
         <div class='row'>
 
                 <?php
@@ -76,12 +76,12 @@ function process()
                             $member_userImage = CurrentUserData::getUserImage($friend_id);
                             echo "<div class='col-sm-6 col-md-4'>
                                     <div class='thumbnail' align='center'>
-                                        <img src=".SITE_URL.IMG_DIR_PROFILE.$member_userImage." class='img-rounded img-responsive'>
+                                        <img src=".SITE_URL.IMG_DIR_PROFILE.$member_userImage." class='rounded img-fluid'>
                                         <div class='caption'>
                                             <h4>{$member_username}</h4>
                                             <p>
                                                 <a href='".SITE_URL."Profile/{$member_username}' class='btn btn-sm btn-primary'>View Profile</a>
-                                                <a href='".SITE_URL."UnFriend/{$member_username}' class='btn btn-sm btn-default'>UnFriend</a>
+                                                <a href='".SITE_URL."UnFriend/{$member_username}' class='btn btn-sm btn-secondary'>UnFriend</a>
                                             </p>
                                         </div>
                                     </div>
@@ -95,7 +95,7 @@ function process()
 		<?php
 			/** Check to see if there is more than one page **/
 			if($pageLinks > "1"){
-				echo "<div class='panel-footer' style='text-align: center'>";
+				echo "<div class='card-footer text-muted' style='text-align: center'>";
 				echo $pageLinks;
 				echo "</div>";
 			}
@@ -107,11 +107,11 @@ function process()
 }else{
 ?>
 <div class="col-lg-8 col-md-8 col-sm-8">
-	<div class="panel panel-default">
-		<div class="panel-heading">
+	<div class="card mb-3">
+		<div class="card-header h4">
 			<h1><?=$title?></h1>
 		</div>
-        <div class='panel-body'>
+        <div class='card-body'>
             Sorry, You don't have any friends yet. :(
         </div>
     </div>

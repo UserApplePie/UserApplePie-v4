@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 
@@ -16,18 +16,18 @@ use Libs\Language,
   Libs\Form;
 
 if(empty($data['msg_error'])){ $data['msg_error'] = ""; }
-if($data['msg_error'] == 'true'){$panelclass = "panel-danger";}else{$panelclass = "panel-default";}
+if($data['msg_error'] == 'true'){$panelclass = "card-danger";}else{$panelclass = "card-secondary";}
 
 ?>
 
 <div class='col-lg-8 col-md-8'>
 
 
-	<div class='panel <?php echo $panelclass; ?>'>
-		<div class='panel-heading'>
-			<h3 class='jumbotron-heading'><?php echo $data['title'] ?></h3>
+	<div class='card <?php echo $panelclass; ?>'>
+		<div class='card-header h4'>
+			<?php echo $data['title'] ?>
 		</div>
-		<div class='panel-body'>
+		<div class='card-body'>
 			<p><?php echo $data['welcome_message'] ?></p>
 				<?php
 					if(isset($data['message'])){

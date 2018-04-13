@@ -1,8 +1,8 @@
-![UserApplePie](http://uap3demo.userapplepie.com/uap3logolg.gif)
+![UserApplePie](https://uap4demo.userapplepie.com/uap4logolg.gif)
 
 ---
 
-# UAP Version 4.0.0
+# UAP Version 4.2.0
 
 [![Software License](http://img.shields.io/badge/License-BSD--3-brightgreen.svg)](LICENSE)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/UserApplePie/UAP-MVC-CMS-3/master/license.txt)
@@ -19,13 +19,13 @@ UserApplePie is a PHP 5.5+ CMS MVC Framework. It's designed to be lightweight an
 
 ## Documentation
 
-Full docs & tutorials are available at [userapplepie.com](http://www.userapplepie.com/)
+Full docs & tutorials are available at [userapplepie.com](https://www.userapplepie.com/)
 
 ---
 
 ## Demo Website
 
-Check out the demo website at [uap4demo.userapplepie.com](http://uap4demo.userapplepie.com/)
+Check out the demo website at [uap4demo.userapplepie.com](https://uap4demo.userapplepie.com/)
 
 ---
 

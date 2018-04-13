@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 namespace App\Plugins\Messages\Controllers;
@@ -66,7 +66,7 @@ class Messages extends Controller{
 
     // Setup Breadcrumbs
 		$data['breadcrumbs'] = "
-			<li class='active'>Private Messages</li>
+			<li class='breadcrumb-item active'>Private Messages</li>
 		";
 
         // Ready the token!
@@ -199,10 +199,10 @@ class Messages extends Controller{
 
     // Check to see if user has reached message limit, if so show warning
     if($data['quota_msg_percentage'] >= "100"){
-      $error = "<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
+      $error = "<span class='fas fa-exclamation-sign' aria-hidden='true'></span>
                   <b>Your Inbox is Full!</b>  Other Site Members Can NOT send you any messages!";
     }else if($data['quota_msg_percentage'] >= "90"){
-      $error = "<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
+      $error = "<span class='fas fa-exclamation-sign' aria-hidden='true'></span>
                   <b>Warning!</b> Your Inbox is Almost Full!";
     }
 
@@ -216,8 +216,8 @@ class Messages extends Controller{
 
     // Setup Breadcrumbs
 		$data['breadcrumbs'] = "
-			<li><a href='".DIR."Messages'>Private Messages</a></li>
-			<li class='active'>".$data['title']."</li>
+			<li class='breadcrumb-item'><a href='".DIR."Messages'>Private Messages</a></li>
+			<li class='breadcrumb-item active'>".$data['title']."</li>
 		";
     $data['csrf_token'] = Csrf::makeToken('messages');
 
@@ -309,10 +309,10 @@ class Messages extends Controller{
 
     // Check to see if user has reached message limit, if so show warning
     if($data['quota_msg_percentage'] >= "100"){
-      $error[] = "<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
+      $error[] = "<span class='fas fa-exclamation-sign' aria-hidden='true'></span>
                   <b>Your Outbox is Full!</b>  You Can NOT send any messages!";
     }else if($data['quota_msg_percentage'] >= "90"){
-      $error[] = "<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
+      $error[] = "<span class='fas fa-exclamation-sign' aria-hidden='true'></span>
                   <b>Warning!</b> Your Outbox is Almost Full!";
     }
 
@@ -324,8 +324,8 @@ class Messages extends Controller{
 
     // Setup Breadcrumbs
 		$data['breadcrumbs'] = "
-			<li><a href='".DIR."Messages'>Private Messages</a></li>
-			<li class='active'>".$data['title']."</li>
+			<li class='breadcrumb-item'><a href='".DIR."Messages'>Private Messages</a></li>
+			<li class='breadcrumb-item active'>".$data['title']."</li>
 		";
     $data['csrf_token'] = Csrf::makeToken('messages');
 
@@ -371,8 +371,8 @@ class Messages extends Controller{
     }
     // Setup Breadcrumbs
 		$data['breadcrumbs'] = "
-			<li><a href='".DIR."Messages'>Private Messages</a></li>
-			<li class='active'>".$data['title']."</li>
+			<li class='breadcrumb-item'><a href='".DIR."Messages'>Private Messages</a></li>
+			<li class='breadcrumb-item active'>".$data['title']."</li>
 		";
     $data['csrf_token'] = Csrf::makeToken('messages');
 
@@ -406,7 +406,7 @@ class Messages extends Controller{
         if($this->model->checkMessageQuota($u_id)){
         // user is over limit, disable new message form
         $data['hide_form'] = "true";
-            $error[] = "<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
+            $error[] = "<span class='fas fa-exclamation-sign' aria-hidden='true'></span>
                       <b>Your Outbox is Full!</b>  You Can NOT send any messages!";
         }
 
@@ -506,8 +506,8 @@ class Messages extends Controller{
 
         // Setup Breadcrumbs
 		$data['breadcrumbs'] = "
-			<li><a href='".DIR."Messages'>Private Messages</a></li>
-			<li class='active'>".$data['title']."</li>
+			<li class='breadcrumb-item'><a href='".DIR."Messages'>Private Messages</a></li>
+			<li class='breadcrumb-item active'>".$data['title']."</li>
 		";
 
         // Get requested message data

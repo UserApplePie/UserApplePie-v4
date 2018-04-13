@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 /** Forum Settings Admin Panel View **/
@@ -17,18 +17,18 @@ use Libs\Form,
 ?>
 
 <div class='col-lg-12 col-md-12 col-sm-12'>
-	<div class='panel panel-default'>
-		<div class='panel-heading'>
+	<div class='card mb-3'>
+		<div class='card-header h4'>
 			<h3 class='jumbotron-heading'><?php echo $data['title'];  ?></h3>
 		</div>
-		<div class='panel-body'>
+		<div class='card-body'>
 			<p><?php echo $data['welcome_message'] ?></p>
 
       <!-- Start main forum Settings -->
         <?php echo Form::open(array('method' => 'post')); ?>
 
         <!-- Enable / Disable Forum -->
-				<div class='input-group'>
+				<div class='form-group'>
 					<span class='input-group-addon'><i class='glyphicon glyphicon'></i> Forum ON/OFF</span>
 					<select class='form-control' id='forum_on_off' name='forum_on_off'>
 				    <option value='Enabled' <?php if($data['forum_on_off'] == "Enabled"){echo "SELECTED";}?> >Enabled</option>
@@ -40,7 +40,7 @@ use Libs\Form,
         </div>
 
         <!-- Forum Name -->
-        <div class='input-group'>
+        <div class='form-group'>
           <span class='input-group-addon'><i class='glyphicon glyphicon'></i> Forum Title</span>
           <?php echo Form::input(array('type' => 'text', 'name' => 'forum_title', 'class' => 'form-control', 'value' => $data['forum_title'], 'placeholder' => 'Global Forum Name/Title', 'maxlength' => '100')); ?>
         </div>
@@ -49,7 +49,7 @@ use Libs\Form,
         </div>
 
         <!-- Forum Description -->
-        <div class='input-group'>
+        <div class='form-group'>
           <span class='input-group-addon'><i class='glyphicon glyphicon'></i> Forum Description</span>
           <?php echo Form::textBox(array('type' => 'text', 'name' => 'forum_description', 'class' => 'form-control', 'value' => $data['forum_description'], 'placeholder' => 'Global Forum Description', 'maxlength' => '255')); ?>
         </div>
@@ -60,7 +60,7 @@ use Libs\Form,
         <hr>
 
         <!-- Forum Topic Limit Per Page -->
-        <div class='input-group'>
+        <div class='form-group'>
           <span class='input-group-addon'><i class='glyphicon glyphicon'></i> Topics Per Page</span>
           <?php echo Form::input(array('type' => 'text', 'name' => 'forum_topic_limit', 'class' => 'form-control', 'value' => $data['forum_topic_limit'], 'placeholder' => 'Topics Per Page Limit', 'maxlength' => '100')); ?>
         </div>
@@ -69,7 +69,7 @@ use Libs\Form,
         </div>
 
         <!-- Forum Topic Reply Limit Per Page -->
-        <div class='input-group'>
+        <div class='form-group'>
           <span class='input-group-addon'><i class='glyphicon glyphicon'></i> Topic Replies Per Page</span>
           <?php echo Form::input(array('type' => 'text', 'name' => 'forum_topic_reply_limit', 'class' => 'form-control', 'value' => $data['forum_topic_reply_limit'], 'placeholder' => 'Topic Replies Per Page Limit', 'maxlength' => '100')); ?>
         </div>
@@ -88,8 +88,8 @@ use Libs\Form,
   <div class='row'>
   <!-- Start of Forum Users groups -->
   <div class='col-lg-4 col-md-4'>
-  	<div class='panel panel-default'>
-  		<div class='panel-heading'>
+  	<div class='card mb-3'>
+  		<div class='card-header h4'>
   			<h3 class='jumbotron-heading'>Forum User Groups</h3>
   		</div>
 
@@ -164,8 +164,8 @@ use Libs\Form,
 
   <!-- Start of Forum Moderator groups -->
   <div class='col-lg-4 col-md-4'>
-  	<div class='panel panel-default'>
-  		<div class='panel-heading'>
+  	<div class='card mb-3'>
+  		<div class='card-header h4'>
   			<h3 class='jumbotron-heading'>Forum Moderator Groups</h3>
   		</div>
 
@@ -218,8 +218,8 @@ use Libs\Form,
 
   <!-- Start of Forum Admin groups -->
   <div class='col-lg-4 col-md-4'>
-  	<div class='panel panel-default'>
-  		<div class='panel-heading'>
+  	<div class='card mb-3'>
+  		<div class='card-header h4'>
   			<h3 class='jumbotron-heading'>Forum Administrator Groups</h3>
   		</div>
 

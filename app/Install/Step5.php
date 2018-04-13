@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 /** Install Success **/
@@ -25,11 +25,11 @@ if(!$copy_file){
 }else{
 ?>
 
-<div class='panel panel-info'>
-	<div class='panel-heading'>
+<div class='card border-info mb-3'>
+	<div class='card-header h4'>
 		<h3>UAP 4 Installation Step 4</h3>
 	</div>
-	<div class='panel-body'>
+	<div class='card-body'>
 		UserApplePie 4 Has Successfully Installed on your Server.  <br>
 		Make sure to go sign up for your site, as the first user to sign up is admin by default. <br>
 		<br>

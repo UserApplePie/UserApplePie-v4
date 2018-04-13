@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.0.1
+* @version 4.2.0
 */
 
 // Displays a list of all message for current user
@@ -20,11 +20,11 @@ use Libs\Language,
 <div class='col-lg-8 col-md-8'>
 
 
-	<div class='panel panel-default'>
-		<div class='panel-heading'>
-			<h3 class='jumbotron-heading'><?php echo $data['title'] ?></h3>
+	<div class='card mb-3'>
+		<div class='card-header h4'>
+			<?php echo $data['title'] ?>
 		</div>
-		<div class='panel-body'>
+		<div class='card-body'>
 			<p><?php echo $data['welcome_message'] ?></p>
 			<table class='table table-striped table-hover table-bordered responsive'>
 				<tr>
@@ -41,10 +41,10 @@ use Libs\Language,
                 //Check to see if message is new
                 if($row->date_read == NULL){
                   // Unread
-                  echo "<span class='glyphicon glyphicon-star' aria-hidden='true' style='font-size:25px; color:#419641'></span>";
+                  echo "<span class='fas fa-star' aria-hidden='true' style='font-size:25px; color:#419641'></span>";
                 }else{
                   // Read
-                  echo "<span class='glyphicon glyphicon-star-empty' aria-hidden='true' style='font-size:25px; color:#CCC'></span>";
+                  echo "<span class='far fa-star' aria-hidden='true' style='font-size:25px; color:#CCC'></span>";
                 }
               echo "</td>";
               echo "<td><a href='".DIR."ViewMessage/$row->id'><b>Subject:</b> $row->subject</a><br>";

@@ -4,7 +4,7 @@
  *
  * UserApplePie
  * @author David (DaVaR) Sargent <davar@userapplepie.com>
- * @version 4.0.1
+ * @version 4.2.0
  */
 
 namespace App\Controllers;
@@ -106,7 +106,7 @@ class Auth extends Controller
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
-    			<li class='active'>".$data['title']."</li>
+    			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
         /** Check to see if user is logged in **/
@@ -222,7 +222,7 @@ class Auth extends Controller
         /** Get lang Code **/
         $langeCode = \Libs\Language::setLang();
         /** Add JS Files requried for live checks **/
-    	$data['js'] = "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>";
+    	  $data['js'] = "<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>";
         $data['js'] .= "<script type='text/javascript'>
                         var char_limit = {
                           username_min: '".MIN_USERNAME_LENGTH."',
@@ -234,13 +234,13 @@ class Auth extends Controller
                         };
                       </script>";
         $data['js'] .= "<script src='".Url::templatePath()."js/lang.".$langeCode.".js'></script>";
-    	$data['js'] .= "<script src='".Url::templatePath()."js/live_email.js'></script>";
-    	$data['js'] .= "<script src='".Url::templatePath()."js/live_username_check.js'></script>";
-    	$data['js'] .= "<script src='".Url::templatePath()."js/password_strength_match.js'></script>";
+      	$data['js'] .= "<script src='".Url::templatePath()."js/live_email.js'></script>";
+      	$data['js'] .= "<script src='".Url::templatePath()."js/live_username_check.js'></script>";
+      	$data['js'] .= "<script src='".Url::templatePath()."js/password_strength_match.js'></script>";
 
         /** Setup Breadcrumbs **/
     	$data['breadcrumbs'] = "
-    		<li class='active'>".$data['title']."</li>
+    		<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
         /** Check to see if user is logged in **/
@@ -273,7 +273,7 @@ class Auth extends Controller
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
-    			<li class='active'>".$data['title']."</li>
+    			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
 
@@ -325,8 +325,8 @@ class Auth extends Controller
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
-          <li><a href='".DIR."Account-Settings'>".$this->language->get('account_settings_title')."</a></li>
-    			<li class='active'>".$data['title']."</li>
+          <li class='breadcrumb-item'><a href='".DIR."Account-Settings'>".$this->language->get('account_settings_title')."</a></li>
+    			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
         /** Add JS Files requried for live checks **/
@@ -390,8 +390,8 @@ class Auth extends Controller
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
-          <li><a href='".DIR."Account-Settings'>".$this->language->get('account_settings_title')."</a></li>
-    			<li class='active'>".$data['title']."</li>
+          <li class='breadcrumb-item'><a href='".DIR."Account-Settings'>".$this->language->get('account_settings_title')."</a></li>
+    			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
         /** Add JS Files requried for live checks **/
@@ -441,7 +441,7 @@ class Auth extends Controller
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
-    			<li class='active'>".$data['title']."</li>
+    			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
 
@@ -491,7 +491,7 @@ class Auth extends Controller
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
-    			<li class='active'>".$data['title']."</li>
+    			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
 
@@ -529,7 +529,7 @@ class Auth extends Controller
 
         /** Setup Breadcrumbs **/
     		$data['breadcrumbs'] = "
-    			<li class='active'>".$data['title']."</li>
+    			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
 
