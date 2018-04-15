@@ -14,7 +14,7 @@ return array(
     'En' => array('info' => 'English',   'name' => 'English',    'locale' => 'en_US', 'dir' => 'ltr'),
     'Es' => array('info' => 'Spanish',   'name' => 'Español',    'locale' => 'es_ES', 'dir' => 'ltr'),
 //    'fa' => array('info' => 'Persian',   'name' => 'پارسی',      'locale' => 'fa_IR', 'dir' => 'rtl'),
-//    'fr' => array('info' => 'French',    'name' => 'Français',   'locale' => 'fr_FR', 'dir' => 'ltr'),
+    'fr' => array('info' => 'French',    'name' => 'Français',   'locale' => 'fr_FR', 'dir' => 'ltr'),
 //    'it' => array('info' => 'Italian',   'name' => 'italiano',   'locale' => 'it_IT', 'dir' => 'ltr'),
 //    'ja' => array('info' => 'Japanesse', 'name' => '日本語',      'locale' => 'ja_JA', 'dir' => 'ltr'),
 //    'nl' => array('info' => 'Dutch',     'name' => 'Nederlands', 'locale' => 'nl_NL', 'dir' => 'ltr'),
