@@ -220,7 +220,7 @@ class ForumAdmin extends Controller{
       <li class='breadcrumb-item active'><i class='fas fa-cog'></i> ".$data['title']."</li>
     ";
 
-    Load::ViewPlugin("forum_settings", $data, "AdminPanel::AP-Sidebar::Left", "Forum", "AdminPanel");
+    Load::ViewPlugin("forum_settings", $data, "", "Forum", "AdminPanel");
   }
 
   /**
@@ -619,7 +619,7 @@ class ForumAdmin extends Controller{
     // Setup CSRF token
     $data['csrf_token'] = Csrf::makeToken('ForumAdmin');
 
-    Load::ViewPlugin("forum_categories", $data, "AdminPanel::AP-Sidebar::Left", "Forum", "AdminPanel");
+    Load::ViewPlugin("forum_categories", $data, "", "Forum", "AdminPanel");
   }
 
   public function forum_blocked(){
@@ -654,7 +654,7 @@ class ForumAdmin extends Controller{
       <li class='breadcrumb-item active'><i class='fas fa-remove-sign'></i> ".$data['title']."</li>
     ";
 
-    Load::ViewPlugin("forum_blocked", $data, "AdminPanel::AP-Sidebar::Left", "Forum", "AdminPanel");
+    Load::ViewPlugin("forum_blocked", $data, "", "Forum", "AdminPanel");
 
   }
 

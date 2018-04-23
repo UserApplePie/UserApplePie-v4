@@ -29,11 +29,11 @@ $orderby = $data['orderby'];
               }
               else if($data['orderby'] == "ID-DESC"){
                 $ob_value = "ID-ASC";
-                $ob_icon = "<i class='fas fa-triangle-bottom'></i>";
+                $ob_icon = "<i class='fas fa-caret-down'></i>";
               }
               else if($data['orderby'] == "ID-ASC"){
                 $ob_value = "ID-DESC";
-                $ob_icon = "<i class='fas fa-triangle-top'></i>";
+                $ob_icon = "<i class='fas fa-caret-up'></i>";
               }else{
 								$ob_value = "ID-ASC";
                 $ob_icon = "";
@@ -50,11 +50,11 @@ $orderby = $data['orderby'];
               }
               else if($data['orderby'] == "UN-DESC"){
                 $obu_value = "UN-ASC";
-                $obu_icon = "<i class='fas fa-triangle-bottom'></i>";
+                $obu_icon = "<i class='fas fa-caret-down'></i>";
               }
               else if($data['orderby'] == "UN-ASC"){
                 $obu_value = "UN-DESC";
-                $obu_icon = "<i class='fas fa-triangle-top'></i>";
+                $obu_icon = "<i class='fas fa-caret-up'></i>";
               }else{
 								$obu_value = "UN-ASC";
                 $obu_icon = "";

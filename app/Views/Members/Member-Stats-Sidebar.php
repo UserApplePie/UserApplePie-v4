@@ -21,7 +21,7 @@ function process()
 
 
 
-<div class="col-lg-4 col-md-4 col-sm-4">
+<div class="col-lg-4 col-md-4 col-sm-12">
     <div class='card mb-3'>
         <div class='card-header h4'>
             <?=Language::show('members_user_stats', 'Members'); ?>

@@ -80,7 +80,7 @@ class Sweets
       $sweet_total = count($sweet_count);
     }
     if($display_type == "btn"){
-      $sweet_display = " <div class='btn btn-success btn-xs'>".SWEET_TITLE_DISPLAY." <span class='badge'>$sweet_total</span></div> ";
+      $sweet_display = " <div class='btn btn-success btn-xs'>".SWEET_TITLE_DISPLAY." <span class='badge badge-light'>$sweet_total</span></div> ";
     }else if($display_type = "num"){
       $sweet_display = $sweet_total;
     }
@@ -273,7 +273,7 @@ class Sweets
             ':sweet_location' => $sweet_location,
             ':sweet_sec_location' => $sweet_sec_location));
     $sweet_total = count($sweet_count);
-    $sweet_display = " <div class='btn btn-success btn-xs'>".SWEET_TITLE_DISPLAY." <span class='badge'>$sweet_total</span></div> ";
+    $sweet_display = " <div class='btn btn-success btn-xs'>".SWEET_TITLE_DISPLAY." <span class='badge badge-light'>$sweet_total</span></div> ";
     return $sweet_display;
   }
 

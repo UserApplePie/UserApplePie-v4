@@ -13,7 +13,7 @@
 
 ?>
 
-<div class='col-lg-4 col-md-4'>
+<div class='col-lg-4 col-md-4 col-sm-12'>
   <div class='card mb-3'>
     <div class='card-header h4' style='font-weight: bold'>
       My Friends
@@ -24,7 +24,7 @@
             /** Check to see if there are any pending friend requests **/
             $new_friend_count = \Libs\CurrentUserData::getFriendRequests($currentUserData[0]->userID);
             if($new_friend_count >= "1"){
-                echo " <span class='badge badge-info badge-pill'>".$new_friend_count." New</span>";
+                echo " <span class='badge badge-primary'>".$new_friend_count." New</span>";
             }
         ?>
       </a></li>
@@ -33,7 +33,7 @@
             /** Check to see how many friends user has **/
             $total_friend_count = \Libs\CurrentUserData::getFriendsCount($currentUserData[0]->userID);
             if($total_friend_count >= "1"){
-              echo " <span class='badge badge-info badge-pill'>".$total_friend_count." Total</span>";
+              echo " <span class='badge badge-primary'>".$total_friend_count." Total</span>";
             }
         ?>
       </a></li>

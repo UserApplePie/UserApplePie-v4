@@ -47,11 +47,11 @@ use Core\Language,
       // Check to see if topic is allowed
       if($data['topic_allow'] == "TRUE"){
         // Display Views Count
-        echo "<div class='btn btn-xs btn-info'>Views <span class='badge'>".$data['PageViews']."</span></div>";
+        echo "<div class='btn btn-xs btn-info'>Views <span class='badge badge-light'>".$data['PageViews']."</span></div>";
         // Display Total Sweets Count for Topic and All Replys
         echo Sweets::getTotalSweets($data['topic_id'], 'Forum_Topic', 'Forum_Topic_Reply');
         // Display total images
-        echo "<div class='btn btn-success btn-xs'> Images <span class='badge'>";
+        echo "<div class='btn btn-success btn-xs'> Images <span class='badge badge-light'>";
           echo Images::getImageCountForum('Topic', $data['topic_id']);
         echo "</span></div>";
         echo "<hr>";
@@ -80,7 +80,7 @@ use Core\Language,
           //Format the content with bbcode
   				$data_topic_content = BBCode::getHtml($data['topic_content']);
   			echo "<div class='card-body forum' style='padding: 0px; overflow: hidden; height: auto;'>";
-          echo "<div class='col-lg-3 col-md-3 col-sm-3 hidden-xs' style='padding-top: 8px; padding-bottom: 8px; float: left; padding-bottom: 1500px; margin-bottom: -1500px; text-align: left; border-right: 1px solid #cccccc;'>";
+          echo "<div class='col-lg-3 col-md-3 col-sm-3 d-none d-md-block' style='padding-top: 8px; padding-bottom: 8px; float: left; padding-bottom: 1500px; margin-bottom: -1500px; text-align: left; border-right: 1px solid #cccccc;'>";
             // Display User's Stats
             // Check to see if user has a profile image
             $user_image_display = CurrentUserData::getUserImage($data['topic_creator']);
@@ -224,7 +224,7 @@ use Core\Language,
 						echo "<div class='card-body forum' style='overflow: hidden; height: auto; padding: 0px;'>";
 							//Format the content with bbcode
 							$rf_p_content_bb = BBCode::getHtml($rf_p_content);
-              echo "<div class='col-lg-3 col-md-3 col-sm-3 hidden-xs' style='padding-top: 8px; padding-bottom: 8px; float: left; padding-bottom: 1500px; margin-bottom: -1500px; text-align: left; border-right: 1px solid #cccccc;'>";
+              echo "<div class='col-lg-3 col-md-3 col-sm-3 d-none d-md-block' style='padding-top: 8px; padding-bottom: 8px; float: left; padding-bottom: 1500px; margin-bottom: -1500px; text-align: left; border-right: 1px solid #cccccc;'>";
                 // Display User's Stats
                 // Check to see if user has a profile image
                 $user_image_display = CurrentUserData::getUserImage($rf_p_user_id);
@@ -362,8 +362,10 @@ use Core\Language,
             <?php echo Form::open(array('method' => 'post',  'files' => '')); ?>
 
             <!-- Topic Reply Content -->
-            <div class='form-group' style='margin-bottom: 25px'>
-              <span class='input-group-addon'><i class='fas fa-pencil'></i> </span>
+            <div class='input-group mb-3' style='margin-bottom: 25px'>
+              <div class="input-group-prepend">
+                <span class='input-group-text'><i class='fas fa-pencil-alt'></i> </span>
+              </div>
               <?php (isset($data['fpr_content'])) ? $data['fpr_content'] = $data['fpr_content'] : $data['fpr_content'] = ""; ?>
               <?php echo Form::textBox(array('type' => 'text', 'name' => 'fpr_content', 'class' => 'form-control', 'value' => $data['fpr_content'], 'placeholder' => 'Topic Reply Content', 'rows' => '6')); ?>
             </div>
@@ -373,8 +375,10 @@ use Core\Language,
               if($data['is_new_user'] != true){
              ?>
                 <!-- Image Upload -->
-                <div class='form-group' style='margin-bottom: 25px'>
-                  <span class='input-group-addon'><i class='fas fa-picture'></i> </span>
+                <div class='input-group' style='margin-bottom: 25px'>
+                  <div class="input-group-prepend">
+                    <span class='input-group-text'><i class='fas fa-image'></i> </span>
+                  </div>
                   <?php echo Form::input(array('type' => 'file', 'name' => 'forumImage', 'id' => 'forumImage', 'class' => 'form-control', 'accept' => 'image/jpeg,image/png,image/gif')); ?>
                 </div>
             <?php } ?>

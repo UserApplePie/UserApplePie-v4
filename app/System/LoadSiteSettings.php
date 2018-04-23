@@ -98,6 +98,13 @@ class LoadSiteSettings {
          *****************/
         // Account needs email activation, false=no true=yes
         define("ACCOUNT_ACTIVATION", $this->model->getSettings('site_user_activation'));
+        /*****************
+         *                *
+         *     Theme      *
+         *                *
+         *****************/
+        // Get them from settings
+        define("SITE_THEME", $this->model->getSettings('site_theme'));
     }
 
 }

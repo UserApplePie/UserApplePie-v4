@@ -95,12 +95,12 @@ use Core\Language,
 
                                             // Display total number of topics for this category
                                             echo "<div class='btn btn-info btn-xs' style='margin-top: 5px'>";
-                                            echo "Topics <span class='badge'>$row2->total_topics_display</span>";
+                                            echo "Topics <span class='badge badge-light'>$row2->total_topics_display</span>";
                                             echo "</div>";
 
                                             // Display total number of topic replys for this category
                                             echo "<div class='btn btn-info btn-xs' style='margin-top: 3px'>";
-                                            echo "Replies <span class='badge'>$row2->total_topic_replys_display</span>";
+                                            echo "Replies <span class='badge badge-light'>$row2->total_topic_replys_display</span>";
                                             echo "</div>";
 
         								        echo "</div>";
@@ -111,12 +111,12 @@ use Core\Language,
         								echo "<div class='media-right d-none d-sm-block' style='text-align: right'>";
                                             // Display total number of topics for this category
                                             echo "<div class='btn btn-info btn-xs' style='margin-top: 5px'>";
-                                            echo "Topics <span class='badge'>$row2->total_topics_display</span>";
+                                            echo "Topics <span class='badge badge-light'>$row2->total_topics_display</span>";
                                             echo "</div>";
                                             echo "<br>";
                                             // Display total number of topic replys for this category
                                             echo "<div class='btn btn-info btn-xs' style='margin-top: 3px'>";
-                                            echo "Replies <span class='badge'>$row2->total_topic_replys_display</span>";
+                                            echo "Replies <span class='badge badge-light'>$row2->total_topic_replys_display</span>";
                                             echo "</div>";
         								echo "</div>";
         						echo "</div>";
