@@ -32,7 +32,7 @@ use Libs\Assets,
         <link rel='shortcut icon' href='<?=Url::templatePath()?>images/favicon.ico'>
         <?=Assets::css([
             'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
-            'https://bootswatch.com/4/cerulean/bootstrap.css',
+            'https://bootswatch.com/4/'.SITE_THEME.'/bootstrap.css',
             'https://bootswatch.com/_assets/css/custom.min.css',
             'https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css',
             SITE_URL.'Templates/Default/Assets/css/style.css'
@@ -42,7 +42,7 @@ use Libs\Assets,
     </head>
     <body>
       <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
-        <div class="container">
+
           <img class='navbar-brand' src='<?php echo Url::templatePath(); ?>images/logo.gif'>
           <a href="<?=SITE_URL?>" class="navbar-brand"><?=SITE_TITLE?></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,12 +81,12 @@ use Libs\Assets,
                       if($notifi_count_fr >= "1" || $notifi_count >= "1"){
                           $notifi_total = $notifi_count_fr + $notifi_count;
                           if($notifi_total >= "1"){
-                          echo "<span class='badge badge-info badge-pill'>".$notifi_total."</span>";
+                          echo "<span class='badge badge-light'>".$notifi_total."</span>";
                           }
                       }
                     ?>
                     <span class='caret'></span> </a>
-                      <ul class='dropdown-menu'>
+                      <ul class='dropdown-menu dropdown-menu-right'>
                         <li>
                           <div class="navbar-login">
                             <div class="row">
@@ -124,7 +124,7 @@ use Libs\Assets,
                                   /** Check to see if there are any pending friend requests **/
                                   $new_friend_count = \Libs\CurrentUserData::getFriendRequests($currentUserData[0]->userID);
                                   if($new_friend_count >= "1"){
-                                      echo " <span class='badge badge-info badge-pill'>".$new_friend_count."</span>";
+                                      echo " <span class='badge badge-light'>".$new_friend_count."</span>";
                                   }
                               echo " </a>";
                           }
@@ -134,7 +134,7 @@ use Libs\Assets,
                               /** Check to see if there are any unread messages in inbox **/
                               $new_msg_count = \Libs\CurrentUserData::getUnreadMessages($currentUserData[0]->userID);
                               if($new_msg_count >= "1"){
-                                echo " <span class='badge badge-info badge-pill'>".$new_msg_count."</span>";
+                                echo " <span class='badge badge-light'>".$new_msg_count."</span>";
                               }
                             echo " </a>";
                           }
@@ -153,11 +153,10 @@ use Libs\Assets,
             </ul>
 
           </div>
-        </div>
       </div>
 
 
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
 
               <!-- BreadCrumbs -->

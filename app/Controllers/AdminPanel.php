@@ -149,7 +149,7 @@ class AdminPanel extends Controller{
       \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
     }
 
-    Load::View("AdminPanel/AdminPanel", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
+    Load::View("AdminPanel/AdminPanel", $data, "", "AdminPanel");
   }
 
     /*
@@ -196,6 +196,7 @@ class AdminPanel extends Controller{
                     $site_email_site = Request::post('site_email_site');
                     $site_recapcha_public = Request::post('site_recapcha_public');
                     $site_recapcha_private = Request::post('site_recapcha_private');
+                    $site_theme = Request::post('site_theme');
 
                     if($this->model->updateSetting('site_title', $site_title)){}else{ $errors[] = 'Site Title Error'; }
                     if($this->model->updateSetting('site_description', $site_description)){}else{ $errors[] = 'Site Description Error'; }
@@ -210,6 +211,7 @@ class AdminPanel extends Controller{
                     if($this->model->updateSetting('site_email_site', $site_email_site)){}else{ $errors[] = 'Site Email Error'; }
                     if($this->model->updateSetting('site_recapcha_public', $site_recapcha_public)){}else{ $errors[] = 'Site reCAPCHA Public Error'; }
                     if($this->model->updateSetting('site_recapcha_private', $site_recapcha_private)){}else{ $errors[] = 'Site reCAPCHA Private Error'; }
+                    if($this->model->updateSetting('site_theme', $site_theme)){}else{ $errors[] = 'Site Theme Error'; }
 
                     // Run the update profile script
                     if(count($errors) == 0){
@@ -252,6 +254,7 @@ class AdminPanel extends Controller{
         $data['site_email_site'] = $this->model->getSettings('site_email_site');
         $data['site_recapcha_public'] = $this->model->getSettings('site_recapcha_public');
         $data['site_recapcha_private'] = $this->model->getSettings('site_recapcha_private');
+        $data['site_theme'] = $this->model->getSettings('site_theme');
 
         /* Setup Token for Form */
         $data['csrfToken'] = Csrf::makeToken('settings');
@@ -262,7 +265,7 @@ class AdminPanel extends Controller{
           <li class='breadcrumb-item active'><i class='fa fa-fw fa-dashboard'></i> ".$data['title']."</li>
         ";
 
-        Load::View("AdminPanel/Settings", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
+        Load::View("AdminPanel/Settings", $data, "", "AdminPanel");
     }
 
 
@@ -307,7 +310,7 @@ class AdminPanel extends Controller{
       \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
     }
 
-    Load::View("AdminPanel/Users", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
+    Load::View("AdminPanel/Users", $data, "", "AdminPanel");
   }
 
   public function User($id){
@@ -467,7 +470,7 @@ class AdminPanel extends Controller{
       \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
     }
 
-    Load::View("AdminPanel/User", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
+    Load::View("AdminPanel/User", $data, "", "AdminPanel");
   }
 
   // Setup Groups Page
@@ -529,7 +532,7 @@ class AdminPanel extends Controller{
       \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
     }
 
-    Load::View("AdminPanel/Groups", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
+    Load::View("AdminPanel/Groups", $data, "", "AdminPanel");
   }
 
   // Setup Group Page
@@ -643,7 +646,7 @@ class AdminPanel extends Controller{
       \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
     }
 
-    Load::View("AdminPanel/Group", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
+    Load::View("AdminPanel/Group", $data, "", "AdminPanel");
   }
 
   /**
@@ -721,7 +724,7 @@ class AdminPanel extends Controller{
       }
     }
 
-    Load::View("AdminPanel/MassEmail", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
+    Load::View("AdminPanel/MassEmail", $data, "", "AdminPanel");
   }
 
     /**
@@ -878,7 +881,7 @@ class AdminPanel extends Controller{
         $data['system_routes'] = $this->model->getAllRoutes();
 
         /** Load The View **/
-        Load::View("AdminPanel/SystemRoutes", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
+        Load::View("AdminPanel/SystemRoutes", $data, "", "AdminPanel");
 
     }
 
@@ -961,7 +964,7 @@ class AdminPanel extends Controller{
         $data['system_route'] = $this->model->getRoute($id);
 
         /** Load The View **/
-        Load::View("AdminPanel/SystemRoute", $data, "AdminPanel::AP-Sidebar::Left", "AdminPanel");
+        Load::View("AdminPanel/SystemRoute", $data, "", "AdminPanel");
 
     }
 }

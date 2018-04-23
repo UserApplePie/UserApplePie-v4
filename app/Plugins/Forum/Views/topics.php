@@ -32,7 +32,7 @@ use App\System\Language,
 				<?php
         // Setup form list table stuff
 				echo "
-					<div class='card-body d-none d-sm-block'>
+					<div class='card-body d-none d-md-block'>
 						<div class='row'>
 
 							<div class='col-md-7 col-sm-6'>
@@ -65,13 +65,71 @@ use App\System\Language,
 
           $f_p_title = stripslashes($f_p_title);
                   echo "<tr><td>";
-                  echo "<div class='row'>";
-                  echo "<div class='d-none d-sm-block'>";
-                    echo "<div class='col-md-7 col-sm-6'>";
+                  echo "<div class='d-none d-md-block'>";
+                    echo "<div class='row'>";
+                      echo "<div class='col-lg-7 col-md-6 col-sm-6'>";
+                          // Add text to blank Topic Titles
+                          if(empty($f_p_title)){ $f_p_title = "Oops! Title is Missing for this Topic."; }
+                          echo "<strong>";
+                            // Display icon that lets user know if they have read this topic or not
+                            if($has_user_read){
+                                echo "<span class='fas fa-star' aria-hidden='true'></span> ";
+                            }else{
+                                echo "<span class='far fa-star' aria-hidden='true' style='color: #DDD'></span> ";
+                            }
+                          echo "<a href='".DIR."Topic/$f_p_id/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
+                          echo "</strong>";
+                          echo "<div class='text small'>";
+                            echo " Created by <a href='".DIR."Profile/$f_p_user_id' style='font-weight: bold'>$f_p_user_name</a> - ";
+                            //Display how long ago this was posted
+                            $timestart = "$f_p_timestamp";  //Time of post
+                            echo " " . TimeDiff::dateDiff("now", "$timestart", 1) . " ago ";
+                            // Display Locked Message if Topic has been locked by admin
+                            if($f_p_status == 2){
+                              echo " <strong><font color='red'>Topic Locked</font></strong> ";
+                            }
+                          echo "</div>";
+                      echo "</div>";
 
+                      echo "<div class='col-lg-2 col-md-3 col-sm-3'>";
+                          // Display total replys
+                          // Display total topic replys
+                          echo "<div class='btn btn-info btn-xs' style='margin-bottom: 3px'>";
+                      		  echo "Replies <span class='badge badge-light'>$row2->total_topic_replys</span>";
+                      		echo "</div>";
+                          echo " ";
+                          // Display total sweets
+                          echo Sweets::getTotalSweets($f_p_id, 'Forum_Topic', 'Forum_Topic_Reply');
+                          echo " ";
+                          // Display total views
+                          echo "<div class='btn btn-info btn-xs' style='margin-top: 3px'> Views <span class='badge badge-light'>";
+                            echo PageViews::views('false', $f_p_id, 'Forum_Topic', $data['current_userID']);
+                          echo "</span></div> ";
+                          // Display total images
+                          echo "<div class='btn btn-success btn-xs' style='margin-top: 3px'> Images <span class='badge badge-light'>";
+                            echo Images::getImageCountForum('Topic', $f_p_id);
+                          echo "</span></div>";
+                      echo "</div>";
+
+                      echo "<div class='col-lg-3 col-md-3 col-sm-3' style='text-align: right'>";
+                          // Check to see if there has been a reply for this topic.  If not then don't show anything.
+                          if(isset($row2->LR_UserID)){
+                            // Display Last Reply User Name
+                            $rp_user_name2 = CurrentUserData::getUserName($row2->LR_UserID);
+                            //Display how long ago this was posted
+                            echo " Last Reply by <br> <a href='".DIR."Profile/$row2->LR_UserID' style='font-weight: bold'>$rp_user_name2</a><br> " . TimeDiff::dateDiff("now", "$row2->LR_TimeStamp", 1) . " ago ";
+                          }
+                      echo "</div>";
+                    echo "</div>";
+                  echo "</div>";
+
+                // For small devices hides extra info
+                echo "<div class='d-block d-md-none'>";
+                  echo "<div class='row'>";
+                    echo "<div class='col-xs-10'>";
                         // Add text to blank Topic Titles
                         if(empty($f_p_title)){ $f_p_title = "Oops! Title is Missing for this Topic."; }
-                        echo "<h4>";
+                        echo "<strong>";
                           // Display icon that lets user know if they have read this topic or not
                           if($has_user_read){
                               echo "<span class='fas fa-star' aria-hidden='true'></span> ";
@@ -79,7 +137,7 @@ use App\System\Language,
                               echo "<span class='far fa-star' aria-hidden='true' style='color: #DDD'></span> ";
                           }
                         echo "<a href='".DIR."Topic/$f_p_id/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
-                        echo "</h4>";
+                        echo "</strong>";
                         echo "<div class='text small'>";
                           echo " Created by <a href='".DIR."Profile/$f_p_user_id' style='font-weight: bold'>$f_p_user_name</a> - ";
                           //Display how long ago this was posted
@@ -90,91 +148,33 @@ use App\System\Language,
                             echo " <strong><font color='red'>Topic Locked</font></strong> ";
                           }
                         echo "</div>";
-
                     echo "</div>";
-                  echo "</div>";
-                  echo "<div class='d-none d-sm-block'>";
-                    echo "<div class='col-md-2 col-sm-3 col-xs-6'>";
+                    echo "<div class='col-xs-2'>
+                      <button href='#Bar${f_p_id}' class='btn btn-secondary' data-toggle='collapse'>
+                        <span class='fas fa-plus' aria-hidden='true'></span>
+                      </button>
+                    </div>";
+                    echo "<div  id='Bar${f_p_id}' class='collapse col-xs-12'>";
                       // Display total replys
                       // Display total topic replys
-                      echo "<div class='btn btn-info btn-xs' style='margin-bottom: 3px'>";
-                  		  echo "Replies <span class='badge'>$row2->total_topic_replys</span>";
-                  		echo "</div>";
-                      echo " ";
+                      echo "<div class='btn btn-info btn-xs'>";
+                        echo "Replies <span class='badge badge-light'>$row2->total_topic_replys</span>";
+                      echo "</div>";
                       // Display total sweets
                       echo Sweets::getTotalSweets($f_p_id, 'Forum_Topic', 'Forum_Topic_Reply');
-                      echo " ";
                       // Display total views
-                      echo "<div class='btn btn-info btn-xs' style='margin-top: 3px'> Views <span class='badge'>";
+                      echo "<div class='btn btn-info btn-xs'> Views <span class='badge badge-light'>";
                         echo PageViews::views('false', $f_p_id, 'Forum_Topic', $data['current_userID']);
-                      echo "</span></div> ";
-                      // Display total images
-                      echo "<div class='btn btn-success btn-xs' style='margin-top: 3px'> Images <span class='badge'>";
-                        echo Images::getImageCountForum('Topic', $f_p_id);
                       echo "</span></div>";
-                    echo "</div>";
-                    echo "<div class='col-md-3 col-sm-3 col-xs-6' style='text-align: right'>";
+
                       // Check to see if there has been a reply for this topic.  If not then don't show anything.
                       if(isset($row2->LR_UserID)){
                         // Display Last Reply User Name
                         $rp_user_name2 = CurrentUserData::getUserName($row2->LR_UserID);
                         //Display how long ago this was posted
-                        echo " Last Reply by <br> <a href='".DIR."Profile/$row2->LR_UserID' style='font-weight: bold'>$rp_user_name2</a><br> " . TimeDiff::dateDiff("now", "$row2->LR_TimeStamp", 1) . " ago ";
+                        echo "<Br> Last Reply by <a href='".DIR."Profile/$row2->LR_UserID/' style='font-weight: bold'>$rp_user_name2</a> " . TimeDiff::dateDiff("now", "$row2->LR_TimeStamp", 1) . " ago ";
                       }
                     echo "</div>";
-                  echo "</div>";
-
-                // For small devices hides extra info
-                echo "<div class='d-block d-sm-none'>";
-                  echo "<div class='col-xs-10'>";
-                      // Add text to blank Topic Titles
-                      if(empty($f_p_title)){ $f_p_title = "Oops! Title is Missing for this Topic."; }
-                      echo "<h4>";
-                        // Display icon that lets user know if they have read this topic or not
-                        if($has_user_read){
-                            echo "<span class='fas fa-star' aria-hidden='true'></span> ";
-                        }else{
-                            echo "<span class='far fa-star' aria-hidden='true' style='color: #DDD'></span> ";
-                        }
-                      echo "<a href='".DIR."Topic/$f_p_id/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
-                      echo "</h4>";
-                      echo "<div class='text small'>";
-                        echo " Created by <a href='".DIR."Profile/$f_p_user_id' style='font-weight: bold'>$f_p_user_name</a> - ";
-                        //Display how long ago this was posted
-                        $timestart = "$f_p_timestamp";  //Time of post
-                        echo " " . TimeDiff::dateDiff("now", "$timestart", 1) . " ago ";
-                        // Display Locked Message if Topic has been locked by admin
-                        if($f_p_status == 2){
-                          echo " <strong><font color='red'>Topic Locked</font></strong> ";
-                        }
-                      echo "</div>";
-                  echo "</div>";
-                  echo "<div class='col-xs-2'>
-                    <button href='#Bar${f_p_id}' class='btn btn-secondary' data-toggle='collapse'>
-                      <span class='fas fa-plus' aria-hidden='true'></span>
-                    </button>
-                  </div>";
-                  echo "<div  id='Bar${f_p_id}' class='collapse col-xs-12'>";
-                    // Display total replys
-                    // Display total topic replys
-                    echo "<div class='btn btn-info btn-xs'>";
-                      echo "Replies <span class='badge'>$row2->total_topic_replys</span>";
-                    echo "</div>";
-                    // Display total sweets
-                    echo Sweets::getTotalSweets($f_p_id, 'Forum_Topic', 'Forum_Topic_Reply');
-                    // Display total views
-                    echo "<div class='btn btn-info btn-xs'> Views <span class='badge'>";
-                      echo PageViews::views('false', $f_p_id, 'Forum_Topic', $data['current_userID']);
-                    echo "</span></div>";
-
-                    // Check to see if there has been a reply for this topic.  If not then don't show anything.
-                    if(isset($row2->LR_UserID)){
-                      // Display Last Reply User Name
-                      $rp_user_name2 = CurrentUserData::getUserName($row2->LR_UserID);
-                      //Display how long ago this was posted
-                      echo "<Br> Last Reply by <a href='".DIR."Profile/$row2->LR_UserID/' style='font-weight: bold'>$rp_user_name2</a> " . TimeDiff::dateDiff("now", "$row2->LR_TimeStamp", 1) . " ago ";
-                    }
-                  echo "</div>";
                 echo "</div>";
 
             echo "</div></td></tr>";

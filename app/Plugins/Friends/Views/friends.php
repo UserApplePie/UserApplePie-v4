@@ -23,7 +23,7 @@ function process()
   }
 </script>
 
-<div class="col-lg-8 col-md-8 col-sm-8">
+<div class="col-lg-8 col-md-8 col-sm-12">
 	<div class="card mb-3">
 		<div class="card-header h4">
 			<?=$title?>
@@ -39,10 +39,10 @@ function process()
 						$obu_icon = "";
 					}else if($data['orderby'] == "UN-DESC"){
 						$obu_value = "UN-ASC";
-						$obu_icon = "<i class='fas fa-triangle-bottom'></i>";
+						$obu_icon = "<i class='fas fa-caret-down'></i>";
 					}else if($data['orderby'] == "UN-ASC"){
 						$obu_value = "UN-DESC";
-						$obu_icon = "<i class='fas fa-triangle-top'></i>";
+						$obu_icon = "<i class='fas fa-caret-up'></i>";
 					}else{
 						$obu_value = "UN-ASC";
 						$obu_icon = "";

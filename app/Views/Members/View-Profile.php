@@ -10,7 +10,7 @@
 use Libs\Language;
 ?>
 
-    <div class="col-md-4 col-lg-4">
+    <div class="col-md-4 col-lg-4 col-md-12">
         <div class="card border-primary mb-3">
             <div class="card-header h4">
                 <?php echo $data['profile']->username; ?>

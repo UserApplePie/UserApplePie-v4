@@ -23,7 +23,7 @@
         <?php
           // Check to see if there are any unread messages in inbox
           if($data['new_messages_inbox'] >= "1"){
-            echo " <span class='badge badge-info badge-pill'>${data['new_messages_inbox']} New</span>";
+            echo " <span class='badge badge-primary'>${data['new_messages_inbox']} New</span>";
           }
         ?>
       </a></li>

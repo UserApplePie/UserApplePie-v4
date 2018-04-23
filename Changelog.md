@@ -9,8 +9,10 @@ UAP v4.0.1 to v4.2.0
 Updated Bootstrap from v3 to v4
  - Updated style sheets and java request urls
  - Updated from old style formats to new (All View and Template files updated)
+ - Added usage of FontAwesome for icons
  - Fixed bug with site version checker
  - Added French language pack (EddyBeaupre)
+ - Added Theme Change Option in Admin Settings. 
 ----------------------------------------------------------------------------------------
 
 ----------------------------------------------------------------------------------------

@@ -37,60 +37,72 @@ if(isset($cur_uap_version) || isset($cur_uap_messages_version) || isset($cur_uap
 ?>
 <div class='col-lg-12 col-md-12 col-sm-12'>
 	<div class='row'>
-		<div class="col-xs-12 col-md-6 col-lg-3">
-			<div class="panel panel-blue panel-widget ">
-				<div class="row no-padding">
-					<div class="col-sm-3 col-lg-5 widget-left">
-						<i class='fas fa-user' style='font-size:38px'></i>
-					</div>
-					<div class="col-sm-9 col-lg-7 widget-right">
-						<div class="large"><?=$activatedAccounts?></div>
-						<div class="text-muted">Site Members</div>
-					</div>
-				</div>
+		<div class="col-xs-12 col-md-6 col-lg-3 mb-3">
+			<div class="card text-white bg-primary o-hidden h-100">
+            <div class="card-body">
+              <div class="card-body-icon">
+                <i class="fa fa-fw fa-user"></i>
+              </div>
+              <div class="mr-5"><?=$activatedAccounts?></div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" href="#">
+              <span class="float-left">Site Members</span>
+              <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+              </span>
+            </a>
 			</div>
 		</div>
 
-		<div class="col-xs-12 col-md-6 col-lg-3">
-			<div class="panel panel-orange panel-widget ">
-				<div class="row no-padding">
-					<div class="col-sm-3 col-lg-5 widget-left">
-						<i class='fas fa-tower' style='font-size:38px'></i>
-					</div>
-					<div class="col-sm-9 col-lg-7 widget-right">
-						<div class="large"><?=$usergroups?></div>
-						<div class="text-muted">User Groups</div>
-					</div>
-				</div>
+		<div class="col-xs-12 col-md-6 col-lg-3 mb-3">
+			<div class="card text-white bg-warning o-hidden h-100">
+            <div class="card-body">
+              <div class="card-body-icon">
+                <i class="fa fa-fw fa-users"></i>
+              </div>
+              <div class="mr-5"><?=$usergroups?></div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" href="#">
+              <span class="float-left">User Groups</span>
+              <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+              </span>
+            </a>
 			</div>
 		</div>
 
-		<div class="col-xs-12 col-md-6 col-lg-3">
-			<div class="panel panel-teal panel-widget ">
-				<div class="row no-padding">
-					<div class="col-sm-3 col-lg-5 widget-left">
-						<i class='fas fa-user' style='font-size:38px'></i>
-					</div>
-					<div class="col-sm-9 col-lg-7 widget-right">
-						<div class="large"><?=$onlineAccounts?></div>
-						<div class="text-muted">Online Members</div>
-					</div>
-				</div>
+		<div class="col-xs-12 col-md-6 col-lg-3 mb-3">
+			<div class="card text-white bg-success o-hidden h-100">
+            <div class="card-body">
+              <div class="card-body-icon">
+                <i class="fa fa-fw fa-user"></i>
+              </div>
+              <div class="mr-5"><?=$onlineAccounts?></div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" href="#">
+              <span class="float-left">Online Members</span>
+              <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+              </span>
+            </a>
 			</div>
 		</div>
 
-		<div class="col-xs-12 col-md-6 col-lg-3">
-			<div class="panel panel-red panel-widget ">
-				<div class="row no-padding">
-					<div class="col-sm-3 col-lg-5 widget-left">
-						<i class='fas fa-road' style='font-size:38px'></i>
-					</div>
-					<div class="col-sm-9 col-lg-7 widget-right">
-						<div class="large"><?=$totalPageViews?></div>
-						<div class="text-muted">Page Views</div>
-					</div>
-				</div>
-			</div>
+		<div class="col-xs-12 col-md-6 col-lg-3 mb-3">
+			<div class="card text-white bg-danger o-hidden h-100">
+            <div class="card-body">
+              <div class="card-body-icon">
+                <i class="fa fa-fw fa-road"></i>
+              </div>
+              <div class="mr-5"><?=$totalPageViews?></div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" href="#">
+              <span class="float-left">Page Views</span>
+              <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+              </span>
+            </a>
+			</div>			
 		</div>
 	</div>
 

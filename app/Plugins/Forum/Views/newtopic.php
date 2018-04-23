@@ -32,14 +32,18 @@ use Core\Language,
             <?php echo Form::open(array('method' => 'post', 'files' => '')); ?>
 
             <!-- Topic Title -->
-            <div class='form-group' style='margin-bottom: 25px'>
-              <span class='input-group-addon'><i class='fas fa-book'></i> </span>
+            <div class='input-group' style='margin-bottom: 25px'>
+              <div class="input-group-prepend">
+                <span class='input-group-text'><i class='fas fa-book'></i> </span>
+              </div>
               <?php echo Form::input(array('type' => 'text', 'name' => 'forum_title', 'class' => 'form-control', 'value' => $data['forum_title'], 'placeholder' => 'Topic Title', 'maxlength' => '100')); ?>
             </div>
 
             <!-- Topic Content -->
-            <div class='form-group' style='margin-bottom: 25px'>
-              <span class='input-group-addon'><i class='fas fa-pencil'></i> </span>
+            <div class='input-group' style='margin-bottom: 25px'>
+              <div class="input-group-prepend">
+                <span class='input-group-text'><i class='fas fa-alt-pencil'></i> </span>
+              </div>
               <?php echo Form::textBox(array('type' => 'text', 'name' => 'forum_content', 'class' => 'form-control', 'value' => $data['forum_content'], 'placeholder' => 'Topic Content', 'rows' => '6')); ?>
             </div>
 
@@ -48,8 +52,10 @@ use Core\Language,
               if($data['is_new_user'] != true){
              ?>
                 <!-- Image Upload -->
-                <div class='form-group' style='margin-bottom: 25px'>
-                  <span class='input-group-addon'><i class='fas fa-picture'></i> </span>
+                <div class='input-group' style='margin-bottom: 25px'>
+                  <div class="input-group-prepend">
+                    <span class='input-group-text'><i class='fas fa-image'></i> </span>
+                  </div>
                   <?php echo Form::input(array('type' => 'file', 'name' => 'forumImage', 'id' => 'forumImage', 'class' => 'form-control', 'accept' => 'image/jpeg,image/png,image/gif')); ?>
                 </div>
             <?php } ?>
