@@ -14,7 +14,7 @@ define('PUBLICDIR', realpath(__DIR__).'/');
 define('ROOTDIR', realpath(__DIR__.'/../').'/');
 
 /** Define Current Version of UAP **/
-define('UAPVersion', '4.0.0');
+define('UAPVersion', '4.2.0');
 
 /* load Composer Autoloader */
 if (file_exists(ROOTDIR.'vendor/autoload.php')) {
