@@ -489,7 +489,7 @@ class AdminPanel extends Controller{
     // Setup Breadcrumbs
     $data['breadcrumbs'] = "
       <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
-      <li class='breadcrumb-item active'><i class='fa fa-fw fa-user'></i>".$data['title']."</li>
+      <li class='breadcrumb-item active'><i class='fa fa-fw fa-group'></i> ".$data['title']."</li>
     ";
 
     // Check to make sure admin is trying to create group
@@ -628,8 +628,8 @@ class AdminPanel extends Controller{
     // Setup Breadcrumbs
     $data['breadcrumbs'] = "
       <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
-      <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Groups'><i class='fa fa-fw fa-user'></i> Groups </a></li>
-      <li class='breadcrumb-item active'><i class='fa fa-fw fa-user'></i>Group - ".$data['g_groupName']."</li>
+      <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Groups'><i class='fa fa-fw fa-group'></i> Groups </a></li>
+      <li class='breadcrumb-item active'><i class='fa fa-fw fa-group'></i> Group - ".$data['g_groupName']."</li>
     ";
 
     /** Check to see if user is logged in **/

@@ -28,8 +28,10 @@ use Libs\Form,
         <?php echo Form::open(array('method' => 'post')); ?>
 
         <!-- Enable / Disable Forum -->
-				<div class='form-group'>
-					<span class='input-group-addon'><i class='glyphicon glyphicon'></i> Forum ON/OFF</span>
+				<div class='input-group mb-3'>
+          <div class='input-group-prepend'>
+            <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Forum ON/OFF</span>
+          </div>
 					<select class='form-control' id='forum_on_off' name='forum_on_off'>
 				    <option value='Enabled' <?php if($data['forum_on_off'] == "Enabled"){echo "SELECTED";}?> >Enabled</option>
 				    <option value='Disabled' <?php if($data['forum_on_off'] == "Disabled"){echo "SELECTED";}?> >Disabled</option>
@@ -40,8 +42,10 @@ use Libs\Form,
         </div>
 
         <!-- Forum Name -->
-        <div class='form-group'>
-          <span class='input-group-addon'><i class='glyphicon glyphicon'></i> Forum Title</span>
+        <div class='input-group mb-3'>
+          <div class='input-group-prepend'>
+            <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Forum Title</span>
+          </div>
           <?php echo Form::input(array('type' => 'text', 'name' => 'forum_title', 'class' => 'form-control', 'value' => $data['forum_title'], 'placeholder' => 'Global Forum Name/Title', 'maxlength' => '100')); ?>
         </div>
         <div style='margin-bottom: 25px'>
@@ -49,8 +53,10 @@ use Libs\Form,
         </div>
 
         <!-- Forum Description -->
-        <div class='form-group'>
-          <span class='input-group-addon'><i class='glyphicon glyphicon'></i> Forum Description</span>
+        <div class='input-group mb-3'>
+          <div class='input-group-prepend'>
+            <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Forum Description</span>
+          </div>
           <?php echo Form::textBox(array('type' => 'text', 'name' => 'forum_description', 'class' => 'form-control', 'value' => $data['forum_description'], 'placeholder' => 'Global Forum Description', 'maxlength' => '255')); ?>
         </div>
         <div style='margin-bottom: 25px'>
@@ -60,8 +66,10 @@ use Libs\Form,
         <hr>
 
         <!-- Forum Topic Limit Per Page -->
-        <div class='form-group'>
-          <span class='input-group-addon'><i class='glyphicon glyphicon'></i> Topics Per Page</span>
+        <div class='input-group mb-3'>
+          <div class='input-group-prepend'>
+            <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Topics Per Page</span>
+          </div>
           <?php echo Form::input(array('type' => 'text', 'name' => 'forum_topic_limit', 'class' => 'form-control', 'value' => $data['forum_topic_limit'], 'placeholder' => 'Topics Per Page Limit', 'maxlength' => '100')); ?>
         </div>
         <div style='margin-bottom: 25px'>
@@ -69,8 +77,10 @@ use Libs\Form,
         </div>
 
         <!-- Forum Topic Reply Limit Per Page -->
-        <div class='form-group'>
-          <span class='input-group-addon'><i class='glyphicon glyphicon'></i> Topic Replies Per Page</span>
+        <div class='input-group mb-3'>
+          <div class='input-group-prepend'>
+            <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Topic Replies Per Page</span>
+          </div>
           <?php echo Form::input(array('type' => 'text', 'name' => 'forum_topic_reply_limit', 'class' => 'form-control', 'value' => $data['forum_topic_reply_limit'], 'placeholder' => 'Topic Replies Per Page Limit', 'maxlength' => '100')); ?>
         </div>
         <div style='margin-bottom: 25px'>

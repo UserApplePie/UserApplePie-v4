@@ -27,7 +27,7 @@ use Libs\Form,
     			<!-- Site Title -->
     			<div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
-    				  <span class='input-group-text'><i class='fa fa-globe'></i> Site Title</span>
+    				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Site Title</span>
             </div>
     				<?php echo Form::input(array('type' => 'text', 'name' => 'site_title', 'class' => 'form-control', 'value' => $site_title, 'placeholder' => 'Site Title', 'maxlength' => '255')); ?>
     			</div>
@@ -35,7 +35,7 @@ use Libs\Form,
                 <!-- Site Description -->
                 <div class='input-group mb-3' style='margin-bottom: 25px'>
                   <div class="input-group-prepend">
-                    <span class='input-group-text'><i class='fa fa-globe'></i> Site Description</span>
+                    <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Site Description</span>
                   </div>
                     <?php echo Form::input(array('type' => 'text', 'name' => 'site_description', 'class' => 'form-control', 'value' => $site_description, 'placeholder' => 'Site Description' , 'maxlength' => '255')); ?>
                 </div>
@@ -43,7 +43,7 @@ use Libs\Form,
                 <!-- Site Keywords -->
     			<div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
-    				  <span class='input-group-text'><i class='fa fa-globe'></i> Site Keywords</span>
+    				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Site Keywords</span>
             </div>
     				<?php echo Form::input(array('type' => 'text', 'name' => 'site_keywords', 'class' => 'form-control', 'value' => $site_keywords, 'placeholder' => 'Site Keywords', 'maxlength' => '255')); ?>
     			</div>
@@ -65,11 +65,11 @@ use Libs\Form,
           Site User Account Settings.
       	  <div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
-    				  <span class='input-group-text'><i class='fa fa-globe'></i> User Account Activation</span>
+    				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> User Account Activation</span>
             </div>
             <select class='form-control' id='gender' name='site_user_activation'>
                 <option value='true' <?php if($site_user_activation == "true"){echo "SELECTED";}?> >E-Mail Activation Required</option>
-                <option value='false' <?php if($site_user_activation == "false"){echo "SELECTED";}?> >No E-Mail Activation Required</option>
+                <option value='fa fa-fw lse' <?php if($site_user_activation == "false"){echo "SELECTED";}?> >No E-Mail Activation Required</option>
             </select>
     			</div>
     		</div>
@@ -85,7 +85,7 @@ use Libs\Form,
           Site Theme provided by <a href='https://bootswatch.com/' target='_blank'>Bootswatch</a>.
       	  <div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
-    				  <span class='input-group-text'><i class='fa fa-globe'></i> Theme</span>
+    				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Theme</span>
             </div>
             <select class='form-control' id='theme' name='site_theme'>
                 <option value='default' <?php if($site_theme == "default"){echo "SELECTED";}?> >Default</option>
@@ -127,7 +127,7 @@ use Libs\Form,
                 <!-- E-Mail Username -->
     			<div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
-    				  <span class='input-group-text'><i class='fa fa-globe'></i> E-Mail Username</span>
+    				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> E-Mail Username</span>
             </div>
     				<?php echo Form::input(array('type' => 'text', 'name' => 'site_email_username', 'class' => 'form-control', 'value' => $site_email_username, 'placeholder' => 'E-Mail Username', 'maxlength' => '100')); ?>
     			</div>
@@ -135,7 +135,7 @@ use Libs\Form,
                 <!-- E-Mail Password -->
     			<div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
-    				  <span class='input-group-text'><i class='fa fa-globe'></i> E-Mail Password</span>
+    				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> E-Mail Password</span>
             </div>
     				<?php echo Form::input(array('type' => 'password', 'name' => 'site_email_password', 'class' => 'form-control', 'value' => $site_email_password, 'placeholder' => 'E-Mail Password', 'maxlength' => '100')); ?>
     			</div>
@@ -143,7 +143,7 @@ use Libs\Form,
                 <!-- E-Mail From Name -->
     			<div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
-      				<span class='input-group-text'><i class='fa fa-globe'></i> E-Mail From Name</span>
+      				<span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> E-Mail From Name</span>
             </div>
     				<?php echo Form::input(array('type' => 'text', 'name' => 'site_email_fromname', 'class' => 'form-control', 'value' => $site_email_fromname, 'placeholder' => 'E-Mail From Name', 'maxlength' => '100')); ?>
     			</div>
@@ -151,7 +151,7 @@ use Libs\Form,
                 <!-- E-Mail Host -->
                 <div class='input-group mb-3' style='margin-bottom: 25px'>
                   <div class="input-group-prepend">
-                    <span class='input-group-text'><i class='fa fa-globe'></i> E-Mail Host</span>
+                    <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> E-Mail Host</span>
                   </div>
                     <?php echo Form::input(array('type' => 'text', 'name' => 'site_email_host', 'class' => 'form-control', 'value' => $site_email_host, 'placeholder' => 'E-Mail Host Address', 'maxlength' => '100')); ?>
                 </div>
@@ -159,7 +159,7 @@ use Libs\Form,
                 <!-- E-Mail Port -->
                 <div class='input-group mb-3' style='margin-bottom: 25px'>
                   <div class="input-group-prepend">
-                    <span class='input-group-text'><i class='fa fa-globe'></i> E-Mail Host Port</span>
+                    <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> E-Mail Host Port</span>
                   </div>
                     <?php echo Form::input(array('type' => 'text', 'name' => 'site_email_port', 'class' => 'form-control', 'value' => $site_email_port, 'placeholder' => 'E-Mail Host Port', 'maxlength' => '100')); ?>
                 </div>
@@ -167,7 +167,7 @@ use Libs\Form,
                 <!-- E-Mail SMTP Auth Type -->
                 <div class='input-group mb-3' style='margin-bottom: 25px'>
                   <div class="input-group-prepend">
-                    <span class='input-group-text'><i class='fa fa-globe'></i> E-Mail SMTP Auth Type</span>
+                    <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> E-Mail SMTP Auth Type</span>
                   </div>
                     <?php echo Form::input(array('type' => 'text', 'name' => 'site_email_smtp', 'class' => 'form-control', 'value' => $site_email_smtp, 'placeholder' => 'E-Mail SMTP Auth Type', 'maxlength' => '100')); ?>
                 </div>
@@ -175,7 +175,7 @@ use Libs\Form,
                 <!-- E-Mail Site Address -->
                 <div class='input-group mb-3' style='margin-bottom: 25px'>
                   <div class="input-group-prepend">
-                    <span class='input-group-text'><i class='fa fa-globe'></i> E-Mail Site Address</span>
+                    <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> E-Mail Site Address</span>
                   </div>
                     <?php echo Form::input(array('type' => 'text', 'name' => 'site_email_site', 'class' => 'form-control', 'value' => $site_email_site, 'placeholder' => 'E-Mail Site Address', 'maxlength' => '100')); ?>
                 </div>
@@ -195,7 +195,7 @@ use Libs\Form,
                 <!-- reCAPCHA Public Key -->
     			<div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
-    				  <span class='input-group-text'><i class='fa fa-globe'></i> reCAPCHA Public Key</span>
+    				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> reCAPCHA Public Key</span>
             </div>
     				<?php echo Form::input(array('type' => 'text', 'name' => 'site_recapcha_public', 'class' => 'form-control', 'value' => $site_recapcha_public, 'placeholder' => 'reCAPCHA Public Key', 'maxlength' => '100')); ?>
     			</div>
@@ -203,7 +203,7 @@ use Libs\Form,
                 <!-- reCAPCHA Private Key -->
     			<div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
-      				<span class='input-group-text'><i class='fa fa-globe'></i> reCAPCHA Private Key</span>
+      				<span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> reCAPCHA Private Key</span>
             </div>
     				<?php echo Form::input(array('type' => 'text', 'name' => 'site_recapcha_private', 'class' => 'form-control', 'value' => $site_recapcha_private, 'placeholder' => 'reCAPCHA Private Key', 'maxlength' => '100')); ?>
     			</div>

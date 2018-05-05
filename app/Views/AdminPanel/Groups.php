@@ -48,11 +48,11 @@ $orderby = $data['orderby'];
             }
             else if($data['orderby'] == "ID-DESC"){
               $ob_value = "ID-ASC";
-              $ob_icon = "<i class='fas fa-caret-down'></i>";
+              $ob_icon = "<i class='fa fa-fw  fa-caret-down'></i>";
             }
             else if($data['orderby'] == "ID-ASC"){
               $ob_value = "ID-DESC";
-              $ob_icon = "<i class='fas fa-caret-up'></i>";
+              $ob_icon = "<i class='fa fa-fw  fa-caret-up'></i>";
             }else{
                 $ob_value = "ID-DESC";
                 $ob_icon = "";
@@ -72,11 +72,11 @@ $orderby = $data['orderby'];
             }
             else if($data['orderby'] == "UN-DESC"){
               $obu_value = "UN-ASC";
-              $obu_icon = "<i class='fas fa-caret-down'></i>";
+              $obu_icon = "<i class='fa fa-fw  fa-caret-down'></i>";
             }
             else if($data['orderby'] == "UN-ASC"){
               $obu_value = "UN-DESC";
-              $obu_icon = "<i class='fas fa-caret-up'></i>";
+              $obu_icon = "<i class='fa fa-fw  fa-caret-up'></i>";
             }else{
                 $obu_value = "UN-DESC";
                 $obu_icon = "";
@@ -101,7 +101,7 @@ $orderby = $data['orderby'];
 						echo "<td><button type='button' class='btn btn-secondary btn-xs' data-toggle='modal' data-target='#myModal-$row->groupID'>$group_name</button></td>";
             echo "<td><font color='$row->groupFontColor' style='font-weight: $row->groupFontWeight'>$row->groupName</font></td>";
             echo "<td align='right'>";
-            echo "<a href='".DIR."AdminPanel-Group/$row->groupID' class='btn btn-xs btn-primary'><span class='fas fa-pencil'></span></a>";
+            echo "<a href='".DIR."AdminPanel-Group/$row->groupID' class='btn btn-xs btn-primary'><span class='fa fa-fw  fa-pencil'></span></a>";
             echo "</td>";
 						echo "</tr>";
             echo "
@@ -111,7 +111,7 @@ $orderby = $data['orderby'];
                   <div class='modal-content'>
                     <div class='modal-header'>
                       <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-                      <h4 class='modal-title' id='myModalLabel'><span class='fas fa-tower'></span> ".$row->groupName." Information</h4>
+                      <h4 class='modal-title' id='myModalLabel'><span class='fa fa-fw  fa-tower'></span> ".$row->groupName." Information</h4>
                     </div>
                     <div class='modal-body'>
                       <b style='border-bottom: 1px solid #ccc'>Group Name Display:</b><br>

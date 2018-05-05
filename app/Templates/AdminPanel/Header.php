@@ -91,13 +91,13 @@ use Libs\ErrorMessages,
           </a>
           <ul class="sidenav-second-level collapse" id="collapseForum">
             <li>
-              <a href="AdminPanel-Forum-Settings">Settings</a>
+              <a href="<?php echo DIR; ?>AdminPanel-Forum-Settings">Settings</a>
             </li>
             <li>
-              <a href="AdminPanel-Forum-Categories">Categories</a>
+              <a href="<?php echo DIR; ?>AdminPanel-Forum-Categories">Categories</a>
             </li>
 						<li>
-							<a href="AdminPanel-Forum-Blocked-Content">Blocked Content</a>
+							<a href="<?php echo DIR; ?>AdminPanel-Forum-Blocked-Content">Blocked Content</a>
 						</li>
           </ul>
         </li>

@@ -26,26 +26,34 @@ use Libs\Form,
 			<?php echo Form::open(array('method' => 'post')); ?>
 
 			<!-- Group Name -->
-			<div class='form-group' style='margin-bottom: 25px'>
-				<span class='input-group-addon'><i class='fas fa-tower'></i> Group Name</span>
+			<div class='input-group mb-3' style='margin-bottom: 25px'>
+        <div class="input-group-prepend">
+				  <span class='input-group-text'><i class='fa fa-fw fa-group'></i> Group Name</span>
+        </div>
 				<?php echo Form::input(array('type' => 'text', 'name' => 'ag_groupName', 'class' => 'form-control', 'value' => $data['g_groupName'], 'placeholder' => 'Group Name', 'maxlength' => '150')); ?>
 			</div>
 
 				<!-- Group Description -->
-				<div class='form-group' style='margin-bottom: 25px'>
-					<span class='input-group-addon'><i class='fas fa-book'></i> Group Description</span>
+				<div class='input-group mb-3' style='margin-bottom: 25px'>
+          <div class="input-group-prepend">
+  				  <span class='input-group-text'><i class='fa fa-fw  fa-book'></i> Group Description</span>
+          </div>
 					<?php echo Form::input(array('type' => 'text', 'name' => 'ag_groupDescription', 'class' => 'form-control', 'value' => $data['g_groupDescription'], 'placeholder' => 'Group Description', 'maxlength' => '255')); ?>
 				</div>
 
 				<!-- Group Font Color -->
-				<div class='form-group' style='margin-bottom: 25px'>
-					<span class='input-group-addon'><i class='fas fa-lamp'></i> Group Font Color</span>
+				<div class='input-group mb-3' style='margin-bottom: 25px'>
+          <div class="input-group-prepend">
+  				  <span class='input-group-text'><i class='fa fa-fw  fa-paint-brush'></i> Group Font Color</span>
+          </div>
 					<?php echo Form::input(array('type' => 'text', 'name' => 'ag_groupFontColor', 'class' => 'form-control', 'value' => $data['g_groupFontColor'], 'placeholder' => 'Font Color', 'maxlength' => '20')); ?>
 				</div>
 
         <!-- Group Font Weight -->
-				<div class='form-group' style='margin-bottom: 25px'>
-					<span class='input-group-addon'><i class='fas fa-bold'></i> Group Font Weight</span>
+				<div class='input-group mb-3' style='margin-bottom: 25px'>
+          <div class="input-group-prepend">
+  				  <span class='input-group-text'><i class='fa fa-fw  fa-bold'></i> Group Font Weight</span>
+          </div>
           <select class='form-control' id='gender' name='ag_groupFontWeight'>
             <option value='Normal' <?php if($data['g_groupFontWeight'] == "Normal"){echo "SELECTED";}?> >Normal</option>
             <option value='Bold' <?php if($data['g_groupFontWeight'] == "Bold"){echo "SELECTED";}?> >Bold</option>
