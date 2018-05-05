@@ -595,7 +595,7 @@ class Forum extends Models {
       array(':topic_id' => $topic_id));
       $count = count($data);
       if($count > 0){
-          return $data[0]->imageLocation.$data[0]->imageName;
+          return $data[0]->imageLocation;
       }
     }
 
