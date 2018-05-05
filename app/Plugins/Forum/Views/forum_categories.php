@@ -33,7 +33,7 @@ use Libs\Form,
                 echo Form::open(array('method' => 'post'));
                   echo "<div class='card border-primary mb-3'>";
                     echo "<div class='card-header h4'>";
-                      echo "<i class='fas fa-list'></i> Update Main Category Title";
+                      echo "<i class='fa fa-fw fa-list'></i> Update Main Category Title";
                     echo "</div>";
                     echo "<div class='card-body'>";
                       echo Form::input(array('type' => 'hidden', 'name' => 'prev_forum_title', 'value' => $data['data_cat_main']));
@@ -64,25 +64,25 @@ use Libs\Form,
                       echo "<div class='card-body'>";
                         echo "<div class='col-lg-6 col-md-6'>";
                           // Display total number of topics for this category
-                          echo " <div class='label label-warning' style='margin-top: 5px'>";
+                          echo " <div class='badge badge-warning' style='margin-top: 5px'>";
                           echo "Topics <span class='badge badge-light'>$row->total_topics_display</span>";
                           echo "</div> ";
                           // Display total number of topic replies for this category
-                          echo " <div class='label label-warning' style='margin-top: 5px'>";
+                          echo " <div class='badge badge-warning' style='margin-top: 5px'>";
                           echo "Replies <span class='badge badge-light'>$row->total_topic_replys_display</span>";
                           echo "</div> ";
                         echo "</div>";
                         echo "<div class='col-lg-6 col-md-6' style='text-align: right'>";
                           // Check to see if object is at top
                           if($row->forum_order_cat > 1){
-                            echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubUp/$row->forum_id/$row->forum_order_cat' class='btn btn-primary btn-xs' role='button'><span class='fas fa-caret-up' aria-hidden='true'></span></a> ";
+                            echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubUp/$row->forum_id/$row->forum_order_cat' class='btn btn-primary btn-xs' role='button'><span class='fa fa-fw fa-caret-up' aria-hidden='true'></span></a> ";
                           }
                           // Check to see if object is at bottom
                           if($data['fourm_cat_sub_last'] != $row->forum_order_cat){
-                            echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubDown/$row->forum_id/$row->forum_order_cat' class='btn btn-primary btn-xs' role='button'><span class='fas fa-caret-down' aria-hidden='true'></span></a> ";
+                            echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubDown/$row->forum_id/$row->forum_order_cat' class='btn btn-primary btn-xs' role='button'><span class='fa fa-fw fa-caret-down' aria-hidden='true'></span></a> ";
                           }
-                          echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubEdit/$row->forum_id' class='btn btn-success btn-xs' role='button'><span class='fas fa-cog' aria-hidden='true'></span> Edit</a> ";
-                          echo "<a href='".DIR."AdminPanel-Forum-Categories/DeleteSubCat/$row->forum_id' class='btn btn-danger btn-xs' role='button'><span class='fas fa-remove-circle' aria-hidden='true'></span></a> ";
+                          echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubEdit/$row->forum_id' class='btn btn-success btn-xs' role='button'><span class='fa fa-fw fa-cog' aria-hidden='true'></span> Edit</a> ";
+                          echo "<a href='".DIR."AdminPanel-Forum-Categories/DeleteSubCat/$row->forum_id' class='btn btn-danger btn-xs' role='button'><span class='fa fa-fw fa-trash' aria-hidden='true'></span></a> ";
                         echo "</div>";
                       echo "</div>";
                     echo "</div>";
@@ -95,7 +95,7 @@ use Libs\Form,
               echo Form::open(array('method' => 'post', 'action' => DIR.'AdminPanel-Forum-Categories/CatSubList/'.$row->forum_id));
                 echo "<div class='card border-info mb-3'>";
                   echo "<div class='card-header h4'>";
-                    echo "<i class='fas fa-list'></i> Create New Sub Category";
+                    echo "<i class='fa fa-fw fa-list'></i> Create New Sub Category";
                   echo "</div>";
                   echo "<div class='card-body'>";
                     echo Form::input(array('type' => 'hidden', 'name' => 'action', 'value' => 'new_cat_sub'));
@@ -118,7 +118,7 @@ use Libs\Form,
                   echo Form::open(array('method' => 'post', 'action' => DIR.'AdminPanel-Forum-Categories/CatSubEdit/'.$row->forum_id));
                     echo "<div class='card border-primary mb-3'>";
                       echo "<div class='card-header h4'>";
-                        echo "<i class='fas fa-list'></i> Edit Sub Category";
+                        echo "<i class='fa fa-fw fa-list'></i> Edit Sub Category";
                       echo "</div>";
                       echo "<div class='card-body'>";
                         echo Form::input(array('type' => 'hidden', 'name' => 'action', 'value' => 'edit_cat_sub'));
@@ -202,30 +202,30 @@ use Libs\Form,
                     echo "<div class='card-body'>";
                       echo "<div class='col-lg-6 col-md-6' style='text-align: left; margin-bottom: 2px'>";
                         // Display total number of sub cats for this category
-                        echo " <div class='label label-warning' style='margin-top: 5px'>";
+                        echo " <div class='badge badge-warning' style='margin-top: 5px'>";
                         echo "Sub Cats <span class='badge badge-light'>$row->total_sub_cats</span>";
                         echo "</div> ";
                         // Display total number of topics for this category
-                        echo " <div class='label label-warning' style='margin-top: 5px'>";
+                        echo " <div class='badge badge-warning' style='margin-top: 5px'>";
                         echo "Topics <span class='badge badge-light'>$row->total_topics_display</span>";
                         echo "</div> ";
                         // Display total number of topic replies for this category
-                        echo " <div class='label label-warning' style='margin-top: 5px'>";
+                        echo " <div class='badge badge-warning' style='margin-top: 5px'>";
                         echo "Replies <span class='badge badge-light'>$row->total_topic_replys_display</span>";
                         echo "</div> ";
                       echo "</div>";
                       echo "<div class='col-lg-6 col-md-6' style='text-align: right; margin-bottom: 2px'>";
                         // Check to see if object is at top
                         if($row->forum_order_title > 1){
-                          echo "<a href='".DIR."AdminPanel-Forum-Categories/CatMainUp/$row->forum_order_title' class='btn btn-primary btn-xs' role='button'><span class='fas fa-caret-up' aria-hidden='true'></span></a> ";
+                          echo "<a href='".DIR."AdminPanel-Forum-Categories/CatMainUp/$row->forum_order_title' class='btn btn-primary btn-xs' role='button'><span class='fa fa-fw fa-caret-up' aria-hidden='true'></span></a> ";
                         }
                         // Check to see if object is at bottom
                         if($data['fourm_cat_main_last'] != $row->forum_order_title){
-                          echo "<a href='".DIR."AdminPanel-Forum-Categories/CatMainDown/$row->forum_order_title' class='btn btn-primary btn-xs' role='button'><span class='fas fa-caret-down' aria-hidden='true'></span></a> ";
+                          echo "<a href='".DIR."AdminPanel-Forum-Categories/CatMainDown/$row->forum_order_title' class='btn btn-primary btn-xs' role='button'><span class='fa fa-fw fa-caret-down' aria-hidden='true'></span></a> ";
                         }
-                        echo "<a href='".DIR."AdminPanel-Forum-Categories/CatMainEdit/$row->forum_id' class='btn btn-success btn-xs' role='button'><span class='fas fa-cog' aria-hidden='true'></span> Edit</a> ";
-                        echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubList/$row->forum_id' class='btn btn-info btn-xs' role='button'><span class='fas fa-list' aria-hidden='true'></span> Sub Categories</a> ";
-                        echo "<a href='".DIR."AdminPanel-Forum-Categories/DeleteMainCat/$row->forum_id' class='btn btn-danger btn-xs' role='button'><span class='fas fa-remove-circle' aria-hidden='true'></span></a> ";
+                        echo "<a href='".DIR."AdminPanel-Forum-Categories/CatMainEdit/$row->forum_id' class='btn btn-success btn-xs' role='button'><span class='fa fa-fw fa-cog' aria-hidden='true'></span> Edit</a> ";
+                        echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubList/$row->forum_id' class='btn btn-info btn-xs' role='button'><span class='fa fa-fw fa-list' aria-hidden='true'></span> Sub Categories</a> ";
+                        echo "<a href='".DIR."AdminPanel-Forum-Categories/DeleteMainCat/$row->forum_id' class='btn btn-danger btn-xs' role='button'><span class='fa fa-fw fa-trash' aria-hidden='true'></span></a> ";
                       echo "</div>";
                     echo "</div>";
                   echo "</div>";
@@ -235,7 +235,7 @@ use Libs\Form,
               echo Form::open(array('method' => 'post', 'action' => DIR.'AdminPanel-Forum-Categories/CatMainNew/1'));
                 echo "<div class='card mb-3'>";
                   echo "<div class='card-header h4'>";
-                    echo "<i class='fas fa-list'></i> New Main Category Title";
+                    echo "<i class='fa fa-fw fa-list'></i> New Main Category Title";
                   echo "</div>";
                   echo "<div class='card-body'>";
                     echo Form::input(array('type' => 'hidden', 'name' => 'action', 'value' => 'new_cat_main_title'));
@@ -249,7 +249,7 @@ use Libs\Form,
               echo Form::close();
             }// End of action check
 
-            
+
 
       ?>
 </div>

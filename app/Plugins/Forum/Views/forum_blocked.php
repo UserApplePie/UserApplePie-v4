@@ -28,7 +28,7 @@ use Libs\Form,
       <?php
         // Display List of blocked topics
         if(isset($data['blocked_topics'])){
-          echo "<div class='card card-danger'>";
+          echo "<div class='card border-danger mb-3'>";
             echo "<div class='card-header h4'>";
               echo "Blocked Forum Topics List";
             echo "</div>";
@@ -64,7 +64,7 @@ use Libs\Form,
 
         // Display List of blocked topics
         if(isset($data['blocked_replies'])){
-          echo "<div class='card card-danger'>";
+          echo "<div class='card border-danger mb-3'>";
             echo "<div class='card-header h4'>";
               echo "Blocked Forum Replies List";
             echo "</div>";

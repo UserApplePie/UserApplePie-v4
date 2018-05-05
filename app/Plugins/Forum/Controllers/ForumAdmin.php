@@ -217,7 +217,7 @@ class ForumAdmin extends Controller{
     // Setup Breadcrumbs
     $data['breadcrumbs'] = "
       <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
-      <li class='breadcrumb-item active'><i class='fas fa-cog'></i> ".$data['title']."</li>
+      <li class='breadcrumb-item active'><i class='fa fa-fw fa-cog'></i> ".$data['title']."</li>
     ";
 
     Load::ViewPlugin("forum_settings", $data, "", "Forum", "AdminPanel");
@@ -283,9 +283,9 @@ class ForumAdmin extends Controller{
 
           // Setup Breadcrumbs
           $data['breadcrumbs'] = "
-            <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fas fa-cog'></i> Admin Panel</a></li>
-            <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories'><i class='fas fa-list'></i> ".$data['title']."</a></li>
-            <li class='breadcrumb-item active'><i class='fas fa-pencil'></i> Edit Main Category</li>
+            <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+            <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories'><i class='fa fa-fw fa-list'></i> ".$data['title']."</a></li>
+            <li class='breadcrumb-item active'><i class='fa fa-fw fa-pencil'></i> Edit Main Category</li>
           ";
         }
       }else if($action == "CatMainUp"){
@@ -370,9 +370,9 @@ class ForumAdmin extends Controller{
 
           // Setup Breadcrumbs
           $data['breadcrumbs'] = "
-            <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fas fa-cog'></i> Admin Panel</a></li>
-            <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories'><i class='fas fa-list'></i> ".$data['title']."</a></li>
-            <li class='breadcrumb-item active'><i class='fas fa-pencil'></i> Sub Categories List</li>
+            <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+            <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories'><i class='fa fa-fw fa-list'></i> ".$data['title']."</a></li>
+            <li class='breadcrumb-item active'><i class='fa fa-fw fa-pencil'></i> Sub Categories List</li>
           ";
         }
       }else if($action == "CatSubEdit"){
@@ -404,10 +404,10 @@ class ForumAdmin extends Controller{
 
           // Setup Breadcrumbs
           $data['breadcrumbs'] = "
-            <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fas fa-cog'></i> Admin Panel</a></li>
-            <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories'><i class='fas fa-list'></i> ".$data['title']."</a></li>
-            <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories/CatSubList/$id'><i class='fas fa-list'></i> Sub Categories List</a></li>
-            <li class='breadcrumb-item active'><i class='fas fa-pencil'></i> Edit Sub Category</li>
+            <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+            <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories'><i class='fa fa-fw fa-list'></i> ".$data['title']."</a></li>
+            <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories/CatSubList/$id'><i class='fa fa-fw fa-list'></i> Sub Categories List</a></li>
+            <li class='breadcrumb-item active'><i class='fa fa-fw fa-pencil'></i> Edit Sub Category</li>
           ";
         }
       }else if($action == "DeleteSubCat"){
@@ -484,10 +484,10 @@ class ForumAdmin extends Controller{
 
           // Setup Breadcrumbs
           $data['breadcrumbs'] = "
-            <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fas fa-cog'></i> Admin Panel</a></li>
-            <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories'><i class='fas fa-list'></i> ".$data['title']."</a></li>
-            <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories/CatSubList/".$id."'><i class='fas fa-list'></i> Sub Categories List</a></li>
-            <li class='breadcrumb-item active'><i class='fas fa-pencil'></i> Delete Sub Category</li>
+            <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+            <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories'><i class='fa fa-fw fa-list'></i> ".$data['title']."</a></li>
+            <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories/CatSubList/".$id."'><i class='fa fa-fw fa-list'></i> Sub Categories List</a></li>
+            <li class='breadcrumb-item active'><i class='fa fa-fw fa-pencil'></i> Delete Sub Category</li>
           ";
         }
       }else if($action == "CatSubUp"){
@@ -586,9 +586,9 @@ class ForumAdmin extends Controller{
 
           // Setup Breadcrumbs
           $data['breadcrumbs'] = "
-            <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fas fa-cog'></i> Admin Panel</a></li>
-            <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories'><i class='fas fa-list'></i> ".$data['title']."</a></li>
-            <li class='breadcrumb-item active'><i class='fas fa-pencil'></i> Delete Main Category</li>
+            <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+            <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories'><i class='fa fa-fw fa-list'></i> ".$data['title']."</a></li>
+            <li class='breadcrumb-item active'><i class='fa fa-fw fa-pencil'></i> Delete Main Category</li>
           ";
         }
       }
@@ -601,8 +601,8 @@ class ForumAdmin extends Controller{
 
       // Setup Breadcrumbs
       $data['breadcrumbs'] = "
-        <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fas fa-cog'></i> Admin Panel</a></li>
-        <li class='breadcrumb-item active'><i class='fas fa-list'></i> ".$data['title']."</li>
+        <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+        <li class='breadcrumb-item active'><i class='fa fa-fw fa-list'></i> ".$data['title']."</li>
       ";
     }
 
@@ -650,8 +650,8 @@ class ForumAdmin extends Controller{
 
     // Setup Breadcrumbs
     $data['breadcrumbs'] = "
-      <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fas fa-cog'></i> Admin Panel</a></li>
-      <li class='breadcrumb-item active'><i class='fas fa-remove-sign'></i> ".$data['title']."</li>
+      <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+      <li class='breadcrumb-item active'><i class='fa fa-fw fa-ban'></i> ".$data['title']."</li>
     ";
 
     Load::ViewPlugin("forum_blocked", $data, "", "Forum", "AdminPanel");

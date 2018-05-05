@@ -21,14 +21,14 @@ use Libs\Form;
 			<?php echo Form::open(array('method' => 'post')); ?>
 
       <!-- Subject -->
-      <div class='form-group' style='margin-bottom: 25px'>
-        <span class='input-group-addon'><i class='fas fa-book'></i> </span>
+      <div class='input-group mb-3' style='margin-bottom: 25px'>
+        <span class='input-group-addon'><i class='fa fa-fw s fa-book'></i> </span>
         <?php echo Form::input(array('type' => 'text', 'name' => 'subject', 'class' => 'form-control', 'value' => urldecode($data['subject']), 'placeholder' => 'Subject', 'maxlength' => '100')); ?>
       </div>
 
       <!-- Message Content -->
-      <div class='form-group' style='margin-bottom: 25px'>
-        <span class='input-group-addon'><i class='fas fa-pencil'></i> </span>
+      <div class='input-group mb-3' style='margin-bottom: 25px'>
+        <span class='input-group-addon'><i class='fa fa-fw s fa-pencil'></i> </span>
         <?php echo Form::textBox(array('type' => 'text', 'name' => 'content', 'class' => 'form-control', 'value' => $data['content'], 'placeholder' => 'Message Content', 'rows' => '6')); ?>
       </div>
 

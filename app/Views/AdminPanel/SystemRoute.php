@@ -26,33 +26,43 @@ use Libs\Form,
 			<?php echo Form::open(array('method' => 'post')); ?>
 
 			<!-- Controller -->
-			<div class='form-group' style='margin-bottom: 25px'>
-				<span class='input-group-addon'><i class='fas fa-tower'></i> Controller</span>
+			<div class='input-group mb-3' style='margin-bottom: 25px'>
+        <div class="input-group-prepend">
+				  <span class='input-group-text'><i class='fa fa-fw  fa-newspaper-o'></i> Controller</span>
+        </div>
 				<?php echo Form::input(array('type' => 'text', 'name' => 'controller', 'class' => 'form-control', 'value' => $data['system_route'][0]->controller, 'placeholder' => 'Controller Class Name', 'maxlength' => '255')); ?>
 			</div>
 
 			<!-- Method -->
-			<div class='form-group' style='margin-bottom: 25px'>
-				<span class='input-group-addon'><i class='fas fa-book'></i> Method</span>
+			<div class='input-group mb-3' style='margin-bottom: 25px'>
+        <div class="input-group-prepend">
+				  <span class='input-group-text'><i class='fa fa-fw  fa-book'></i> Method</span>
+        </div>
 				<?php echo Form::input(array('type' => 'text', 'name' => 'method', 'class' => 'form-control', 'value' => $data['system_route'][0]->method, 'placeholder' => 'Method Function Name', 'maxlength' => '255')); ?>
 			</div>
 
             <!-- URL -->
-			<div class='form-group' style='margin-bottom: 25px'>
-				<span class='input-group-addon'><i class='fas fa-book'></i> URL</span>
+			<div class='input-group mb-3' style='margin-bottom: 25px'>
+        <div class="input-group-prepend">
+				  <span class='input-group-text'><i class='fa fa-fw  fa-book'></i> URL</span>
+        </div>
 				<?php echo Form::input(array('type' => 'text', 'name' => 'url', 'class' => 'form-control', 'value' => $data['system_route'][0]->url, 'placeholder' => 'URL Address Name', 'maxlength' => '255')); ?>
 			</div>
 
             <!-- Arguments -->
-            <div class='form-group' style='margin-bottom: 25px'>
-                <span class='input-group-addon'><i class='fas fa-book'></i> Arguments</span>
+            <div class='input-group mb-3' style='margin-bottom: 25px'>
+              <div class="input-group-prepend">
+                <span class='input-group-text'><i class='fa fa-fw  fa-book'></i> Arguments</span>
+              </div>
                 <?php echo Form::input(array('type' => 'text', 'name' => 'arguments', 'class' => 'form-control', 'value' => $data['system_route'][0]->arguments, 'placeholder' => 'Route Arguments', 'maxlength' => '255')); ?>
             </div>
 
 
         <!-- Group Font Weight -->
-				<div class='form-group' style='margin-bottom: 25px'>
-					<span class='input-group-addon'><i class='fas fa-book'></i> Route Enabled</span>
+				<div class='input-group mb-3' style='margin-bottom: 25px'>
+          <div class="input-group-prepend">
+  				  <span class='input-group-text'><i class='fa fa-fw  fa-book'></i> Route Enabled</span>
+          </div>
           <select class='form-control' id='gender' name='enable'>
             <option value='1' <?php if($data['system_route'][0]->enable == "1"){echo "SELECTED";}?> >Enabled</option>
             <option value='0' <?php if($data['system_route'][0]->enable == "0"){echo "SELECTED";}?> >Disabled</option>
