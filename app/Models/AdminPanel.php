@@ -30,14 +30,19 @@ class AdminPanel extends Models {
 
     /* Update Site Setting Data */
   	public function updateSetting($setting_title, $setting_data){
-  		/* Update Setting Data */
-  		$query = $this->db->update(PREFIX.'settings', array('setting_data' => $setting_data), array('setting_title' => $setting_title));
-  		$count = count($query);
-  		if($count > 0){
-  			return true;
-  		}else{
-  			return false;
-  		}
+      /* Check to see if data is the same */
+      $cur_setting = SELF::getSettings($setting_title);
+      if($cur_setting == $setting_data){
+        return true;
+      }else{
+    		/* Update Setting Data */
+    		$query = $this->db->update(PREFIX.'settings', array('setting_data' => $setting_data), array('setting_title' => $setting_title));
+    		if(isset($query) && $query > 0){
+    			return true;
+    		}else{
+    			return false;
+    		}
+      }
   	}
 
 

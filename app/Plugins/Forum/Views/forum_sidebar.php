@@ -26,17 +26,6 @@ function process()
 
 <div class='col-lg-4 col-md-4 col-sm-12'>
 
-  <div class='card bg-default mb-3'><div class='card-body'><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <!-- UAP Top -->
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-6685932141124990"
-       data-ad-slot="5753057242"
-       data-ad-format="auto"></ins>
-  <script>
-  (adsbygoogle = window.adsbygoogle || []).push({});
-  </script></div></div>
-
   <div class='card mb-3'>
       <div class='card-header h4'>
           <h3>Users Status</h3>
@@ -123,16 +112,5 @@ foreach($data['forum_recent_posts'] as $row_rp)
  ?>
     </ul>
   </div>
-
-  <div class='card bg-default mb-3'><div class='card-body'><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <!-- UAP Top -->
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-6685932141124990"
-       data-ad-slot="5753057242"
-       data-ad-format="auto"></ins>
-  <script>
-  (adsbygoogle = window.adsbygoogle || []).push({});
-  </script></div></div>
 
 </div>

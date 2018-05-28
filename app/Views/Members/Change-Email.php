@@ -20,16 +20,30 @@ use Libs\Language, Libs\Form;
 			<?php echo Form::open(array('method' => 'post')); ?>
 
 				<!-- Current Password -->
-				<div class='form-group' style='width: 80%; margin-bottom: 25px'>
-					<span class='input-group-addon'><i class='fas fa-lock'></i></span>
-					<?php echo Form::input(array('type' => 'password', 'name' => 'passwordemail', 'class' => 'form-control', 'placeholder' => Language::show('current_password', 'Members'))); ?>
+				<div class='form-group'>
+					<div class='form-group'>
+						<div class='input-group mb-3'>
+							<div class='input-group-prepend'>
+								<span class='input-group-text'><i class='fas fa-lock'></i></span>
+							</div>
+							<?php echo Form::input(array('type' => 'password', 'name' => 'passwordemail', 'class' => 'form-control', 'placeholder' => Language::show('current_password', 'Members'))); ?>
+						</div>
+					</div>
 				</div>
 
 				<!-- Email -->
-				<div class='form-group' style='width: 80%; margin-bottom: 25px'>
-					<span class='input-group-addon'><i class='fas fa-envelope'></i></span>
-					<?php echo Form::input(array('id' => 'email', 'type' => 'text', 'name' => 'newemail', 'class' => 'form-control', 'placeholder' => $data['email'])); ?>
-					<span id='resultemail' class='input-group-addon'></span>
+				<div class='form-group'>
+					<div class='form-group'>
+						<div class='input-group mb-3'>
+							<div class='input-group-prepend'>
+								<span class='input-group-text'><i class='fas fa-envelope'></i></span>
+							</div>
+							<?php echo Form::input(array('id' => 'email', 'type' => 'text', 'name' => 'newemail', 'class' => 'form-control', 'placeholder' => $data['email'])); ?>
+							<div class='input-group-prepend'>
+								<span id='resultemail' class='input-group-text'></span>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<!-- Error Message Display -->

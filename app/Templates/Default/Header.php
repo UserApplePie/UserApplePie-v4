@@ -26,7 +26,7 @@ use Libs\Assets,
         <meta charset="utf-8">
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-        <title><?=SITE_TITLE?><?=(isset($pageTitle)) ? " - ".$pageTitle : "" ?></title>
+        <title><?=SITE_TITLE?><?=(isset($pageTitle)) ? " - ".$pageTitle : " - ".$title ?></title>
         <meta name="keywords" content="<?=SITE_KEYWORDS?>">
         <meta name="description" content="<?=SITE_DESCRIPTION?>">
         <link rel='shortcut icon' href='<?=Url::templatePath()?>images/favicon.ico'>
