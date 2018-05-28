@@ -351,8 +351,8 @@ class Auth {
             } elseif (strlen($username) < MIN_USERNAME_LENGTH) {
                 $this->errormsg[] = $this->language->get('register_username_short');
             } elseif (!preg_match("/^[a-zA-Z\p{Cyrillic}0-9]+$/u", $username)) {
-				$this->errormsg[] = $this->language->get('Username is Invalid');
-			}
+							$this->errormsg[] = $this->language->get('Username is Invalid');
+						}
             if (strlen($password) == 0) {
                 $this->errormsg[] = $this->language->get('register_password_empty');
             } elseif (strlen($password) > MAX_PASSWORD_LENGTH) {
@@ -373,7 +373,7 @@ class Auth {
             } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $this->errormsg[] = $this->language->get('register_email_invalid');
             }
-            if (count($this->errormsg) == 0) {
+            if (!isset($this->errormsg) || count($this->errormsg) == 0) {
                 // Input is valid
                 $query = $this->authorize->getAccountInfo($username);
                 $count = count($query);
@@ -420,7 +420,7 @@ class Auth {
 								}
 								/* Error Message Display */
 								ErrorMessages::push($this->language->get('register_error')." ".$error_data, 'Register');
-                				return false; // Return Error
+                return false; // Return Error
             }
         } else {
             // User is logged in
@@ -450,8 +450,8 @@ class Auth {
             } elseif (strlen($username) < MIN_USERNAME_LENGTH) {
                 $this->errormsg[] = $this->language->get('register_username_short');
             } elseif (!preg_match("/^[a-zA-Z\p{Cyrillic}0-9]+$/u", $username)) {
-				$this->errormsg[] = $this->language->get('Username is Invalid');
-			}
+								$this->errormsg[] = $this->language->get('Username is Invalid');
+						}
             if (strlen($password) == 0) {
                 $this->errormsg[] = $this->language->get('register_password_empty');
             } elseif (strlen($password) > MAX_PASSWORD_LENGTH) {
@@ -472,7 +472,7 @@ class Auth {
             } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $this->errormsg[] = $this->language->get('register_email_invalid');
             }
-            if (count($this->errormsg) == 0) {
+            if (!isset($this->errormsg) || count($this->errormsg) == 0) {
                 // Input is valid
                 $query = $this->authorize->getAccountInfo($username);
                 $count = count($query);
@@ -502,7 +502,7 @@ class Auth {
                         //EMAIL MESSAGE USING PHPMAILER
                         $mail = new \Libs\PhpMailer\Mail();
                         $mail->addAddress($email);
-						$mail->setFrom(SITEEMAIL, EMAIL_FROM_NAME);
+												$mail->setFrom(SITEEMAIL, EMAIL_FROM_NAME);
                         $mail->subject(SITE_TITLE. " - EMAIL VERIFICATION");
                         $body = $this->language->get('regi_email_hello')." {$username}<br/><br/>";
                         $body .= $this->language->get('regi_email_recently_registered')." ".SITE_TITLE."<br/>";
@@ -631,7 +631,7 @@ class Auth {
             $this->errormsg[] = $this->language->get('logactivity_addinfo_long');
             return false;
         }
-        if (count($this->errormsg) == 0) {
+        if (!isset($this->errormsg) || count($this->errormsg) == 0) {
             $ip = $_SERVER['REMOTE_ADDR'];
             $date = date("Y-m-d H:i:s");
             $info = array("date" => $date, "username" => $username, "action" => $action, "additionalinfo" => $additionalinfo, "ip" => $ip);
@@ -646,10 +646,9 @@ class Auth {
      * @return string $hashed_password
      */
     private function hashPass($password) {
-        // this options should be on Setup.php
+        // this options should be on Config.php
         $options = [
-            'cost' => COST,
-            'salt' => mcrypt_create_iv(HASH_LENGTH, MCRYPT_DEV_URANDOM)
+            'cost' => COST
         ];
         return \Libs\Password::make($password, PASSWORD_BCRYPT, $options);
     }
@@ -702,7 +701,7 @@ class Auth {
         } elseif ($newpass !== $verifynewpass) {
             $this->errormsg[] = $this->language->get('changepass_password_nomatch');
         }
-        if (count($this->errormsg) == 0) {
+        if (!isset($this->errormsg) || count($this->errormsg) == 0) {
             //$currpass = $this->hashPass($currpass);
             $newpass = $this->hashPass($newpass);
             $query = $this->authorize->getAccountInfo($username);
@@ -773,7 +772,7 @@ class Auth {
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->errormsg[] = $this->language->get('changeemail_email_invalid');
         }
-        if (count($this->errormsg) == 0) {
+        if (!isset($this->errormsg) || count($this->errormsg) == 0) {
             $query = $this->authorize->getAccountInfo($username);
             $count = count($query);
             if ($count == 0) {
@@ -880,7 +879,7 @@ class Auth {
                 } elseif ($newpass !== $verifynewpass) {
                     $this->errormsg[] = $this->language->get('resetpass_newpass_nomatch');
                 }
-                if (count($this->errormsg) == 0) {
+                if (!isset($this->errormsg) || count($this->errormsg) == 0) {
                     $query = $this->authorize->getAccountInfo($username);
                     $count = count($query);
                     if ($count == 0) {
@@ -995,7 +994,7 @@ class Auth {
         } elseif (strlen($password) < MIN_PASSWORD_LENGTH) {
             $this->errormsg[] = $this->language->get('deleteaccount_password_short');
         }
-        if (count($this->errormsg) == 0) {
+        if (!isset($this->errormsg) || count($this->errormsg) == 0) {
 
             $query = $this->authorize->getAccountInfo($username);
             $count = count($query);

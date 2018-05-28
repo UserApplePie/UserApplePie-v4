@@ -98,6 +98,31 @@ class Database extends \PDO {
         }
     }
     /**
+     * method for selecting records from a database
+     * @param  string $sql       sql query
+     * @param  array  $array     named params
+     * @param  object $fetchMode
+     * @param  string $class     class name
+     * @return int            returns row count
+     */
+    public function selectCount($sql, $array = array(), $fetchMode = \PDO::FETCH_OBJ, $class = '')
+    {
+        $stmt = $this->prepare($sql);
+        foreach ($array as $key => $value) {
+            if (is_int($value)) {
+                $stmt->bindValue("$key", $value, \PDO::PARAM_INT);
+            } else {
+                $stmt->bindValue("$key", $value);
+            }
+        }
+        $stmt->execute();
+        if ($fetchMode === \PDO::FETCH_CLASS) {
+            return $stmt->rowCount();
+        } else {
+            return $stmt->rowCount();
+        }
+    }
+    /**
      * insert method
      * @param  string $table table name
      * @param  array $data  array of columns and values

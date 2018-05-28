@@ -48,7 +48,7 @@ class Auth extends Controller
             $rememberMe = null !=  Request::post('rememberMe');
 
             $email = $this->auth->checkIfEmail($username);
-            $username = count($email) != 0 ? $email[0]->username : $username;
+            $username = $email && (count($email) != 0 ) ? $email[0]->username : $username;
 
             if ($this->auth->login($username, $password, $rememberMe)) {
                 $userId = $this->auth->currentSessionInfo()['uid'];
@@ -329,6 +329,9 @@ class Auth extends Controller
     			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
+        /** Get lang Code **/
+        $langeCode = \Libs\Language::setLang();
+
         /** Add JS Files requried for live checks **/
     		$data['js'] = "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>";
         $data['js'] = "<script type='text/javascript'>
@@ -337,7 +340,7 @@ class Auth extends Controller
                           password_max: '".MAX_PASSWORD_LENGTH."'
                         };
                       </script>";
-        $data['js'] .= "<script src='".Url::templatePath()."js/lang.".LANG_CODE.".js'></script>";
+        $data['js'] .= "<script src='".Url::templatePath()."js/lang.".$langeCode.".js'></script>";
     		$data['js'] .= "<script src='".Url::templatePath()."js/password_strength_match.js'></script>";
 
 
@@ -394,6 +397,9 @@ class Auth extends Controller
     			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
+        /** Get lang Code **/
+        $langeCode = \Libs\Language::setLang();
+
         /** Add JS Files requried for live checks **/
     		$data['js'] = "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>";
         $data['js'] = "<script type='text/javascript'>
@@ -402,7 +408,7 @@ class Auth extends Controller
                           email_max: '".MAX_EMAIL_LENGTH."'
                         };
                       </script>";
-        $data['js'] .= "<script src='".Url::templatePath()."js/lang.".LANG_CODE.".js'></script>";
+        $data['js'] .= "<script src='".Url::templatePath()."js/lang.".$langeCode.".js'></script>";
     		$data['js'] .= "<script src='".Url::templatePath()."js/live_email.js'></script>";
 
         Load::View('Members/Change-Email', $data, 'Members/Member-Account-Sidebar::Left');

@@ -214,7 +214,7 @@ class AdminPanel extends Controller{
                     if($this->model->updateSetting('site_theme', $site_theme)){}else{ $errors[] = 'Site Theme Error'; }
 
                     // Run the update profile script
-                    if(count($errors) == 0){
+                    if(!isset($errors) || count($errors) == 0){
                         // Success
                         \Libs\SuccessMessages::push('You Have Successfully Updated Site Settings', 'AdminPanel-Settings');
                     }else{
@@ -766,7 +766,7 @@ class AdminPanel extends Controller{
             /** Get Core Routes **/
             $core_routes = Routes::all();
             foreach ($core_routes as $cr) {
-                if($class == $cr[controller] && $method == $cr[method]){
+                if($class == $cr['controller'] && $method == $cr['method']){
                     $match[] = true;
                 }
             }
