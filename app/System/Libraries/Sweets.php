@@ -208,8 +208,7 @@ class Sweets
                 'sweet_location' => $sweet_location,
                 'sweet_owner_userid' => $sweet_owner_userid,
                 'sweet_sec_id' => $sweet_sec_id));
-      $count = count($sweet_add_data);
-      if($count > 0){
+      if($sweet_add_data > 0){
         // Success
         SuccessMessages::push('You Have Successfully Submitted a '.SWEET_BUTTON_DISPLAY, $sweet_url);
       }else{
@@ -238,8 +237,7 @@ class Sweets
                 'sweet_location' => $sweet_location,
                 'sweet_owner_userid' => $sweet_owner_userid,
                 'sweet_sec_id' => $sweet_sec_id));
-      $count = count($sweet_remove_data);
-      if($count > 0){
+      if($sweet_remove_data > 0){
         // Success
         SuccessMessages::push('You Have Successfully Deleted a '.SWEET_BUTTON_DISPLAY, $sweet_url);
       }else{

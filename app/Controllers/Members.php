@@ -265,8 +265,7 @@ class Members extends Controller
                     $onlineUsers->updateProfile($u_id, $firstName, $lastName, $gender, $website, $db_image, $aboutMe, $signature);
                     // Success Message Display
                     SuccessMessages::push($this->language->get('edit_profile_success'), 'Edit-Profile');
-                }
-                else{
+                }else{
                     // Error Message Display
                     ErrorMessages::push($this->language->get('edit_profile_error'), 'Edit-Profile');
                 }

@@ -696,8 +696,7 @@ class AdminPanel extends Controller{
         $content = Request::post('content');
         if(empty($subject)){ $errormsg[] = "Subject Field Blank!"; }
         if(empty($content)){ $errormsg[] = "Content Field Blank!"; }
-        $error_count = count($errormsg);
-        if($error_count == 0){
+        if(!isset($errormsg)){
           // Run the mass email script
           foreach ($data['get_users_massemail_allow'] as $row) {
             if($this->model->sendMassEmail($row->userID, $u_id, $subject, $content, $row->username, $row->email)){
@@ -770,8 +769,7 @@ class AdminPanel extends Controller{
                     $match[] = true;
                 }
             }
-            $match_count = count($match);
-            if($match_count > 0){
+            if(isset($match)){
                 return false;
             }else{
                 return true;
@@ -867,8 +865,7 @@ class AdminPanel extends Controller{
         }
 
         /** Check to see if any new routes were added to database **/
-        $new_routes_count = count($new_routes);
-        if($new_routes_count > 0){
+        if(isset($new_routes)){
             /** Format New Rutes for Success Message **/
             $new_routes_display = implode(" ", $new_routes);
             /** Success **/

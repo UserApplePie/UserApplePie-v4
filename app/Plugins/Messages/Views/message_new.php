@@ -2,9 +2,9 @@
 /**
 * UserApplePie v4 Messages View Plugin Message New
 *
-* UserApplePie
+* UserApplePie - Messages Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.0
+* @version 2.1.0 for UAP v.4.2.0
 */
 
 // Message New Displays form for user to create a new message to send

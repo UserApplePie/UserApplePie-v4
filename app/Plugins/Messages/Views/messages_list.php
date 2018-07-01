@@ -2,9 +2,9 @@
 /**
 * UserApplePie v4 Messages View Plugin Message List
 *
-* UserApplePie
+* UserApplePie - Messages Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.0
+* @version 2.1.0 for UAP v.4.2.0
 */
 
 // Displays a list of all message for current user
@@ -60,7 +60,7 @@ use Libs\Language,
 						}
             echo "<input type='hidden' name='token_messages' value='".$data['csrf_token']."' />";
             echo "</tr><td colspan='3'>";
-            echo "<div class='col-lg-7 col-md-7 col-sm-7 pull-left' style='font-size:12px;margin-bottom:0px;'>";
+            echo "<div class='col-lg-7 col-md-7 col-sm-7 float-left' style='font-size:12px;'>";
               // Display Quta Info
               echo "<b>Total ${data['what_box']} Messages:</b> ${data['quota_msg_ttl']} - <b>Limit:</b> ${data['quota_msg_limit']}";
               // Check to see how full the inbox or outbox is and set color of progress bar
@@ -79,8 +79,10 @@ use Libs\Language,
                       </div>
                     </div>";
             echo "</div>";
-            echo "<div class='col-lg-5 col-md-5 col-sm-5 input-group pull-right' style='margin-bottom:0px;'>";
-              echo "<span class='input-group-addon'>Actions</span>";
+            echo "<div class='col-lg-5 col-md-5 col-sm-5 input-group float-right'>";
+              echo "<div class='input-group-prepend'>";
+                echo "<span class='input-group-text'>Actions</span>";
+              echo "</div>";
               echo "<select class='form-control' id='actions' name='actions'>";
                 echo "<option>Select Action</option>";
                 // Check to see if using inbox - oubox mark as read is disabled
@@ -89,7 +91,7 @@ use Libs\Language,
                 }
                 echo "<option value='delete'>Delete</option>";
               echo "</select>";
-              echo "<span class='input-group-btn'><button class='btn btn-success' name='submit' type='submit'>GO</button></span>";
+              echo "<span class='input-group-append'><button class='btn btn-success' name='submit' type='submit'>GO</button></span>";
             echo "</div>";
             echo "</td></tr>";
             // Check to see if there is more than one page

@@ -2,9 +2,9 @@
 /**
 * UserApplePie v4 Messages View Plugin Messages Home
 *
-* UserApplePie
+* UserApplePie - Messages Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.0
+* @version 2.1.0 for UAP v.4.2.0
 */
 
 // Displays a list of all message for current user

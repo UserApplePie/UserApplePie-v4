@@ -2,9 +2,9 @@
 /**
 * UserApplePie v4 Forum Controller Plugin
 *
-* UserApplePie
+* UserApplePie - Forum Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.0
+* @version 2.1.0 for UAP v.4.2.0
 */
 
 /** Forum controller **/
@@ -265,7 +265,7 @@ use App\System\Controller,
                 $error[] = 'You Do Not Own The Content You Were Trying To Edit!';
               }
               // Check for errors before sending message
-              if(count($error) == 0){
+              if(!isset($error)){
                   // No Errors, lets submit the new topic to db
           				if($this->model->updateTopic($id, $data['forum_title'], $data['forum_content'])){
           					// Success
@@ -292,7 +292,7 @@ use App\System\Controller,
                 $error[] = 'You Do Not Own The Content You Were Trying To Edit!';
               }
               // Check for errors before sending message
-              if(count($error) == 0){
+              if(!isset($error)){
                   // No Errors, lets submit the new topic to db
           				if($this->model->updateTopicReply($data['edit_reply_id'], $data['fpr_content'])){
           					// Success
@@ -311,7 +311,7 @@ use App\System\Controller,
                 $error[] = 'Topic Reply Content Field is Blank!';
               }
               // Check for errors before sending message
-              if(count($error) == 0){
+              if(!isset($error)){
                   // No Errors, lets submit the new topic to db
           				if($this->model->sendTopicReply($u_id, $id, $topic_forum_id, $data['fpr_content'], $data['is_user_subscribed'])){
                     // Get Submitted Reply ID
@@ -493,7 +493,7 @@ use App\System\Controller,
               $error[] = 'Topic Content Field is Blank!';
             }
             // Check for errors before sending message
-            if(count($error) == 0){
+            if(!isset($error)){
                 // No Errors, lets submit the new topic to db
                 $new_topic = $this->model->sendTopic($u_id, $id, $data['forum_title'], $data['forum_content']);
         				if($new_topic){

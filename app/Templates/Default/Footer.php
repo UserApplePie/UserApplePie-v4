@@ -18,7 +18,7 @@ use Libs\Assets, Libs\Language;
                             <span class='text-muted'>
 
                                 <!-- Footer links / text -->
-                    						<?=Language::show('uap_poweredby', 'Welcome');?> <a href='http://www.userapplepie.com' title='View UserApplePie Website' ALT='UserApplePie' target='_blank'>UserApplePie v4</a>
+                    						<?=Language::show('uap_poweredby', 'Welcome');?> <a href='https://www.userapplepie.com' title='View UserApplePie Website' ALT='UserApplePie' target='_blank'>UserApplePie v4</a>
                                  |
                     						<!-- Display Copywrite stuff with auto year -->
                     						 &copy; <?php echo date("Y") ?> <?php echo SITE_TITLE;?> <?=Language::show('uap_all_rights', 'Welcome');?>.

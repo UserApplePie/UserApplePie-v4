@@ -264,7 +264,7 @@ class Members extends Models
     public function updateUPrivacy($u_id, $privacy_massemail, $privacy_pm)
     {
         $data = $this->db->update(PREFIX.'users', array('privacy_massemail' => $privacy_massemail, 'privacy_pm' => $privacy_pm), array('userID' => $u_id));
-        if(count($data) > 0){
+        if($data > 0){
           return true;
         }else{
           return false;

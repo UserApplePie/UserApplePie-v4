@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `uap4_users_online` (
 CREATE TABLE IF NOT EXISTS `uap4_sitelogs` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `membername` varchar(255) DEFAULT NULL,
-  `refer` varchar(255) DEFAULT NULL,
+  `refer` text,
   `useragent` text,
   `cfile` varchar(255) DEFAULT NULL,
   `uri` text,

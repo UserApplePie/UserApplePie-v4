@@ -2,9 +2,9 @@
 /**
 * UserApplePie v4 Friends Controller Plugin
 *
-* UserApplePie
+* UserApplePie - Friends Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.0
+* @version 2.1.0 for UAP v.4.2.0
 */
 
 namespace App\Plugins\Friends\Controllers;

@@ -1050,7 +1050,7 @@ class Auth {
             } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $auth_error[] = $this->language->get('register_email_invalid');
             }
-            if (count($auth_error) == 0) {
+            if (!isset($auth_error)) {
                 // Input is valid
                 // Check DataBase to see if email user is activated
                 $query = $this->authorize->getAccountInfoEmail($email);

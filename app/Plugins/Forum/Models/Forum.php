@@ -2,9 +2,9 @@
 /**
 * UserApplePie v4 Forum Models Plugin
 *
-* UserApplePie
+* UserApplePie - Forum Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.0
+* @version 2.1.0 for UAP v.4.2.0
 */
 
 /** Forum model **/
@@ -504,7 +504,7 @@ class Forum extends Models {
      * @return int returns forum topic reply count
      */
     public function getTotalReplys($where_id){
-      $data = $this->db->select("
+      $data = $this->db->selectCount("
         SELECT
           *
         FROM
@@ -516,7 +516,7 @@ class Forum extends Models {
         ASC
       ",
       array(':where_id' => $where_id));
-      return count($data);
+      return $data;
     }
 
     /**
@@ -538,7 +538,7 @@ class Forum extends Models {
       $query = $this->db->insert(PREFIX.'forum_posts', array('forum_id' => $forum_id, 'forum_user_id' => $forum_user_id, 'forum_title' => $forum_title, 'forum_content' => $forum_content));
       $last_insert_id = $this->db->lastInsertId('forum_post_id');
       $query_track = $this->db->insert(PREFIX.'forum_post_tracker', array('forum_post_id' => $last_insert_id));
-      $count = count($query, $query_track);
+      $count = $query + $query_track;
       // Check to make sure Topic was Created
       if($count > 0){
           // Run post count group checker
@@ -567,9 +567,8 @@ class Forum extends Models {
     public function sendNewImage($user_id, $imageName, $imageLocation, $imageSize, $forumID, $forumTopicID, $forumTopicReplyID = null){
       // Update forum images table
       $query = $this->db->insert(PREFIX.'forum_images', array('user_id' => $user_id, 'imageName' => $imageName, 'imageLocation' => $imageLocation, 'imageSize' => $imageSize, 'forumID' => $forumID, 'forumTopicID' => $forumTopicID, 'forumTopicReplyID' => $forumTopicReplyID));
-      $count = count($query);
       // Check to make sure row was inserted
-      if($count > 0){
+      if($query > 0){
         return true;
       }else{
         return false;
@@ -593,9 +592,8 @@ class Forum extends Models {
         AND forumTopicReplyID IS NULL
       ",
       array(':topic_id' => $topic_id));
-      $count = count($data);
-      if($count > 0){
-          return $data[0]->imageLocation;
+      if(isset($data)){
+          return $data[0]->imageLocation.$data[0]->imageName;
       }
     }
 
@@ -613,9 +611,8 @@ class Forum extends Models {
     public function updateTopic($id, $forum_title, $forum_content){
       // Update messages table
       $query = $this->db->update(PREFIX.'forum_posts', array('forum_title' => $forum_title, 'forum_content' => $forum_content, 'forum_edit_date' => date('Y-m-d H:i:s')), array('forum_post_id' => $id));
-      $count = count($query);
       // Check to make sure Topic was Created
-      if($count > 0){
+      if($query > 0){
         return true;
       }else{
         return false;
@@ -661,7 +658,7 @@ class Forum extends Models {
       $query = $this->db->insert(PREFIX.'forum_post_replies', array('fpr_post_id' => $fpr_post_id, 'fpr_user_id' => $fpr_user_id, 'fpr_id' => $fpr_id, 'fpr_content' => $fpr_content, 'subscribe_email' => $subscribe));
       $last_insert_id = $this->db->lastInsertId('id');
       $query_track = $this->db->insert(PREFIX.'forum_post_tracker', array('forum_post_id' => $fpr_post_id, 'forum_reply_id' => $last_insert_id));
-      $count = count($query, $query_track);
+      $count = $query + $query_track;
       // Check to make sure Topic was Created
       if($count > 0){
         // Run post count group checker
@@ -706,9 +703,8 @@ class Forum extends Models {
     public function updateTopicReply($id, $fpr_content){
       // Update messages table
       $query = $this->db->update(PREFIX.'forum_post_replies', array('fpr_content' => $fpr_content, 'fpr_edit_date' => date('Y-m-d H:i:s')), array('id' => $id));
-      $count = count($query);
       // Check to make sure Topic was Created
-      if($count > 0){
+      if($query > 0){
         return true;
       }else{
         return false;
@@ -748,9 +744,8 @@ class Forum extends Models {
     public function updateTopicLockStatus($id, $setting){
       // Update messages table
       $query = $this->db->update(PREFIX.'forum_posts', array('forum_status' => $setting), array('forum_post_id' => $id));
-      $count = count($query);
       // Check to make sure Topic was Created
-      if($count > 0){
+      if($query){
         return true;
       }else{
         return false;
@@ -773,9 +768,8 @@ class Forum extends Models {
       // Update messages table
       $current_datetime = date("Y-m-d H:i:s");
       $query = $this->db->update(PREFIX.'forum_posts', array('allow' => $setting, 'hide_userID' => $user_id, 'hide_reason' => $reason, 'hide_timestamp' => $current_datetime), array('forum_post_id' => $id));
-      $count = count($query);
       // Check to make sure Topic was Created
-      if($count > 0){
+      if($query > 0){
         return true;
       }else{
         return false;
@@ -798,9 +792,8 @@ class Forum extends Models {
       // Update messages table
       $current_datetime = date("Y-m-d H:i:s");
       $query = $this->db->update(PREFIX.'forum_post_replies', array('allow' => $setting, 'hide_userID' => $user_id, 'hide_reason' => $reason, 'hide_timestamp' => $current_datetime), array('id' => $id));
-      $count = count($query);
       // Check to make sure Topic was Created
-      if($count > 0){
+      if($query > 0){
         return true;
       }else{
         return false;
@@ -818,7 +811,7 @@ class Forum extends Models {
      * @return boolean has user posted (true/false)
      */
     public function checkUserPosted($post_id, $user_id){
-      $data = $this->db->select("
+      $data = $this->db->selectCount("
       SELECT * FROM (
   			 (
   			 SELECT *
@@ -836,8 +829,7 @@ class Forum extends Models {
   		) AS uniontable
       ",
       array(':post_id' => $post_id, ':user_id' => $user_id));
-      $count = count($data);
-      if($count > 0){
+      if($data > 0){
         return true;
       }else {
         return false;
@@ -855,7 +847,7 @@ class Forum extends Models {
      * @return boolean is user subscribed (true/false)
      */
     public function checkTopicSubscribe($post_id, $user_id){
-      $data = $this->db->select("
+      $data = $this->db->selectCount("
       SELECT * FROM (
   			 (
   			 SELECT *
@@ -875,8 +867,7 @@ class Forum extends Models {
   		) AS uniontable
       ",
       array(':post_id' => $post_id, ':user_id' => $user_id));
-      $count = count($data);
-      if($count > 0){
+      if($data > 0){
         return true;
       }else {
         return false;
@@ -898,9 +889,7 @@ class Forum extends Models {
       // Update messages table
       $query_a = $this->db->update(PREFIX.'forum_posts', array('subscribe_email' => $setting), array('forum_post_id' => $id, 'forum_user_id' => $user_id));
       $query_b = $this->db->update(PREFIX.'forum_post_replies', array('subscribe_email' => $setting), array('fpr_post_id' => $id, 'fpr_user_id' => $user_id));
-      $count_a = count($query_a);
-      $count_b = count($query_b);
-      $count = $count_a + $count_b;
+      $count = $query_a + $query_b;
       // Check to make sure Topic was Created
       if($count > 0){
         return true;
@@ -1062,9 +1051,9 @@ class Forum extends Models {
         /* Make sure there is a user id and post id */
         if(!empty($user_id) && !empty($post_id) && !empty($forum_id)){
             /* Check to see is user has a record for post_id */
-            $check_table = count($this->db->select("SELECT * FROM ".PREFIX."forum_tracker WHERE user_id=:user_id AND post_id=:post_id AND forum_id=:forum_id",array(":user_id"=>$user_id, ":post_id"=>$post_id, 'forum_id'=>$forum_id)));
+            $check_table = $this->db->selectCount("SELECT * FROM ".PREFIX."forum_tracker WHERE user_id=:user_id AND post_id=:post_id AND forum_id=:forum_id",array(":user_id"=>$user_id, ":post_id"=>$post_id, 'forum_id'=>$forum_id));
             $current_date = date("Y-m-d H:i:s");
-            if($check_table == 0){
+            if(!isset($check_table)){
                 /* No Data for user - Create new entry */
                 return $this->db->insert(PREFIX.'forum_tracker', array('user_id' => $user_id, 'post_id' => $post_id, 'forum_id' => $forum_id, 'last_visit' => $current_date));
             }else{
