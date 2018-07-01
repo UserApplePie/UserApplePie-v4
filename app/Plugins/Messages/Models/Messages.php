@@ -2,9 +2,9 @@
 /**
 * UserApplePie v4 Messages Models Plugin
 *
-* UserApplePie
+* UserApplePie - Messages Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.0
+* @version 2.1.0 for UAP v.4.2.0
 */
 
 namespace App\Plugins\Messages\Models;
@@ -148,9 +148,8 @@ class Messages extends Models {
 		$content = nl2br($content);
 		// Update messages table
 		$query = $this->db->insert(PREFIX.'messages', array('to_userID' => $to_userID, 'from_userID' => $from_userID, 'subject' => $subject, 'content' => $content));
-		$count = count($query);
 		// Check to make sure something was updated
-		if($count > 0){
+		if($query > 0){
       // Message was updated in database, now we send the to user an email notification.
       // Get to user's email from id
       $data = $this->db->select("SELECT email, username, privacy_pm FROM ".PREFIX."users WHERE userID = :userID",
@@ -186,14 +185,12 @@ class Messages extends Models {
   // Deletes selected messages from inbox where userID is owner
   public function deleteMessageInbox($u_id, $msg_id){
     // Check to make sure message is not already marked as read
-    $query = $this->db->select('SELECT * FROM '.PREFIX.'messages WHERE id = :msg_id AND to_userID = :u_id',
+    $query = $this->db->selectCount('SELECT * FROM '.PREFIX.'messages WHERE id = :msg_id AND to_userID = :u_id',
         array(':msg_id' => $msg_id, ':u_id' => $u_id));
-    $count = count($query);
-    if($count == "1")
+    if($query == "1")
     {
       $data_del = $this->db->update(PREFIX.'messages', array('to_delete' => 'true'), array('id' => $msg_id));
-      $count_del = count($data_del);
-      if($count_del > 0){
+      if($data_del > 0){
         return true;
       }else{
         return false;
@@ -206,14 +203,12 @@ class Messages extends Models {
   // Mark selected messages as read in messages database where userID is owner
   public function markReadMessageInbox($u_id, $msg_id){
     // Check to make sure message is not already marked as read
-    $query = $this->db->select('SELECT * FROM '.PREFIX.'messages WHERE id = :msg_id AND to_userID = :u_id AND date_read IS NULL',
+    $query = $this->db->selectCount('SELECT * FROM '.PREFIX.'messages WHERE id = :msg_id AND to_userID = :u_id AND date_read IS NULL',
         array(':msg_id' => $msg_id, ':u_id' => $u_id));
-    $count = count($query);
-    if($count == "1")
+    if($query == "1")
     {
       $data_del = $this->db->update(PREFIX.'messages', array('date_read' => date('Y-m-d G:i:s')), array('id' => $msg_id));
-      $count_del = count($data_del);
-      if($count_del > 0){
+      if($data_del > 0){
         return true;
       }else{
         return false;
@@ -232,8 +227,7 @@ class Messages extends Models {
     if($count == "1")
     {
       $data_del = $this->db->update(PREFIX.'messages', array('from_delete' => 'true'), array('id' => $msg_id));
-      $count_del = count($data_del);
-      if($count_del > 0){
+      if($data_del > 0){
         return true;
       }else{
         return false;

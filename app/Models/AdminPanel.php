@@ -103,8 +103,7 @@ class AdminPanel extends Models {
     $au_signature = nl2br($au_signature);
 		// Update users table
 		$query = $this->db->update(PREFIX.'users', array('username' => $au_username, 'firstName' => $au_firstName, 'lastName' => $au_lastName, 'email' => $au_email, 'gender' => $au_gender, 'userImage' => $au_userImage, 'website' => $au_website, 'aboutme' => $au_aboutme, 'signature' => $au_signature), array('userID' => $au_id));
-		$count = count($query);
-		if($count > 0){
+		if($query > 0){
 			return true;
 		}else{
 			return false;
@@ -114,9 +113,8 @@ class AdminPanel extends Models {
   // Update users isactive status
   public function activateUser($au_id){
     // Update users table isactive status
-		$query_a = $this->db->update(PREFIX.'users', array('isactive' => '1'), array('userID' => $au_id));
-		$count_a = count($query_a);
-		if($count_a > 0){
+		$query = $this->db->update(PREFIX.'users', array('isactive' => '1'), array('userID' => $au_id));
+		if($query > 0){
 			return true;
 		}else{
 			return false;
@@ -126,9 +124,8 @@ class AdminPanel extends Models {
   // Update users isactive status
   public function deactivateUser($au_id){
     // Update users table isactive status
-		$query_a = $this->db->update(PREFIX.'users', array('isactive' => '0'), array('userID' => $au_id));
-		$count_a = count($query_a);
-		if($count_a > 0){
+		$query = $this->db->update(PREFIX.'users', array('isactive' => '0'), array('userID' => $au_id));
+		if($query > 0){
 			return true;
 		}else{
 			return false;
@@ -143,13 +140,13 @@ class AdminPanel extends Models {
   * @return int count
   */
   public function getTotalUsers(){
-    $data = $this->db->select("
+    $data = $this->db->selectCount("
         SELECT
           *
         FROM
           ".PREFIX."users
         ");
-    return count($data);
+    return $data;
   }
 
   // Get list of all groups
@@ -167,7 +164,7 @@ class AdminPanel extends Models {
 
   // Check to see if user is member of group
   public function checkUserGroup($userID, $groupID){
-    $data = $this->db->select("
+    $data = $this->db->selectCount("
         SELECT
           userID,
           groupID
@@ -181,8 +178,7 @@ class AdminPanel extends Models {
           groupID DESC
         ",
         array(':userID' => $userID, ':groupID' => $groupID));
-      $count = count($data);
-      if($count > 0){
+      if($data > 0){
         return true;
       }else{
         return false;
@@ -211,7 +207,7 @@ class AdminPanel extends Models {
 
   // Check to see how many groups user is a member of
   public function checkUserGroupsCount($userID){
-    $data = $this->db->select("
+    $data = $this->db->selectCount("
         SELECT
           userID
         FROM
@@ -220,8 +216,7 @@ class AdminPanel extends Models {
           userID = :userID
         ",
         array(':userID' => $userID));
-      $count = count($data);
-      if($count <= 1){
+      if($data <= 1){
         return false;
       }else{
         return true;
@@ -231,8 +226,7 @@ class AdminPanel extends Models {
   // Remove given user from group
   public function removeFromGroup($userID, $groupID){
     $data = $this->db->delete(PREFIX.'users_groups', array('userID' => $userID, 'groupID' => $groupID));
-    $count = count($data);
-    if($count > 0){
+    if($data > 0){
       return true;
     }else{
       return false;
@@ -242,8 +236,7 @@ class AdminPanel extends Models {
   // Add given user to group
   public function addToGroup($userID, $groupID){
     $data = $this->db->insert(PREFIX.'users_groups', array('userID' => $userID, 'groupID' => $groupID));
-    $count = count($data);
-    if($count > 0){
+    if($data > 0){
       return true;
     }else{
       return false;
@@ -306,9 +299,8 @@ class AdminPanel extends Models {
 	public function updateGroup($ag_groupID, $ag_groupName, $ag_groupDescription, $ag_groupFontColor, $ag_groupFontWeight){
 		// Update groups table
 		$query = $this->db->update(PREFIX.'groups', array('groupName' => $ag_groupName, 'groupDescription' => $ag_groupDescription, 'groupFontColor' => $ag_groupFontColor, 'groupFontWeight' => $ag_groupFontWeight), array('groupID' => $ag_groupID));
-		$count = count($query);
 		// Check to make sure something was updated
-		if($count > 0){
+		if($query > 0){
 			return true;
 		}else{
 			return false;
@@ -318,8 +310,7 @@ class AdminPanel extends Models {
   // delete group
   public function deleteGroup($groupID){
     $data = $this->db->delete(PREFIX.'groups', array('groupID' => $groupID));
-    $count = count($data);
-    if($count > 0){
+    if($data > 0){
       return true;
     }else{
       return false;
@@ -338,8 +329,7 @@ class AdminPanel extends Models {
   public function createGroup($groupName){
     $data = $this->db->insert(PREFIX.'groups', array('groupName' => $groupName));
     $new_group_id = $this->db->lastInsertId('groupID');
-    $count = count($data);
-    if($count > 0){
+    if($data > 0){
       return $new_group_id;
     }else{
       return false;
@@ -400,9 +390,8 @@ class AdminPanel extends Models {
 		$content = nl2br($content);
 		// Update messages table
 		$query = $this->db->insert(PREFIX.'messages', array('to_userID' => $to_userID, 'from_userID' => $from_userID, 'subject' => $subject, 'content' => $content));
-		$count = count($query);
 		// Check to make sure something was updated
-		if($count > 0){
+		if($query > 0){
       // Message was updated in database, now we send the to user an email notification.
       // Get from user's data
       $data2 = $this->db->select("SELECT username FROM ".PREFIX."users WHERE userID = :userID",
@@ -437,7 +426,7 @@ class AdminPanel extends Models {
     * @return int count
     */
     public function checkForRoute($controller, $method){
-        $data = $this->db->select("
+        $data = $this->db->selectCount("
             SELECT
                 *
             FROM
@@ -447,8 +436,7 @@ class AdminPanel extends Models {
             AND
                 method = :method
         ", array(':controller' => $controller, ':method' => $method));
-      $count = count($data);
-      if($count > 0){
+      if($data > 0){
           return true;
       }else{
           return false;
@@ -468,8 +456,7 @@ class AdminPanel extends Models {
      */
     public function addRoute($controller, $method){
       $data = $this->db->insert(PREFIX.'routes', array('controller' => $controller, 'method' => $method, 'url' => $method));
-      $count = count($data);
-      if($count > 0){
+      if($data > 0){
         return true;
       }else{
         return false;
@@ -511,8 +498,7 @@ class AdminPanel extends Models {
                 id = :id
             LIMIT 1
         ", array(':id' => $id));
-      $count = count($data);
-      if($count > 0){
+      if(isset($data)){
           return $data;
       }else{
           return false;
@@ -528,8 +514,7 @@ class AdminPanel extends Models {
      */
   	public function updateRoute($id, $controller, $method, $url, $arguments, $enable){
   		$query = $this->db->update(PREFIX.'routes', array('controller' => $controller, 'method' => $method, 'url' => $url, 'arguments' => $arguments, 'enable' => $enable), array('id' => $id));
-  		$count = count($query);
-  		if($count > 0){
+  		if($query > 0){
   			return true;
   		}else{
   			return false;
@@ -547,8 +532,7 @@ class AdminPanel extends Models {
      */
     public function deleteRoute($id){
       $data = $this->db->delete(PREFIX.'routes', array('id' => $id));
-      $count = count($data);
-      if($count > 0){
+      if($data > 0){
         return true;
       }else{
         return false;

@@ -2,9 +2,9 @@
 /**
 * UserApplePie v4 Forum View Plugin Sidebar
 *
-* UserApplePie
+* UserApplePie - Forum Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.0
+* @version 2.1.0 for UAP v.4.2.0
 */
 
   use Libs\Language;
@@ -28,7 +28,7 @@ function process()
 
   <div class='card mb-3'>
       <div class='card-header h4'>
-          <h3>Users Status</h3>
+          <h3>Members Status</h3>
       </div>
       <ul class="list-group list-group-flush">
           <li class="list-group-item"><a href="<?php echo DIR; ?>Members">Members: <?php echo CurrentUserData::getMembers(); ?></a></li>

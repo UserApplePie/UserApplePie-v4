@@ -2,14 +2,15 @@
 /**
 * UserApplePie v4 Messages View Plugin Message Sidebar
 *
-* UserApplePie
+* UserApplePie - Friends Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.0
+* @version 2.1.0 for UAP v.4.2.0
 */
 
   // View to display message sidebar
 
   use Libs\Language;
+  use Libs\CurrentUserData;
 
 ?>
 
@@ -58,4 +59,15 @@
             </form>
         </div>
     <?php } ?>
+
+    <div class='card mb-3'>
+        <div class='card-header h4'>
+            <h3>Members Status</h3>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="<?php echo DIR; ?>Members">Members: <?php echo CurrentUserData::getMembers(); ?></a></li>
+            <li class="list-group-item"><a href="<?php echo DIR; ?>Online-Members">Members Online: <?php echo CurrentUserData::getOnlineMembers(); ?></a></li>
+        </ul>
+    </div>
+
 </div>

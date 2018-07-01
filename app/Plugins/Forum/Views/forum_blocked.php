@@ -2,9 +2,9 @@
 /**
 * UserApplePie v4 Forum View Plugin Blocked Content
 *
-* UserApplePie
+* UserApplePie - Forum Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.0
+* @version 2.1.0 for UAP v.4.2.0
 */
 
 /** Forum Categories Admin Panel View **/

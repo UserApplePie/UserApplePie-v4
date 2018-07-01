@@ -76,16 +76,27 @@ class CurrentUserData
     return count($user_groups);
   }
 
-    /**
-     * Get current user's username from database
-     */
-    public static function getUserName($where_id){
-    self::$db = Database::get();
-    	$data = self::$db->select("SELECT username FROM ".PREFIX."users WHERE userID = :userID",
-    		array(':userID' => $where_id));
-        (isset($data[0]->username)) ? $username = $data[0]->username : $username = "Guest";
-    	return $username;
-    }
+  /**
+   * Get current user's username from database
+   */
+  public static function getUserName($where_id){
+  self::$db = Database::get();
+  	$data = self::$db->select("SELECT username FROM ".PREFIX."users WHERE userID = :userID",
+  		array(':userID' => $where_id));
+      (isset($data[0]->username)) ? $username = $data[0]->username : $username = "Guest";
+  	return $username;
+  }
+
+  /**
+   * Get current user's username from database
+   */
+  public static function getUserFirstName($where_id){
+  self::$db = Database::get();
+  	$data = self::$db->select("SELECT firstName FROM ".PREFIX."users WHERE userID = :userID",
+  		array(':userID' => $where_id));
+      (isset($data[0]->firstName)) ? $firstName = $data[0]->firstName : $firstName = "";
+  	return $firstName;
+  }
 
   /**
   * Get Current User's Groups Data For Display

@@ -15,7 +15,7 @@ use Libs\Language;
 		<div class="card-header h4">
 			<h1><?=$title?></h1>
 		</div>
-    <table class="table table-striped table-hover table-bordered responsive">
+    <table class="table table-striped table-hover responsive">
 				<thead><tr><th colspan='4'><?=$welcomeMessage;?></th></tr></thead>
         <thead>
             <tr>
@@ -72,9 +72,10 @@ use Libs\Language;
             foreach($data['members'] as $member){
                 echo "<tr>
                         <td width='20px'><img src=".SITE_URL.IMG_DIR_PROFILE.$member->userImage." class='rounded' style='height: 25px'></td>
-						<td><a href='".DIR."Profile/{$member->username}'> {$member->username}</a></td>
+												<td><a href='".DIR."Profile/{$member->username}'> {$member->username}</a></td>
                         <td>{$member->firstName}</td>
-                        <td><font color='{$member->groupFontColor}' style='font-weight:{$member->groupFontWeight}'>{$member->groupName}</font></td></tr>";
+                        <td><font color='{$member->groupFontColor}' style='font-weight:{$member->groupFontWeight}'>{$member->groupName}</font></td>
+											</tr>";
             }
         ?>
         </tbody>

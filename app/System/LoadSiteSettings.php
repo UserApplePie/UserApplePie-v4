@@ -57,29 +57,37 @@ class LoadSiteSettings {
 
          /* Check to see if email settings are set */
          if($get_site_host = $this->model->getSettings('site_email_host')){
-             /**
-             * SMTP Email host
-             * Example : Google (smtp.gmail.com), Yahoo (smtp.mail.yahoo.com)
-             */
-             define('EMAIL_HOST', $this->model->getSettings('site_email_host'));
+          /**
+          * SMTP Email host
+          * Example : Google (smtp.gmail.com), Yahoo (smtp.mail.yahoo.com)
+          */
+          define('EMAIL_HOST', $this->model->getSettings('site_email_host'));
 
-             /**
-             * SMTP Email port
-             * default : 25 (https://www.arclab.com/en/kb/email/list-of-smtp-and-pop3-servers-mailserver-list.html)
-             */
-             define('EMAIL_PORT', $this->model->getSettings('site_email_port'));
+          /**
+          * SMTP Email port
+          * default : 25 (https://www.arclab.com/en/kb/email/list-of-smtp-and-pop3-servers-mailserver-list.html)
+          */
+          define('EMAIL_PORT', $this->model->getSettings('site_email_port'));
 
-             /**
-             * SMTP Email authentication
-             * default : ssl
-             * choices : ssl, tls, (leave it empty)
-             */
-             define('EMAIL_STMP_SECURE', $this->model->getSettings('site_email_smtp'));
+          /**
+          * SMTP Email authentication
+          * default : ssl
+          * choices : ssl, tls, (leave it empty)
+          */
+          define('EMAIL_STMP_SECURE', $this->model->getSettings('site_email_smtp'));
 
-             /**
-              * Optionall set a site email address.
-              */
-             define('SITEEMAIL', $this->model->getSettings('site_email_site'));
+          /**
+          * Optionall set a site email address.
+          */
+          define('SITEEMAIL', $this->model->getSettings('site_email_site'));
+        }else{
+          /**
+          * SMTP Email Set Blank if not setup in system
+          */
+          define('EMAIL_HOST', 'localhost');
+          define('EMAIL_PORT', '');
+          define('EMAIL_STMP_SECURE', '');
+          define('SITEEMAIL', '');
         }
 
         /********************

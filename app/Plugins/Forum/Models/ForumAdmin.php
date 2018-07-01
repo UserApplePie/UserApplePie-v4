@@ -2,9 +2,9 @@
 /**
 * UserApplePie v4 Forum Admin Models Plugin
 *
-* UserApplePie
+* UserApplePie - Forum Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.0
+* @version 2.1.0 for UAP v.4.2.0
 */
 
 /** Admin Panel Forum Admin Models **/
@@ -123,7 +123,7 @@ class ForumAdmin extends Models {
    * @return boolean returns true/false
    */
   public function checkGroupForum($forum_group, $groupID){
-    $data = $this->db->select("
+    $data = $this->db->selectCount("
         SELECT
           forum_group,
           groupID
@@ -137,8 +137,7 @@ class ForumAdmin extends Models {
           groupID DESC
         ",
         array(':forum_group' => $forum_group, ':groupID' => $groupID));
-      $count = count($data);
-      if($count > 0){
+      if($data > 0){
         return true;
       }else{
         return false;
@@ -160,8 +159,7 @@ class ForumAdmin extends Models {
     if($action == "add"){
       // Add Forum Group to Group
       $data = $this->db->insert(PREFIX.'forum_groups', array('forum_group' => $groupName, 'groupID' => $groupID));
-      $count = count($data);
-      if($count > 0){
+      if($data > 0){
         return true;
       }else{
         return false;
@@ -169,8 +167,7 @@ class ForumAdmin extends Models {
     }else if($action == "remove"){
       // Remove Forum Group from Group
       $data = $this->db->delete(PREFIX.'forum_groups', array('forum_group' => $groupName, 'groupID' => $groupID));
-      $count = count($data);
-      if($count > 0){
+      if($data > 0){
         return true;
       }else{
         return false;
@@ -288,9 +285,8 @@ class ForumAdmin extends Models {
   public function updateCatMainTitle($prev_forum_title,$new_forum_title){
     // Update groups table
     $query = $this->db->update(PREFIX.'forum_cat', array('forum_title' => $new_forum_title), array('forum_title' => $prev_forum_title));
-    $count = count($query);
     // Check to make sure something was updated
-    if($count > 0){
+    if($query > 0){
       return true;
     }else{
       return false;
@@ -327,9 +323,8 @@ class ForumAdmin extends Models {
             `forum_order_title`
         END
         ");
-      $count = count($query);
       // Check to make sure something was updated
-      if($count > 0){
+      if(isset($query)){
         return true;
       }else{
         return false;
@@ -367,9 +362,8 @@ class ForumAdmin extends Models {
           `forum_order_title`
       END
       ");
-    $count = count($query);
     // Check to make sure something was updated
-    if($count > 0){
+    if(isset($query)){
       return true;
     }else{
       return false;
@@ -448,8 +442,7 @@ class ForumAdmin extends Models {
     // Add 1 to last order number
     $order_num = $last_order_num + 1;
     $data = $this->db->insert(PREFIX.'forum_cat', array('forum_title' => $forum_title, 'forum_name' => $forum_name, 'forum_order_title' => $order_num));
-    $count = count($data);
-    if($count > 0){
+    if($data > 0){
       return true;
     }else{
       return false;
@@ -487,9 +480,8 @@ class ForumAdmin extends Models {
         END
         WHERE `forum_title` = '$forum_title'
         ");
-      $count = count($query);
       // Check to make sure something was updated
-      if($count > 0){
+      if(isset($query)){
         return true;
       }else{
         return false;
@@ -528,9 +520,8 @@ class ForumAdmin extends Models {
       END
       WHERE `forum_title` = '$forum_title'
       ");
-    $count = count($query);
     // Check to make sure something was updated
-    if($count > 0){
+    if(isset($query)){
       return true;
     }else{
       return false;
@@ -551,9 +542,8 @@ class ForumAdmin extends Models {
   public function updateSubCat($forum_id,$forum_cat,$forum_des){
     // Update groups table
     $query = $this->db->update(PREFIX.'forum_cat', array('forum_cat' => $forum_cat, 'forum_des' => $forum_des), array('forum_id' => $forum_id));
-    $count = count($query);
     // Check to make sure something was updated
-    if($count > 0){
+    if($query > 0){
       return true;
     }else{
       return false;
@@ -570,7 +560,7 @@ class ForumAdmin extends Models {
    * @return boolean returns true/false
    */
   public function checkSubCat($forum_title){
-    $query = $this->db->select("
+    $query = $this->db->selectCount("
         SELECT
           forum_cat
         FROM
@@ -581,9 +571,8 @@ class ForumAdmin extends Models {
           forum_cat IS NOT NULL
         ",
         array(':forum_title' => $forum_title));
-    $count = count($query);
     // Check to make sure something was updated
-    if($count > 0){
+    if($query > 0){
       return true;
     }else{
       return false;
@@ -606,8 +595,7 @@ class ForumAdmin extends Models {
     // Add 1 to last order number
     $order_num = $last_order_num + 1;
     $data = $this->db->insert(PREFIX.'forum_cat', array('forum_name' => 'forum', 'forum_title' => $forum_title, 'forum_cat' => $forum_cat, 'forum_des' => $forum_des, 'forum_order_cat' => $order_num, 'forum_order_title' => $forum_order_title));
-    $count = count($data);
-    if($count > 0){
+    if($data > 0){
       return true;
     }else{
       return false;
@@ -669,8 +657,7 @@ class ForumAdmin extends Models {
    */
   public function deleteCatForumID($forum_id){
     $data = $this->db->delete(PREFIX.'forum_cat', array('forum_id' => $forum_id), '99999999');
-    $count = count($data);
-    if($count > 0){
+    if($data > 0){
       return true;
     }else{
       return false;
@@ -688,8 +675,7 @@ class ForumAdmin extends Models {
    */
   public function deleteTopicsForumID($forum_id){
     $data = $this->db->delete(PREFIX.'forum_posts', array('forum_id' => $forum_id), '99999999');
-    $count = count($data);
-    if($count > 0){
+    if($data > 0){
       return true;
     }else{
       return false;
@@ -707,8 +693,7 @@ class ForumAdmin extends Models {
    */
   public function deleteTopicRepliesForumID($forum_id){
     $data = $this->db->delete(PREFIX.'forum_post_replies', array('fpr_id' => $forum_id), '99999999');
-    $count = count($data);
-    if($count > 0){
+    if($data > 0){
       return true;
     }else{
       return false;
@@ -727,8 +712,7 @@ class ForumAdmin extends Models {
    */
   public function updateTopicsForumID($old_id, $new_id){
     $data = $this->db->update(PREFIX.'forum_posts', array('forum_id' => $new_id), array('forum_id' => $old_id));
-    $count = count($data);
-    if($count > 0){
+    if($data > 0){
       return true;
     }else{
       return false;
@@ -747,8 +731,7 @@ class ForumAdmin extends Models {
    */
   public function updateTopicRepliesForumID($old_id, $new_id){
     $data = $this->db->update(PREFIX.'forum_post_replies', array('fpr_id' => $new_id), array('fpr_id' => $old_id));
-    $count = count($data);
-    if($count > 0){
+    if($data > 0){
       return true;
     }else{
       return false;
@@ -779,9 +762,8 @@ class ForumAdmin extends Models {
         WHERE
           `forum_title` = '$old_forum_title'
       ");
-    $count = count($query);
     // Check to make sure something was updated
-    if($count > 0){
+    if(isset($query)){
       return true;
     }else{
       return false;

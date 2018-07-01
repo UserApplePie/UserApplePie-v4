@@ -2,9 +2,9 @@
 /**
 * UserApplePie v4 Friends View Plugin Friends Display
 *
-* UserApplePie
+* UserApplePie - Friends Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.0
+* @version 2.1.0 for UAP v.4.2.0
 */
 
 use Libs\Language,
@@ -28,7 +28,7 @@ function process()
 		<div class="card-header h4">
 			<?=$title?>
 		</div>
-    <table class="table table-striped table-hover table-bordered responsive">
+    <table class="table table-striped table-hover responsive">
 				<thead><tr><th colspan='4'><?=$welcomeMessage;?></th></tr></thead>
         <thead>
             <tr>
@@ -56,11 +56,11 @@ function process()
 					echo "<a href='".DIR."Friends/$obu_value/".$data['current_page_num'].$search_url."' class=''>".Language::show('friends_username', 'Friends')." $obu_icon</button>";
 					?>
 				</th>
+        <th><?=Language::show('members_firstname', 'Members'); ?></th>
+        <th></th>
             </tr>
         </thead>
-    </table>
-    <div class='card-body'>
-        <div class='row'>
+        <tbody>
 
                 <?php
                     foreach ($friends_list as $var) {
@@ -73,24 +73,19 @@ function process()
                         /** Check to make sure there is a friend id **/
                         if(isset($friend_id)){
                             $member_username = CurrentUserData::getUserName($friend_id);
+                            $member_firstName = CurrentUserData::getUserFirstName($friend_id);
                             $member_userImage = CurrentUserData::getUserImage($friend_id);
-                            echo "<div class='col-sm-6 col-md-4'>
-                                    <div class='thumbnail' align='center'>
-                                        <img src=".SITE_URL.IMG_DIR_PROFILE.$member_userImage." class='rounded img-fluid'>
-                                        <div class='caption'>
-                                            <h4>{$member_username}</h4>
-                                            <p>
-                                                <a href='".SITE_URL."Profile/{$member_username}' class='btn btn-sm btn-primary'>View Profile</a>
-                                                <a href='".SITE_URL."UnFriend/{$member_username}' class='btn btn-sm btn-secondary'>UnFriend</a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>";
+                            echo "<tr>
+                                    <td width='20px'><img src=".SITE_URL.IMG_DIR_PROFILE.$member_userImage." class='rounded' style='height: 25px'></td>
+                                    <td><a href='".DIR."Profile/{$member_username}'> {$member_username}</a></td>
+                                    <td>{$member_firstName}</td>
+                                    <td><div class='float-right'><a href='".SITE_URL."Profile/{$member_username}' class='btn btn-sm btn-primary'>View Profile</a> <a href='".SITE_URL."UnFriend/{$member_username}' class='btn btn-sm btn-secondary'>UnFriend</a></div></td>
+                                  </tr>";
                         }
                     }
                 ?>
-        </div>
-    </div>
+        </tbody>
+    </table>
 
 		<?php
 			/** Check to see if there is more than one page **/

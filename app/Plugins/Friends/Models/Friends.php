@@ -2,9 +2,9 @@
 /**
 * UserApplePie v4 Friends Models Plugin
 *
-* UserApplePie
+* UserApplePie - Friends Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.0
+* @version 2.1.0 for UAP v.4.2.0
 */
 
 /** Friends model **/
@@ -217,8 +217,8 @@ class Friends extends Models {
     * @return booleen returns true/false
     */
     public function unfriend($userID, $friend_id){
-        $data_a = count($this->db->delete(PREFIX.'friends', array('uid1' => $userID, 'uid2' => $friend_id)));
-        $data_b = count($this->db->delete(PREFIX.'friends', array('uid2' => $userID, 'uid1' => $friend_id)));
+        $data_a = $this->db->delete(PREFIX.'friends', array('uid1' => $userID, 'uid2' => $friend_id));
+        $data_b = $this->db->delete(PREFIX.'friends', array('uid2' => $userID, 'uid1' => $friend_id));
         $count = $data_a + $data_b;
         if($count > 0){
           return true;
@@ -262,8 +262,7 @@ class Friends extends Models {
     */
     public function addfriend($userID, $friend_id){
         $data = $this->db->insert(PREFIX.'friends', array('uid1' => $userID, 'uid2' => $friend_id, 'status1' => '1'));
-        $count = count($data);
-        if($count > 0){
+        if($data > 0){
             return true;
         }else{
             return false;
@@ -282,8 +281,7 @@ class Friends extends Models {
     */
     public function approvefriend($userID, $friend_id){
         $data = $this->db->update(PREFIX.'friends', array('status2' => '1'), array('uid1' => $friend_id, 'uid2' => $userID));
-        $count = count($data);
-        if($count > 0){
+        if($data > 0){
             return true;
         }else{
             return false;
