@@ -57,15 +57,15 @@ class Config {
     /**
      * Database name.
      */
-    define('DB_NAME', 'uap4_demo_421');
+    define('DB_NAME', 'db_name');
     /**
      * Database username.
      */
-    define('DB_USER', 'uap4_demo');
+    define('DB_USER', 'db_username');
     /**
      * Database password.
      */
-    define('DB_PASS', 'VBkIPTLXpqsrr74G');
+    define('DB_PASS', 'db_password');
     /**
      * PREFIX to be used in database calls default is uap4_
      */
@@ -120,4 +120,4 @@ class Config {
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
-/////////////////////////////////////////////////
+/////////////////////////////////////////////////////
