@@ -4,7 +4,7 @@
 *
 * UserApplePie - Forum Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 2.1.0 for UAP v.4.2.1
+* @version 2.1.0 for UAP v.4.2.0
 */
 
 /** Admin Panel Forum Admin Models **/
@@ -205,20 +205,16 @@ class ForumAdmin extends Models {
    * @param string $forum_description Forum Description
    * @param int $forum_topic_limit Topic Per Page Limit
    * @param int $forum_topic_reply_limit Topic Rely Per Page Limit
-   * @param string $forum_posts_group_change_enable Enable/Disable true/false
-   * @param int forum_posts_group_change New Member group change limit
    *
    * @return boolean returns true/false
    */
-  public function updateGlobalSettings($forum_on_off,$forum_title,$forum_description,$forum_topic_limit,$forum_topic_reply_limit,$forum_posts_group_change_enable,$forum_posts_group_change){
+  public function updateGlobalSettings($forum_on_off,$forum_title,$forum_description,$forum_topic_limit,$forum_topic_reply_limit){
     // Update groups table
     $query[] = $this->db->update(PREFIX.'forum_settings', array('setting_value' => $forum_on_off), array('setting_title' => 'forum_on_off'));
     $query[] = $this->db->update(PREFIX.'forum_settings', array('setting_value' => $forum_title), array('setting_title' => 'forum_title'));
     $query[] = $this->db->update(PREFIX.'forum_settings', array('setting_value' => $forum_description), array('setting_title' => 'forum_description'));
     $query[] = $this->db->update(PREFIX.'forum_settings', array('setting_value' => $forum_topic_limit), array('setting_title' => 'forum_topic_limit'));
     $query[] = $this->db->update(PREFIX.'forum_settings', array('setting_value' => $forum_topic_reply_limit), array('setting_title' => 'forum_topic_reply_limit'));
-    $query[] = $this->db->update(PREFIX.'forum_settings', array('setting_value' => $forum_posts_group_change_enable), array('setting_title' => 'forum_posts_group_change_enable'));
-    $query[] = $this->db->update(PREFIX.'forum_settings', array('setting_value' => $forum_posts_group_change), array('setting_title' => 'forum_posts_group_change'));
     $count = count($query);
     // Check to make sure something was updated
     if($count > 0){

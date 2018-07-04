@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.1
+* @version 4.2.0
 */
 
 use Libs\ErrorMessages,
@@ -53,7 +53,7 @@ use Libs\ErrorMessages,
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
           <a class="nav-link" href="<?php echo DIR; ?>AdminPanel-Settings">
             <i class="fa fa-fw fa-cog"></i>
-            <span class="nav-link-text">Main Settings</span>
+            <span class="nav-link-text">Settings</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
@@ -102,18 +102,6 @@ use Libs\ErrorMessages,
           </ul>
         </li>
 			<?php } ?>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-				<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-AdvancedSettings">
-					<i class="fa fa-fw fa-cog"></i>
-					<span class="nav-link-text">Advanced Settings</span>
-				</a>
-			</li>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-				<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-AuthLogs">
-					<i class="fa fa-fw fa-server"></i>
-					<span class="nav-link-text">Auth Logs</span>
-				</a>
-			</li>
 		</ul>
       <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
@@ -144,6 +132,11 @@ use Libs\ErrorMessages,
 				echo "</ol>";
 		}
 		?>
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12">
+			<h1 class="page-header"><?=$title?></h1>
+		</div>
+	</div><!--/.row-->
 	<div class="row">
 		<?php
 		// Setup the Error and Success Messages Libs

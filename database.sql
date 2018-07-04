@@ -1,5 +1,5 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.10deb1
+-- version 4.0.10deb1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
@@ -7,7 +7,7 @@
 -- Server version: 5.5.47-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.14
 
--- UserApplePie v4.2.1
+-- UserApplePie v4.2.0
 
 -- Instructions
 -- Import this file to your mySQL database
@@ -367,9 +367,7 @@ INSERT INTO `uap4_forum_settings` (`id`, `setting_title`, `setting_value`, `sett
 (2, 'forum_title', 'Forum', ''),
 (3, 'forum_description', 'Welcome to the Forum', ''),
 (4, 'forum_topic_limit', '20', ''),
-(5, 'forum_topic_reply_limit', '10', ''),
-(6, 'forum_posts_group_change_enable', 'true', ''),
-(7, 'forum_posts_group_change', '15', '');
+(5, 'forum_topic_reply_limit', '10', '');
 
 -- --------------------------------------------------------
 
@@ -404,26 +402,7 @@ INSERT INTO `uap4_settings` (`setting_id`, `setting_title`, `setting_data`) VALU
 (11, 'site_email_site', ''),
 (12, 'site_recapcha_public', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'),
 (13, 'site_recapcha_private', '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'),
-(14, 'site_user_invite_code', ''),
-(15, 'site_theme', 'default'),
-(16, 'max_attempts', '5'),
-(17, 'security_duration', '5'),
-(18, 'session_duration', '1'),
-(19, 'session_duration_rm', '1'),
-(20, 'min_username_length', '5'),
-(21, 'max_username_length', '30'),
-(22, 'min_password_length', '5'),
-(23, 'max_password_length', '30'),
-(24, 'min_email_length', '5'),
-(25, 'max_email_length', '100'),
-(26, 'random_key_length', '15'),
-(27, 'default_timezone', 'America/Chicago'),
-(28, 'users_pageinator_limit', '20'),
-(29, 'friends_pageinator_limit', '20'),
-(30, 'message_quota_limit', '50'),
-(31, 'message_pageinator_limit', '10'),
-(32, 'sweet_title_display', 'Sweets'),
-(33, 'sweet_button_display', 'Sweet');
+(14, 'site_theme', 'default');
 
 -- --------------------------------------------------------
 

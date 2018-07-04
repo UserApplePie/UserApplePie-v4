@@ -4,7 +4,7 @@
  *
  * UserApplePie
  * @author David (DaVaR) Sargent <davar@userapplepie.com>
- * @version 4.2.1
+ * @version 4.2.0
  */
 
  namespace App\Models;
@@ -32,26 +32,16 @@ class AdminPanel extends Models {
   	public function updateSetting($setting_title, $setting_data){
       /* Check to see if data is the same */
       $cur_setting = SELF::getSettings($setting_title);
-      if(isset($cur_setting)){
-        if($cur_setting == $setting_data){
-          return true;
-        }else{
-      		/* Update Setting Data */
-      		$query = $this->db->update(PREFIX.'settings', array('setting_data' => $setting_data), array('setting_title' => $setting_title));
-      		if(isset($query) && $query > 0){
-      			return true;
-      		}else{
-      			return false;
-      		}
-        }
+      if($cur_setting == $setting_data){
+        return true;
       }else{
-        /* Insert New Setting Data */
-        $query = $this->db->insert(PREFIX.'settings', array('setting_title' => $setting_title, 'setting_data' => $setting_data));
-        if(isset($query) && $query > 0){
-          return true;
-        }else{
-          return false;
-        }
+    		/* Update Setting Data */
+    		$query = $this->db->update(PREFIX.'settings', array('setting_data' => $setting_data), array('setting_title' => $setting_title));
+    		if(isset($query) && $query > 0){
+    			return true;
+    		}else{
+    			return false;
+    		}
       }
   	}
 
@@ -547,28 +537,6 @@ class AdminPanel extends Models {
       }else{
         return false;
       }
-    }
-
-    /**
-    * getAuthLogs
-    *
-    * Gets auth logs
-    *
-    * @return int count
-    */
-    public function getAuthLogs($limit = null){
-      return $this->db->select("SELECT * FROM ".PREFIX."activitylog WHERE NOT action='AUTH_CHECKSESSION' ORDER BY date DESC $limit");
-    }
-
-    /**
-    * getTotalAuthLogs
-    *
-    * Gets total count of entries in auth logs
-    *
-    * @return int count
-    */
-    public function getTotalAuthLogs(){
-      return $this->db->selectCount("SELECT * FROM ".PREFIX."activitylog WHERE NOT action='AUTH_CHECKSESSION' ");
     }
 
 }

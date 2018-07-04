@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.1
+* @version 4.2.0
 *
 * @author David Carr - dave@daveismyname.com
 */
@@ -47,9 +47,9 @@ class Paginator
     /**
      *  __construct
      *
-     *  Pass values when class is initiated.
+     *  Pass values when class is istantiated.
      *
-     * @param numeric  $perPage  sets the number of items per page
+     * @param numeric  $perPage  sets the number of iteems per page
      * @param numeric  $current_page sets the instance for the GET parameter
      */
     public function __construct($perPage = null, $curPage = null)

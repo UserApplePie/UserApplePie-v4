@@ -5,7 +5,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.1
+* @version 4.2.0
 */
 
 namespace App;
@@ -64,7 +64,6 @@ class Routes {
         /* Admin Panel Routing */
         $routes[] = self::add('AdminPanel', 'AdminPanel', 'Dashboard');
         $routes[] = self::add('AdminPanel-Settings', 'AdminPanel', 'Settings');
-        $routes[] = self::add('AdminPanel-AdvancedSettings', 'AdminPanel', 'AdvancedSettings');
         $routes[] = self::add('AdminPanel-Users', 'AdminPanel', 'Users' , '(:any)/(:any)');
         $routes[] = self::add('AdminPanel-User', 'AdminPanel', 'User', '(:any)');
         $routes[] = self::add('AdminPanel-Groups', 'AdminPanel', 'Groups');
@@ -72,7 +71,6 @@ class Routes {
         $routes[] = self::add('AdminPanel-MassEmail', 'AdminPanel', 'MassEmail');
         $routes[] = self::add('AdminPanel-SystemRoutes', 'AdminPanel', 'SystemRoutes');
         $routes[] = self::add('AdminPanel-SystemRoute', 'AdminPanel', 'SystemRoute', '(:any)');
-        $routes[] = self::add('AdminPanel-AuthLogs', 'AdminPanel', 'AuthLogs', '(:any)');
         /* End Admin Panel Routing */
 
         /* Language Code Change */

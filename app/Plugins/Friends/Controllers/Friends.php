@@ -4,7 +4,7 @@
 *
 * UserApplePie - Friends Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 2.1.0 for UAP v.4.2.1
+* @version 2.1.0 for UAP v.4.2.0
 */
 
 namespace App\Plugins\Friends\Controllers;
@@ -17,6 +17,8 @@ use App\System\Controller,
     Libs\Url,
     Libs\SuccessMessages,
     Libs\ErrorMessages;
+
+define('FRIENDS_PAGEINATOR_LIMIT', '20');  // Sets up friends listing page limit
 
 /** Friends Controller Class **/
 class Friends extends Controller {

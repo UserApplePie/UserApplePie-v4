@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.1
+* @version 4.2.0
 */
 
 
@@ -74,9 +74,9 @@ if(isset($_POST['submit'])){
 	**/
 	if(isset($_GET['update_config_file_refresh'])){
 		if($_GET['update_config_file_refresh'] == "true"){
-			echo "<div class='card border-primary bg-light mb-3 text-center'><card class='card-body'>";
+			echo "<div class='well'><center>";
 			echo "<img src='uap4logo_wait_animation.gif'>";
-			echo "<h3>Please Wait While The Config File Is Updated!</h3></card></div>";
+			echo "<h3>Please Wait While The Config File Is Updated!</h3></center></div>";
 			echo "<meta http-equiv='refresh' content='5; url=/?install_step=2&update_config_file=true'>";
 		}
 	}else{

@@ -5,7 +5,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.1
+* @version 4.2.0
 */
 
 /** Check to see where the user is at within the install **/
@@ -59,50 +59,47 @@ if(isset($_GET['install_step'])){
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>UAP v4 Installation</title>
 	<link rel='shortcut icon' href='http://uap3demo.userapplepie.com/templates/default/assets/images/favicon.ico'>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<br>
 	<div class='container'>
 		<div class='row'>
 
 			<div class='col-lg-12 col-md-12 col-sm-12'>
 
-			<div class='card border-primary mb-3'>
-				<div class='card-header h4'>
-					<div class='row'>
-						<div class='col-lg-12 col-md-12 col-sm-12' align='center'>
-							<h3>UserApplePie v4 Installation</h3>
-						</div>
-						<div class='col-lg-12 col-md-12 col-sm-12'>
-							<hr>
-						</div>
-						<div class='col-lg-3 col-md-3 col-sm-3' align='center'>
-							<div class='btn <?=$step1_style?> btn-lg'>Step 1</div><br>
-							<small>System Check</small>
-						</div>
-						<div class='col-lg-3 col-md-3 col-sm-3' align='center'>
-							<div href='/?install_step=2' class='btn <?=$step2_style?> btn-lg'>Step 2</div><br>
-							<small>System Settings</small>
-						</div>
-						<div class='col-lg-3 col-md-3 col-sm-3' align='center'>
-							<div href='/?install_step=3' class='btn <?=$step3_style?> btn-lg'>Step 3</div><br>
-							<small>Create Database</small>
-						</div>
-						<div class='col-lg-3 col-md-3 col-sm-3' align='center'>
-							<div href='/?install_step=4' class='btn <?=$step4_style?> btn-lg'>Step 4</div><br>
-							<small>Finalize Install</small>
-						</div>
-						<div class='col-lg-12 col-md-12 col-sm-12'>
-							<hr>
-						</div>
-						<div class='col-lg-12 col-md-12 col-sm-12'>
-							<div class="progress">
-								<div class="progress-bar bg-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-								  <div class="progress-bar bg-success" role="progressbar" aria-valuenow="<?=$percentage?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$percentage?>%;"> &nbsp;<?=$percentage?>% </div>
-								</div>
+				<div class='card border-primary mb-3'>
+          <div class='card-header h4'>
+						<div class='row'>
+              <div class='col-lg-12 col-md-12 col-sm-12' align='center'>
+                <h3>UserApplePie v4 Installation</h3>
+              </div>
+              <div class='col-lg-12 col-md-12 col-sm-12'>
+                <hr>
+              </div>
+							<div class='col-lg-3 col-md-3 col-sm-3' align='center'>
+								<div class='btn <?=$step1_style?> btn-lg'>Step 1</div><br>
+                <small>System Check</small>
+							</div>
+              <div class='col-lg-3 col-md-3 col-sm-3' align='center'>
+                <div href='/?install_step=2' class='btn <?=$step2_style?> btn-lg'>Step 2</div><br>
+                <small>System Settings</small>
+              </div>
+              <div class='col-lg-3 col-md-3 col-sm-3' align='center'>
+                <div href='/?install_step=3' class='btn <?=$step3_style?> btn-lg'>Step 3</div><br>
+                <small>Create Database</small>
+              </div>
+              <div class='col-lg-3 col-md-3 col-sm-3' align='center'>
+                <div href='/?install_step=4' class='btn <?=$step4_style?> btn-lg'>Step 4</div><br>
+                <small>Finalize Install</small>
+              </div>
+              <div class='col-lg-12 col-md-12 col-sm-12'>
+                <hr>
+              </div>
+							<div class='col-lg-12 col-md-12 col-sm-12'>
+                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+								  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?=$percentage?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$percentage?>%;"> &nbsp;<?=$percentage?>% </div>
+                </div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>

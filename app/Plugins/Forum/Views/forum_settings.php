@@ -4,7 +4,7 @@
 *
 * UserApplePie - Forum Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 2.1.0 for UAP v.4.2.1
+* @version 2.1.0 for UAP v.4.2.0
 */
 
 /** Forum Settings Admin Panel View **/
@@ -86,42 +86,10 @@ use Libs\Form,
         <div style='margin-bottom: 25px'>
           <i>Default: 10</i> - Set the Forum Topic Replies Limit Per Page.
         </div>
-
-        <hr>
-
-        <!-- Enable / Disable Forum Auto Member Group Change -->
-        <div class='input-group mb-3'>
-          <div class='input-group-prepend'>
-            <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Auto New Member Group Change</span>
-          </div>
-          <select class='form-control' id='forum_posts_group_change_enable' name='forum_posts_group_change_enable'>
-            <option value='true' <?php if($data['forum_posts_group_change_enable'] == "true"){echo "SELECTED";}?> >Enabled</option>
-            <option value='false' <?php if($data['forum_posts_group_change_enable'] == "false"){echo "SELECTED";}?> >Disabled</option>
-          </select>
-        </div>
-        <div style='margin-bottom: 25px'>
-          <i>Default: Enabled</i> - When enabled New Members will automaticly be upgraded to Member group when they post more than set below.
-        </div>
-
-        <!-- Forum Posts Group Change Limit -->
-        <div class='input-group mb-3'>
-          <div class='input-group-prepend'>
-            <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Auto New Member Group Change Posts Limit</span>
-          </div>
-          <?php echo Form::input(array('type' => 'text', 'name' => 'forum_posts_group_change', 'class' => 'form-control', 'value' => $data['forum_posts_group_change'], 'placeholder' => 'New Member Group Change Posts Limit', 'maxlength' => '100')); ?>
-        </div>
-        <div style='margin-bottom: 25px'>
-          <i>Default: 15</i> - Set the amount of Post a New Member must post to be upgraded to Member Group if Enabled.
-        </div>
-
-
         <?php echo Form::input(array('type' => 'hidden', 'name' => 'token_ForumAdmin', 'value' => $data['csrf_token'])); ?>
         <?php echo Form::input(array('type' => 'hidden', 'name' => 'update_global_settings', 'value' => 'true')); ?>
         <button class='btn btn-sm btn-success' name='submit' type='submit'>Update Forum Settings</button>
         <?php echo Form::close(); ?>
-
-
-
       <!-- End Main forum Settings -->
 
     </div>

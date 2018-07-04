@@ -4,7 +4,7 @@
 *
 * UserApplePie - Forum Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 2.1.0 for UAP v.4.2.1
+* @version 2.1.0 for UAP v.4.2.0
 */
 
 /** Forum model **/
@@ -1053,12 +1053,12 @@ class Forum extends Models {
             /* Check to see is user has a record for post_id */
             $check_table = $this->db->selectCount("SELECT * FROM ".PREFIX."forum_tracker WHERE user_id=:user_id AND post_id=:post_id AND forum_id=:forum_id",array(":user_id"=>$user_id, ":post_id"=>$post_id, 'forum_id'=>$forum_id));
             $current_date = date("Y-m-d H:i:s");
-            if($check_table > 0){
-              /* Data found for user - Update current date */
-              return $this->db->update(PREFIX.'forum_tracker', array('last_visit' => $current_date), array('user_id' => $user_id, 'post_id' => $post_id, 'forum_id' => $forum_id));
+            if(!isset($check_table)){
+                /* No Data for user - Create new entry */
+                return $this->db->insert(PREFIX.'forum_tracker', array('user_id' => $user_id, 'post_id' => $post_id, 'forum_id' => $forum_id, 'last_visit' => $current_date));
             }else{
-              /* No Data for user - Create new entry */
-              return $this->db->insert(PREFIX.'forum_tracker', array('user_id' => $user_id, 'post_id' => $post_id, 'forum_id' => $forum_id, 'last_visit' => $current_date));
+                /* Data found for user - Update current date */
+                return $this->db->update(PREFIX.'forum_tracker', array('last_visit' => $current_date), array('user_id' => $user_id, 'post_id' => $post_id, 'forum_id' => $forum_id));
             }
         }
     }
@@ -1074,13 +1074,13 @@ class Forum extends Models {
      * @param int posts_count
      */
     public function newMemberPostsChecker($user_id = null){
-        if(SELF::globalForumSetting('forum_posts_group_change_enable') == 'true'){
+        if(FORUM_POSTS_GROUP_CHANGE_ENABLE == 'true'){
             $posts_count = \Libs\ForumStats::getTotalPosts($user_id);
             if(isset($user_id) && isset($posts_count)){
                 // Check if user is in the New Member Group
-        		    $new_member_group = count($this->db->select("SELECT *	FROM ".PREFIX."users_groups WHERE userID = :userID AND groupID = 1", array(':userID' => $user_id)));
+        		$new_member_group = count($this->db->select("SELECT *	FROM ".PREFIX."users_groups WHERE userID = :userID AND groupID = 1", array(':userID' => $user_id)));
                 if($new_member_group == 1){
-                    $forum_posts_group_change = SELF::globalForumSetting('forum_posts_group_change');
+                    $forum_posts_group_change = FORUM_POSTS_GROUP_CHANGE;
                     if($posts_count >= $forum_posts_group_change){
                         return $this->db->update(PREFIX."users_groups", array('groupID' => '2'), array('userID' => $user_id));
                     }
