@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.0
+* @version 4.2.1
 */
 
 namespace App;
@@ -57,15 +57,15 @@ class Config {
     /**
      * Database name.
      */
-    define('DB_NAME', 'db_name');
+    define('DB_NAME', 'uap4_demo_421');
     /**
      * Database username.
      */
-    define('DB_USER', 'db_username');
+    define('DB_USER', 'uap4_demo');
     /**
      * Database password.
      */
-    define('DB_PASS', 'db_password');
+    define('DB_PASS', 'VBkIPTLXpqsrr74G');
     /**
      * PREFIX to be used in database calls default is uap4_
      */
@@ -78,50 +78,17 @@ class Config {
      *                *
      *****************/
 
-    // Max attempts for login before user is locked out
-    define("MAX_ATTEMPTS", 5);
-    // How long a user is locked out after they reach the max attempts
-    define("SECURITY_DURATION", "+5 minutes");
     // Account activation route
     define("ACTIVATION_ROUTE", 'Activate');
     // Account password reset route
     define("RESET_PASSWORD_ROUTE", 'ResetPassword');
-    //How long a session lasts : Default = +1 day
-    define("SESSION_DURATION", "+1 day");
-    //How long a REMEMBER ME SESSION lasts : Default = +1 month
-    define("SESSION_DURATION_RM", "+1 month");
+    // this is the same as SECURITY_DURATION but in number format
+    $waittime = preg_replace("/[^0-9]/", "", SECURITY_DURATION); //DO NOT MODIFY
+    define('WAIT_TIME', $waittime); //DO NOT MODIFY
     //INT cost of BCRYPT algorithm
     define("COST", 10);
     //INT hash length of BCRYPT algorithm
     define("HASH_LENGTH", 22);
-    // min length of username
-    define('MIN_USERNAME_LENGTH', 5);
-    // max length of username
-    define('MAX_USERNAME_LENGTH', 30);
-    // min length of password
-    define('MIN_PASSWORD_LENGTH', 5);
-    // max length of password
-    define('MAX_PASSWORD_LENGTH', 30);
-    //max length of email
-    define('MAX_EMAIL_LENGTH', 100);
-    // min length of email
-    define('MIN_EMAIL_LENGTH', 5);
-    //random key used for password reset or account activation
-    define('RANDOM_KEY_LENGTH', 15);
-    $waittime = preg_replace("/[^0-9]/", "", SECURITY_DURATION); //DO NOT MODIFY
-    // this is the same as SECURITY_DURATION but in number format
-    define('WAIT_TIME', $waittime); //DO NOT MODIFY
-
-    /**
-    * Forum Settings
-    */
-    // Enable or Disable the auto member group updater
-    define('FORUM_POSTS_GROUP_CHANGE_ENABLE', 'true');
-    // Sets how many posts a user must make to forum to
-    // change their group from New Member to Member
-    // Default 15
-    define('FORUM_POSTS_GROUP_CHANGE', '15');
-
     /**
      * Image Settings
      */
@@ -138,9 +105,6 @@ class Config {
     set_exception_handler('App\System\ErrorLogger::ExceptionHandler');
     set_error_handler('App\System\ErrorLogger::ErrorHandler');
 
-    /* Set timezone */
-    date_default_timezone_set('America/Chicago');
-
     $GLOBALS["instances"] = array();
 
   }
@@ -156,4 +120,4 @@ class Config {
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
-/////////////////////////////////////////////////////
+/////////////////////////////////////////////////

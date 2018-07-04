@@ -4,7 +4,7 @@
  *
  * UserApplePie
  * @author David (DaVaR) Sargent <davar@userapplepie.com>
- * @version 4.2.0
+ * @version 4.2.1
  */
 
 namespace App\Controllers;
@@ -21,8 +21,6 @@ use App\System\Controller,
     Libs\SuccessMessages,
     Libs\SimpleImage,
     App\System\Error;
-
-define('USERS_PAGEINATOR_LIMIT', '20');  // Sets up users listing page limit
 
 class Members extends Controller
 {

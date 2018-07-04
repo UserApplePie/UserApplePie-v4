@@ -6,7 +6,7 @@
  *
  * UserApplePie
  * @author David (DaVaR) Sargent <davar@userapplepie.com>
- * @version 4.2.0
+ * @version 4.2.1
  */
 
 namespace Libs;
@@ -14,10 +14,6 @@ namespace Libs;
 use Libs\Database,
     Libs\Form,
     Libs\Request;
-
-// Define what we want to call our sweets (Sweets/Likes/etc.)
-define('SWEET_TITLE_DISPLAY', 'Sweets'); // Purl Display
-define('SWEET_BUTTON_DISPLAY', 'Sweet'); // Singular Button Display
 
 class Sweets
 {
