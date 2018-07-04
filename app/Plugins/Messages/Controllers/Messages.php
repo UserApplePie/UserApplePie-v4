@@ -4,7 +4,7 @@
 *
 * UserApplePie - Messages Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 2.1.0 for UAP v.4.2.0
+* @version 2.1.0 for UAP v.4.2.1
 */
 
 namespace App\Plugins\Messages\Controllers;
@@ -17,13 +17,6 @@ use App\System\Controller,
   Libs\Url,
   Libs\SuccessMessages,
   Libs\ErrorMessages;
-
-  /**
-  *  Define Message Limit for Inbox and Outbox
-  *  And Message Limit per page for Paginator
-  */
-  define('MESSAGE_QUOTA_LIMIT','50');  // Inbox and Outbox total Limit
-  define('MESSAGE_PAGEINATOR_LIMIT','10');  // How many message to display per page
 
 class Messages extends Controller{
 

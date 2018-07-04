@@ -4,7 +4,7 @@
 *
 * UserApplePie - Forum Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 2.1.0 for UAP v.4.2.0
+* @version 2.1.0 for UAP v.4.2.1
 */
 
 /** Forum New Topic View **/
@@ -42,7 +42,7 @@ use Core\Language,
             <!-- Topic Content -->
             <div class='input-group' style='margin-bottom: 25px'>
               <div class="input-group-prepend">
-                <span class='input-group-text'><i class='fas fa-alt-pencil'></i> </span>
+                <span class='input-group-text'><i class='fas fa-pencil-alt'></i> </span>
               </div>
               <?php echo Form::textBox(array('type' => 'text', 'name' => 'forum_content', 'class' => 'form-control', 'value' => $data['forum_content'], 'placeholder' => 'Topic Content', 'rows' => '6')); ?>
             </div>

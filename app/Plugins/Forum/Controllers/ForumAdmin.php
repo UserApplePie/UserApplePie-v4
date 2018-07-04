@@ -4,7 +4,7 @@
 *
 * UserApplePie - Forum Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 2.1.0 for UAP v.4.2.0
+* @version 2.1.0 for UAP v.4.2.1
 */
 
 /** Forum Admin Panel Controller **/
@@ -62,8 +62,10 @@ class ForumAdmin extends Controller{
           $forum_description = Request::post('forum_description');
           $forum_topic_limit = Request::post('forum_topic_limit');
           $forum_topic_reply_limit = Request::post('forum_topic_reply_limit');
+          $forum_posts_group_change_enable = Request::post('forum_posts_group_change_enable');
+          $forum_posts_group_change = Request::post('forum_posts_group_change');
           // Run Forum Settings Update
-          if($this->forum->updateGlobalSettings($forum_on_off,$forum_title,$forum_description,$forum_topic_limit,$forum_topic_reply_limit)){
+          if($this->forum->updateGlobalSettings($forum_on_off,$forum_title,$forum_description,$forum_topic_limit,$forum_topic_reply_limit,$forum_posts_group_change_enable,$forum_posts_group_change)){
             // Success
             \Libs\SuccessMessages::push('You Have Successfully Updated Forum Global Settings', 'AdminPanel-Forum-Settings');
           }else{
@@ -117,6 +119,8 @@ class ForumAdmin extends Controller{
     $data['forum_description'] = $this->forum->globalForumSetting('forum_description');
     $data['forum_topic_limit'] = $this->forum->globalForumSetting('forum_topic_limit');
     $data['forum_topic_reply_limit'] = $this->forum->globalForumSetting('forum_topic_reply_limit');
+    $data['forum_posts_group_change_enable'] = $this->forum->globalForumSetting('forum_posts_group_change_enable');
+    $data['forum_posts_group_change'] = $this->forum->globalForumSetting('forum_posts_group_change');
 
     // Get user groups data
     $data_groups = $this->model->getAllGroups();

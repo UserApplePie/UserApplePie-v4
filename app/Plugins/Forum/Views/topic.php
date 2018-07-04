@@ -4,7 +4,7 @@
 *
 * UserApplePie - Forum Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 2.1.0 for UAP v.4.2.0
+* @version 2.1.0 for UAP v.4.2.1
 */
 
 /** Forum Topic View **/
@@ -491,6 +491,13 @@ use Core\Language,
             You <b><?php echo $gfp_post; ?></b> post in this forum.<Br>
             You <b><?php echo $gfp_mod; ?></b> moderate this forum.<br>
             You <?php echo $gfp_admin; ?> this forum.<br>
+            <?php
+              if($data['current_userID']){
+                if($data['update_tracking'] > 0){
+                  echo "Forum Topic User Tracking Updated.";
+                }
+              }
+            ?>
         </div>
     </div>
 

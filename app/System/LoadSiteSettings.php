@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.0
+* @version 4.2.1
 */
 
 namespace App\System;
@@ -101,11 +101,35 @@ class LoadSiteSettings {
         define("RECAP_PRIVATE_KEY", $this->model->getSettings('site_recapcha_private'));
         /*****************
          *                *
-         *     Account    *
+         *     Accounts    *
          *                *
          *****************/
+        // New users need invite code to sign up if not null.
+        define("SITE_USER_INVITE_CODE", $this->model->getSettings('site_user_invite_code'));
         // Account needs email activation, false=no true=yes
         define("ACCOUNT_ACTIVATION", $this->model->getSettings('site_user_activation'));
+        // Max attempts for login before user is locked out
+        define("MAX_ATTEMPTS", $this->model->getSettings('max_attempts'));
+        // How long a user is locked out after they reach the max attempts
+        define("SECURITY_DURATION", "+".$this->model->getSettings('security_duration')." minutes");
+        //How long a session lasts : Default = +1 day
+        define("SESSION_DURATION", "+".$this->model->getSettings('session_duration')." day");
+        //How long a REMEMBER ME SESSION lasts : Default = +1 month
+        define("SESSION_DURATION_RM", "+".$this->model->getSettings('session_duration_rm')." month");
+        // min length of username
+        define('MIN_USERNAME_LENGTH', $this->model->getSettings('min_username_length'));
+        // max length of username
+        define('MAX_USERNAME_LENGTH', $this->model->getSettings('max_username_length'));
+        // min length of password
+        define('MIN_PASSWORD_LENGTH', $this->model->getSettings('min_password_length'));
+        // max length of password
+        define('MAX_PASSWORD_LENGTH', $this->model->getSettings('max_password_length'));
+        // min length of email
+        define('MIN_EMAIL_LENGTH', $this->model->getSettings('min_email_length'));
+        //max length of email
+        define('MAX_EMAIL_LENGTH', $this->model->getSettings('max_email_length'));
+        //random key used for password reset or account activation
+        define('RANDOM_KEY_LENGTH', $this->model->getSettings('random_key_length'));
         /*****************
          *                *
          *     Theme      *
@@ -113,6 +137,39 @@ class LoadSiteSettings {
          *****************/
         // Get them from settings
         define("SITE_THEME", $this->model->getSettings('site_theme'));
+        /*****************
+         *                *
+         * Set Timezone   *
+         *                *
+         *****************/
+        date_default_timezone_set($this->model->getSettings('default_timezone'));
+        /*****************
+         *                *
+         *   Paginator    *
+         *                *
+         *****************/
+        // Sets up users listing page limit
+        define('USERS_PAGEINATOR_LIMIT', $this->model->getSettings('users_pageinator_limit'));
+        // Sets up friends listing page limit
+        define('FRIENDS_PAGEINATOR_LIMIT', $this->model->getSettings('friends_pageinator_limit'));
+        /*****************
+         *                *
+         *   Messages     *
+         *                *
+         *****************/
+         // Inbox and Outbox total Limit
+         define('MESSAGE_QUOTA_LIMIT', $this->model->getSettings('message_quota_limit'));
+         // How many message to display per page
+         define('MESSAGE_PAGEINATOR_LIMIT', $this->model->getSettings('message_pageinator_limit'));
+         /*****************
+          *                *
+          *    Sweets      *
+          *                *
+          *****************/
+          // Sweets Purl Display
+          define('SWEET_TITLE_DISPLAY', $this->model->getSettings('sweet_title_display'));
+          // Sweets Singular Button Display
+          define('SWEET_BUTTON_DISPLAY', $this->model->getSettings('sweet_button_display'));
     }
 
 }
