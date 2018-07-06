@@ -187,7 +187,7 @@ use App\System\Language,
             if($data['isLoggedIn'] && $group_forum_perms_post == true){
               echo "<a class='btn btn-sm btn-success' href='".DIR."NewTopic/".$data['current_topic_id']."'>";
                 echo "Create New Topic";
-              echo "</a>";
+              echo "</a><br><br>";
             }
 
             // Display Paginator Links

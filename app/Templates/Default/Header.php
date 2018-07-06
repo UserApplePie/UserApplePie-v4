@@ -32,7 +32,7 @@ use Libs\Assets,
         <link rel='shortcut icon' href='<?=Url::templatePath()?>images/favicon.ico'>
         <?=Assets::css([
             'https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css',
-            'https://bootswatch.com/4/'.SITE_THEME.'/bootstrap.css',
+            SITE_URL.'assets/themes/'.SITE_THEME.'/bootstrap.css',
             'https://bootswatch.com/_assets/css/custom.min.css',
             'https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css',
             SITE_URL.'Templates/Default/Assets/css/style.css'
