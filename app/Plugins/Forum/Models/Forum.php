@@ -192,36 +192,36 @@ class Forum extends Models {
      */
     public function forum_topics($where_id, $limit = null){
       $data = $this->db->select("
-          SELECT
-              sub1.*,
-              fpr_post_id,
-              fpr_user_id AS LR_UserID,
-              fpr_timestamp AS LR_TimeStamp,
-              COUNT(fpr_post_id) AS total_topic_replys
-          FROM (
-              SELECT sub2.* FROM (
-                  SELECT
-                      fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
-                      fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
-                      fp.forum_edit_date as forum_edit_date,
-                      fp.forum_timestamp as forum_timestamp,
-                      fp.forum_status as forum_status, fpr.id as id,
-                      fpr.fpr_post_id as fpr_post_id, fpr.fpr_id as fpr_id,
-                      fpr.fpr_user_id as fpr_user_id, fpr.fpr_title as fpr_title,
-                      fpr.fpr_edit_date as fpr_edit_date,
-                      fpr.fpr_timestamp as fpr_timestamp,
-                      GREATEST(fp.forum_timestamp, COALESCE(fpr.fpr_timestamp, '00-00-00 00:00:00')) AS tstamp
-                      FROM ".PREFIX."forum_posts fp
-                      LEFT JOIN ".PREFIX."forum_post_replies fpr
-                      ON fp.forum_post_id = fpr.fpr_post_id
-                      WHERE forum_id = :where_id
-                      AND fp.allow = 'TRUE'
-              ) sub2
-                  ORDER BY tstamp DESC
-                  $limit
-          ) sub1
-              GROUP BY forum_post_id
-              ORDER BY tstamp DESC
+        SELECT
+            sub1.*,
+            fpr_post_id,
+            fpr_user_id AS LR_UserID,
+            fpr_timestamp AS LR_TimeStamp,
+            COUNT(fpr_post_id) AS total_topic_replys
+        FROM (
+            SELECT sub2.* FROM (
+                SELECT
+                    fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
+                    fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
+                    fp.forum_edit_date as forum_edit_date,
+                    fp.forum_timestamp as forum_timestamp,
+                    fp.forum_status as forum_status, fpr.id as id,
+                    fpr.fpr_post_id as fpr_post_id, fpr.fpr_id as fpr_id,
+                    fpr.fpr_user_id as fpr_user_id, fpr.fpr_title as fpr_title,
+                    fpr.fpr_edit_date as fpr_edit_date,
+                    fpr.fpr_timestamp as fpr_timestamp,
+                    GREATEST(fp.forum_timestamp, COALESCE(fpr.fpr_timestamp, '00-00-00 00:00:00')) AS tstamp
+                    FROM ".PREFIX."forum_posts fp
+                    LEFT JOIN ".PREFIX."forum_post_replies fpr
+                    ON fp.forum_post_id = fpr.fpr_post_id
+                    WHERE forum_id = :where_id
+                    AND fp.allow = 'TRUE'
+            ) sub2
+                ORDER BY tstamp DESC
+        ) sub1
+            GROUP BY forum_post_id
+            ORDER BY tstamp DESC
+            $limit
       ",
       array(':where_id' => $where_id));
       return $data;
