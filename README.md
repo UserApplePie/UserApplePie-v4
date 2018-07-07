@@ -35,7 +35,7 @@ The UAP v4 requirements are limited.
 
 - Apache Web Server or equivalent with mod rewrite support.
 - IIS with URL Rewrite module installed - [http://www.iis.net/downloads/microsoft/url-rewrite](http://www.iis.net/downloads/microsoft/url-rewrite)
-- PHP 5.5 or greater is required
+- PHP 7.1.3 or greater is required
 - fileinfo enabled (edit php.ini and uncomment php_fileinfo.dll or use php selector within cpanel if available.)
 - mySQL Database Server or equivalent
 
