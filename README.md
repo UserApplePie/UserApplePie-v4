@@ -13,7 +13,7 @@
 
 ## What is UserApplePie v4?
 
-UserApplePie is a PHP 5.5+ CMS MVC Framework. It's designed to be lightweight and modular, allowing developers to build better and easy to maintain code with PHP.
+UserApplePie is a PHP 7.1.3+ CMS MVC Framework. It's designed to be lightweight and modular, allowing developers to build better and easy to maintain code with PHP.
 
 ---
 
