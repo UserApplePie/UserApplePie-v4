@@ -65,7 +65,17 @@ class Csrf {
      * @return bool
      */
     public static function isTokenValid($name = 'csrfToken') {
-        return $_POST['token_'.$name] === Session::get($name);
+      if ((isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']))) {
+        if (strtolower(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST)) != strtolower($_SERVER['HTTP_HOST'])) {
+          /* referer not from the same domain */
+          return false;
+        }else{
+          return $_POST['token_'.$name] === Session::get($name);
+        }
+      }else{
+        return false;
+      }
+
     }
     /**
      * Generate a random number using any available function on the system.
