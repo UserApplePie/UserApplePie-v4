@@ -24,7 +24,7 @@ class Config {
      define('DIR', '/');
 
     /* Define Site Url Address */
-    define('SITE_URL', 'https://uap4demo.userapplepie.com/');
+    define('SITE_URL', 'https://localhost/');
 
     /* Define Controller */
     define('DEFAULT_CONTROLLER', 'Home');
@@ -53,7 +53,7 @@ class Config {
     /**
      * Database host default is localhost.
      */
-    define('DB_HOST', 'localhost');
+    define('DB_HOST', 'db_host');
     /**
      * Database name.
      */
@@ -82,9 +82,6 @@ class Config {
     define("ACTIVATION_ROUTE", 'Activate');
     // Account password reset route
     define("RESET_PASSWORD_ROUTE", 'ResetPassword');
-    // this is the same as SECURITY_DURATION but in number format
-    $waittime = preg_replace("/[^0-9]/", "", SECURITY_DURATION); //DO NOT MODIFY
-    define('WAIT_TIME', $waittime); //DO NOT MODIFY
     //INT cost of BCRYPT algorithm
     define("COST", 10);
     //INT hash length of BCRYPT algorithm

@@ -2,3 +2,4 @@ app/Config.php
 app/_notes/dwsync.xml
 app/Templates/Default/_notes/dwsync.xml
 *.xml
+[Vv]endor/

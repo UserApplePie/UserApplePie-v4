@@ -112,6 +112,9 @@ class LoadSiteSettings {
         define("MAX_ATTEMPTS", $this->model->getSettings('max_attempts'));
         // How long a user is locked out after they reach the max attempts
         define("SECURITY_DURATION", "+".$this->model->getSettings('security_duration')." minutes");
+		    // this is the same as SECURITY_DURATION but in number format
+		$waittime = preg_replace("/[^0-9]/", "", SECURITY_DURATION); //DO NOT MODIFY
+		define('WAIT_TIME', $waittime); //DO NOT MODIFY
         //How long a session lasts : Default = +1 day
         define("SESSION_DURATION", "+".$this->model->getSettings('session_duration')." day");
         //How long a REMEMBER ME SESSION lasts : Default = +1 month
