@@ -40,7 +40,7 @@ use Libs\Language,
                             echo "<td>$row->arguments</td>";
                             echo "<td>$row->enable</td>";
                             echo "<td align='right'>";
-                            echo "<a href='".DIR."AdminPanel-SystemRoute/$row->id' class='btn btn-xs btn-primary'><span class='fa fa-fw  fa-pencil'></span></a>";
+                            echo "<a href='".DIR."AdminPanel-SystemRoute/$row->id' class='btn btn-sm btn-primary'><span class='fa fa-fw  fa-pencil'></span></a>";
                             echo "</td>";
                         echo "</tr>";
 					}

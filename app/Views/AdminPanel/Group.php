@@ -85,7 +85,7 @@ use Libs\Form,
           echo "<input type='hidden' name='token_group' value='".$data['csrfToken']."'>";
           echo "<input type='hidden' name='delete_group' value='true' />";
           echo "<input type='hidden' name='ag_groupID' value='".$data['g_groupID']."'>";
-          echo "<button class='btn btn-xs btn-danger' name='submit' type='submit'>Delete Group</button>";
+          echo "<button class='btn btn-sm btn-danger' name='submit' type='submit'>Delete Group</button>";
           echo Form::close();
         }
       ?>

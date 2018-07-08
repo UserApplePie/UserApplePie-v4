@@ -40,7 +40,7 @@ use Libs\Assets,
         <?=(isset($css)) ? $css : ""?>
         <?=(isset($header)) ? $header : ""?>
     </head>
-    <body>
+    <body class="fixed-nav sticky-footer bg-light" id="page-top">
       <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
 
           <img class='navbar-brand' src='<?php echo Url::templatePath(); ?>images/logo.gif'>
@@ -50,13 +50,7 @@ use Libs\Assets,
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav">
-              <li><a class="nav-link" href="<?=SITE_URL?>"><?=Language::show('uap_home', 'Welcome');?></a></li>
-              <?php
-                /* Check to see if Private Message Module is installed, if it is show link */
-                if(file_exists(ROOTDIR.'app/Plugins/Forum/Controllers/Forum.php')){
-                  echo "<li><a class='nav-link' href='".SITE_URL."Forum' title='Forum'> ".Language::show('uap_forum', 'Welcome')." </a></li>";
-                }
-              ?>
+              <?php echo PageFunctions::getLinks('header_main'); ?>
             </ul>
 
             <ul class="nav navbar-nav ml-auto">
@@ -90,18 +84,18 @@ use Libs\Assets,
                         <li>
                           <div class="navbar-login">
                             <div class="row">
-                              <div class="col-lg-4 col-md-4" align="center">
+                              <div class="col-4" align="center">
                                 <div class="col-centered" align="center">
-                                <?php // Check to see if user has a profile image
-                                  if(!empty($currentUserData[0]->userImage)){
-                                    echo "<img src='".SITE_URL.IMG_DIR_PROFILE.$currentUserData[0]->userImage."' class='rounded img-fluid'>";
-                                  }else{
-                                    echo "<span class='fas fa-user icon-size'></span>";
-                                  }
-                                ?>
+                                  <?php // Check to see if user has a profile image
+                                    if(!empty($currentUserData[0]->userImage)){
+                                      echo "<img src='".SITE_URL.IMG_DIR_PROFILE.$currentUserData[0]->userImage."' class='rounded img-fluid'>";
+                                    }else{
+                                      echo "<span class='fas fa-user icon-size'></span>";
+                                    }
+                                  ?>
                                 </div>
                               </div>
-                              <div class="col-lg-8 col-md-8">
+                              <div class="col-8">
                                 <p class="h5"><?php echo $currentUserData[0]->username; if(isset($currentUserData[0]->firstName)){echo " <small class='navbar-login-text'>".$currentUserData[0]->firstName."</small>";}; if(isset($currentUserData[0]->lastName)){echo "  <small class='navbar-login-text'>".$currentUserData[0]->lastName."</small>";} ?></p>
                                 <p class="h6"><?php echo $currentUserData[0]->email; ?></p>
                                 <p>

@@ -4,7 +4,7 @@
 *
 * UserApplePie - Forum Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 2.1.0 for UAP v.4.2.1
+* @version 2.1.1 for UAP v.4.2.1
 */
 
 /** Forum Categories Admin Panel View **/
@@ -75,14 +75,14 @@ use Libs\Form,
                         echo "<div class='col-lg-6 col-md-6' style='text-align: right'>";
                           // Check to see if object is at top
                           if($row->forum_order_cat > 1){
-                            echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubUp/$row->forum_id/$row->forum_order_cat' class='btn btn-primary btn-xs' role='button'><span class='fa fa-fw fa-caret-up' aria-hidden='true'></span></a> ";
+                            echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubUp/$row->forum_id/$row->forum_order_cat' class='btn btn-primary btn-sm' role='button'><span class='fa fa-fw fa-caret-up' aria-hidden='true'></span></a> ";
                           }
                           // Check to see if object is at bottom
                           if($data['fourm_cat_sub_last'] != $row->forum_order_cat){
-                            echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubDown/$row->forum_id/$row->forum_order_cat' class='btn btn-primary btn-xs' role='button'><span class='fa fa-fw fa-caret-down' aria-hidden='true'></span></a> ";
+                            echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubDown/$row->forum_id/$row->forum_order_cat' class='btn btn-primary btn-sm' role='button'><span class='fa fa-fw fa-caret-down' aria-hidden='true'></span></a> ";
                           }
-                          echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubEdit/$row->forum_id' class='btn btn-success btn-xs' role='button'><span class='fa fa-fw fa-cog' aria-hidden='true'></span> Edit</a> ";
-                          echo "<a href='".DIR."AdminPanel-Forum-Categories/DeleteSubCat/$row->forum_id' class='btn btn-danger btn-xs' role='button'><span class='fa fa-fw fa-trash' aria-hidden='true'></span></a> ";
+                          echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubEdit/$row->forum_id' class='btn btn-success btn-sm' role='button'><span class='fa fa-fw fa-cog' aria-hidden='true'></span> Edit</a> ";
+                          echo "<a href='".DIR."AdminPanel-Forum-Categories/DeleteSubCat/$row->forum_id' class='btn btn-danger btn-sm' role='button'><span class='fa fa-fw fa-trash' aria-hidden='true'></span></a> ";
                         echo "</div>";
                       echo "</div>";
                     echo "</div>";
@@ -217,15 +217,15 @@ use Libs\Form,
                       echo "<div class='col-lg-6 col-md-6' style='text-align: right; margin-bottom: 2px'>";
                         // Check to see if object is at top
                         if($row->forum_order_title > 1){
-                          echo "<a href='".DIR."AdminPanel-Forum-Categories/CatMainUp/$row->forum_order_title' class='btn btn-primary btn-xs' role='button'><span class='fa fa-fw fa-caret-up' aria-hidden='true'></span></a> ";
+                          echo "<a href='".DIR."AdminPanel-Forum-Categories/CatMainUp/$row->forum_order_title' class='btn btn-primary btn-sm' role='button'><span class='fa fa-fw fa-caret-up' aria-hidden='true'></span></a> ";
                         }
                         // Check to see if object is at bottom
                         if($data['fourm_cat_main_last'] != $row->forum_order_title){
-                          echo "<a href='".DIR."AdminPanel-Forum-Categories/CatMainDown/$row->forum_order_title' class='btn btn-primary btn-xs' role='button'><span class='fa fa-fw fa-caret-down' aria-hidden='true'></span></a> ";
+                          echo "<a href='".DIR."AdminPanel-Forum-Categories/CatMainDown/$row->forum_order_title' class='btn btn-primary btn-sm' role='button'><span class='fa fa-fw fa-caret-down' aria-hidden='true'></span></a> ";
                         }
-                        echo "<a href='".DIR."AdminPanel-Forum-Categories/CatMainEdit/$row->forum_id' class='btn btn-success btn-xs' role='button'><span class='fa fa-fw fa-cog' aria-hidden='true'></span> Edit</a> ";
-                        echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubList/$row->forum_id' class='btn btn-info btn-xs' role='button'><span class='fa fa-fw fa-list' aria-hidden='true'></span> Sub Categories</a> ";
-                        echo "<a href='".DIR."AdminPanel-Forum-Categories/DeleteMainCat/$row->forum_id' class='btn btn-danger btn-xs' role='button'><span class='fa fa-fw fa-trash' aria-hidden='true'></span></a> ";
+                        echo "<a href='".DIR."AdminPanel-Forum-Categories/CatMainEdit/$row->forum_id' class='btn btn-success btn-sm' role='button'><span class='fa fa-fw fa-cog' aria-hidden='true'></span> Edit</a> ";
+                        echo "<a href='".DIR."AdminPanel-Forum-Categories/CatSubList/$row->forum_id' class='btn btn-info btn-sm' role='button'><span class='fa fa-fw fa-list' aria-hidden='true'></span> Sub Categories</a> ";
+                        echo "<a href='".DIR."AdminPanel-Forum-Categories/DeleteMainCat/$row->forum_id' class='btn btn-danger btn-sm' role='button'><span class='fa fa-fw fa-trash' aria-hidden='true'></span></a> ";
                       echo "</div>";
                     echo "</div>";
                   echo "</div>";
