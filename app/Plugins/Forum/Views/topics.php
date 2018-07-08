@@ -4,7 +4,7 @@
 *
 * UserApplePie - Forum Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 2.1.0 for UAP v.4.2.1
+* @version 2.1.1 for UAP v.4.2.1
 */
 
 /** Forum Topics List View **/
@@ -94,7 +94,7 @@ use App\System\Language,
                       echo "<div class='col-lg-2 col-md-3 col-sm-3'>";
                           // Display total replys
                           // Display total topic replys
-                          echo "<div class='btn btn-info btn-xs' style='margin-bottom: 3px'>";
+                          echo "<div class='btn btn-info btn-sm' style='margin-bottom: 3px'>";
                       		  echo "Replies <span class='badge badge-light'>$row2->total_topic_replys</span>";
                       		echo "</div>";
                           echo " ";
@@ -102,11 +102,11 @@ use App\System\Language,
                           echo Sweets::getTotalSweets($f_p_id, 'Forum_Topic', 'Forum_Topic_Reply');
                           echo " ";
                           // Display total views
-                          echo "<div class='btn btn-info btn-xs' style='margin-top: 3px'> Views <span class='badge badge-light'>";
+                          echo "<div class='btn btn-info btn-sm' style='margin-top: 3px'> Views <span class='badge badge-light'>";
                             echo PageViews::views('false', $f_p_id, 'Forum_Topic', $data['current_userID']);
                           echo "</span></div> ";
                           // Display total images
-                          echo "<div class='btn btn-success btn-xs' style='margin-top: 3px'> Images <span class='badge badge-light'>";
+                          echo "<div class='btn btn-success btn-sm' style='margin-top: 3px'> Images <span class='badge badge-light'>";
                             echo Images::getImageCountForum('Topic', $f_p_id);
                           echo "</span></div>";
                       echo "</div>";
@@ -157,13 +157,13 @@ use App\System\Language,
                     echo "<div  id='Bar${f_p_id}' class='collapse col-xs-12'>";
                       // Display total replys
                       // Display total topic replys
-                      echo "<div class='btn btn-info btn-xs'>";
+                      echo "<div class='btn btn-info btn-sm'>";
                         echo "Replies <span class='badge badge-light'>$row2->total_topic_replys</span>";
                       echo "</div>";
                       // Display total sweets
                       echo Sweets::getTotalSweets($f_p_id, 'Forum_Topic', 'Forum_Topic_Reply');
                       // Display total views
-                      echo "<div class='btn btn-info btn-xs'> Views <span class='badge badge-light'>";
+                      echo "<div class='btn btn-info btn-sm'> Views <span class='badge badge-light'>";
                         echo PageViews::views('false', $f_p_id, 'Forum_Topic', $data['current_userID']);
                       echo "</span></div>";
 

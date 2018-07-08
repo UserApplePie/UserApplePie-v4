@@ -4,7 +4,7 @@
 *
 * UserApplePie - Forum Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 2.1.0 for UAP v.4.2.1
+* @version 2.1.1 for UAP v.4.2.1
 */
 
 /** Forum Home Page View **/
@@ -94,12 +94,12 @@ use Core\Language,
         								        echo "<div style='text-align: center'>";
 
                                             // Display total number of topics for this category
-                                            echo "<div class='btn btn-info btn-xs' style='margin-top: 5px'>";
+                                            echo "<div class='btn btn-info btn-sm' style='margin-top: 5px'>";
                                             echo "Topics <span class='badge badge-light'>$row2->total_topics_display</span>";
                                             echo "</div>";
 
                                             // Display total number of topic replys for this category
-                                            echo "<div class='btn btn-info btn-xs' style='margin-top: 3px'>";
+                                            echo "<div class='btn btn-info btn-sm' style='margin-top: 3px'>";
                                             echo "Replies <span class='badge badge-light'>$row2->total_topic_replys_display</span>";
                                             echo "</div>";
 
@@ -110,12 +110,12 @@ use Core\Language,
         								// Displays when not on mobile device
         								echo "<div class='media-right d-none d-sm-block' style='text-align: right'>";
                                             // Display total number of topics for this category
-                                            echo "<div class='btn btn-info btn-xs' style='margin-top: 5px'>";
+                                            echo "<div class='btn btn-info btn-sm' style='margin-top: 5px'>";
                                             echo "Topics <span class='badge badge-light'>$row2->total_topics_display</span>";
                                             echo "</div>";
                                             echo "<br>";
                                             // Display total number of topic replys for this category
-                                            echo "<div class='btn btn-info btn-xs' style='margin-top: 3px'>";
+                                            echo "<div class='btn btn-info btn-sm' style='margin-top: 3px'>";
                                             echo "Replies <span class='badge badge-light'>$row2->total_topic_replys_display</span>";
                                             echo "</div>";
         								echo "</div>";

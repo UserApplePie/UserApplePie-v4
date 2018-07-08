@@ -4,7 +4,7 @@
 *
 * UserApplePie - Forum Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 2.1.0 for UAP v.4.2.1
+* @version 2.1.1 for UAP v.4.2.1
 */
 
 /** Forum Settings Admin Panel View **/
@@ -146,7 +146,7 @@ use Libs\Form,
                 echo "<input type='hidden' name='token_ForumAdmin' value='".$data['csrf_token']."'>";
                 echo "<input type='hidden' name='remove_group_user' value='true' />";
                 echo "<input type='hidden' name='groupID' value='".$member[0]->groupID."'>";
-                echo "<button class='btn btn-xs btn-danger' name='submit' type='submit'>Remove</button>";
+                echo "<button class='btn btn-sm btn-danger' name='submit' type='submit'>Remove</button>";
                 echo Form::close();
                 echo " - <font color='".$member[0]->groupFontColor."' style='font-weight: ".$member[0]->groupFontWeight."'>".$member[0]->groupName."</font>";
                 echo "</td></tr>";
@@ -167,7 +167,7 @@ use Libs\Form,
                 echo "<input type='hidden' name='token_ForumAdmin' value='".$data['csrf_token']."'>";
                 echo "<input type='hidden' name='add_group_user' value='true' />";
                 echo "<input type='hidden' name='groupID' value='".$notmember[0]->groupID."'>";
-                echo "<button class='btn btn-xs btn-success' name='submit' type='submit'>Add</button>";
+                echo "<button class='btn btn-sm btn-success' name='submit' type='submit'>Add</button>";
                 echo Form::close();
                 echo " - <font color='".$notmember[0]->groupFontColor."' style='font-weight: ".$notmember[0]->groupFontWeight."'>".$notmember[0]->groupName."</font> ";
                 echo "</td></tr>";
@@ -197,7 +197,7 @@ use Libs\Form,
   //          echo "</td></tr>";
   //        echo "</table>";
   //        echo "<input type='hidden' name='update_users_group_perm' value='true' />";
-  //        echo "<button class='btn btn-xs btn-success' name='submit' type='submit'>Update Permissions</button>";
+  //        echo "<button class='btn btn-sm btn-success' name='submit' type='submit'>Update Permissions</button>";
   //        echo Form::close();
         ?>
 
@@ -222,7 +222,7 @@ use Libs\Form,
                 echo "<input type='hidden' name='token_ForumAdmin' value='".$data['csrf_token']."'>";
                 echo "<input type='hidden' name='remove_group_mod' value='true' />";
                 echo "<input type='hidden' name='groupID' value='".$member[0]->groupID."'>";
-                echo "<button class='btn btn-xs btn-danger' name='submit' type='submit'>Remove</button>";
+                echo "<button class='btn btn-sm btn-danger' name='submit' type='submit'>Remove</button>";
                 echo Form::close();
                 echo " - <font color='".$member[0]->groupFontColor."' style='font-weight: ".$member[0]->groupFontWeight."'>".$member[0]->groupName."</font>";
                 echo "</td></tr>";
@@ -243,7 +243,7 @@ use Libs\Form,
                 echo "<input type='hidden' name='token_ForumAdmin' value='".$data['csrf_token']."'>";
                 echo "<input type='hidden' name='add_group_mod' value='true' />";
                 echo "<input type='hidden' name='groupID' value='".$notmember[0]->groupID."'>";
-                echo "<button class='btn btn-xs btn-success' name='submit' type='submit'>Add</button>";
+                echo "<button class='btn btn-sm btn-success' name='submit' type='submit'>Add</button>";
                 echo Form::close();
                 echo " - <font color='".$notmember[0]->groupFontColor."' style='font-weight: ".$notmember[0]->groupFontWeight."'>".$notmember[0]->groupName."</font> ";
                 echo "</td></tr>";
@@ -276,7 +276,7 @@ use Libs\Form,
                 echo "<input type='hidden' name='token_ForumAdmin' value='".$data['csrf_token']."'>";
                 echo "<input type='hidden' name='remove_group_admin' value='true' />";
                 echo "<input type='hidden' name='groupID' value='".$member[0]->groupID."'>";
-                echo "<button class='btn btn-xs btn-danger' name='submit' type='submit'>Remove</button>";
+                echo "<button class='btn btn-sm btn-danger' name='submit' type='submit'>Remove</button>";
                 echo Form::close();
                 echo " - <font color='".$member[0]->groupFontColor."' style='font-weight: ".$member[0]->groupFontWeight."'>".$member[0]->groupName."</font>";
                 echo "</td></tr>";
@@ -297,7 +297,7 @@ use Libs\Form,
                 echo "<input type='hidden' name='token_ForumAdmin' value='".$data['csrf_token']."'>";
                 echo "<input type='hidden' name='add_group_admin' value='true' />";
                 echo "<input type='hidden' name='groupID' value='".$notmember[0]->groupID."'>";
-                echo "<button class='btn btn-xs btn-success' name='submit' type='submit'>Add</button>";
+                echo "<button class='btn btn-sm btn-success' name='submit' type='submit'>Add</button>";
                 echo Form::close();
                 echo " - <font color='".$notmember[0]->groupFontColor."' style='font-weight: ".$notmember[0]->groupFontWeight."'>".$notmember[0]->groupName."</font> ";
                 echo "</td></tr>";

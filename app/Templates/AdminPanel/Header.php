@@ -109,6 +109,12 @@ use Libs\ErrorMessages,
 				</a>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+				<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-SiteLinks">
+					<i class="fa fa-fw fa-globe"></i>
+					<span class="nav-link-text">Site Links</span>
+				</a>
+			</li>
+			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
 				<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-AuthLogs">
 					<i class="fa fa-fw fa-server"></i>
 					<span class="nav-link-text">Auth Logs</span>

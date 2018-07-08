@@ -99,10 +99,10 @@ $orderby = $data['orderby'];
               echo "<td>$row->groupID</td>";
   						/** Check to make sure group has a name/title **/
   						$group_name = (!empty($row->groupName) ? $row->groupName : "UnNamed Group");
-  						echo "<td><button type='button' class='btn btn-secondary btn-xs' data-toggle='modal' data-target='#myModal-$row->groupID'>$group_name</button></td>";
+  						echo "<td><button type='button' class='btn btn-secondary btn-sm' data-toggle='modal' data-target='#myModal-$row->groupID'>$group_name</button></td>";
               echo "<td><font color='$row->groupFontColor' style='font-weight: $row->groupFontWeight'>$row->groupName</font></td>";
               echo "<td align='right'>";
-              echo "<a href='".DIR."AdminPanel-Group/$row->groupID' class='btn btn-xs btn-primary'><span class='fa fa-fw  fa-pencil'></span></a>";
+              echo "<a href='".DIR."AdminPanel-Group/$row->groupID' class='btn btn-sm btn-primary'><span class='fa fa-fw  fa-pencil'></span></a>";
               echo "</td>";
   						echo "</tr>";
               echo "

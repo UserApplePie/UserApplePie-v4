@@ -25,10 +25,10 @@ use Libs\Language;
 						<?php } ?>
                         <Br>
                         <?php if($data['isAdmin'] == 'true'){
-                            echo " <a href='".SITE_URL."AdminPanel-User/".$data['profile']->userID."' title='Admin - Edit User' class='btn btn-warning btn-block btn-xs'>Admin - Edit User</a> ";
+                            echo " <a href='".SITE_URL."AdminPanel-User/".$data['profile']->userID."' title='Admin - Edit User' class='btn btn-warning btn-block btn-sm'>Admin - Edit User</a> ";
                         } ?>
                         <?php if($currentUserData[0]->username == $data['profile']->username){
-                            echo " <a href='".SITE_URL."Edit-Profile' title='".Language::show('mem_act_edit_profile', 'Members')."' class='btn btn-danger btn-block btn-xs'>".Language::show('mem_act_edit_profile', 'Members')."</a> ";
+                            echo " <a href='".SITE_URL."Edit-Profile' title='".Language::show('mem_act_edit_profile', 'Members')."' class='btn btn-danger btn-block btn-sm'>".Language::show('mem_act_edit_profile', 'Members')."</a> ";
                         } ?>
                     </div>
                 </div>
@@ -43,7 +43,7 @@ use Libs\Language;
                                 if($isLoggedIn){
                                     /* Check to see if Private Message Plugin is installed, if it is show link */
                                     if(file_exists(ROOTDIR.'app/Plugins/Messages/Controllers/Messages.php')){
-                                      echo "<tr><td>PM</td><td><a href='".SITE_URL."NewMessage/".$data['profile']->username."' class='btn btn-xs btn-secondary'>".Language::show('members_profile_sendmsg', 'Members')."</a></td></tr>";
+                                      echo "<tr><td>PM</td><td><a href='".SITE_URL."NewMessage/".$data['profile']->username."' class='btn btn-sm btn-secondary'>".Language::show('members_profile_sendmsg', 'Members')."</a></td></tr>";
                                     }
                                     /* Check to see if Friends Plugin is installed, if it is show link */
                                     if(file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php') && $currentUserData[0]->username != $data['profile']->username){
@@ -54,7 +54,7 @@ use Libs\Language;
                                         }else if($friends_status == "Pending"){
                                             echo "<tr><td>".Language::show('Friend', 'Friends')."</td><td> ".Language::show('pending_approval', 'Friends')." </td></tr>";
                                         }else{
-                                            echo "<tr><td>".Language::show('Friend', 'Friends')."</td><td><a href='".SITE_URL."AddFriend/".$data['profile']->username."' class='btn btn-xs btn-secondary'>".Language::show('send_friend_request', 'Friends')."</a></td></tr>";
+                                            echo "<tr><td>".Language::show('Friend', 'Friends')."</td><td><a href='".SITE_URL."AddFriend/".$data['profile']->username."' class='btn btn-sm btn-secondary'>".Language::show('send_friend_request', 'Friends')."</a></td></tr>";
                                         }
                                     }
                                 }

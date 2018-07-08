@@ -4,7 +4,7 @@
 *
 * UserApplePie - Forum Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 2.1.0 for UAP v.4.2.1
+* @version 2.1.1 for UAP v.4.2.1
 */
 
 /** Forum Topic View **/
@@ -47,11 +47,11 @@ use Core\Language,
       // Check to see if topic is allowed
       if($data['topic_allow'] == "TRUE"){
         // Display Views Count
-        echo "<div class='btn btn-xs btn-info'>Views <span class='badge badge-light'>".$data['PageViews']."</span></div>";
+        echo "<div class='btn btn-sm btn-info'>Views <span class='badge badge-light'>".$data['PageViews']."</span></div>";
         // Display Total Sweets Count for Topic and All Replys
         echo Sweets::getTotalSweets($data['topic_id'], 'Forum_Topic', 'Forum_Topic_Reply');
         // Display total images
-        echo "<div class='btn btn-success btn-xs'> Images <span class='badge badge-light'>";
+        echo "<div class='btn btn-success btn-sm'> Images <span class='badge badge-light'>";
           echo Images::getImageCountForum('Topic', $data['topic_id']);
         echo "</span></div>";
         echo "<hr>";
@@ -70,10 +70,10 @@ use Core\Language,
     					echo "</div>";
     					echo "<div class='col-lg-6 col-md-6 col-sm-6' style='text-align:right'>";
     						// Display how long ago this was posted
-                            $data_topic_date = $data['topic_date'];
+                $data_topic_date = $data['topic_date'];
     						echo "<font color=green> " . TimeDiff::dateDiff("now", "$data_topic_date", 1) . " ago</font> ";
-                            // Display post number
-                            echo " <span class='label label-secondary'>Topic</span> ";
+                // Display post number
+                echo " <span class='label label-secondary'>Topic</span> ";
     					echo "</div>";
     				echo "</div>";
     			echo "</div>";
@@ -91,18 +91,18 @@ use Core\Language,
             }else{
               echo "<span class='fas fa-user icon-size' style='margin-bottom: 2px'></span>";
             }
-            echo " <strong><a href='".DIR."Profile/$f_p_user_name' class='btn btn-xs btn-secondary'>$f_p_user_name</a></strong> <Br>";
+            echo " <strong><a href='".DIR."Profile/$f_p_user_name' class='btn btn-sm btn-secondary'>$f_p_user_name</a></strong> ";
+            // Check to see if current user is logged in... if not then hide the pm button
+            if(!empty($data['current_userID'])){
+              echo " <a href='".DIR."NewMessage/$f_p_user_name' class='btn btn-sm btn-secondary'>PM</a> ";
+            }
+            echo "<br>";
             // Show user's membership status
             foreach(CurrentUserData::getUserGroups($data['topic_creator']) as $row){ echo "<font size='2'>".$row."</font><br>"; };
             echo "<font size='1'>";
               echo "<strong>Total Posts</strong>: $user_total_posts<br>";
               echo "<strong>Joined</strong>: $user_signup_display";
             echo "</font>";
-            echo " <a href='".DIR."Profile/$f_p_user_name' class='btn btn-xs btn-secondary'>Profile</a> ";
-            // Check to see if current user is logged in... if not then hide the pm button
-            if(!empty($data['current_userID'])){
-              echo " <a href='".DIR."NewMessage/$f_p_user_name' class='btn btn-xs btn-secondary'>PM</a> ";
-            }
           echo "</div>";
           echo "<div class='col-lg-9 col-md-9 col-sm-9' style='padding-top: 8px; padding-bottom: 8px; float: left; padding-bottom: 1500px; margin-bottom: -1500px;'>";
             // Display Post DateTime
@@ -118,7 +118,7 @@ use Core\Language,
               // CSRF Token
               echo "<input type='hidden' name='token_forum' value='".$data['csrf_token']."' />";
               // Display Submit Button
-              echo "<button class='btn btn-xs btn-success' name='submit' type='submit'>Update Topic</button>";
+              echo "<button class='btn btn-sm btn-success' name='submit' type='submit'>Update Topic</button>";
               echo Form::close();
             }else{
               // Display Topic Content
@@ -160,7 +160,7 @@ use Core\Language,
                 // CSRF Token
                 echo "<input type='hidden' name='token_forum' value='".$data['csrf_token']."' />";
                 // Display Submit Button
-                echo "<button class='btn btn-xs btn-info' name='submit' type='submit'>Edit Topic</button>";
+                echo "<button class='btn btn-sm btn-info' name='submit' type='submit'>Edit Topic</button>";
                 echo Form::close();
               }
   					echo "</div>";
@@ -216,8 +216,8 @@ use Core\Language,
 									// Display how long ago this was posted
 									$timestart = "$rf_p_timestamp";  //Time of post
 									echo "<font color=green> " . TimeDiff::dateDiff("now", "$timestart", 1) . " ago</font> ";
-                                    // Display reply post number
-                                    echo " <span class='label label-secondary'>#$post_num</span> ";
+                  // Display reply post number
+                  echo " <span class='label label-secondary'>#$post_num</span> ";
 								echo "</div>";
 							echo "</div>";
 						echo "</div>";
@@ -235,18 +235,18 @@ use Core\Language,
                 }else{
                   echo "<span class='fas fa-user icon-size' style='margin-bottom: 2px'></span>";
                 }
-                echo " <strong><a href='".DIR."Profile/".$rf_p_user_name."' class='btn btn-xs btn-secondary'>$rf_p_user_name</a></strong> <Br>";
+                echo " <strong><a href='".DIR."Profile/".$rf_p_user_name."' class='btn btn-sm btn-secondary'>$rf_p_user_name</a></strong>";
+                // Check to see if current user is logged in... if not then hide the pm button
+                if(!empty($data['current_userID'])){
+                  echo " <a href='".DIR."NewMessage/$rf_p_user_name' class='btn btn-sm btn-secondary'>PM</a> ";
+                }
+                echo "<br>";
                 // Show user's membership status
                 foreach(CurrentUserData::getUserGroups($rf_p_user_id) as $row){ echo "<font size='2'>".$row."</font><br>"; };
                 echo "<font size='1'>";
                   echo "<strong>Total Posts</strong>: $user_total_posts<br>";
                   echo "<strong>Joined</strong>: $user_signup_display";
                 echo "</font>";
-                echo " <a href='".DIR."Profile/$rf_p_user_name' class='btn btn-xs btn-secondary'>Profile</a> ";
-                // Check to see if current user is logged in... if not then hide the pm button
-                if(!empty($data['current_userID'])){
-                  echo " <a href='".DIR."NewMessage/$rf_p_user_name' class='btn btn-xs btn-secondary'>PM</a> ";
-                }
               echo "</div>";
               echo "<div class='col-lg-9 col-md-9 col-sm-9' style='padding-top: 8px; padding-bottom: 8px; float: left; padding-bottom: 1500px; margin-bottom: -1500px;'>";
                 // Display Post DateTime
@@ -267,7 +267,7 @@ use Core\Language,
                     // CSRF Token
                     echo "<input type='hidden' name='token_forum' value='".$data['csrf_token']."' />";
                     // Display Submit Button
-                    echo "<button class='btn btn-xs btn-success' name='submit' type='submit'>Update Reply</button>";
+                    echo "<button class='btn btn-sm btn-success' name='submit' type='submit'>Update Reply</button>";
                     echo Form::close();
                   }else{
                     // Display Topic Reply Content
@@ -318,7 +318,7 @@ use Core\Language,
                     // CSRF Token
                     echo "<input type='hidden' name='token_forum' value='".$data['csrf_token']."' />";
                     // Display Submit Button
-                    echo "<button class='btn btn-xs btn-info' name='submit' type='submit'>Edit Reply</button>";
+                    echo "<button class='btn btn-sm btn-info' name='submit' type='submit'>Edit Reply</button>";
                     echo Form::close();
                   }
                   // Display Admin Hide/UnHide Button
@@ -331,14 +331,14 @@ use Core\Language,
                         echo "<input type='hidden' name='reply_url' value='$reply_url' />";
                         echo "<input type='hidden' name='action' value='unhide_reply' />";
                         echo "<input type='hidden' name='reply_id' value='$rf_p_main_id' />";
-                        echo "<button name='submit' type='submit' class='btn btn-xs btn-warning'>UnHide Reply</button>";
+                        echo "<button name='submit' type='submit' class='btn btn-sm btn-warning'>UnHide Reply</button>";
                       }else{
                         // Hide Button
                         $reply_url = "Topic/".$data['topic_id']."/".$data['current_page']."/#topicreply".$rf_p_main_id;
                         echo "<input type='hidden' name='reply_url' value='$reply_url' />";
                         echo "<input type='hidden' name='action' value='hide_reply' />";
                         echo "<input type='hidden' name='reply_id' value='$rf_p_main_id' />";
-                        echo "<button name='submit' type='submit' class='btn btn-xs btn-danger' style='margin-top: 2px'>Hide Reply</button>";
+                        echo "<button name='submit' type='submit' class='btn btn-sm btn-danger' style='margin-top: 2px'>Hide Reply</button>";
                       }
                     // CSRF Token
                     echo "<input type='hidden' name='token_forum' value='".$data['csrf_token']."' />";
@@ -414,7 +414,7 @@ use Core\Language,
             echo Form::open(array('method' => 'post'));
             echo "<input type='hidden' name='action' value='unsubscribe' />";
             echo "<input type='hidden' name='token_forum' value='".$data['csrf_token']."' />";
-            echo "<button type='submit' name='submit' class='btn btn-warning btn-xs'>UnSubscribe</button>";
+            echo "<button type='submit' name='submit' class='btn btn-warning btn-sm'>UnSubscribe</button>";
             echo Form::close();
           }else {
             if($data['is_user_subscribed'] != true && $data['checkUserPosted'] == true){
@@ -423,7 +423,7 @@ use Core\Language,
               echo Form::open(array('method' => 'post'));
               echo "<input type='hidden' name='action' value='subscribe' />";
               echo "<input type='hidden' name='token_forum' value='".$data['csrf_token']."' />";
-              echo "<button type='submit' name='submit' class='btn btn-success btn-xs'>Subscribe</button>";
+              echo "<button type='submit' name='submit' class='btn btn-success btn-sm'>Subscribe</button>";
               echo Form::close();
             }
           }
@@ -437,11 +437,11 @@ use Core\Language,
             if($data['topic_status'] == 2){
               // UnLock Button
               echo "<input type='hidden' name='action' value='unlock_topic' />";
-              echo "<button name='submit' type='submit' class='btn btn-xs btn-warning'>UnLock Topic</button>";
+              echo "<button name='submit' type='submit' class='btn btn-sm btn-warning'>UnLock Topic</button>";
             }else{
               // Lock Button
               echo "<input type='hidden' name='action' value='lock_topic' />";
-              echo "<button name='submit' type='submit' class='btn btn-xs btn-danger'>Lock Topic</button>";
+              echo "<button name='submit' type='submit' class='btn btn-sm btn-danger'>Lock Topic</button>";
             }
           // CSRF Token
           echo "<input type='hidden' name='token_forum' value='".$data['csrf_token']."' />";
@@ -461,12 +461,12 @@ use Core\Language,
           if($data['topic_allow'] == "FALSE"){
             // UnHide Button
             echo "<input type='hidden' name='action' value='unhide_topic' />";
-            echo "<button name='submit' type='submit' class='btn btn-xs btn-warning'>UnHide Topic</button>";
+            echo "<button name='submit' type='submit' class='btn btn-sm btn-warning'>UnHide Topic</button>";
           }else{
             // Hide Button
             echo "<input type='hidden' name='action' value='hide_topic' />";
             echo Form::input(array('type' => 'text', 'name' => 'hide_reason', 'class' => 'form-control', 'placeholder' => 'Reason For Hiding This Topic', 'maxlength' => '255'));
-            echo "<button name='submit' type='submit' class='btn btn-xs btn-danger' style='margin-top: 2px'>Hide Topic</button>";
+            echo "<button name='submit' type='submit' class='btn btn-sm btn-danger' style='margin-top: 2px'>Hide Topic</button>";
           }
         // CSRF Token
         echo "<input type='hidden' name='token_forum' value='".$data['csrf_token']."' />";

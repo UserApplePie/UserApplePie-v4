@@ -84,7 +84,7 @@ use Libs\Form,
           echo "<input type='hidden' name='token_route' value='".$data['csrfToken']."'>";
           echo "<input type='hidden' name='delete_route' value='true' />";
           echo "<input type='hidden' name='id' value='".$data['system_route'][0]->id."'>";
-          echo "<button class='btn btn-xs btn-danger' name='submit' type='submit'>Delete System Route</button>";
+          echo "<button class='btn btn-sm btn-danger' name='submit' type='submit'>Delete System Route</button>";
           echo Form::close();
       ?>
 		</div>

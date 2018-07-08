@@ -73,7 +73,7 @@ $orderby = $data['orderby'];
 						foreach($data['users_list'] as $row) {
 							echo "<tr>";
               echo "<td>$row->userID</td>";
-							echo "<td><button type='button' class='btn btn-secondary btn-xs' data-toggle='modal' data-target='#myModal-$row->userID'>$row->username</button></td>";
+							echo "<td><button type='button' class='btn btn-secondary btn-sm' data-toggle='modal' data-target='#myModal-$row->userID'>$row->username</button></td>";
 							echo "<td>$row->firstName $row->lastName</td>";
               echo "<td class='hidden-xs'>";
 								if($row->LastLogin){ echo date("M d, y",strtotime($row->LastLogin)); }else{ echo "Never"; }
@@ -82,7 +82,7 @@ $orderby = $data['orderby'];
 							echo date("M d, y",strtotime($row->SignUp));
 							echo "</td>";
 							echo "<td align='right'>";
-							echo "<a href='".DIR."AdminPanel-User/$row->userID' class='btn btn-xs btn-primary'><span class='fa fa-fw  fa-pencil'></span></a>";
+							echo "<a href='".DIR."AdminPanel-User/$row->userID' class='btn btn-sm btn-primary'><span class='fa fa-fw  fa-pencil'></span></a>";
 							echo "</td>";
 							echo "</tr>";
 							echo "

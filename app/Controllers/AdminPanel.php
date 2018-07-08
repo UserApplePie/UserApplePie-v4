@@ -1154,4 +1154,39 @@ class AdminPanel extends Controller{
       Load::View("AdminPanel/AuthLogs", $data, "", "AdminPanel");
     }
 
+    /*
+    ** Admin Panel Site Links
+    ** Allows admins to edit Site Links
+    */
+    public function SiteLinks(){
+
+      // Get data for users
+      $data['title'] = "Site Links Editor";
+      $data['welcome_message'] = "Welcome to the Admin Panel Site Links Editor.  You can edit links shown within set arears of the web site.";
+
+      // Setup Breadcrumbs
+      $data['breadcrumbs'] = "
+        <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+        <li class='breadcrumb-item active'><i class='fa fa-fw fa-globe'></i> ".$data['title']."</li>
+      ";
+
+      /** Check to see if user is logged in **/
+      if($data['isLoggedIn'] = $this->auth->isLogged()){
+        /** User is logged in - Get their data **/
+        $u_id = $this->auth->user_info();
+        $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+        if($data['isAdmin'] = $this->user->checkIsAdmin($u_id) == 'false'){
+          /** User Not Admin - kick them out **/
+          \Libs\ErrorMessages::push('You are Not Admin', '');
+        }
+      }else{
+        /** User Not logged in - kick them out **/
+        \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
+      }
+
+      Load::View("AdminPanel/SiteLinks", $data, "", "AdminPanel");
+    }
+
+
+
 }

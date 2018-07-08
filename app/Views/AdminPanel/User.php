@@ -133,7 +133,7 @@ use Libs\Form,
               echo "<input type='hidden' name='token_user' value='".$data['csrfToken']."'>";
               echo "<input type='hidden' name='deactivate_user' value='true' />";
               echo "<input type='hidden' name='au_id' value='".$user_data[0]->userID."'>";
-              echo "<button class='btn btn-xs btn-danger' name='submit' type='submit'>Deactivate User</button>";
+              echo "<button class='btn btn-sm btn-danger' name='submit' type='submit'>Deactivate User</button>";
               echo Form::close();
             }else{
               echo "User Account Is Not Active";
@@ -141,7 +141,7 @@ use Libs\Form,
               echo "<input type='hidden' name='token_user' value='".$data['csrfToken']."'>";
               echo "<input type='hidden' name='activate_user' value='true' />";
               echo "<input type='hidden' name='au_id' value='".$user_data[0]->userID."'>";
-              echo "<button class='btn btn-xs btn-success' name='submit' type='submit'>Activate User</button>";
+              echo "<button class='btn btn-sm btn-success' name='submit' type='submit'>Activate User</button>";
               echo Form::close();
             }
           ?>
@@ -164,7 +164,7 @@ use Libs\Form,
                   echo "<input type='hidden' name='remove_group' value='true' />";
                   echo "<input type='hidden' name='au_userID' value='".$user_data[0]->userID."'>";
                   echo "<input type='hidden' name='au_groupID' value='".$member[0]->groupID."'>";
-                  echo "<button class='btn btn-xs btn-danger' name='submit' type='submit'>Remove</button>";
+                  echo "<button class='btn btn-sm btn-danger' name='submit' type='submit'>Remove</button>";
                   echo Form::close();
                   echo " - <font color='".$member[0]->groupFontColor."' style='font-weight: ".$member[0]->groupFontWeight."'>".$member[0]->groupName."</font>";
                   echo "</td></tr>";
@@ -186,7 +186,7 @@ use Libs\Form,
                   echo "<input type='hidden' name='add_group' value='true' />";
                   echo "<input type='hidden' name='au_userID' value='".$user_data[0]->userID."'>";
                   echo "<input type='hidden' name='au_groupID' value='".$notmember[0]->groupID."'>";
-                  echo "<button class='btn btn-xs btn-success' name='submit' type='submit'>Add</button>";
+                  echo "<button class='btn btn-sm btn-success' name='submit' type='submit'>Add</button>";
                   echo Form::close();
                   echo " - <font color='".$notmember[0]->groupFontColor."' style='font-weight: ".$notmember[0]->groupFontWeight."'>".$notmember[0]->groupName."</font> ";
                   echo "</td></tr>";
