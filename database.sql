@@ -523,7 +523,8 @@ CREATE TABLE `uap4_links` (
   `url` varchar(255) DEFAULT NULL,
   `alt_text` varchar(255) DEFAULT NULL,
   `location` varchar(255) DEFAULT NULL,
-  `link_order` int(11) DEFAULT NULL,
+  `link_order` int(11) DEFAULT '0',
+  `link_order_drop_down` int(11) DEFAULT '0',
   `drop_down` int(11) DEFAULT '0',
   `drop_down_for` int(11) DEFAULT '0',
   `require_plugin` varchar(255) DEFAULT NULL,
@@ -537,10 +538,10 @@ CREATE TABLE `uap4_links` (
 --
 
 INSERT INTO `uap4_links` (`id`, `title`, `url`, `alt_text`, `location`, `link_order`, `drop_down`, `drop_down_for`, `require_plugin`, `timestamp`) VALUES
-(1, 'Home', 'Home', 'Home Page', 'header_main', 1, 0, 0, NULL, '2018-07-08 10:47:22'),
-(2, 'About', 'About', 'About Us', 'header_main', 2, 1, 0, NULL, '2018-07-08 10:48:40'),
-(3, 'Contact', 'Contact', 'Contact Us', 'header_main', 3, 0, 0, NULL, '2018-07-08 10:49:16'),
-(4, 'Members', 'Members', 'Members', 'header_main', 2, 0, 2, NULL, '2018-07-08 11:40:26'),
-(5, 'Online Members', 'Online-Members', 'Online Members', 'header_main', 3, 0, 2, NULL, '2018-07-08 12:25:39'),
-(6, 'About', 'About', 'About', 'header_main', 1, 0, 2, NULL, '2018-07-08 12:28:20'),
-(7, 'Forum', 'Forum', 'Forum', 'header_main', 4, 0, 0, 'Forum', '2018-07-08 12:30:44');
+(1, 'Home', 'Home', 'Home Page', 'header_main', 1, 0, 0, 0, NULL, '2018-07-08 10:47:22'),
+(2, 'About', 'About', 'About Us', 'header_main', 2, 0, 1, 0, NULL, '2018-07-08 10:48:40'),
+(3, 'Contact', 'Contact', 'Contact Us', 'header_main', 3, 0, 0, 0, NULL, '2018-07-08 10:49:16'),
+(4, 'Members', 'Members', 'Members', 'header_main', 2, 1, 0, 2, NULL, '2018-07-08 11:40:26'),
+(5, 'Online Members', 'Online-Members', 'Online Members', 'header_main', 2, 2, 0, 2, NULL, '2018-07-08 12:25:39'),
+(6, 'About', 'About', 'About', 'header_main', 2, 3, 0, 2, NULL, '2018-07-08 12:28:20'),
+(7, 'Forum', 'Forum', 'Forum', 'header_main', 4, 0, 0, 0, 'Forum', '2018-07-08 12:30:44');

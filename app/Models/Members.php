@@ -214,7 +214,7 @@ class Members extends Models
       // Check to see if profile is being requeted by userID
       if(ctype_digit($user)){
         // Requeted profile information based on ID
-        return $this->db->select("
+        $profile_data = $this->db->select("
           SELECT
             u.userID,
             u.username,
@@ -232,7 +232,7 @@ class Members extends Models
             array(':userID' => $user));
       }else{
         // Requested profile information based on Name
-          return $this->db->select("
+          $profile_data = $this->db->select("
   					SELECT
   						u.userID,
   						u.username,
@@ -248,6 +248,11 @@ class Members extends Models
   					FROM " . PREFIX . "users u
   					WHERE u.username = :username",
               array(':username' => $user));
+      }
+      if(isset($profile_data)){
+        return $profile_data;
+      }else{
+        return false;
       }
     }
 
