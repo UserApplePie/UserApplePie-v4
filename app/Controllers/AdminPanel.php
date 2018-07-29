@@ -1158,10 +1158,10 @@ class AdminPanel extends Controller{
     ** Admin Panel Site Links
     ** Allows admins to edit Site Links
     */
-    public function SiteLinks(){
+    public function SiteLinks($action = null, $link_location = null, $link_id = null){
 
       // Get data for users
-      $data['title'] = "Site Links Editor";
+      $data['title'] = "Site Links";
       $data['welcome_message'] = "Welcome to the Admin Panel Site Links Editor.  You can edit links shown within set arears of the web site.";
 
       // Setup Breadcrumbs
@@ -1184,7 +1184,183 @@ class AdminPanel extends Controller{
         \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
       }
 
+      if($action == "LinkUp"){
+        if($this->model->moveUpLink($link_location,$link_id)){
+          // Success
+          \Libs\SuccessMessages::push('You Have Successfully Moved Up Site Link', 'AdminPanel-SiteLinks');
+        }else{
+          // Fail
+          \Libs\ErrorMessages::push('Moved Up Site Link Failed', 'AdminPanel-SiteLinks');
+        }
+      }else if($action == "LinkDown"){
+        if($this->model->moveDownLink($link_location,$link_id)){
+          // Success
+          \Libs\SuccessMessages::push('You Have Successfully Moved Down Site Link', 'AdminPanel-SiteLinks');
+        }else{
+          // Fail
+          \Libs\ErrorMessages::push('Moved Down Site Link Failed', 'AdminPanel-SiteLinks');
+        }
+      }
+
+      /** Get all Main Site Links **/
+      $data['main_site_links'] = $this->model->getSiteLinks('header_main');
+      $data['link_order_last'] = $this->model->getSiteLinksLastID('header_main');
+
       Load::View("AdminPanel/SiteLinks", $data, "", "AdminPanel");
+    }
+
+    /*
+    ** Admin Panel Site Link
+    ** Allows admins to add or edit Site Link
+    */
+    public function SiteLink($action = null, $main_link_id = null, $dd_link_id = null){
+
+      /** Check to see if user is logged in **/
+      if($data['isLoggedIn'] = $this->auth->isLogged()){
+        /** User is logged in - Get their data **/
+        $u_id = $this->auth->user_info();
+        $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+        if($data['isAdmin'] = $this->user->checkIsAdmin($u_id) == 'false'){
+          /** User Not Admin - kick them out **/
+          \Libs\ErrorMessages::push('You are Not Admin', '');
+        }
+      }else{
+        /** User Not logged in - kick them out **/
+        \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
+      }
+
+      if($action == 'New'){
+        /** Admin is Creating a New Link **/
+        $data['title'] = "Site Link Editor - New";
+        $data['welcome_message'] = "You are creating a new site link.  Fill out the form below.";
+        $data['edit_type'] = "new";
+        $data['csrfToken'] = Csrf::makeToken('SiteLink');
+      }else if($action == "LinkDDUp"){
+        if($this->model->moveUpDDLink($main_link_id,$dd_link_id)){
+          // Success
+          \Libs\SuccessMessages::push('You Have Successfully Moved Up Drop Down Link', 'AdminPanel-SiteLink/'.$main_link_id.'/');
+        }else{
+          // Fail
+          \Libs\ErrorMessages::push('Move Up Drop Down Link Failed', 'AdminPanel-SiteLink/'.$main_link_id.'/');
+        }
+      }else if($action == "LinkDDDown"){
+        if($this->model->moveDownDDLink($main_link_id,$dd_link_id)){
+          // Success
+          \Libs\SuccessMessages::push('You Have Successfully Moved Down Drop Down Link', 'AdminPanel-SiteLink/'.$main_link_id.'/');
+        }else{
+          // Fail
+          \Libs\ErrorMessages::push('Move Down Drop Down Link Failed', 'AdminPanel-SiteLink/'.$main_link_id.'/');
+        }
+      }else if($action == 'LinkDelete'){
+          /** Admin is Creating a New Link **/
+          $main_link_title = $this->model->getMainLinkTitle($main_link_id);
+          $data['title'] = "Site Link Editor - Delete Link: $main_link_title";
+          $data['welcome_message'] = "Do you want to delete link: $main_link_title";
+          $data['main_link_id'] = $main_link_id;
+          $data['edit_type'] = "deletelink";
+          $data['link_data'] = $this->model->getSiteLinkData($main_link_id);
+          $data['csrfToken'] = Csrf::makeToken('SiteLink');
+      }else if($action == 'DropDownUpdate'){
+          /** Admin is Creating a New Link **/
+          $main_link_title = $this->model->getMainLinkTitle($main_link_id);
+          $data['title'] = "Site Link Editor - Update Drop Down Link for $main_link_title";
+          $data['welcome_message'] = "You are updating a drop down link.  Fill out the form below.";
+          $data['dd_link_id'] = $dd_link_id;
+          $data['main_link_id'] = $main_link_id;
+          $data['edit_type'] = "dropdownupdate";
+          $data['link_data'] = $this->model->getSiteLinkData($dd_link_id);
+          $data['csrfToken'] = Csrf::makeToken('SiteLink');
+      }else if($action == 'DropDownNew'){
+          /** Admin is Creating a New Link **/
+          $main_link_title = $this->model->getMainLinkTitle($main_link_id);
+          $data['title'] = "Site Link Editor - New Drop Down Link for $main_link_title";
+          $data['welcome_message'] = "You are creating a new drop down link.  Fill out the form below.";
+          $data['main_link_id'] = $main_link_id;
+          $data['edit_type'] = "dropdownnew";
+          $data['csrfToken'] = Csrf::makeToken('SiteLink');
+      }else if(ctype_digit(strval($action))){
+        /** Admin is Editing a Link **/
+        $data['title'] = "Site Link Editor - Update";
+        $data['welcome_message'] = "You are updating a site link.";
+        $data['edit_type'] = "update";
+        $data['link_data'] = $this->model->getSiteLinkData($action);
+        $data['csrfToken'] = Csrf::makeToken('SiteLink');
+        /** Get all Drop Down Links **/
+        $data['drop_down_links'] = $this->model->getSiteDropDownLinks($action);
+        $data['drop_down_order_last'] = $this->model->getSiteDropDownLinksLastID($action);
+      }else{
+        /** Send User Back because the URL Input is invalid **/
+        \Libs\ErrorMessages::push('Invalid URL Input!', 'AdminPanel-SiteLinks');
+      }
+
+      /** Check to see if Admin is updating System Route **/
+      if(isset($_POST['submit'])){
+        /** Check to make sure the csrf token is good **/
+        if (Csrf::isTokenValid('SiteLink')) {
+          /** Get Form Data **/
+          $link_action = Request::post('link_action');
+          $id = Request::post('id');
+          $title = Request::post('title');
+          $url = Request::post('url');
+          $alt_text = Request::post('alt_text');
+          $location = "header_main";
+          $drop_down = Request::post('drop_down');
+          $require_plugin = Request::post('require_plugin');
+          $drop_down_for = Request::post('drop_down_for');
+          $dd_link_id = Request::post('dd_link_id');
+          /** Check if update or new **/
+          if($link_action == "update"){
+            if($this->model->updateSiteLink($id, $title, $url, $alt_text, $location, $drop_down, $require_plugin)){
+              /** Success **/
+              \Libs\SuccessMessages::push('You Have Successfully Updated Site Link', 'AdminPanel-SiteLinks');
+            }else{
+              /** Error **/
+              \Libs\ErrorMessages::push('Update Site Link Failed', 'AdminPanel-SiteLinks');
+            }
+          }else if($link_action == "new"){
+            if($this->model->addSiteLink($title, $url, $alt_text, $location, $drop_down, $require_plugin)){
+              /** Success **/
+              \Libs\SuccessMessages::push('You Have Successfully Added New Site Link', 'AdminPanel-SiteLinks');
+            }else{
+              /** Error **/
+              \Libs\ErrorMessages::push('Create New Site Link Failed', 'AdminPanel-SiteLinks');
+            }
+          }else if($link_action == "delete"){
+            if($this->model->deleteSiteLink($id)){
+              /** Success **/
+              \Libs\SuccessMessages::push('You Have Successfully Deleted Site Link', 'AdminPanel-SiteLinks');
+            }else{
+              /** Error **/
+              \Libs\ErrorMessages::push('Delete Site Link Failed', 'AdminPanel-SiteLinks');
+            }
+          }else if($link_action == "dropdownnew"){
+            if($this->model->addSiteDDLink($title, $url, $alt_text, $location, $drop_down, $require_plugin, $drop_down_for)){
+              /** Success **/
+              \Libs\SuccessMessages::push('You Have Successfully Added New Site Link', 'AdminPanel-SiteLinks');
+            }else{
+              /** Error **/
+              \Libs\ErrorMessages::push('Create New Site Link Failed', 'AdminPanel-SiteLinks');
+            }
+          }else if($link_action == "dropdownupdate"){
+            if($this->model->updateSiteDDLink($dd_link_id, $title, $url, $alt_text, $location, $drop_down, $require_plugin)){
+              /** Success **/
+              \Libs\SuccessMessages::push('You Have Successfully Updated Site Link', 'AdminPanel-SiteLinks');
+            }else{
+              /** Error **/
+              \Libs\ErrorMessages::push('Update Site Link Failed', 'AdminPanel-SiteLinks');
+            }
+          }
+        }
+      }
+
+      // Setup Breadcrumbs
+      $data['breadcrumbs'] = "
+        <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+        <li class='breadcrumb-item active'><a href='".DIR."AdminPanel-SiteLinks'><i class='fa fa-fw fa-globe'></i>Site Links</a></li>
+        <li class='breadcrumb-item active'><i class='fa fa-fw fa-globe'></i> ".$data['title']."</li>
+      ";
+
+      Load::View("AdminPanel/SiteLink", $data, "", "AdminPanel");
     }
 
 

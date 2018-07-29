@@ -158,7 +158,7 @@ class Members extends Controller
     {
         $onlineUsers = new MembersModel();
         $profile = $onlineUsers->getUserProfile($user);
-        if(sizeof($profile)>0){
+        if($profile){
             $data['title'] = $profile[0]->username . "'s ".$this->language->get('members_profile_title');
             $data['profile'] = $profile[0];
 

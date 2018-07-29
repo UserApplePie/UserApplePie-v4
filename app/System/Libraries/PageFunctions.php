@@ -57,7 +57,9 @@ class PageFunctions {
 			if(isset($data)){
 				foreach ($data as $link) {
 					/* Check to see if is a plugin link and if that plugin exists */
-					if(isset($link->require_plugin)){
+					if(empty($link->require_plugin)){
+						$link_enable = true;
+					}else	if(isset($link->require_plugin)){
 						if(file_exists(ROOTDIR.'app/Plugins/'.$link->require_plugin.'/Controllers/'.$link->require_plugin.'.php')){
 							$link_enable = true;
 						}else{
@@ -93,7 +95,7 @@ class PageFunctions {
 					".PREFIX."links u
 				WHERE
 					drop_down_for = :drop_down_for
-				ORDER BY link_order ASC
+				ORDER BY link_order_drop_down ASC
 				",
 			array(':drop_down_for' => $drop_down_for));
 			$links_output = "";
