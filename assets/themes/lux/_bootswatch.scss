@@ -1,4 +1,4 @@
-// Lux 4.1.1
+// Lux 4.2.1
 // Bootswatch
 
 
@@ -117,6 +117,12 @@ th {
 .table {
   th, td {
     padding: 1.5rem;
+  }
+
+  &-sm {
+    th, td {
+      padding: 0.75rem;
+    }
   }
 }
 
