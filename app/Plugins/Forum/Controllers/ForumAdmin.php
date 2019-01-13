@@ -52,58 +52,64 @@ class ForumAdmin extends Controller{
 
     // Check to make sure admin is trying to update user profile
 		if(isset($_POST['submit'])){
-			// Check to make sure the csrf token is good
-			if (Csrf::isTokenValid('ForumAdmin')) {
-        // Check to see if admin is editing forum global settings
-        if($_POST['update_global_settings'] == "true"){
-          // Get data from post
-          $forum_on_off = Request::post('forum_on_off');
-          $forum_title = Request::post('forum_title');
-          $forum_description = Request::post('forum_description');
-          $forum_topic_limit = Request::post('forum_topic_limit');
-          $forum_topic_reply_limit = Request::post('forum_topic_reply_limit');
-          $forum_posts_group_change_enable = Request::post('forum_posts_group_change_enable');
-          $forum_posts_group_change = Request::post('forum_posts_group_change');
-          // Run Forum Settings Update
-          if($this->forum->updateGlobalSettings($forum_on_off,$forum_title,$forum_description,$forum_topic_limit,$forum_topic_reply_limit,$forum_posts_group_change_enable,$forum_posts_group_change)){
-            // Success
-            \Libs\SuccessMessages::push('You Have Successfully Updated Forum Global Settings', 'AdminPanel-Forum-Settings');
-          }else{
-            $errors[] = "There was an Error Updating Forum Global Settings";
+      /* Check to see if site is a demo site */
+      if(DEMO_SITE != 'TRUE'){
+  			// Check to make sure the csrf token is good
+  			if (Csrf::isTokenValid('ForumAdmin')) {
+          // Check to see if admin is editing forum global settings
+          if($_POST['update_global_settings'] == "true"){
+            // Get data from post
+            $forum_on_off = Request::post('forum_on_off');
+            $forum_title = Request::post('forum_title');
+            $forum_description = Request::post('forum_description');
+            $forum_topic_limit = Request::post('forum_topic_limit');
+            $forum_topic_reply_limit = Request::post('forum_topic_reply_limit');
+            $forum_posts_group_change_enable = Request::post('forum_posts_group_change_enable');
+            $forum_posts_group_change = Request::post('forum_posts_group_change');
+            // Run Forum Settings Update
+            if($this->forum->updateGlobalSettings($forum_on_off,$forum_title,$forum_description,$forum_topic_limit,$forum_topic_reply_limit,$forum_posts_group_change_enable,$forum_posts_group_change)){
+              // Success
+              \Libs\SuccessMessages::push('You Have Successfully Updated Forum Global Settings', 'AdminPanel-Forum-Settings');
+            }else{
+              $errors[] = "There was an Error Updating Forum Global Settings";
+            }
+          }
+          // Check to see if admin is editing forum groups
+          if($_POST['remove_group_user'] == "true"){
+            $forum_edit_group = "users";
+            $forum_edit_group_action = "remove";
+          }else if($_POST['add_group_user'] == "true"){
+            $forum_edit_group = "users";
+            $forum_edit_group_action = "add";
+          }else if($_POST['remove_group_mod'] == "true"){
+            $forum_edit_group = "mods";
+            $forum_edit_group_action = "remove";
+          }else if($_POST['add_group_mod'] == "true"){
+            $forum_edit_group = "mods";
+            $forum_edit_group_action = "add";
+          }else if($_POST['remove_group_admin'] == "true"){
+            $forum_edit_group = "admins";
+            $forum_edit_group_action = "remove";
+          }else if($_POST['add_group_admin'] == "true"){
+            $forum_edit_group = "admins";
+            $forum_edit_group_action = "add";
+          }
+          if(isset($forum_edit_group) && isset($forum_edit_group_action)){
+            // Get data from post
+            $groupID = Request::post('groupID');
+            // Updates current user's group
+            if($this->forum->editForumGroup($forum_edit_group, $forum_edit_group_action, $groupID)){
+              // Success
+              \Libs\SuccessMessages::push('You Have Successfully Updated Forum Group ('.$forum_edit_group.')', 'AdminPanel-Forum-Settings');
+            }else{
+              // Fail
+              $error[] = "Edit Forum Group Failed";
+            }
           }
         }
-        // Check to see if admin is editing forum groups
-        if($_POST['remove_group_user'] == "true"){
-          $forum_edit_group = "users";
-          $forum_edit_group_action = "remove";
-        }else if($_POST['add_group_user'] == "true"){
-          $forum_edit_group = "users";
-          $forum_edit_group_action = "add";
-        }else if($_POST['remove_group_mod'] == "true"){
-          $forum_edit_group = "mods";
-          $forum_edit_group_action = "remove";
-        }else if($_POST['add_group_mod'] == "true"){
-          $forum_edit_group = "mods";
-          $forum_edit_group_action = "add";
-        }else if($_POST['remove_group_admin'] == "true"){
-          $forum_edit_group = "admins";
-          $forum_edit_group_action = "remove";
-        }else if($_POST['add_group_admin'] == "true"){
-          $forum_edit_group = "admins";
-          $forum_edit_group_action = "add";
-        }
-        if(isset($forum_edit_group) && isset($forum_edit_group_action)){
-          // Get data from post
-          $groupID = Request::post('groupID');
-          // Updates current user's group
-          if($this->forum->editForumGroup($forum_edit_group, $forum_edit_group_action, $groupID)){
-            // Success
-            \Libs\SuccessMessages::push('You Have Successfully Updated Forum Group ('.$forum_edit_group.')', 'AdminPanel-Forum-Settings');
-          }else{
-            // Fail
-            $error[] = "Edit Forum Group Failed";
-          }
-        }
+      }else{
+      	/* Error Message Display */
+      	\Libs\ErrorMessages::push('Demo Limit - Forum Settings Disabled', 'AdminPanel-Forum-Settings');
       }
     }
 
@@ -263,20 +269,26 @@ class ForumAdmin extends Controller{
       if($action == 'CatMainEdit'){
         // Check to make sure admin is trying to update
         if(isset($_POST['submit'])){
-          // Check to make sure the csrf token is good
-          if (Csrf::isTokenValid('ForumAdmin')) {
-            if($_POST['action'] == "update_cat_main_title"){
-              // Catch password inputs using the Request helper
-              $new_forum_title = Request::post('forum_title');
-              $prev_forum_title = Request::post('prev_forum_title');
-              if($this->forum->updateCatMainTitle($prev_forum_title,$new_forum_title)){
-                // Success
-                \Libs\SuccessMessages::push('You Have Successfully Updated Forum Main Category Title to <b>'.$new_forum_title.'</b>', 'AdminPanel-Forum-Categories');
-              }else{
-                // Fail
-                $error[] = "Edit Forum Main Category Failed";
+          /* Check to see if site is a demo site */
+          if(DEMO_SITE != 'TRUE'){
+            // Check to make sure the csrf token is good
+            if (Csrf::isTokenValid('ForumAdmin')) {
+              if($_POST['action'] == "update_cat_main_title"){
+                // Catch password inputs using the Request helper
+                $new_forum_title = Request::post('forum_title');
+                $prev_forum_title = Request::post('prev_forum_title');
+                if($this->forum->updateCatMainTitle($prev_forum_title,$new_forum_title)){
+                  // Success
+                  \Libs\SuccessMessages::push('You Have Successfully Updated Forum Main Category Title to <b>'.$new_forum_title.'</b>', 'AdminPanel-Forum-Categories');
+                }else{
+                  // Fail
+                  $error[] = "Edit Forum Main Category Failed";
+                }
               }
             }
+          }else{
+          	/* Error Message Display */
+          	\Libs\ErrorMessages::push('Demo Limit - Forum Settings Disabled', 'AdminPanel-Forum-Categories');
           }
         }else{
           // Get data for CatMainEdit Form
@@ -311,57 +323,69 @@ class ForumAdmin extends Controller{
       }else if($action == 'CatMainNew'){
         // Check to make sure admin is trying to update
         if(isset($_POST['submit'])){
-          // Check to make sure the csrf token is good
-          if (Csrf::isTokenValid('ForumAdmin')) {
-            // Add new cate main title to database
-            if($_POST['action'] == "new_cat_main_title"){
-              // Catch inputs using the Request helper
-              $forum_title = Request::post('forum_title');
-              // Get last order title number from db
-              $last_order_num = $this->forum->getLastCatMain();
-              // Attempt to add new Main Category Title to DB
-              if($this->forum->newCatMainTitle($forum_title,'forum',$last_order_num)){
-                // Success
-                \Libs\SuccessMessages::push('You Have Successfully Created New Forum Main Category Title <b>'.$new_forum_title.'</b>', 'AdminPanel-Forum-Categories');
-              }else{
-                // Fail
-                $error[] = "New Forum Main Category Failed";
+          /* Check to see if site is a demo site */
+          if(DEMO_SITE != 'TRUE'){
+            // Check to make sure the csrf token is good
+            if (Csrf::isTokenValid('ForumAdmin')) {
+              // Add new cate main title to database
+              if($_POST['action'] == "new_cat_main_title"){
+                // Catch inputs using the Request helper
+                $forum_title = Request::post('forum_title');
+                // Get last order title number from db
+                $last_order_num = $this->forum->getLastCatMain();
+                // Attempt to add new Main Category Title to DB
+                if($this->forum->newCatMainTitle($forum_title,'forum',$last_order_num)){
+                  // Success
+                  \Libs\SuccessMessages::push('You Have Successfully Created New Forum Main Category Title <b>'.$new_forum_title.'</b>', 'AdminPanel-Forum-Categories');
+                }else{
+                  // Fail
+                  $error[] = "New Forum Main Category Failed";
+                }
               }
             }
+          }else{
+          	/* Error Message Display */
+          	\Libs\ErrorMessages::push('Demo Limit - Forum Settings Disabled', 'AdminPanel-Forum-Categories');
           }
         }
       }else if($action == "CatSubList"){
         // Check to make sure admin is trying to update
         if(isset($_POST['submit'])){
-          // Check to make sure the csrf token is good
-          if (Csrf::isTokenValid('ForumAdmin')) {
-            // Add new cate main title to database
-            if($_POST['action'] == "new_cat_sub"){
-              // Catch inputs using the Request helper
-              $forum_title = Request::post('forum_title');
-              $forum_cat = Request::post('forum_cat');
-              $forum_des = Request::post('forum_des');
-              // Check to see if we are adding to a new main cat
-              if($this->forum->checkSubCat($forum_title)){
-                // Get last cat sub order id
-                $last_cat_order_id = $this->forum->getLastCatSub($forum_title);
-                // Get forum order title id
-                $forum_order_title = $this->forum->getForumOrderTitle($forum_title);
-                // Run insert for new sub cat
-                $run_sub_cat = $this->forum->newSubCat($forum_title,$forum_cat,$forum_des,$last_cat_order_id,$forum_order_title);
-              }else{
-                // Run update for new main cat
-                $run_sub_cat = $this->forum->updateSubCat($id,$forum_cat,$forum_des);
-              }
-              // Attempt to update/insert sub cat in db
-              if($run_sub_cat){
-                // Success
-                \Libs\SuccessMessages::push('You Have Successfully Created Forum Sub Category', 'AdminPanel-Forum-Categories/CatSubList/'.$id);
-              }else{
-                // Fail
-                $error[] = "Create Forum Sub Category Failed";
+          /* Check to see if site is a demo site */
+          if(DEMO_SITE != 'TRUE'){
+            // Check to make sure the csrf token is good
+            if (Csrf::isTokenValid('ForumAdmin')) {
+              // Add new cate main title to database
+              if($_POST['action'] == "new_cat_sub"){
+                // Catch inputs using the Request helper
+                $forum_title = Request::post('forum_title');
+                $forum_cat = Request::post('forum_cat');
+                $forum_des = Request::post('forum_des');
+                // Check to see if we are adding to a new main cat
+                if($this->forum->checkSubCat($forum_title)){
+                  // Get last cat sub order id
+                  $last_cat_order_id = $this->forum->getLastCatSub($forum_title);
+                  // Get forum order title id
+                  $forum_order_title = $this->forum->getForumOrderTitle($forum_title);
+                  // Run insert for new sub cat
+                  $run_sub_cat = $this->forum->newSubCat($forum_title,$forum_cat,$forum_des,$last_cat_order_id,$forum_order_title);
+                }else{
+                  // Run update for new main cat
+                  $run_sub_cat = $this->forum->updateSubCat($id,$forum_cat,$forum_des);
+                }
+                // Attempt to update/insert sub cat in db
+                if($run_sub_cat){
+                  // Success
+                  \Libs\SuccessMessages::push('You Have Successfully Created Forum Sub Category', 'AdminPanel-Forum-Categories/CatSubList/'.$id);
+                }else{
+                  // Fail
+                  $error[] = "Create Forum Sub Category Failed";
+                }
               }
             }
+          }else{
+          	/* Error Message Display */
+          	\Libs\ErrorMessages::push('Demo Limit - Forum Settings Disabled', 'AdminPanel-Forum-Categories');
           }
         }else{
           // Set goods for Forum Sub Categories Listing
@@ -382,22 +406,28 @@ class ForumAdmin extends Controller{
       }else if($action == "CatSubEdit"){
         // Check to make sure admin is trying to update
         if(isset($_POST['submit'])){
-          // Check to make sure the csrf token is good
-          if (Csrf::isTokenValid('ForumAdmin')) {
-            // Add new cate main title to database
-            if($_POST['action'] == "edit_cat_sub"){
-              // Catch inputs using the Request helper
-              $forum_cat = Request::post('forum_cat');
-              $forum_des = Request::post('forum_des');
-              // Attempt to update sub cat in db
-              if($this->forum->updateSubCat($id,$forum_cat,$forum_des)){
-                // Success
-                \Libs\SuccessMessages::push('You Have Successfully Updated Forum Sub Category', 'AdminPanel-Forum-Categories/CatSubList/'.$id);
-              }else{
-                // Fail
-                $error[] = "Update Forum Sub Category Failed";
+          /* Check to see if site is a demo site */
+          if(DEMO_SITE != 'TRUE'){
+            // Check to make sure the csrf token is good
+            if (Csrf::isTokenValid('ForumAdmin')) {
+              // Add new cate main title to database
+              if($_POST['action'] == "edit_cat_sub"){
+                // Catch inputs using the Request helper
+                $forum_cat = Request::post('forum_cat');
+                $forum_des = Request::post('forum_des');
+                // Attempt to update sub cat in db
+                if($this->forum->updateSubCat($id,$forum_cat,$forum_des)){
+                  // Success
+                  \Libs\SuccessMessages::push('You Have Successfully Updated Forum Sub Category', 'AdminPanel-Forum-Categories/CatSubList/'.$id);
+                }else{
+                  // Fail
+                  $error[] = "Update Forum Sub Category Failed";
+                }
               }
             }
+          }else{
+          	/* Error Message Display */
+          	\Libs\ErrorMessages::push('Demo Limit - Forum Settings Disabled', 'AdminPanel-Forum-Categories');
           }
         }else{
           // Display Edit Forum for Selected Sub Cat
@@ -417,67 +447,73 @@ class ForumAdmin extends Controller{
       }else if($action == "DeleteSubCat"){
         // Check to make sure admin is trying to update
         if(isset($_POST['submit'])){
-          // Check to make sure the csrf token is good
-          if (Csrf::isTokenValid('ForumAdmin')) {
-            // Add new cate main title to database
-            if($_POST['action'] == "delete_cat_sub"){
-              // Catch inputs using the Request helper
-              $delete_cat_sub_action = Request::post('delete_cat_sub_action');
+          /* Check to see if site is a demo site */
+          if(DEMO_SITE != 'TRUE'){
+            // Check to make sure the csrf token is good
+            if (Csrf::isTokenValid('ForumAdmin')) {
+              // Add new cate main title to database
+              if($_POST['action'] == "delete_cat_sub"){
+                // Catch inputs using the Request helper
+                $delete_cat_sub_action = Request::post('delete_cat_sub_action');
 
-              // Get title basted on forum_id
-              $forum_title = $this->forum->getCatMain($id);
+                // Get title basted on forum_id
+                $forum_title = $this->forum->getCatMain($id);
 
-              // Get title basted on forum_cat
-              $forum_cat = $this->forum->getCatSub($id);
+                // Get title basted on forum_cat
+                $forum_cat = $this->forum->getCatSub($id);
 
-              // Check to see what delete function admin has selected
-              if($delete_cat_sub_action == "delete_all"){
-                // Admin wants to delete Sub Cat and Everything Within it
-                // First we delete all related topic Replies
-                if($this->forum->deleteTopicsForumID($id)){
-                  $success_count = $success_count + 1;
-                }
-                // Second we delete all topics
-                if($this->forum->deleteTopicRepliesForumID($id)){
-                  $success_count = $success_count + 1;
-                }
-                // Finally we delete the main cat and all related sub cats
-                if($this->forum->deleteCatForumID($id)){
-                  $success_count = $success_count + 1;
-                }
-                // Check to see if everything was deleted Successfully
-                if($success_count > 0){
-                  // Success
-                  \Libs\SuccessMessages::push('You Have Successfully Deleted Sub Category: <b>'.$forum_title.' > '.$forum_cat.'</b> and Everything Within it!', 'AdminPanel-Forum-Categories');
-                }
-              }else{
-                // Extract forum_id from move_to_# string
-                $forum_id = str_replace("move_to_", "", $delete_cat_sub_action);
-                if(!empty($forum_id)){
-                  // First Update Topic Replies forum_id
-                  if($this->forum->updateTopicRepliesForumID($id, $forum_id)){
+                // Check to see what delete function admin has selected
+                if($delete_cat_sub_action == "delete_all"){
+                  // Admin wants to delete Sub Cat and Everything Within it
+                  // First we delete all related topic Replies
+                  if($this->forum->deleteTopicsForumID($id)){
                     $success_count = $success_count + 1;
                   }
-                  // Second Update Topics forum_id
-                  if($this->forum->updateTopicsForumID($id, $forum_id)){
+                  // Second we delete all topics
+                  if($this->forum->deleteTopicRepliesForumID($id)){
                     $success_count = $success_count + 1;
                   }
-                  // Last delete the sub Category
+                  // Finally we delete the main cat and all related sub cats
                   if($this->forum->deleteCatForumID($id)){
                     $success_count = $success_count + 1;
                   }
-                  // Check to see if anything was done
+                  // Check to see if everything was deleted Successfully
                   if($success_count > 0){
                     // Success
-                    \Libs\SuccessMessages::push('You Have Successfully Moved Main Category From <b>'.$old_forum_title.'</b> to <b>'.$new_forum_title.'</b>', 'AdminPanel-Forum-Categories/CatSubList/'.$forum_id);
+                    \Libs\SuccessMessages::push('You Have Successfully Deleted Sub Category: <b>'.$forum_title.' > '.$forum_cat.'</b> and Everything Within it!', 'AdminPanel-Forum-Categories');
                   }
                 }else{
-                  // User has not selected to delete or move main cat
-                  \Libs\ErrorMessages::push('No Action Selected.  No actions executed.', 'AdminPanel-Forum-Categories/DeleteSubCat/'.$id);
+                  // Extract forum_id from move_to_# string
+                  $forum_id = str_replace("move_to_", "", $delete_cat_sub_action);
+                  if(!empty($forum_id)){
+                    // First Update Topic Replies forum_id
+                    if($this->forum->updateTopicRepliesForumID($id, $forum_id)){
+                      $success_count = $success_count + 1;
+                    }
+                    // Second Update Topics forum_id
+                    if($this->forum->updateTopicsForumID($id, $forum_id)){
+                      $success_count = $success_count + 1;
+                    }
+                    // Last delete the sub Category
+                    if($this->forum->deleteCatForumID($id)){
+                      $success_count = $success_count + 1;
+                    }
+                    // Check to see if anything was done
+                    if($success_count > 0){
+                      // Success
+                      \Libs\SuccessMessages::push('You Have Successfully Moved Main Category From <b>'.$old_forum_title.'</b> to <b>'.$new_forum_title.'</b>', 'AdminPanel-Forum-Categories/CatSubList/'.$forum_id);
+                    }
+                  }else{
+                    // User has not selected to delete or move main cat
+                    \Libs\ErrorMessages::push('No Action Selected.  No actions executed.', 'AdminPanel-Forum-Categories/DeleteSubCat/'.$id);
+                  }
                 }
-              }
 
+              }
             }
+          }else{
+          	/* Error Message Display */
+          	\Libs\ErrorMessages::push('Demo Limit - Forum Settings Disabled', 'AdminPanel-Forum-Categories');
           }
         }else{
           // Display Delete Cat Sub Form
@@ -519,65 +555,71 @@ class ForumAdmin extends Controller{
       }else if($action == "DeleteMainCat"){
         // Check to make sure admin is trying to update
         if(isset($_POST['submit'])){
-          // Check to make sure the csrf token is good
-          if (Csrf::isTokenValid('ForumAdmin')) {
-            // Add new cate main title to database
-            if($_POST['action'] == "delete_cat_main"){
-              // Catch inputs using the Request helper
-              $delete_cat_main_action = Request::post('delete_cat_main_action');
+          /* Check to see if site is a demo site */
+          if(DEMO_SITE != 'TRUE'){
+            // Check to make sure the csrf token is good
+            if (Csrf::isTokenValid('ForumAdmin')) {
+              // Add new cate main title to database
+              if($_POST['action'] == "delete_cat_main"){
+                // Catch inputs using the Request helper
+                $delete_cat_main_action = Request::post('delete_cat_main_action');
 
-              // Get title basted on forum_id
-              $forum_title = $this->forum->getCatMain($id);
+                // Get title basted on forum_id
+                $forum_title = $this->forum->getCatMain($id);
 
-              // Check to see what delete function admin has selected
-              if($delete_cat_main_action == "delete_all"){
-                // Admin wants to delete Main Cat and Everything Within it
-                // Get list of all forum_id's for this Main Cat
-                $forum_id_all = $this->forum->getAllForumTitleIDs($forum_title);
-                $success_count = "0";
-                if(isset($forum_id_all)){
-                  foreach ($forum_id_all as $row) {
-                    // First we delete all related topic Replies
-                    if($this->forum->deleteTopicsForumID($row->forum_id)){
-                      $success_count = $success_count + 1;
-                    }
-                    // Second we delete all topics
-                    if($this->forum->deleteTopicRepliesForumID($row->forum_id)){
-                      $success_count = $success_count + 1;
-                    }
-                    // Finally we delete the main cat and all related sub cats
-                    if($this->forum->deleteCatForumID($row->forum_id)){
-                      $success_count = $success_count + 1;
+                // Check to see what delete function admin has selected
+                if($delete_cat_main_action == "delete_all"){
+                  // Admin wants to delete Main Cat and Everything Within it
+                  // Get list of all forum_id's for this Main Cat
+                  $forum_id_all = $this->forum->getAllForumTitleIDs($forum_title);
+                  $success_count = "0";
+                  if(isset($forum_id_all)){
+                    foreach ($forum_id_all as $row) {
+                      // First we delete all related topic Replies
+                      if($this->forum->deleteTopicsForumID($row->forum_id)){
+                        $success_count = $success_count + 1;
+                      }
+                      // Second we delete all topics
+                      if($this->forum->deleteTopicRepliesForumID($row->forum_id)){
+                        $success_count = $success_count + 1;
+                      }
+                      // Finally we delete the main cat and all related sub cats
+                      if($this->forum->deleteCatForumID($row->forum_id)){
+                        $success_count = $success_count + 1;
+                      }
                     }
                   }
-                }
-                if($success_count > 0){
-                  // Success
-                  \Libs\SuccessMessages::push('You Have Successfully Deleted Main Category: <b>'.$forum_title.'</b> and Everything Within it!', 'AdminPanel-Forum-Categories');
-                }
-              }else{
-                // Extract forum_id from move_to_# string
-                $forum_id = str_replace("move_to_", "", $delete_cat_main_action);
-                if(!empty($forum_id)){
-                  // Get new and old forum titles
-                  $new_forum_title = $this->forum->getCatMain($forum_id);
-                  $old_forum_title = $this->forum->getCatMain($id);
-                  // Get forum_order_title id for forum_title we are moving to
-                  $new_forum_order_title = $this->forum->getForumOrderTitle($new_forum_title);
-                  // Get last order id for new forum_title we are moving to
-                  $new_forum_order_cat = $this->forum->getLastCatSub($new_forum_title);
-                  // Update with the new forum title from the old one
-                  if($this->forum->moveForumSubCat($old_forum_title,$new_forum_title,$new_forum_order_title,$new_forum_order_cat)){
+                  if($success_count > 0){
                     // Success
-                    \Libs\SuccessMessages::push('You Have Successfully Moved Main Category From <b>'.$old_forum_title.'</b> to <b>'.$new_forum_title.'</b>', 'AdminPanel-Forum-Categories/CatSubList/'.$forum_id);
+                    \Libs\SuccessMessages::push('You Have Successfully Deleted Main Category: <b>'.$forum_title.'</b> and Everything Within it!', 'AdminPanel-Forum-Categories');
                   }
                 }else{
-                  // User has not selected to delete or move main cat
-                  \Libs\ErrorMessages::push('No Action Selected.  No actions executed.', 'AdminPanel-Forum-Categories/DeleteMainCat/'.$id);
+                  // Extract forum_id from move_to_# string
+                  $forum_id = str_replace("move_to_", "", $delete_cat_main_action);
+                  if(!empty($forum_id)){
+                    // Get new and old forum titles
+                    $new_forum_title = $this->forum->getCatMain($forum_id);
+                    $old_forum_title = $this->forum->getCatMain($id);
+                    // Get forum_order_title id for forum_title we are moving to
+                    $new_forum_order_title = $this->forum->getForumOrderTitle($new_forum_title);
+                    // Get last order id for new forum_title we are moving to
+                    $new_forum_order_cat = $this->forum->getLastCatSub($new_forum_title);
+                    // Update with the new forum title from the old one
+                    if($this->forum->moveForumSubCat($old_forum_title,$new_forum_title,$new_forum_order_title,$new_forum_order_cat)){
+                      // Success
+                      \Libs\SuccessMessages::push('You Have Successfully Moved Main Category From <b>'.$old_forum_title.'</b> to <b>'.$new_forum_title.'</b>', 'AdminPanel-Forum-Categories/CatSubList/'.$forum_id);
+                    }
+                  }else{
+                    // User has not selected to delete or move main cat
+                    \Libs\ErrorMessages::push('No Action Selected.  No actions executed.', 'AdminPanel-Forum-Categories/DeleteMainCat/'.$id);
+                  }
                 }
-              }
 
+              }
             }
+          }else{
+          	/* Error Message Display */
+          	\Libs\ErrorMessages::push('Demo Limit - Forum Settings Disabled', 'AdminPanel-Forum-Categories');
           }
         }else{
           // Show delete options for main cat

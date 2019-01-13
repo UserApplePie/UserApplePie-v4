@@ -77,7 +77,6 @@ class Config {
      *     Account    *
      *                *
      *****************/
-
     // Account activation route
     define("ACTIVATION_ROUTE", 'Activate');
     // Account password reset route
@@ -86,6 +85,7 @@ class Config {
     define("COST", 10);
     //INT hash length of BCRYPT algorithm
     define("HASH_LENGTH", 22);
+
     /**
      * Image Settings
      */
@@ -95,6 +95,12 @@ class Config {
     define('IMG_DIR_FORUM_TOPIC', 'assets/images/forum-pics/topics/');
     // Forum Topic Replies Image Directory
     define('IMG_DIR_FORUM_REPLY', 'assets/images/forum-pics/replies/');
+
+    /**
+    * Demo Settings
+    * Enable (TRUE) or disable (FALSE) demo site
+    */
+    define('DEMO_SITE', 'FALSE');
 
     /**
      * Turn on custom error handling.

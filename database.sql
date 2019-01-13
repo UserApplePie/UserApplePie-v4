@@ -537,11 +537,11 @@ CREATE TABLE `uap4_links` (
 -- Dumping data for table `uap4_links`
 --
 
-INSERT INTO `uap4_links` (`id`, `title`, `url`, `alt_text`, `location`, `link_order`, `drop_down`, `drop_down_for`, `require_plugin`, `timestamp`) VALUES
+INSERT INTO `uap4_links` (`id`, `title`, `url`, `alt_text`, `location`, `link_order`, `link_order_drop_down`, `drop_down`, `drop_down_for`, `require_plugin`, `timestamp`) VALUES
 (1, 'Home', 'Home', 'Home Page', 'header_main', 1, 0, 0, 0, NULL, '2018-07-08 10:47:22'),
 (2, 'About', 'About', 'About Us', 'header_main', 2, 0, 1, 0, NULL, '2018-07-08 10:48:40'),
-(3, 'Contact', 'Contact', 'Contact Us', 'header_main', 3, 0, 0, 0, NULL, '2018-07-08 10:49:16'),
-(4, 'Members', 'Members', 'Members', 'header_main', 2, 1, 0, 2, NULL, '2018-07-08 11:40:26'),
-(5, 'Online Members', 'Online-Members', 'Online Members', 'header_main', 2, 2, 0, 2, NULL, '2018-07-08 12:25:39'),
-(6, 'About', 'About', 'About', 'header_main', 2, 3, 0, 2, NULL, '2018-07-08 12:28:20'),
-(7, 'Forum', 'Forum', 'Forum', 'header_main', 4, 0, 0, 0, 'Forum', '2018-07-08 12:30:44');
+(3, 'Contact', 'Contact', 'Contact Us', 'header_main', 3, 0, 0, 0, '', '2018-07-08 10:49:16'),
+(6, 'About', 'About', 'About', 'header_main', 2, 1, 0, 2, NULL, '2018-07-08 12:28:20'),
+(8, 'Footer', 'Home', 'Footer', 'footer', 1, 0, 0, 0, NULL, '2018-07-15 22:12:13'),
+(10, 'New', 'New', 'New', 'new', 1, 0, 0, 0, '', '2018-07-21 12:28:44'),
+(11, 'Contact Us', 'Contact', '', 'header_main', 2, 2, NULL, 2, '', '2018-08-17 00:25:19');

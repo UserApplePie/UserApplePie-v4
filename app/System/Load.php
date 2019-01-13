@@ -55,11 +55,34 @@ class Load {
 
         /* todo - setup a file checker that sends error to log file or something if something is missing */
 
+        /* Check to see if Adds are enabled for current page */
+        if(preg_match('/(Members)/', $viewFile) || preg_match('/(AdminPanel)/', $data['current_page'])){
+          $addsEnable = false;
+        }else{
+          $addsEnable = true;
+        }
+
+        /* Setup Adds if Demo is FALSE */
+        $mainAddsTop = APPDIR."Views/Adds/AddsTop.php";
+        $mainAddsBottom = APPDIR."Views/Adds/AddsBottom.php";
+        $sidebarAddsTop = APPDIR."Views/Adds/AddsSidebarTop.php";
+        $sidebarAddsBottom = APPDIR."Views/Adds/AddsSidebarBottom.php";
+
         /* Load files needed to make the page work */
         (isset($templateHeader)) ? require_once $templateHeader : "";
+        ($addsEnable) ? require_once $mainAddsTop : "";
+        if(isset($leftSidebar)){ echo "<div class='col-lg-4 col-md-4 col-sm-12'>"; }
+        (isset($leftSidebar) && $addsEnable) ? require_once $sidebarAddsTop : "";
         (isset($leftSidebar)) ? require_once $leftSidebar : "";
+        (isset($leftSidebar) && $addsEnable) ? require_once $sidebarAddsBottom : "";
+        if(isset($leftSidebar)){ echo "</div>"; }
         require_once $viewFile;
+        if(isset($rightSidebar)){ echo "<div class='col-lg-4 col-md-4 col-sm-12'>"; }
+        (isset($rightSidebar) && $addsEnable) ? require_once $sidebarAddsTop : "";
         (isset($rightSidebar)) ? require_once $rightSidebar : "";
+        (isset($rightSidebar) && $addsEnable) ? require_once $sidebarAddsBottom : "";
+        if(isset($rightSidebar)){ echo "</div>"; }
+        ($addsEnable) ? require_once $mainAddsBottom : "";
         (isset($templateFooter)) ? require_once $templateFooter : "";
     }
 
@@ -109,11 +132,34 @@ class Load {
 
         /* todo - setup a file checker that sends error to log file or something if something is missing */
 
+        /* Check to see if Adds are enabled for current page */
+        if(preg_match('/(Members)/', $data['current_page']) || preg_match('/(AdminPanel)/', $data['current_page']) || preg_match('/(Friend)/', $data['title']) || preg_match('/(Message)/', $data['title'])){
+          $addsEnable = false;
+        }else{
+          $addsEnable = true;
+        }
+
+        /* Setup Adds if Demo is FALSE */
+        $mainAddsTop = APPDIR."Views/Adds/AddsTop.php";
+        $mainAddsBottom = APPDIR."Views/Adds/AddsBottom.php";
+        $sidebarAddsTop = APPDIR."Views/Adds/AddsSidebarTop.php";
+        $sidebarAddsBottom = APPDIR."Views/Adds/AddsSidebarBottom.php";
+
         /* Load files needed to make the page work */
         (isset($templateHeader)) ? require_once $templateHeader : "";
+        ($addsEnable) ? require_once $mainAddsTop : "";
+        if(isset($leftSidebar)){ echo "<div class='col-lg-4 col-md-4 col-sm-12'>"; }
+        (isset($leftSidebar) && $addsEnable) ? require_once $sidebarAddsTop : "";
         (isset($leftSidebar)) ? require_once $leftSidebar : "";
+        (isset($leftSidebar) && $addsEnable) ? require_once $sidebarAddsBottom : "";
+        if(isset($leftSidebar)){ echo "</div>"; }
         require_once $viewFile;
+        if(isset($rightSidebar)){ echo "<div class='col-lg-4 col-md-4 col-sm-12'>"; }
+        (isset($rightSidebar) && $addsEnable) ? require_once $sidebarAddsTop : "";
         (isset($rightSidebar)) ? require_once $rightSidebar : "";
+        (isset($rightSidebar) && $addsEnable) ? require_once $sidebarAddsBottom : "";
+        if(isset($rightSidebar)){ echo "</div>"; }
+        ($addsEnable) ? require_once $mainAddsBottom : "";
         (isset($templateFooter)) ? require_once $templateFooter : "";
     }
 
