@@ -89,7 +89,6 @@ class LoadSiteSettings {
           define('EMAIL_STMP_SECURE', '');
           define('SITEEMAIL', '');
         }
-
         /********************
          *                  *
          *     RECAPTCHA    *

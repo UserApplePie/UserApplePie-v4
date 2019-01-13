@@ -176,6 +176,8 @@ class AdminPanel extends Controller{
 
         /* Check to see if Admin is submiting form data */
         if(isset($_POST['submit'])){
+          /* Check to see if site is a demo site */
+          if(DEMO_SITE != 'TRUE'){
             /* Check to make sure the csrf token is good */
             if (Csrf::isTokenValid('settings')) {
                 /* Check to make sure Admin is updating settings */
@@ -236,6 +238,10 @@ class AdminPanel extends Controller{
                 /* Error Message Display */
                 \Libs\ErrorMessages::push('Error Updating Site Settings', 'AdminPanel-Settings');
             }
+          }else{
+          	/* Error Message Display */
+          	\Libs\ErrorMessages::push('Demo Limit - Settings Disabled', 'AdminPanel-Settings');
+          }
         }
 
         /* Get Settings Data */
@@ -298,6 +304,8 @@ class AdminPanel extends Controller{
 
         /* Check to see if Admin is submiting form data */
         if(isset($_POST['submit'])){
+          /* Check to see if site is a demo site */
+          if(DEMO_SITE != 'TRUE'){
             /* Check to make sure the csrf token is good */
             if (Csrf::isTokenValid('settings')) {
                 /* Check to make sure Admin is updating settings */
@@ -368,6 +376,10 @@ class AdminPanel extends Controller{
                 /* Error Message Display */
                 \Libs\ErrorMessages::push('Error Updating Site Advanced Settings', 'AdminPanel-AdvancedSettings');
             }
+          }else{
+          	/* Error Message Display */
+          	\Libs\ErrorMessages::push('Demo Limit - Advanced Settings Disabled', 'AdminPanel-AdvancedSettings');
+          }
         }
 
         /* Get Advanced Settings Data */
@@ -495,94 +507,98 @@ class AdminPanel extends Controller{
 
       // Check to make sure admin is trying to update user profile
   		if(isset($_POST['submit'])){
+        /* Check to see if site is a demo site */
+        if(DEMO_SITE != 'TRUE'){
+    			// Check to make sure the csrf token is good
+    			if (Csrf::isTokenValid('user')) {
+            if($_POST['update_profile'] == "true"){
+              // Catch password inputs using the Request helper
+              $au_id = Request::post('au_id');
+              $au_username = Request::post('au_username');
+              $au_email = Request::post('au_email');
+              $au_firstName = Request::post('au_firstName');
+              $au_lastName = Request::post('au_lastName');
+              $au_gender = Request::post('au_gender');
+              $au_website = Request::post('au_website');
+              $au_userImage = Request::post('au_userImage');
+              $au_aboutme = Request::post('au_aboutme');
+              $au_signature = Request::post('au_signature');
 
-  			// Check to make sure the csrf token is good
-  			if (Csrf::isTokenValid('user')) {
-                  if($_POST['update_profile'] == "true"){
-                      // Catch password inputs using the Request helper
-                      $au_id = Request::post('au_id');
-                      $au_username = Request::post('au_username');
-                      $au_email = Request::post('au_email');
-                      $au_firstName = Request::post('au_firstName');
-                      $au_lastName = Request::post('au_lastName');
-                      $au_gender = Request::post('au_gender');
-                      $au_website = Request::post('au_website');
-                      $au_userImage = Request::post('au_userImage');
-                      $au_aboutme = Request::post('au_aboutme');
-                      $au_signature = Request::post('au_signature');
+              // Run the update profile script
+              if($this->model->updateProfile($au_id, $au_username, $au_firstName, $au_lastName, $au_email, $au_gender, $au_website, $au_userImage, $au_aboutme, $au_signature)){
+                  // Success
+                  \Libs\SuccessMessages::push('You Have Successfully Updated User Profile', 'AdminPanel-User/'.$au_id);
+              }else{
+                  /** User Update Fail. Show Error **/
+                  \Libs\ErrorMessages::push('Profile Update Failed!', 'AdminPanel-User/'.$au_id);
+              }
+            }
 
-                      // Run the update profile script
-                      if($this->model->updateProfile($au_id, $au_username, $au_firstName, $au_lastName, $au_email, $au_gender, $au_website, $au_userImage, $au_aboutme, $au_signature)){
-                          // Success
-                          \Libs\SuccessMessages::push('You Have Successfully Updated User Profile', 'AdminPanel-User/'.$au_id);
-                      }else{
-                          /** User Update Fail. Show Error **/
-                          \Libs\ErrorMessages::push('Profile Update Failed!', 'AdminPanel-User/'.$au_id);
-                      }
-                  }
+            // Check to see if admin is removing user from group
+            if($_POST['remove_group'] == "true"){
+                // Get data from post
+                $au_userID = Request::post('au_userID');
+                $au_groupID = Request::post('au_groupID');
+                // Check to make sure Admin is not trying to remove user's last group
+                if($this->model->checkUserGroupsCount($au_userID)){
+                    // Updates current user's group
+                    if($this->model->removeFromGroup($au_userID, $au_groupID)){
+                    	// Success
+                        \Libs\SuccessMessages::push('You Have Successfully Removed User From Group', 'AdminPanel-User/'.$au_userID);
+                    }else{
+                        /** User Update Fail. Show Error **/
+                        \Libs\ErrorMessages::push('Remove From Group Failed!', 'AdminPanel-User/'.$au_userID);
+                    }
+                }else{
+                    /** User Update Fail. Show Error **/
+                    \Libs\ErrorMessages::push('User Must Be a Member of at least ONE Group!', 'AdminPanel-User/'.$au_userID);
+                }
+            }
 
-                  // Check to see if admin is removing user from group
-                  if($_POST['remove_group'] == "true"){
-                      // Get data from post
-                      $au_userID = Request::post('au_userID');
-                      $au_groupID = Request::post('au_groupID');
-                      // Check to make sure Admin is not trying to remove user's last group
-                      if($this->model->checkUserGroupsCount($au_userID)){
-                          // Updates current user's group
-                          if($this->model->removeFromGroup($au_userID, $au_groupID)){
-                          	// Success
-                              \Libs\SuccessMessages::push('You Have Successfully Removed User From Group', 'AdminPanel-User/'.$au_userID);
-                          }else{
-                              /** User Update Fail. Show Error **/
-                              \Libs\ErrorMessages::push('Remove From Group Failed!', 'AdminPanel-User/'.$au_userID);
-                          }
-                      }else{
-                          /** User Update Fail. Show Error **/
-                          \Libs\ErrorMessages::push('User Must Be a Member of at least ONE Group!', 'AdminPanel-User/'.$au_userID);
-                      }
-                  }
+            // Check to see if admin is adding user to group
+            if($_POST['add_group'] == "true"){
+              // Get data from post
+              $au_userID = Request::post('au_userID');
+              $au_groupID = Request::post('au_groupID');
+              // Updates current user's group
+      				if($this->model->addToGroup($au_userID, $au_groupID)){
+      					// Success
+                \Libs\SuccessMessages::push('You Have Successfully Added User to Group', 'AdminPanel-User/'.$au_userID);
+      				}else{
+                        /** User Update Fail. Show Error **/
+                        \Libs\ErrorMessages::push('Add to Group Failed!', 'AdminPanel-User/'.$au_id);
+      				}
+            }
 
-          // Check to see if admin is adding user to group
-          if($_POST['add_group'] == "true"){
-            // Get data from post
-            $au_userID = Request::post('au_userID');
-            $au_groupID = Request::post('au_groupID');
-            // Updates current user's group
-    				if($this->model->addToGroup($au_userID, $au_groupID)){
-    					// Success
-              \Libs\SuccessMessages::push('You Have Successfully Added User to Group', 'AdminPanel-User/'.$au_userID);
-    				}else{
-                      /** User Update Fail. Show Error **/
-                      \Libs\ErrorMessages::push('Add to Group Failed!', 'AdminPanel-User/'.$au_id);
-    				}
+            // Check to see if admin wants to activate user
+            if($_POST['activate_user'] == "true"){
+              $au_id = Request::post('au_id');
+              // Run the Activation script
+      				if($this->model->activateUser($au_id)){
+      					// Success
+                \Libs\SuccessMessages::push('You Have Successfully Activated User', 'AdminPanel-User/'.$au_id);
+      				}else{
+                        /** User Update Fail. Show Error **/
+                        \Libs\ErrorMessages::push('Activate User Failed!', 'AdminPanel-User/'.$au_id);
+      				}
+            }
+
+            // Check to see if admin wants to deactivate user
+            if($_POST['deactivate_user'] == "true"){
+              $au_id = Request::post('au_id');
+              // Run the Activation script
+      				if($this->model->deactivateUser($au_id)){
+      					// Success
+                \Libs\SuccessMessages::push('You Have Successfully Deactivated User', 'AdminPanel-User/'.$au_id);
+      				}else{
+                        /** User Update Fail. Show Error **/
+                        \Libs\ErrorMessages::push('Deactivate User Failed!', 'AdminPanel-User/'.$au_id);
+      				}
+            }
           }
-
-          // Check to see if admin wants to activate user
-          if($_POST['activate_user'] == "true"){
-            $au_id = Request::post('au_id');
-            // Run the Activation script
-    				if($this->model->activateUser($au_id)){
-    					// Success
-              \Libs\SuccessMessages::push('You Have Successfully Activated User', 'AdminPanel-User/'.$au_id);
-    				}else{
-                      /** User Update Fail. Show Error **/
-                      \Libs\ErrorMessages::push('Activate User Failed!', 'AdminPanel-User/'.$au_id);
-    				}
-          }
-
-          // Check to see if admin wants to deactivate user
-          if($_POST['deactivate_user'] == "true"){
-            $au_id = Request::post('au_id');
-            // Run the Activation script
-    				if($this->model->deactivateUser($au_id)){
-    					// Success
-              \Libs\SuccessMessages::push('You Have Successfully Deactivated User', 'AdminPanel-User/'.$au_id);
-    				}else{
-                      /** User Update Fail. Show Error **/
-                      \Libs\ErrorMessages::push('Deactivate User Failed!', 'AdminPanel-User/'.$au_id);
-    				}
-          }
-
+        }else{
+        	/* Error Message Display */
+        	\Libs\ErrorMessages::push('Demo Limit - User Settings Disabled', 'AdminPanel-Users');
         }
   		}
 
@@ -638,27 +654,33 @@ class AdminPanel extends Controller{
 
       // Check to make sure admin is trying to create group
   		if(isset($_POST['submit'])){
-  			// Check to make sure the csrf token is good
-  			if (Csrf::isTokenValid('groups')) {
-          //Check for create group
-          if($_POST['create_group'] == "true"){
-            // Catch password inputs using the Request helper
-            $ag_groupName = Request::post('ag_groupName');
-            if(!empty($ag_groupName)){
-              // Run the update group script
-              $new_group_id = $this->model->createGroup($ag_groupName);
-              if($new_group_id){
-                /** Group Create Success **/
-                \Libs\SuccessMessages::push('You Have Successfully Created a New Group', 'AdminPanel-Group/'.$new_group_id);
+        /* Check to see if site is a demo site */
+        if(DEMO_SITE != 'TRUE'){
+    			// Check to make sure the csrf token is good
+    			if (Csrf::isTokenValid('groups')) {
+            //Check for create group
+            if($_POST['create_group'] == "true"){
+              // Catch password inputs using the Request helper
+              $ag_groupName = Request::post('ag_groupName');
+              if(!empty($ag_groupName)){
+                // Run the update group script
+                $new_group_id = $this->model->createGroup($ag_groupName);
+                if($new_group_id){
+                  /** Group Create Success **/
+                  \Libs\SuccessMessages::push('You Have Successfully Created a New Group', 'AdminPanel-Group/'.$new_group_id);
+                }else{
+                  /** Group Create Error. Show Error **/
+                  \Libs\ErrorMessages::push('Group Creation Error!', 'AdminPanel-Groups');
+                }
               }else{
-                /** Group Create Error. Show Error **/
-                \Libs\ErrorMessages::push('Group Creation Error!', 'AdminPanel-Groups');
+                /** Group Name Field Empty. Show Error **/
+                \Libs\ErrorMessages::push('Group Creation Error: Group Name Field Empty!', 'AdminPanel-Groups');
               }
-            }else{
-              /** Group Name Field Empty. Show Error **/
-              \Libs\ErrorMessages::push('Group Creation Error: Group Name Field Empty!', 'AdminPanel-Groups');
             }
           }
+        }else{
+        	/* Error Message Display */
+        	\Libs\ErrorMessages::push('Demo Limit - User Group Settings Disabled', 'AdminPanel-Groups');
         }
       }
 
@@ -724,40 +746,46 @@ class AdminPanel extends Controller{
 
       // Check to make sure admin is trying to update group data
   		if(isset($_POST['submit'])){
-  			// Check to make sure the csrf token is good
-  			if (Csrf::isTokenValid('group')) {
-          // Check for update group
-          if($_POST['update_group'] == "true"){
-    				// Catch password inputs using the Request helper
-            $ag_groupID = Request::post('ag_groupID');
-            $ag_groupName = Request::post('ag_groupName');
-            $ag_groupDescription = Request::post('ag_groupDescription');
-    				$ag_groupFontColor = Request::post('ag_groupFontColor');
-    				$ag_groupFontWeight = Request::post('ag_groupFontWeight');
+        /* Check to see if site is a demo site */
+        if(DEMO_SITE != 'TRUE'){
+    			// Check to make sure the csrf token is good
+    			if (Csrf::isTokenValid('group')) {
+            // Check for update group
+            if($_POST['update_group'] == "true"){
+      				// Catch password inputs using the Request helper
+              $ag_groupID = Request::post('ag_groupID');
+              $ag_groupName = Request::post('ag_groupName');
+              $ag_groupDescription = Request::post('ag_groupDescription');
+      				$ag_groupFontColor = Request::post('ag_groupFontColor');
+      				$ag_groupFontWeight = Request::post('ag_groupFontWeight');
 
-    				// Run the update group script
-    				if($this->model->updateGroup($ag_groupID, $ag_groupName, $ag_groupDescription, $ag_groupFontColor, $ag_groupFontWeight)){
-    					// Success
-              \Libs\SuccessMessages::push('You Have Successfully Updated a Group', 'AdminPanel-Group/'.$ag_groupID);
-    				}else{
-    					// Fail
-    					$error[] = "Group Update Failed";
-    				}
-          }
-          //Check for delete group
-          if($_POST['delete_group'] == "true"){
-            // Catch password inputs using the Request helper
-            $ag_groupID = Request::post('ag_groupID');
+      				// Run the update group script
+      				if($this->model->updateGroup($ag_groupID, $ag_groupName, $ag_groupDescription, $ag_groupFontColor, $ag_groupFontWeight)){
+      					// Success
+                \Libs\SuccessMessages::push('You Have Successfully Updated a Group', 'AdminPanel-Group/'.$ag_groupID);
+      				}else{
+      					// Fail
+      					$error[] = "Group Update Failed";
+      				}
+            }
+            //Check for delete group
+            if($_POST['delete_group'] == "true"){
+              // Catch password inputs using the Request helper
+              $ag_groupID = Request::post('ag_groupID');
 
-            // Run the update group script
-            if($this->model->deleteGroup($ag_groupID)){
-              // Success
-              \Libs\SuccessMessages::push('You Have Successfully Deleted a Group', 'AdminPanel-Groups');
-            }else{
-              // Fail
-              $error[] = "Group Delete Failed";
+              // Run the update group script
+              if($this->model->deleteGroup($ag_groupID)){
+                // Success
+                \Libs\SuccessMessages::push('You Have Successfully Deleted a Group', 'AdminPanel-Groups');
+              }else{
+                // Fail
+                $error[] = "Group Delete Failed";
+              }
             }
           }
+        }else{
+        	/* Error Message Display */
+        	\Libs\ErrorMessages::push('Demo Limit - User Group Settings Disabled', 'AdminPanel-Groups');
         }
   		}
 
@@ -836,37 +864,43 @@ class AdminPanel extends Controller{
 
       // Check to make sure admin is trying to create group
   		if(isset($_POST['submit'])){
-  			// Check to make sure the csrf token is good
-  			if (Csrf::isTokenValid('massemail')) {
-          // Catch password inputs using the Request helper
-          $subject = Request::post('subject');
-          $content = Request::post('content');
-          if(empty($subject)){ $errormsg[] = "Subject Field Blank!"; }
-          if(empty($content)){ $errormsg[] = "Content Field Blank!"; }
-          if(!isset($errormsg)){
-            // Run the mass email script
-            foreach ($data['get_users_massemail_allow'] as $row) {
-              if($this->model->sendMassEmail($row->userID, $u_id, $subject, $content, $row->username, $row->email)){
-                $count = $count + 1;
+        /* Check to see if site is a demo site */
+        if(DEMO_SITE != 'TRUE'){
+    			// Check to make sure the csrf token is good
+    			if (Csrf::isTokenValid('massemail')) {
+            // Catch password inputs using the Request helper
+            $subject = Request::post('subject');
+            $content = Request::post('content');
+            if(empty($subject)){ $errormsg[] = "Subject Field Blank!"; }
+            if(empty($content)){ $errormsg[] = "Content Field Blank!"; }
+            if(!isset($errormsg)){
+              // Run the mass email script
+              foreach ($data['get_users_massemail_allow'] as $row) {
+                if($this->model->sendMassEmail($row->userID, $u_id, $subject, $content, $row->username, $row->email)){
+                  $count = $count + 1;
+                }
               }
-            }
-            if($count > 0){
-              /** Success **/
-              \Libs\SuccessMessages::push('You Have Successfully Sent Mass Email to '.$count.' Users', 'AdminPanel-MassEmail');
+              if($count > 0){
+                /** Success **/
+                \Libs\SuccessMessages::push('You Have Successfully Sent Mass Email to '.$count.' Users', 'AdminPanel-MassEmail');
+              }else{
+                /** Fail **/
+                \Libs\ErrorMessages::push('Mass Email Error', 'AdminPanel-MassEmail');
+              }
             }else{
+              $me_errors = "<hr>";
+              foreach ($errormsg as $row) {
+                $me_errors .= $row."<Br>";
+              }
               /** Fail **/
-              \Libs\ErrorMessages::push('Mass Email Error', 'AdminPanel-MassEmail');
+              $_SESSION['subject'] = $subject;
+              $_SESSION['content'] = $content;
+              \Libs\ErrorMessages::push('Mass Email Error'.$me_errors, 'AdminPanel-MassEmail');
             }
-          }else{
-            $me_errors = "<hr>";
-            foreach ($errormsg as $row) {
-              $me_errors .= $row."<Br>";
-            }
-            /** Fail **/
-            $_SESSION['subject'] = $subject;
-            $_SESSION['content'] = $content;
-            \Libs\ErrorMessages::push('Mass Email Error'.$me_errors, 'AdminPanel-MassEmail');
           }
+        }else{
+        	/* Error Message Display */
+        	\Libs\ErrorMessages::push('Demo Limit - Mass Email Settings Disabled', 'AdminPanel-MassEmail');
         }
       }
 
@@ -957,37 +991,37 @@ class AdminPanel extends Controller{
         /** Check all plugin folders for Controllers **/
         $plugins_directory = APPDIR.'Plugins';
         foreach(glob($plugins_directory.'/*', GLOB_ONLYDIR) as $dir) {
-            $dirname = basename($dir);
-            $directory = $plugins_directory.'/'.$dirname.'/Controllers';
-            $scanned_directory = array_diff(scandir($directory), array('..', '.'));
+          $dirname = basename($dir);
+          $directory = $plugins_directory.'/'.$dirname.'/Controllers';
+          $scanned_directory = array_diff(scandir($directory), array('..', '.'));
 
-            /** Extract the methods from the classes **/
-            foreach ($scanned_directory as $filename) {
-                /** Remove the .php from the files names to get Class Names **/
-                $class = str_replace('.php', '', str_replace('-', ' ', $filename));
-                /** Get array of class methods **/
-                $class_methods = get_class_methods('App\\Plugins\\'.$dirname.'\\Controllers\\'.$class);
-                /** Remove blank and __construct methods from array **/
-                if($class_methods[0] == ""){
-                    unset($class_methods[0]);
-                }
-                if($class_methods[0] == "__construct"){
-                    unset($class_methods[0]);
-                }
-                if($class_methods[1] == "__construct"){
-                    unset($class_methods[1]);
-                }
-
-                foreach ($class_methods as $method) {
-                    $plugin_class = "Plugins\\".$dirname."\\Controllers\\".$class;
-                    if(checkCoreRoutes($plugin_class, $method)){
-                        $routes[] = array(
-                            "controller" => $plugin_class,
-                            "method" => $method
-                        );
-                    }
-                }
+          /** Extract the methods from the classes **/
+          foreach ($scanned_directory as $filename) {
+            /** Remove the .php from the files names to get Class Names **/
+            $class = str_replace('.php', '', str_replace('-', ' ', $filename));
+            /** Get array of class methods **/
+            $class_methods = get_class_methods('App\\Plugins\\'.$dirname.'\\Controllers\\'.$class);
+            /** Remove blank and __construct methods from array **/
+            if($class_methods[0] == ""){
+                unset($class_methods[0]);
             }
+            if($class_methods[0] == "__construct"){
+                unset($class_methods[0]);
+            }
+            if($class_methods[1] == "__construct"){
+                unset($class_methods[1]);
+            }
+
+            foreach ($class_methods as $method) {
+              $plugin_class = "Plugins\\".$dirname."\\Controllers\\".$class;
+              if(checkCoreRoutes($plugin_class, $method)){
+                $routes[] = array(
+                    "controller" => $plugin_class,
+                    "method" => $method
+                );
+              }
+            }
+          }
         }
 
 
@@ -996,19 +1030,19 @@ class AdminPanel extends Controller{
 
         /** Check database to see if all routes are included. **/
         if(isset($routes)){
-            foreach ($routes as $single_route) {
-                /** Check to see if route exist in database **/
-                if($this->model->checkForRoute($single_route['controller'], $single_route['method'])){
-                    /** Controller and Modthod Already Exist **/
-                    /** Might have it do soemthing later... **/
-                }else{
-                    /** Controller and Method Do Not Exist in Database **/
-                    /** Add Controller and Method to Database **/
-                    if($this->model->addRoute($single_route['controller'], $single_route['method'])){
-                        $new_routes[] = $single_route['controller']." - ".$single_route['method']."<Br>";
-                    }
-                }
+          foreach ($routes as $single_route) {
+            /** Check to see if route exist in database **/
+            if($this->model->checkForRoute($single_route['controller'], $single_route['method'])){
+              /** Controller and Modthod Already Exist **/
+              /** Might have it do soemthing later... **/
+            }else{
+              /** Controller and Method Do Not Exist in Database **/
+              /** Add Controller and Method to Database **/
+              if($this->model->addRoute($single_route['controller'], $single_route['method'])){
+                  $new_routes[] = $single_route['controller']." - ".$single_route['method']."<Br>";
+              }
             }
+          }
         }
 
         /** Check to see if any new routes were added to database **/
@@ -1064,22 +1098,23 @@ class AdminPanel extends Controller{
 
         /** Check to see if Admin is updating System Route **/
     	if(isset($_POST['submit'])){
-    		// Check to make sure the csrf token is good
-    		if (Csrf::isTokenValid('route')) {
-                // Check for update group
-                if($_POST['update_route'] == "true"){
+        /* Check to see if site is a demo site */
+        if(DEMO_SITE != 'TRUE'){
+    		  /* Check to make sure the csrf token is good */
+    		  if (Csrf::isTokenValid('route')) {
+            // Check for update group
+            if($_POST['update_route'] == "true"){
       				// Catch password inputs using the Request helper
-                    $id = Request::post('id');
-                    $controller = Request::post('controller');
-                    $method = Request::post('method');
-                    $url = Request::post('url');
-                    $arguments = Request::post('arguments');
-                    $enable = Request::post('enable');
-
+              $id = Request::post('id');
+              $controller = Request::post('controller');
+              $method = Request::post('method');
+              $url = Request::post('url');
+              $arguments = Request::post('arguments');
+              $enable = Request::post('enable');
       				// Run the update group script
       				if($this->model->updateRoute($id, $controller, $method, $url, $arguments, $enable)){
       					// Success
-                        \Libs\SuccessMessages::push('You Have Successfully Updated Controller '.$controller, 'AdminPanel-SystemRoute/'.$id);
+                \Libs\SuccessMessages::push('You Have Successfully Updated Controller '.$controller, 'AdminPanel-SystemRoute/'.$id);
       				}else{
       					// Fail
       					$error[] = "Route Update Failed";
@@ -1089,7 +1124,6 @@ class AdminPanel extends Controller{
                 if($_POST['delete_route'] == "true"){
                     // Check to see what Route Admin is going to delete
                     $id = Request::post('id');
-
                     // Delete the Route
                     if($this->model->deleteRoute($id)){
                         // Success
@@ -1100,6 +1134,10 @@ class AdminPanel extends Controller{
                     }
                 }
             }
+        }else{
+            /* Error Message Display */
+            \Libs\ErrorMessages::push('Demo Limit - Site Routes Settings Disabled', 'AdminPanel-SystemRoutes');
+        }
     	}
 
         /** Get System Route from Database **/
@@ -1295,61 +1333,67 @@ class AdminPanel extends Controller{
 
       /** Check to see if Admin is updating System Route **/
       if(isset($_POST['submit'])){
-        /** Check to make sure the csrf token is good **/
-        if (Csrf::isTokenValid('SiteLink')) {
-          /** Get Form Data **/
-          $link_action = Request::post('link_action');
-          $id = Request::post('id');
-          $title = Request::post('title');
-          $url = Request::post('url');
-          $alt_text = Request::post('alt_text');
-          $location = "header_main";
-          $drop_down = Request::post('drop_down');
-          $require_plugin = Request::post('require_plugin');
-          $drop_down_for = Request::post('drop_down_for');
-          $dd_link_id = Request::post('dd_link_id');
-          /** Check if update or new **/
-          if($link_action == "update"){
-            if($this->model->updateSiteLink($id, $title, $url, $alt_text, $location, $drop_down, $require_plugin)){
-              /** Success **/
-              \Libs\SuccessMessages::push('You Have Successfully Updated Site Link', 'AdminPanel-SiteLinks');
-            }else{
-              /** Error **/
-              \Libs\ErrorMessages::push('Update Site Link Failed', 'AdminPanel-SiteLinks');
-            }
-          }else if($link_action == "new"){
-            if($this->model->addSiteLink($title, $url, $alt_text, $location, $drop_down, $require_plugin)){
-              /** Success **/
-              \Libs\SuccessMessages::push('You Have Successfully Added New Site Link', 'AdminPanel-SiteLinks');
-            }else{
-              /** Error **/
-              \Libs\ErrorMessages::push('Create New Site Link Failed', 'AdminPanel-SiteLinks');
-            }
-          }else if($link_action == "delete"){
-            if($this->model->deleteSiteLink($id)){
-              /** Success **/
-              \Libs\SuccessMessages::push('You Have Successfully Deleted Site Link', 'AdminPanel-SiteLinks');
-            }else{
-              /** Error **/
-              \Libs\ErrorMessages::push('Delete Site Link Failed', 'AdminPanel-SiteLinks');
-            }
-          }else if($link_action == "dropdownnew"){
-            if($this->model->addSiteDDLink($title, $url, $alt_text, $location, $drop_down, $require_plugin, $drop_down_for)){
-              /** Success **/
-              \Libs\SuccessMessages::push('You Have Successfully Added New Site Link', 'AdminPanel-SiteLinks');
-            }else{
-              /** Error **/
-              \Libs\ErrorMessages::push('Create New Site Link Failed', 'AdminPanel-SiteLinks');
-            }
-          }else if($link_action == "dropdownupdate"){
-            if($this->model->updateSiteDDLink($dd_link_id, $title, $url, $alt_text, $location, $drop_down, $require_plugin)){
-              /** Success **/
-              \Libs\SuccessMessages::push('You Have Successfully Updated Site Link', 'AdminPanel-SiteLinks');
-            }else{
-              /** Error **/
-              \Libs\ErrorMessages::push('Update Site Link Failed', 'AdminPanel-SiteLinks');
+        /* Check to see if site is a demo site */
+        if(DEMO_SITE != 'TRUE'){
+          /** Check to make sure the csrf token is good **/
+          if (Csrf::isTokenValid('SiteLink')) {
+            /** Get Form Data **/
+            $link_action = Request::post('link_action');
+            $id = Request::post('id');
+            $title = Request::post('title');
+            $url = Request::post('url');
+            $alt_text = Request::post('alt_text');
+            $location = "header_main";
+            $drop_down = Request::post('drop_down');
+            $require_plugin = Request::post('require_plugin');
+            $drop_down_for = Request::post('drop_down_for');
+            $dd_link_id = Request::post('dd_link_id');
+            /** Check if update or new **/
+            if($link_action == "update"){
+              if($this->model->updateSiteLink($id, $title, $url, $alt_text, $location, $drop_down, $require_plugin)){
+                /** Success **/
+                \Libs\SuccessMessages::push('You Have Successfully Updated Site Link', 'AdminPanel-SiteLinks');
+              }else{
+                /** Error **/
+                \Libs\ErrorMessages::push('Update Site Link Failed', 'AdminPanel-SiteLinks');
+              }
+            }else if($link_action == "new"){
+              if($this->model->addSiteLink($title, $url, $alt_text, $location, $drop_down, $require_plugin)){
+                /** Success **/
+                \Libs\SuccessMessages::push('You Have Successfully Added New Site Link', 'AdminPanel-SiteLinks');
+              }else{
+                /** Error **/
+                \Libs\ErrorMessages::push('Create New Site Link Failed', 'AdminPanel-SiteLinks');
+              }
+            }else if($link_action == "delete"){
+              if($this->model->deleteSiteLink($id)){
+                /** Success **/
+                \Libs\SuccessMessages::push('You Have Successfully Deleted Site Link', 'AdminPanel-SiteLinks');
+              }else{
+                /** Error **/
+                \Libs\ErrorMessages::push('Delete Site Link Failed', 'AdminPanel-SiteLinks');
+              }
+            }else if($link_action == "dropdownnew"){
+              if($this->model->addSiteDDLink($title, $url, $alt_text, $location, $drop_down, $require_plugin, $drop_down_for)){
+                /** Success **/
+                \Libs\SuccessMessages::push('You Have Successfully Added New Site Link', 'AdminPanel-SiteLinks');
+              }else{
+                /** Error **/
+                \Libs\ErrorMessages::push('Create New Site Link Failed', 'AdminPanel-SiteLinks');
+              }
+            }else if($link_action == "dropdownupdate"){
+              if($this->model->updateSiteDDLink($dd_link_id, $title, $url, $alt_text, $location, $drop_down, $require_plugin)){
+                /** Success **/
+                \Libs\SuccessMessages::push('You Have Successfully Updated Site Link', 'AdminPanel-SiteLinks');
+              }else{
+                /** Error **/
+                \Libs\ErrorMessages::push('Update Site Link Failed', 'AdminPanel-SiteLinks');
+              }
             }
           }
+        }else{
+            /* Error Message Display */
+            \Libs\ErrorMessages::push('Demo Limit - Site Links Settings Disabled', 'AdminPanel-SiteLinks');
         }
       }
 
@@ -1363,6 +1407,96 @@ class AdminPanel extends Controller{
       Load::View("AdminPanel/SiteLink", $data, "", "AdminPanel");
     }
 
+    /*
+    ** Admin Panel Adds Settings
+    ** Allows admins to add or edit Adds for website
+    */
+    public function Adds(){
+        /* Get data for dashboard */
+        $data['current_page'] = $_SERVER['REQUEST_URI'];
+        $data['title'] = "Adds Settings";
+        $data['welcomeMessage'] = "Welcome to the Admin Panel Site Adds Settings!";
 
+        /** Check to see if user is logged in **/
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+            /** User is logged in - Get their data **/
+            $u_id = $this->auth->user_info();
+            $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+            if($data['isAdmin'] = $this->user->checkIsAdmin($u_id) == 'false'){
+                /** User Not Admin - kick them out **/
+                \Libs\ErrorMessages::push('You are Not Admin', '');
+            }
+        }else{
+            /** User Not logged in - kick them out **/
+            \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
+        }
+
+        /* Check to see if Admin is submiting form data */
+        if(isset($_POST['submit'])){
+          /* Check to see if site is a demo site */
+          if(DEMO_SITE != 'TRUE'){
+              /* Check to make sure the csrf token is good */
+              if (Csrf::isTokenValid('settings')) {
+                  /* Check to make sure Admin is updating settings */
+                  if($_POST['update_settings'] == "true"){
+                      /* Get data sbmitted by form */
+                      $adds_top = Request::post('adds_top');
+                      $adds_bottom = Request::post('adds_bottom');
+                      $adds_sidebar_top = Request::post('adds_sidebar_top');
+                      $adds_sidebar_bottom = Request::post('adds_sidebar_bottom');
+
+                      if($this->model->updateSetting('adds_top', $adds_top)){}else{ $errors[] = 'Adds Main Top Error'; }
+                      if($this->model->updateSetting('adds_bottom', $adds_bottom)){}else{ $errors[] = 'Adds Main Bottom Error'; }
+                      if($this->model->updateSetting('adds_sidebar_top', $adds_sidebar_top)){}else{ $errors[] = 'Adds Sidebar Top Error'; }
+                      if($this->model->updateSetting('adds_sidebar_bottom', $adds_sidebar_bottom)){}else{ $errors[] = 'Adds Sidebar Bottom Error'; }
+
+                      // Run the update settings script
+                      if(!isset($errors) || count($errors) == 0){
+                          // Success
+                          \Libs\SuccessMessages::push('You Have Successfully Updated Adds Settings', 'AdminPanel-Adds');
+                      }else{
+                          // Error
+                          if(isset($errors)){
+                              $error_data = "<hr>";
+                              foreach($errors as $row){
+                                  $error_data .= " - ".$row."<br>";
+                              }
+                          }else{
+                              $error_data = "";
+                          }
+                          /* Error Message Display */
+                          \Libs\ErrorMessages::push('Error Updating Adds Settings'.$error_data, 'AdminPanel-Adds');
+                      }
+                  }else{
+                      /* Error Message Display */
+                      \Libs\ErrorMessages::push('Error Updating Adds Settings', 'AdminPanel-Adds');
+                  }
+              }else{
+                  /* Error Message Display */
+                  \Libs\ErrorMessages::push('Error Updating Adds Settings', 'AdminPanel-Adds');
+              }
+          }else{
+              /* Error Message Display */
+              \Libs\ErrorMessages::push('Demo Limit - Add Settings Disabled', 'AdminPanel-Adds');
+          }
+        }
+
+        /* Get Settings Data */
+        $data['adds_top'] = $this->model->getSettings('adds_top');
+        $data['adds_bottom'] = $this->model->getSettings('adds_bottom');
+        $data['adds_sidebar_top'] = $this->model->getSettings('adds_sidebar_top');
+        $data['adds_sidebar_bottom'] = $this->model->getSettings('adds_sidebar_bottom');
+
+        /* Setup Token for Form */
+        $data['csrfToken'] = Csrf::makeToken('settings');
+
+        /* Setup Breadcrumbs */
+        $data['breadcrumbs'] = "
+          <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+          <li class='breadcrumb-item active'><i class='fa fa-fw fa-dashboard'></i> ".$data['title']."</li>
+        ";
+
+        Load::View("AdminPanel/Adds", $data, "", "AdminPanel");
+    }
 
 }

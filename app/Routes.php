@@ -75,6 +75,7 @@ class Routes {
         $routes[] = self::add('AdminPanel-AuthLogs', 'AdminPanel', 'AuthLogs', '(:any)');
         $routes[] = self::add('AdminPanel-SiteLinks', 'AdminPanel', 'SiteLinks', '(:any)/(:any)/(:any)');
         $routes[] = self::add('AdminPanel-SiteLink', 'AdminPanel', 'SiteLink', '(:any)/(:any)/(:any)');
+        $routes[] = self::add('AdminPanel-Adds', 'AdminPanel', 'Adds');
         /* End Admin Panel Routing */
 
         /* Language Code Change */

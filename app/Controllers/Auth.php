@@ -162,6 +162,16 @@ class Auth extends Controller
                     }
                 }
 
+                /** Check for site user invite code **/
+                $site_user_invite_code = Request::post('site_user_invite_code');
+                $site_user_invite_code_db = SITE_USER_INVITE_CODE;
+                if(!empty($site_user_invite_code_db)){
+                  if($site_user_invite_code != $site_user_invite_code_db){
+                    // Error Message Display
+                    ErrorMessages::push($this->language->get('register_error'), 'Register');
+                  }
+                }
+
                 //Only continue if captcha did not fail
                 if (!$captcha_fail) {
                     $username = Request::post('username');
@@ -207,6 +217,10 @@ class Auth extends Controller
         $data['csrfToken'] = Csrf::makeToken('register');
         $data['title'] = $this->language->get('register_page_title');
         $data['welcomeMessage'] = $this->language->get('register_page_welcome_message');
+
+        /** Let Site Know if Invite Code is enabled **/
+        $site_user_invite_code_db = SITE_USER_INVITE_CODE;
+        if(!empty($site_user_invite_code_db)){ $data['invite_code'] = true; }
 
         /** needed for recaptcha **/
         if (RECAP_PUBLIC_KEY != "" && RECAP_PRIVATE_KEY != "") {

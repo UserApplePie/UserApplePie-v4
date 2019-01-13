@@ -13,7 +13,7 @@
 
 ?>
 
-<div class='col-lg-4 col-md-4'>
+
   <div class='card mb-3'>
     <div class='card-header h4'>
       Private Messages
@@ -31,4 +31,3 @@
       <li class='list-group-item'><span class='fas fa-pencil-alt'></span> <a href='<?php echo DIR ?>NewMessage' rel='nofollow'>Create New Message</a></li>
     </ul>
   </div>
-</div>

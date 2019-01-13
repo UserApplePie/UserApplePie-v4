@@ -120,6 +120,12 @@ use Libs\ErrorMessages,
 					<span class="nav-link-text">Auth Logs</span>
 				</a>
 			</li>
+			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+				<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-Adds">
+					<i class="fa fa-fw fa-adn"></i>
+					<span class="nav-link-text">Site Adds</span>
+				</a>
+			</li>
 		</ul>
       <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">

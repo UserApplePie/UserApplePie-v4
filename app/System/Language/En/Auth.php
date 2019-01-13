@@ -58,6 +58,7 @@ return [
 	'register_field_password' => "Password",
 	'register_field_confpass' => "Confirm Password",
 	'register_field_email' => "E-Mail",
+	'register_field_invite' => "Invite Code",
 	'register_username_empty' => "Username field is empty!",
 	'register_username_short' => "Username is too short!",
 	'register_username_long' => "Username is too long!",

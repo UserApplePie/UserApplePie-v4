@@ -67,18 +67,28 @@ use Libs\Language, Libs\Form;
 
 				<!-- Email -->
 				<div class='form-group'>
-					<div class='form-group'>
-						<div class='input-group mb-3'>
-							<div class='input-group-prepend'>
-								<span class='input-group-text'><i class='fas fa-envelope'></i></span>
-							</div>
-							<?php echo Form::input(array('id' => 'email', 'type' => 'text', 'name' => 'email', 'class' => 'form-control', 'placeholder' => Language::show('register_field_email', 'Auth'))); ?>
-							<div class='input-group-append'>
-								<span id='resultemail' class='input-group-text'></span>
-							</div>
+					<div class='input-group mb-3'>
+						<div class='input-group-prepend'>
+							<span class='input-group-text'><i class='fas fa-envelope'></i></span>
+						</div>
+						<?php echo Form::input(array('id' => 'email', 'type' => 'text', 'name' => 'email', 'class' => 'form-control', 'placeholder' => Language::show('register_field_email', 'Auth'))); ?>
+						<div class='input-group-append'>
+							<span id='resultemail' class='input-group-text'></span>
 						</div>
 					</div>
 				</div>
+
+				<?php if($data['invite_code']){ ?>
+				<!-- Invite Code -->
+				<div class='form-group'>
+					<div class='input-group mb-3'>
+						<div class='input-group-prepend'>
+							<span class='input-group-text'><i class='fas fa-envelope'></i></span>
+						</div>
+						<?php echo Form::input(array('id' => 'site_user_invite_code', 'type' => 'text', 'name' => 'site_user_invite_code', 'class' => 'form-control', 'placeholder' => Language::show('register_field_invite', 'Auth'))); ?>
+					</div>
+				</div>
+				<?php } ?>
 
 				<!-- reCAPTCHA -->
 				<div id="html_element"></div>
