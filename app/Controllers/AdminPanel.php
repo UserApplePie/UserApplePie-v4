@@ -429,7 +429,7 @@ class AdminPanel extends Controller{
       $this->pages->setTotal($total_num_users);
 
       // Send page links to view
-      $pageFormat = DIR."AdminPanel-Users/$set_order_by/"; // URL page where pages are
+      $pageFormat = SITE_URL."AdminPanel-Users/$set_order_by/"; // URL page where pages are
       $data['pageLinks'] = $this->pages->pageLinks($pageFormat, null, $current_page);
       $data['current_page_num'] = $current_page;
 
@@ -847,7 +847,7 @@ class AdminPanel extends Controller{
       /** Setup Title and Welcome Message **/
       $data['title'] = "Mass Email";
       $data['welcomeMessage'] = "Welcome to the Mass Email Admin Feature.  This feature will send an email to All site members that have not disabled the feature.";
-
+      $data['current_page'] = $_SERVER['REQUEST_URI'];
       $data['get_users_massemail_allow'] = $this->model->getUsersMassEmail();
       $data['csrfToken'] = Csrf::makeToken('massemail');
 
@@ -932,6 +932,7 @@ class AdminPanel extends Controller{
         /** Setup Title and Welcome Message **/
         $data['title'] = "System Routes";
         $data['welcomeMessage'] = "Welcome to the System Routes.  In order for any page to work on this system, it must be setup here.";
+        $data['current_page'] = $_SERVER['REQUEST_URI'];
 
         /** Setup Breadcrumbs **/
         $data['breadcrumbs'] = "
@@ -977,14 +978,15 @@ class AdminPanel extends Controller{
             if($class_methods[1] == "__construct"){
                 unset($class_methods[1]);
             }
-
-            foreach ($class_methods as $method) {
-                if(checkCoreRoutes($class, $method)){
-                    $routes[] = array(
-                        "controller" => $class,
-                        "method" => $method
-                    );
-                }
+            if(isset($class_methods)){
+              foreach ($class_methods as $method) {
+                  if(checkCoreRoutes($class, $method)){
+                      $routes[] = array(
+                          "controller" => $class,
+                          "method" => $method
+                      );
+                  }
+              }
             }
         }
 
@@ -1011,14 +1013,15 @@ class AdminPanel extends Controller{
             if($class_methods[1] == "__construct"){
                 unset($class_methods[1]);
             }
-
-            foreach ($class_methods as $method) {
-              $plugin_class = "Plugins\\".$dirname."\\Controllers\\".$class;
-              if(checkCoreRoutes($plugin_class, $method)){
-                $routes[] = array(
-                    "controller" => $plugin_class,
-                    "method" => $method
-                );
+            if(isset($class_methods)){
+              foreach ($class_methods as $method) {
+                $plugin_class = "Plugins\\".$dirname."\\Controllers\\".$class;
+                if(checkCoreRoutes($plugin_class, $method)){
+                  $routes[] = array(
+                      "controller" => $plugin_class,
+                      "method" => $method
+                  );
+                }
               }
             }
           }
@@ -1089,10 +1092,12 @@ class AdminPanel extends Controller{
         $data['title'] = "System Route";
         $data['welcomeMessage'] = "Welcome to the System Route.  Use Caustion when Editing System Route, it can break your site.";
         $data['csrfToken'] = Csrf::makeToken('route');
+        $data['current_page'] = $_SERVER['REQUEST_URI'];
 
         /** Setup Breadcrumbs **/
         $data['breadcrumbs'] = "
           <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+          <li class='breadcrumb-item'><a href='".DIR."AdminPanel-SystemRoutes'><i class='fa fa-fw fa-cog'></i> System Routes</a></li>
           <li class='breadcrumb-item active'><i class='fa fa-fw fa-user'></i>".$data['title']."</li>
         ";
 
@@ -1159,7 +1164,7 @@ class AdminPanel extends Controller{
       $this->pages->setTotal($total_num_auth_logs);
 
       // Send page links to view
-      $pageFormat = DIR."AdminPanel-AuthLogs/"; // URL page where pages are
+      $pageFormat = SITE_URL."AdminPanel-AuthLogs/"; // URL page where pages are
       $data['pageLinks'] = $this->pages->pageLinks($pageFormat, null, $current_page);
       $data['current_page_num'] = $current_page;
 
@@ -1201,6 +1206,7 @@ class AdminPanel extends Controller{
       // Get data for users
       $data['title'] = "Site Links";
       $data['welcome_message'] = "Welcome to the Admin Panel Site Links Editor.  You can edit links shown within set arears of the web site.";
+      $data['current_page'] = $_SERVER['REQUEST_URI'];
 
       // Setup Breadcrumbs
       $data['breadcrumbs'] = "
@@ -1266,6 +1272,8 @@ class AdminPanel extends Controller{
         /** User Not logged in - kick them out **/
         \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
       }
+
+      $data['current_page'] = $_SERVER['REQUEST_URI'];
 
       if($action == 'New'){
         /** Admin is Creating a New Link **/
@@ -1376,18 +1384,18 @@ class AdminPanel extends Controller{
             }else if($link_action == "dropdownnew"){
               if($this->model->addSiteDDLink($title, $url, $alt_text, $location, $drop_down, $require_plugin, $drop_down_for)){
                 /** Success **/
-                \Libs\SuccessMessages::push('You Have Successfully Added New Site Link', 'AdminPanel-SiteLinks');
+                \Libs\SuccessMessages::push('You Have Successfully Added New Site Drop Down Link', 'AdminPanel-SiteLink/'.$drop_down_for);
               }else{
                 /** Error **/
-                \Libs\ErrorMessages::push('Create New Site Link Failed', 'AdminPanel-SiteLinks');
+                \Libs\ErrorMessages::push('Create New Site Drop Down Link Failed', 'AdminPanel-SiteLink/'.$drop_down_for);
               }
             }else if($link_action == "dropdownupdate"){
               if($this->model->updateSiteDDLink($dd_link_id, $title, $url, $alt_text, $location, $drop_down, $require_plugin)){
                 /** Success **/
-                \Libs\SuccessMessages::push('You Have Successfully Updated Site Link', 'AdminPanel-SiteLinks');
+                \Libs\SuccessMessages::push('You Have Successfully Updated Site Drop Down Link', 'AdminPanel-SiteLink/'.$main_link_id);
               }else{
                 /** Error **/
-                \Libs\ErrorMessages::push('Update Site Link Failed', 'AdminPanel-SiteLinks');
+                \Libs\ErrorMessages::push('Update Site Drop Down Link Failed', 'AdminPanel-SiteLink/'.$main_link_id);
               }
             }
           }

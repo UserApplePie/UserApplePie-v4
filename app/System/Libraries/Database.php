@@ -206,6 +206,57 @@ class Database extends \PDO {
         $stmt->execute();
         return $stmt->rowCount();
     }
+	
+    /**
+     * update where not method
+     * @param  string $table table name
+     * @param  array $data  array of columns and values
+     * @param  array $where array of columns and values
+     */
+    public function updateWhereNot($table, $data, $where, $whereNot)
+    {
+        ksort($data);
+        $fieldDetails = null;
+        foreach ($data as $key => $value) {
+            $fieldDetails .= "$key = :field_$key,";
+        }
+        $fieldDetails = rtrim($fieldDetails, ',');
+        $whereDetails = null;
+        $i = 0;
+        foreach ($where as $key => $value) {
+            if ($i == 0) {
+                $whereDetails .= "$key = :where_$key";
+            } else {
+                $whereDetails .= " AND $key = :where_$key";
+            }
+            $i++;
+        }
+        $whereDetails = ltrim($whereDetails, ' AND ');
+        $whereNotDetails = null;
+        $i = 0;
+        foreach ($whereNot as $key => $value) {
+            if ($i == 0) {
+                $whereNotDetails .= "$key = :wherenot_$key";
+            } else {
+                $whereNotDetails .= " AND $key = :wherenot_$key";
+            }
+            $i++;
+        }
+        $whereNotDetails = ltrim($whereNotDetails, ' AND NOT ');
+        $stmt = $this->prepare("UPDATE $table SET $fieldDetails WHERE $whereDetails AND NOT $whereNotDetails");
+        foreach ($data as $key => $value) {
+            $stmt->bindValue(":field_$key", $value);
+        }
+        foreach ($where as $key => $value) {
+            $stmt->bindValue(":where_$key", $value);
+        }
+        foreach ($whereNot as $key => $value) {
+            $stmt->bindValue(":wherenot_$key", $value);
+        }
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+	
     /**
      * Open Delete method
      *

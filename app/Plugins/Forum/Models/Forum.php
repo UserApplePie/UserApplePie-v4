@@ -814,14 +814,14 @@ class Forum extends Models {
       $data = $this->db->selectCount("
       SELECT * FROM (
   			 (
-  			 SELECT *
+  			 SELECT fpr_post_id, fpr_user_id
   			 FROM ".PREFIX."forum_post_replies
   			 WHERE fpr_post_id = :post_id
   			 AND fpr_user_id = :user_id
   			 )
   			 UNION ALL
   			 (
-  			 SELECT *
+  			 SELECT forum_post_id, forum_user_id
   			 FROM ".PREFIX."forum_posts
   			 WHERE forum_post_id = :post_id
   			 AND forum_user_id = :user_id
@@ -850,7 +850,7 @@ class Forum extends Models {
       $data = $this->db->selectCount("
       SELECT * FROM (
   			 (
-  			 SELECT *
+  			 SELECT fpr_post_id, fpr_user_id, subscribe_email
   			 FROM ".PREFIX."forum_post_replies
   			 WHERE fpr_post_id = :post_id
   			 AND fpr_user_id = :user_id
@@ -858,7 +858,7 @@ class Forum extends Models {
   			 )
   			 UNION ALL
   			 (
-  			 SELECT *
+  			 SELECT forum_post_id, forum_user_id, subscribe_email
   			 FROM ".PREFIX."forum_posts
   			 WHERE forum_post_id = :post_id
   			 AND forum_user_id = :user_id

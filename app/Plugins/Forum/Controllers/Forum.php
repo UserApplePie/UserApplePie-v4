@@ -113,7 +113,7 @@ use App\System\Controller,
       $this->pagesTopic->setTotal($total_num_topics);
 
       // Send page links to view
-      $pageFormat = DIR."Topics/$id/"; // URL page where pages are
+      $pageFormat = SITE_URL."Topics/$id/"; // URL page where pages are
       $data['pageLinks'] = $this->pagesTopic->pageLinks($pageFormat, null, $current_page);
 
   		// Collect Data for view
@@ -228,7 +228,7 @@ use App\System\Controller,
         $this->pagesReply->setTotal($total_num_replys);
 
         // Send page links to view
-        $pageFormat = DIR."Topic/$id/"; // URL page where pages are
+        $pageFormat = SITE_URL."Topic/$id/"; // URL page where pages are
         $data['pageLinks'] = $this->pagesReply->pageLinks($pageFormat, null, $current_page);
 
         // Get related images if any
@@ -603,7 +603,7 @@ use App\System\Controller,
 
         // Send page links to view
         (isset($id)) ? $id = $id : $id = "";
-        $pageFormat = DIR."SearchForum/$search/$id/"; // URL page where pages are
+        $pageFormat = SITE_URL."SearchForum/$search/$id/"; // URL page where pages are
         $data['pageLinks'] = $this->pagesTopic->pageLinks($pageFormat, null, $current_page);
 
         // Display How Many Results

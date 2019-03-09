@@ -64,7 +64,7 @@ Option 1 - files above document root:
 * place the contents of public into your public folder (.htaccess and index.php)
 * navigate to your project in terminal and type composer install to initiate the composer install.
 * edit public/.htaccess set the rewritebase if running on a sub folder otherwise a single / will do.
-* edit app/Config.example.php change the SITEURL and DIR constants. the DIR path this is relative to the project url for example / for on the root or /foldername/ when in a folder. Also change other options as desired. Rename file as Config.php
+* edit app/Config.example.php change the SITE_URL and DIR constants. the DIR path this is relative to the project url for example / for on the root or /foldername/ when in a folder. Also change other options as desired. Rename file as Config.php
 * Import the database.sql to your database (Updated table PREFIX if changed in Config.php).
 * Enjoy!
 
@@ -82,7 +82,7 @@ define('ROOTDIR', realpath(__DIR__).'/');
 ````
 
 * edit .htaccess set the rewritebase if running on a sub folder otherwise a single / will do.
-* edit system/Core/Config.example.php change the SITEURL and DIR constants. the DIR path this is relative to the project url for example / for on the root or /foldername/ when in a folder. Also change other options as desired. Rename file as Config.php
+* edit system/Core/Config.example.php change the SITE_URL and DIR constants. the DIR path this is relative to the project url for example / for on the root or /foldername/ when in a folder. Also change other options as desired. Rename file as Config.php
 * Import the database.sql to your database (Updated table PREFIX if changed in Config.php).
 * Enjoy!
 

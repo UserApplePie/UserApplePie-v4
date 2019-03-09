@@ -388,6 +388,8 @@ class AdminPanel extends Models {
           ".PREFIX."users
         WHERE
           privacy_massemail = 'true'
+        AND
+          isactive = '1'
         ORDER BY
           userID
         ");
