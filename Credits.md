@@ -4,7 +4,7 @@ Thank You to all who helped make UserApplePie possible.
 The following contributed to the UAP build.  
 If your name is not on the list, please let us know so that we can add it.  
 --
-David (DaVaR) Sargent – http://www.userapplepie.com/
+David (DaVaR) Sargent – https://www.userapplepie.com/
 
 Gary Mathis - https://www.youtube.com/channel/UCtDDxnmPWXcTj1GSrkFMqKg
 
@@ -18,4 +18,6 @@ Bryan Yeh
 
 Cam Tosh
 
-EddyBeaupre 
+EddyBeaupre
+
+Bootswatch Themes - https://www.bootswatch.com
