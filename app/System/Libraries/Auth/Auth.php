@@ -364,7 +364,13 @@ class Auth {
             } elseif (strstr($password, $username)) {
                 $this->errormsg[] = $this->language->get('register_password_username');
             }
-            if (strlen($email) == 0) {
+						// Remove all illegal characters from email
+						$email = filter_var($email, FILTER_SANITIZE_EMAIL);
+						$domain_name = substr(strrchr($email, "@"), 1);
+						if (!checkdnsrr($domain_name, 'MX')) {
+								// Email Domain does now show valid
+								$this->errormsg[] = $this->language->get('register_email_invalid');
+						} elseif (strlen($email) == 0) {
                 $this->errormsg[] = $this->language->get('register_email_empty');
             } elseif (strlen($email) > MAX_EMAIL_LENGTH) {
                 $this->errormsg[] = $this->language->get('register_email_long');
@@ -463,7 +469,13 @@ class Auth {
             } elseif (strstr($password, $username)) {
                 $this->errormsg[] = $this->language->get('register_password_username');
             }
-            if (strlen($email) == 0) {
+						// Remove all illegal characters from email
+						$email = filter_var($email, FILTER_SANITIZE_EMAIL);
+						$domain_name = substr(strrchr($email, "@"), 1);
+						if (!checkdnsrr($domain_name, 'MX')) {
+						    // Email Domain does now show valid
+								$this->errormsg[] = $this->language->get('register_email_invalid');
+						} elseif (strlen($email) == 0) {
                 $this->errormsg[] = $this->language->get('register_email_empty');
             } elseif (strlen($email) > MAX_EMAIL_LENGTH) {
                 $this->errormsg[] = $this->language->get('register_email_long');

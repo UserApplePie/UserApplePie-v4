@@ -181,7 +181,7 @@ class Messages extends Controller{
     $this->pages->setTotal($total_num_messages);
 
     // Send page links to view
-    $pageFormat = DIR."MessagesInbox/"; // URL page where pages are
+    $pageFormat = SITE_URL."MessagesInbox/"; // URL page where pages are
     $data['pageLinks'] = $this->pages->pageLinks($pageFormat, null, $current_page);
 
     // Message Quota Goods
@@ -291,7 +291,7 @@ class Messages extends Controller{
     $total_num_messages = $this->model->getTotalMessagesOutbox($u_id);
     $this->pages->setTotal($total_num_messages);
     // Send page links to view
-    $pageFormat = DIR."MessagesOutbox/"; // URL page where pages are
+    $pageFormat = SITE_URL."MessagesOutbox/"; // URL page where pages are
     $data['pageLinks'] = $this->pages->pageLinks($pageFormat, null, $current_page);
 
     // Message Quota Goods
@@ -483,6 +483,7 @@ class Messages extends Controller{
             // Output errors if any
             if(!empty($error)){ $data['error'] = $error; };
         }
+		if(!isset($data['subject'])){ $data['subject'] = $subject; }
 
         // Collect Data for view
         $data['title'] = "My Private Message";

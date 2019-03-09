@@ -205,7 +205,7 @@ class Auth extends Controller
                 }
                 else{
                     // Error Message Display
-                    //ErrorMessages::push($this->language->get('register_error_recap'), 'Register');
+                    ErrorMessages::push($this->language->get('register_error_recap'), 'Register');
                 }
             }
             else{

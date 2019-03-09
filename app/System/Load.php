@@ -18,7 +18,7 @@ class Load {
     ** Load View
     ** Loads files needed to display a page.
     */
-    static function View($viewFile, $viewVars = array(), $sidebarFile = "", $template = DEFAULT_TEMPLATE, $useHeadFoot = true){
+    static function View($viewFile, $viewVars = array(), $sidebarFile = "", $template = DEFAULT_TEMPLATE, $useHeadFoot = true, $sidebarFile2 = ""){
         (empty($template)) ? $template = DEFAULT_TEMPLATE : "";
         $data = $viewVars;
         extract($viewVars);
@@ -47,6 +47,22 @@ class Load {
             ($sidebarLocation == "Left" || $sidebarLocation == "left") ? $leftSidebar = $sidebarFile : "";
         }
 
+        /* Setup Sidebar File */
+        if(!empty($sidebarFile2)){
+            $sidebarFile2Check = explode(".", $sidebarFile2);
+            $esbfc2 = explode("/", str_replace("::", "/", $sidebarFile2));
+            $sidebarLocation2 = end($esbfc2);
+            $sidebarFile2 = str_replace($sidebarLocation2, "", $sidebarFile2);
+            $sidebarFile2 = rtrim(rtrim($sidebarFile2,'/'),'::');
+            if(!isset($sidebarFile2Check[1])){
+                $sidebarFile2 .= ".php";
+            }
+            $sidebarFile2 = str_replace("::", "/", $sidebarFile2);
+            $sidebarFile2 = APPDIR."Views/".$sidebarFile2;
+            ($sidebarLocation2 == "Right" || $sidebarLocation2 == "right") ? $rightSidebar2 = $sidebarFile2 : "";
+            ($sidebarLocation2 == "Left" || $sidebarLocation2 == "left") ? $leftSidebar2 = $sidebarFile2 : "";
+        }
+
         /* Setup Template Files */
         if($useHeadFoot == true){
             $templateHeader = APPDIR."Templates/".$template."/Header.php";
@@ -71,17 +87,23 @@ class Load {
         /* Load files needed to make the page work */
         (isset($templateHeader)) ? require_once $templateHeader : "";
         ($addsEnable) ? require_once $mainAddsTop : "";
-        if(isset($leftSidebar)){ echo "<div class='col-lg-4 col-md-4 col-sm-12'>"; }
-        (isset($leftSidebar) && $addsEnable) ? require_once $sidebarAddsTop : "";
+
+        if(isset($leftSidebar) || isset($leftSidebar2)){ echo "<div class='col-lg-4 col-md-4 col-sm-12'>"; }
+        ((isset($leftSidebar) || isset($leftSidebar2)) && $addsEnable) ? require_once $sidebarAddsTop : "";
         (isset($leftSidebar)) ? require_once $leftSidebar : "";
-        (isset($leftSidebar) && $addsEnable) ? require_once $sidebarAddsBottom : "";
-        if(isset($leftSidebar)){ echo "</div>"; }
+        (isset($leftSidebar2)) ? require_once $leftSidebar2 : "";
+        ((isset($leftSidebar) || isset($leftSidebar2)) && $addsEnable) ? require_once $sidebarAddsBottom : "";
+        if(isset($leftSidebar) || isset($leftSidebar2)){ echo "</div>"; }
+
         require_once $viewFile;
-        if(isset($rightSidebar)){ echo "<div class='col-lg-4 col-md-4 col-sm-12'>"; }
-        (isset($rightSidebar) && $addsEnable) ? require_once $sidebarAddsTop : "";
+
+        if(isset($rightSidebar) || isset($rightSidebar2)){ echo "<div class='col-lg-4 col-md-4 col-sm-12'>"; }
+        ((isset($rightSidebar) || isset($rightSidebar2)) && $addsEnable) ? require_once $sidebarAddsTop : "";
         (isset($rightSidebar)) ? require_once $rightSidebar : "";
-        (isset($rightSidebar) && $addsEnable) ? require_once $sidebarAddsBottom : "";
-        if(isset($rightSidebar)){ echo "</div>"; }
+        (isset($rightSidebar2)) ? require_once $rightSidebar2 : "";
+        ((isset($rightSidebar) || isset($rightSidebar2)) && $addsEnable) ? require_once $sidebarAddsBottom : "";
+        if(isset($rightSidebar) || isset($rightSidebar2)){ echo "</div>"; }
+
         ($addsEnable) ? require_once $mainAddsBottom : "";
         (isset($templateFooter)) ? require_once $templateFooter : "";
     }

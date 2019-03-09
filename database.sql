@@ -377,7 +377,7 @@ INSERT INTO `uap4_forum_settings` (`id`, `setting_title`, `setting_value`, `sett
 -- Table structure for table `uap4_settings`
 --
 
-CREATE TABLE `uap4_settings` (
+CREATE TABLE IF NOT EXISTS `uap4_settings` (
   `setting_id` int(10) NOT NULL AUTO_INCREMENT,
   `setting_title` varchar(255) DEFAULT NULL,
   `setting_data` text,
@@ -402,8 +402,8 @@ INSERT INTO `uap4_settings` (`setting_id`, `setting_title`, `setting_data`) VALU
 (9, 'site_email_port', ''),
 (10, 'site_email_smtp', ''),
 (11, 'site_email_site', ''),
-(12, 'site_recapcha_public', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'),
-(13, 'site_recapcha_private', '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'),
+(12, 'site_recapcha_public', ''),
+(13, 'site_recapcha_private', ''),
 (14, 'site_user_invite_code', ''),
 (15, 'site_theme', 'default'),
 (16, 'max_attempts', '5'),
@@ -431,7 +431,7 @@ INSERT INTO `uap4_settings` (`setting_id`, `setting_title`, `setting_data`) VALU
 -- Table structure for table `uap4_forum_tracker`
 --
 
-CREATE TABLE `uap4_forum_tracker` (
+CREATE TABLE IF NOT EXISTS `uap4_forum_tracker` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `post_id` int(11) DEFAULT NULL,
@@ -446,7 +446,7 @@ CREATE TABLE `uap4_forum_tracker` (
   -- Table structure for table `uap4_forum_post_tracker`
   --
 
-  CREATE TABLE `uap4_forum_post_tracker` (
+  CREATE TABLE IF NOT EXISTS `uap4_forum_post_tracker` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `forum_post_id` int(11) DEFAULT NULL,
     `forum_reply_id` int(11) DEFAULT NULL,
@@ -460,7 +460,7 @@ CREATE TABLE `uap4_forum_tracker` (
 -- Table structure for table `uap4_friends`
 --
 
-CREATE TABLE `uap4_friends` (
+CREATE TABLE IF NOT EXISTS `uap4_friends` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid1` int(15) DEFAULT NULL,
   `uid2` int(15) DEFAULT NULL,
@@ -476,7 +476,7 @@ CREATE TABLE `uap4_friends` (
 -- Table structure for table `uap4_routes`
 --
 
-CREATE TABLE `uap4_routes` (
+CREATE TABLE IF NOT EXISTS `uap4_routes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `controller` varchar(255) DEFAULT NULL,
   `method` varchar(255) DEFAULT NULL,
@@ -517,8 +517,8 @@ INSERT INTO `uap4_forum_groups` (`id`, `forum_group`, `groupID`) VALUES
 -- Table structure for table `uap4_links`
 --
 
-CREATE TABLE `uap4_links` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `uap4_links` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
   `alt_text` varchar(255) DEFAULT NULL,
@@ -528,7 +528,8 @@ CREATE TABLE `uap4_links` (
   `drop_down` int(11) DEFAULT '0',
   `drop_down_for` int(11) DEFAULT '0',
   `require_plugin` varchar(255) DEFAULT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
