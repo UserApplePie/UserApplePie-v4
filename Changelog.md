@@ -16,6 +16,14 @@ Registration
  - Added Site Invitation Code
 Global Variables
  - Moved all defined variables to site settings so they can be stored in database
+Advertisement Settings
+ - Added Advertisement settings where admin can setup automatic adds on their website
+Demo Site Settings
+ - Added setting to disable admin editing in the Admin Panel when site is in demo mode
+Bootswatch Theme Update
+ - Updated to Bootswatch 4.2.1
+Bug Fixes
+ - Minor language fixes
 
 ----------------------------------------------------------------------------------------
 UAP v4.0.1 to v4.2.0
@@ -26,7 +34,7 @@ Updated Bootstrap from v3 to v4
  - Added usage of FontAwesome for icons
  - Fixed bug with site version checker
  - Added French language pack (EddyBeaupre)
- - Added Theme Change Option in Admin Settings. 
+ - Added Theme Change Option in Admin Settings.
 Updated to work with PHP 7.2
  - Properly changed use of most count() functions.
 ----------------------------------------------------------------------------------------

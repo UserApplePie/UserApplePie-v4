@@ -153,10 +153,10 @@ class Auth extends Controller
                 //Check the reCaptcha if the public and private keys were provided
                 if (RECAP_PUBLIC_KEY != "" && RECAP_PRIVATE_KEY != "") {
                     if (isset($_POST['g-recaptcha-response'])) {
-                        $gRecaptchaResponse = $_POST['g-recaptcha-response'];
-
                         $recaptcha = new \ReCaptcha\ReCaptcha(RECAP_PRIVATE_KEY);
-                        $resp = $recaptcha->verify($gRecaptchaResponse);
+                        // Added extra security to the recaptcha check.
+                        $resp = $recaptcha->setExpectedHostname($_SERVER['SERVER_NAME'])
+                          ->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
                         if (!$resp->isSuccess())
                             $captcha_fail = true;
                     }
@@ -205,7 +205,7 @@ class Auth extends Controller
                 }
                 else{
                     // Error Message Display
-                    ErrorMessages::push($this->language->get('register_error_recap'), 'Register');
+                    //ErrorMessages::push($this->language->get('register_error_recap'), 'Register');
                 }
             }
             else{
@@ -225,12 +225,16 @@ class Auth extends Controller
         /** needed for recaptcha **/
         if (RECAP_PUBLIC_KEY != "" && RECAP_PRIVATE_KEY != "") {
             $data['ownjs'] = array(
-              "<script type='text/javascript'>
+              "
+                <script type='text/javascript'>
                   var onloadCallback = function() {
-                      grecaptcha.render('html_element', {'sitekey' : '".RECAP_PUBLIC_KEY."'});
+                    grecaptcha.render('html_element', {
+                      'sitekey' : '".RECAP_PUBLIC_KEY."'
+                    });
                   };
-              </script>",
-              "<script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&amp;render=explicit' async defer></script>",);
+                </script>
+              ",
+              "<script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit' async defer></script>");
         }
 
         /** Get lang Code **/
