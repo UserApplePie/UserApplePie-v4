@@ -247,7 +247,7 @@ use App\System\Controller,
           // Check to see if user is editing topic
           if($data['action'] == "update_topic"){
             // Get data from post
-    				$data['forum_content'] = strip_tags(Request::post('forum_content'));
+    				$data['forum_content'] = htmlspecialchars(Request::post('forum_content'));
             $data['forum_title'] = strip_tags(Request::post('forum_title'));
               // Check to make sure user completed all required fields in form
               if(empty($data['forum_title'])){
@@ -279,7 +279,7 @@ use App\System\Controller,
           // Check to see if user is editing or creating topic reply
           else if($data['action'] == "update_reply"){
             // Get data from post
-    				$data['fpr_content'] = strip_tags(Request::post('fpr_content'));
+    				$data['fpr_content'] = htmlspecialchars(Request::post('fpr_content'));
               // Check to make sure user completed all required fields in form
               if(empty($data['fpr_content'])){
                 // Subject field is empty
@@ -304,7 +304,7 @@ use App\System\Controller,
               }// End Form Complete Check
           }else if($data['action'] == "new_reply"){
     				// Get data from post
-    				$data['fpr_content'] = strip_tags(Request::post('fpr_content'));
+    				$data['fpr_content'] = htmlspecialchars(Request::post('fpr_content'));
               // Check to make sure user completed all required fields in form
               if(empty($data['fpr_content'])){
                 // Subject field is empty
@@ -439,6 +439,9 @@ use App\System\Controller,
       $data['group_forum_perms_mod'] = $this->model->group_forum_perms($u_id, "mods");
       $data['group_forum_perms_admin'] = $this->model->group_forum_perms($u_id, "admins");
 
+      /* Add Java Stuffs */
+      $data['js'] = "<script src='".Url::templatePath()."js/bbcode.js'></script>";
+
         /* Send data to view */
         Load::ViewPlugin("topic", $data, "forum_sidebar::Right", "Forum");
     }
@@ -474,8 +477,9 @@ use App\System\Controller,
       $data['is_new_user'] = $this->auth->checkIsNewUser($u_id);
 
       // Get data from post
+      (isset($_POST['forum_post_id'])) ? $data['forum_post_id'] = strip_tags(Request::post('forum_post_id')) : $data['forum_post_id'] = "";
       (isset($_POST['forum_title'])) ? $data['forum_title'] = strip_tags(Request::post('forum_title')) : $data['forum_title'] = "";
-      (isset($_POST['forum_content'])) ? $data['forum_content'] = strip_tags(Request::post('forum_content')) : $data['forum_content'] = "";
+      (isset($_POST['forum_content'])) ? $data['forum_content'] = htmlspecialchars(Request::post('forum_content')) : $data['forum_content'] = "";
 
       // Check to see if user is submitting a new topic
   		if(isset($_POST['submit'])){
@@ -496,7 +500,7 @@ use App\System\Controller,
             if(!isset($error)){
                 // No Errors, lets submit the new topic to db
                 $new_topic = $this->model->sendTopic($u_id, $id, $data['forum_title'], $data['forum_content']);
-        				if($new_topic){
+                if($new_topic){
                   // New Topic Successfully Created Now Check if User is Uploading Image
                   // Check for image upload with this topic
                   $picture = file_exists($_FILES['forumImage']['tmp_name']) || is_uploaded_file($_FILES['forumImage']['tmp_name']) ? $_FILES['forumImage'] : array ();
@@ -564,6 +568,9 @@ use App\System\Controller,
       $data['group_forum_perms_post'] = $this->model->group_forum_perms($u_id, "users");
       $data['group_forum_perms_mod'] = $this->model->group_forum_perms($u_id, "mods");
       $data['group_forum_perms_admin'] = $this->model->group_forum_perms($u_id, "admins");
+
+      /* Add Java Stuffs */
+      $data['js'] = "<script src='".Url::templatePath()."js/bbcode.js'></script>";
 
         /* Send data to view */
         Load::ViewPlugin("newtopic", $data, "forum_sidebar::Right", "Forum");

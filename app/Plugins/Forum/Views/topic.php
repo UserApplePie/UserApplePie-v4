@@ -111,8 +111,34 @@ use Core\Language,
             if($data['action'] == "edit_topic" && $data['current_userID'] == $data['topic_creator']){
               echo "<font color='green' size='0.5'><b>Editing Topic</b></font>";
               echo Form::open(array('method' => 'post'));
+              echo "
+              <div class='input-group' style='margin-bottom: 25px'>
+                <div class='input-group-prepend'>
+                  <span class='input-group-text'><i class='fas fa-book'></i></span>
+                </div>
+              ";
               echo Form::input(array('type' => 'text', 'name' => 'forum_title', 'class' => 'form-control', 'value' => $data['title'], 'placeholder' => 'Topic Title', 'maxlength' => '100'));
-              echo Form::textBox(array('type' => 'text', 'name' => 'forum_content', 'class' => 'form-control', 'value' => $data['topic_content'], 'placeholder' => 'Topic Content', 'rows' => '6'));
+              echo "</div>";
+              ?>
+              <div class='input-group mb-3' style='margin-bottom: 25px'>
+                <div class='input-group-prepend'>
+                  <span class='input-group-text'>
+                    <!-- BBCode Buttons -->
+                    <div class='btn-group-vertical'>
+                      <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[b]','[/b]');"><i class='fas fa-bold'></i></button>
+                      <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[i]','[/i]');"><i class='fas fa-italic'></i></button>
+                      <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[u]','[/u]');"><i class='fas fa-underline'></i></button>
+                      <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[youtube]','[/youtube]');"><i class='fab fa-youtube'></i></button>
+                      <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[quote]','[/quote]');"><i class='fas fa-quote-right'></i></button>
+                      <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[code]','[/code]');"><i class='fas fa-code'></i></button>
+                      <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[url href=]','[/url]');"><i class='fas fa-link'></i></button>
+                      <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[img]','[/img]');"><i class='fas fa-image'></i></button>
+                    </div>
+                  </span>
+                </div>
+              <?php
+              echo Form::textBox(array('type' => 'text', 'id' => 'forum_content', 'name' => 'forum_content', 'class' => 'form-control', 'value' => $data['topic_content'], 'placeholder' => 'Topic Content', 'rows' => '6'));
+              echo "</div>";
               // Topic Reply Edit True
               echo "<input type='hidden' name='action' value='update_topic' />";
               // CSRF Token
@@ -259,7 +285,26 @@ use Core\Language,
                   if($data['action'] == "edit_reply" && $data['current_userID'] == $rf_p_user_id && $data['edit_reply_id'] == $rf_p_main_id){
                     echo "<font color='green' size='0.5'><b>Editing Topic Reply</b></font>";
                     echo Form::open(array('method' => 'post', 'action' => '#topicreply'.$rf_p_main_id));
-                    echo Form::textBox(array('type' => 'text', 'name' => 'fpr_content', 'class' => 'form-control', 'value' => $rf_p_content, 'placeholder' => 'Topic Reply Content', 'rows' => '6'));
+                ?>
+                <div class='input-group mb-3' style='margin-bottom: 25px'>
+                  <div class='input-group-prepend'>
+                    <span class='input-group-text'>
+                      <!-- BBCode Buttons -->
+                      <div class='btn-group-vertical'>
+                        <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[b]','[/b]');"><i class='fas fa-bold'></i></button>
+                        <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[i]','[/i]');"><i class='fas fa-italic'></i></button>
+                        <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[u]','[/u]');"><i class='fas fa-underline'></i></button>
+                        <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[youtube]','[/youtube]');"><i class='fab fa-youtube'></i></button>
+                        <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[quote]','[/quote]');"><i class='fas fa-quote-right'></i></button>
+                        <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[code]','[/code]');"><i class='fas fa-code'></i></button>
+                        <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[url href=]','[/url]');"><i class='fas fa-link'></i></button>
+                        <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[img]','[/img]');"><i class='fas fa-image'></i></button>
+                      </div>
+                    </span>
+                  </div>
+                <?php
+                    echo Form::textBox(array('type' => 'text', 'id' => 'forum_content', 'name' => 'fpr_content', 'class' => 'form-control', 'value' => $rf_p_content, 'placeholder' => 'Topic Reply Content', 'rows' => '6'));
+                    echo "</div>";
                     // Topic Reply Edit True
                     echo "<input type='hidden' name='action' value='update_reply' />";
                     // Topic Reply ID for editing
@@ -354,6 +399,8 @@ use Core\Language,
         // Display Locked Message if Topic has been locked by admin
         if($data['topic_status'] == 2){
           echo " <strong><font color='red'>Topic Locked - Replies are Disabled</font></strong> ";
+        }else if($data['action'] == "edit_topic" || $data['action'] == "edit_reply"){
+          // Hide reply while editing
         }else{
           // Display Create New Topic Reply Button if user is logged in
           if($data['isLoggedIn'] && $group_forum_perms_post){
@@ -364,10 +411,22 @@ use Core\Language,
             <!-- Topic Reply Content -->
             <div class='input-group mb-3' style='margin-bottom: 25px'>
               <div class="input-group-prepend">
-                <span class='input-group-text'><i class='fas fa-pencil-alt'></i> </span>
+                <span class='input-group-text'>
+                  <!-- BBCode Buttons -->
+                  <div class='btn-group-vertical'>
+                    <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[b]','[/b]');"><i class='fas fa-bold'></i></button>
+                    <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[i]','[/i]');"><i class='fas fa-italic'></i></button>
+                    <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[u]','[/u]');"><i class='fas fa-underline'></i></button>
+                    <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[youtube]','[/youtube]');"><i class='fab fa-youtube'></i></button>
+                    <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[quote]','[/quote]');"><i class='fas fa-quote-right'></i></button>
+                    <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[code]','[/code]');"><i class='fas fa-code'></i></button>
+                    <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[url href=]','[/url]');"><i class='fas fa-link'></i></button>
+                    <button type="button" class="btn btn-sm btn-light" onclick="wrapText('edit','[img]','[/img]');"><i class='fas fa-image'></i></button>
+                  </div>
+                </span>
               </div>
               <?php (isset($data['fpr_content'])) ? $data['fpr_content'] = $data['fpr_content'] : $data['fpr_content'] = ""; ?>
-              <?php echo Form::textBox(array('type' => 'text', 'name' => 'fpr_content', 'class' => 'form-control', 'value' => $data['fpr_content'], 'placeholder' => 'Topic Reply Content', 'rows' => '6')); ?>
+              <?php echo Form::textBox(array('type' => 'text', 'id' => 'forum_content', 'name' => 'fpr_content', 'class' => 'form-control', 'value' => $data['fpr_content'], 'placeholder' => 'Topic Reply Content', 'rows' => '6')); ?>
             </div>
 
             <?php
