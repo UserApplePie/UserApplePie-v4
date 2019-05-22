@@ -172,8 +172,11 @@ class Auth extends Controller
                   }
                 }
 
+                /* Get User Bot Protection Field - Should be empty if Human */
+                $ubp_name = Request::post('ubp_name');
+
                 //Only continue if captcha did not fail
-                if (!$captcha_fail) {
+                if (!$captcha_fail && empty($ubp_name)) {
                     $username = Request::post('username');
                     $password = Request::post('password');
                     $verifypassword = Request::post('passwordc');

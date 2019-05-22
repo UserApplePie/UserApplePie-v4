@@ -96,6 +96,9 @@ use Libs\Language, Libs\Form;
 				<!-- CSRF Token -->
 				<input type="hidden" name="token_register" value="<?=$csrfToken;?>" />
 
+				<!-- UBP Name Protection -->
+				<input type="text" name="ubp_name" value="" class="hidden" />
+
 				<!-- Error Msg Display -->
 				<span id='resultun2' class='label'></span>
 				<span class='label' id='passwordStrength'></span>
