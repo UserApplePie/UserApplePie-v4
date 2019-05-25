@@ -4,6 +4,34 @@ https://www.userapplepie.com
 ----------------------------------------------------------------------------------------
 
 ----------------------------------------------------------------------------------------
+UAP v4.2.1 to v4.2.2
+----------------------------------------------------------------------------------------
+Updated Forum Plugin
+ - Added BBcode buttons for text areas
+ - Fixed issues when users try to post php code to the forum
+Registration Bot Fix
+ - Added a simple hidden empty text field to the form
+ - Set site to block registration if field has data
+ - Updated for more strict email check
+Admin panel
+ - Updated admin panel to not show adds
+User Auth
+ - Updated user auth pages to not show adds
+Mass Email
+ - Updated to only send emails to active users
+Database Library
+ - Added updateWhereNot function that got lost somehow
+Site adds
+ - Added site adds feature to the site and admin panel  
+ - When enabled added code to detect in the Load system controller
+reCAPTCHA
+ - Updated reCAPTCHA to be more strict
+ - Removed test keys since it now requires domain match
+ - Setup where if user leaves keys blank the site will not load reCAPTCHA
+Database
+ - Updated database to check if table exist during install
+
+----------------------------------------------------------------------------------------
 UAP v4.2.0 to v4.2.1
 ----------------------------------------------------------------------------------------
 Updated Forum Plugin
