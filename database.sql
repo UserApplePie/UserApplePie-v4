@@ -369,7 +369,8 @@ INSERT INTO `uap4_forum_settings` (`id`, `setting_title`, `setting_value`, `sett
 (4, 'forum_topic_limit', '20', ''),
 (5, 'forum_topic_reply_limit', '10', ''),
 (6, 'forum_posts_group_change_enable', 'true', ''),
-(7, 'forum_posts_group_change', '15', '');
+(7, 'forum_posts_group_change', '15', ''),
+(8, 'forum_max_image_size', '800,600', '');
 
 -- --------------------------------------------------------
 
@@ -423,7 +424,8 @@ INSERT INTO `uap4_settings` (`setting_id`, `setting_title`, `setting_data`) VALU
 (30, 'message_quota_limit', '50'),
 (31, 'message_pageinator_limit', '10'),
 (32, 'sweet_title_display', 'Sweets'),
-(33, 'sweet_button_display', 'Sweet');
+(33, 'sweet_button_display', 'Sweet'),
+(34, 'image_max_size', '800,600');
 
 -- --------------------------------------------------------
 

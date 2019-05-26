@@ -23,7 +23,7 @@ use Libs\Language;
                         <?php }else{ ?>
 							<span class='fas fa-user icon-size'></span>
 						<?php } ?>
-                        <Br>
+                        <hr>
                         <?php if($data['isAdmin'] == 'true'){
                             echo " <a href='".SITE_URL."AdminPanel-User/".$data['profile']->userID."' title='Admin - Edit User' class='btn btn-warning btn-block btn-sm'>Admin - Edit User</a> ";
                         } ?>
@@ -93,4 +93,15 @@ use Libs\Language;
                 <?php echo $data['profile']->aboutme; ?>
             </div>
         </div>
+        <?php if(!empty($data['profile']->signature)){ ?>
+        <div class="card mb-3">
+            <div class="card-header h4">
+                <?php echo $data['profile']->username; ?>'s <?=Language::show('members_profile_signature', 'Members'); ?>
+            </div>
+            <div class="card-body">
+                <?php echo $data['profile']->signature; ?>
+            </div>
+        </div>
+      <?php } ?>
+
     </div>

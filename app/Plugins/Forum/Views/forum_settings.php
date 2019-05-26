@@ -114,6 +114,23 @@ use Libs\Form,
           <i>Default: 15</i> - Set the amount of Post a New Member must post to be upgraded to Member Group if Enabled.
         </div>
 
+        <!-- Max Image Size when uploaded to server -->
+        <div class='input-group mb-3'>
+          <div class='input-group-prepend'>
+            <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Forum Image Max Size</span>
+          </div>
+          <select class='form-control' id='forum_max_image_size' name='forum_max_image_size'>
+            <option value='240,160' <?php if($data['forum_max_image_size'] == "240,160"){echo "SELECTED";}?> >240 x 160</option>
+            <option value='320,240' <?php if($data['forum_max_image_size'] == "320,240"){echo "SELECTED";}?> >320 x 160</option>
+            <option value='460,309' <?php if($data['forum_max_image_size'] == "460,309"){echo "SELECTED";}?> >460 x 309</option>
+            <option value='800,600' <?php if($data['forum_max_image_size'] == "800,600"){echo "SELECTED";}?> >800 x 600</option>
+            <option value='1024,768' <?php if($data['forum_max_image_size'] == "1024,768"){echo "SELECTED";}?> >1024 x 768</option>
+            <option value='1920,1080' <?php if($data['forum_max_image_size'] == "1920,1080"){echo "SELECTED";}?> >1920 x 1080</option>
+          </select>
+        </div>
+        <div style='margin-bottom: 25px'>
+          <i>Default: 800x600</i> - Select the default image max resize limit.  The larger the size, the larger the file.
+        </div>
 
         <?php echo Form::input(array('type' => 'hidden', 'name' => 'token_ForumAdmin', 'value' => $data['csrf_token'])); ?>
         <?php echo Form::input(array('type' => 'hidden', 'name' => 'update_global_settings', 'value' => 'true')); ?>

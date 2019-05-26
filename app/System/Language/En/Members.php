@@ -39,6 +39,7 @@ return [
 	'members_profile_lastlogin' => "Last Login",
 	'members_profile_signup' => "Signed Up",
 	'members_profile_allabout' => "All About",
+	'members_profile_signature' => "Forum Signature",
 
 	/** Members Search Page **/
 	'members_search_title' => "Members Search",

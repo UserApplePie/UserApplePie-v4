@@ -218,7 +218,8 @@ class Members extends Controller
                                 $rand_string = substr(str_shuffle(md5(time())), 0, 10);
                                 $img_name = $username[0]->username.'_PROFILE_'.$rand_string.'.jpg';
     							$dir = $img_dir_profile.$img_name;
-    							$image->best_fit(400,300)->save(ROOTDIR.$dir);
+                  $img_max_size = explode(',', IMG_MAX_SIZE);
+    							$image->best_fit($img_max_size[0],$img_max_size[1])->save(ROOTDIR.$dir);
                                 if(file_exists(ROOTDIR.$dir) && (strpos($userImage, ".") !== false)){
                                     if($userImage == 'default-1.jpg' || $userImage == 'default-2.jpg' || $userImage == 'default-3.jpg' || $userImage == 'default-4.jpg' || $userImage == 'default-5.jpg'){
                                         // Do Nothing

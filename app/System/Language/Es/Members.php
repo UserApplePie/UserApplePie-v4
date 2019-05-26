@@ -39,6 +39,7 @@ return [
 	'members_profile_lastlogin' => "Último acceso",
 	'members_profile_signup' => "Inscrito",
 	'members_profile_allabout' => "Todo sobre",
+	'members_profile_signature' => "Foro Firma",
 
 	/** Members Search Page **/
 	'members_search_title' => "Miembros Buscar",
