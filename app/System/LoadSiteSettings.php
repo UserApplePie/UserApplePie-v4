@@ -172,6 +172,13 @@ class LoadSiteSettings {
           define('SWEET_TITLE_DISPLAY', $this->model->getSettings('sweet_title_display'));
           // Sweets Singular Button Display
           define('SWEET_BUTTON_DISPLAY', $this->model->getSettings('sweet_button_display'));
+          /*****************
+           *                *
+           *    Images      *
+           *                *
+           *****************/
+           // Get Max Image Size
+           define('IMG_MAX_SIZE', $this->model->getSettings('image_max_size'));
     }
 
 }

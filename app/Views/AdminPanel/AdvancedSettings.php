@@ -291,6 +291,33 @@ use Libs\Form,
     </div>
   </div>
 
+  <div class='col-lg-12 col-md-12 col-sm-12'>
+    <div class='card mb-3'>
+      <div class='card-header h4'>
+        <h3 class='jumbotron-heading'>Max Image Size</h3>
+      </div>
+      <div class='card-body'>
+        <!-- Max Image Size when uploaded to server -->
+        <div class='input-group mb-3'>
+          <div class='input-group-prepend'>
+            <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-image'></i> Max Image Size</span>
+          </div>
+          <select class='form-control' id='image_max_size' name='image_max_size'>
+            <option value='240,160' <?php if($data['image_max_size'] == "240,160"){echo "SELECTED";}?> >240 x 160</option>
+            <option value='320,240' <?php if($data['image_max_size'] == "320,240"){echo "SELECTED";}?> >320 x 160</option>
+            <option value='460,309' <?php if($data['image_max_size'] == "460,309"){echo "SELECTED";}?> >460 x 309</option>
+            <option value='800,600' <?php if($data['image_max_size'] == "800,600"){echo "SELECTED";}?> >800 x 600</option>
+            <option value='1024,768' <?php if($data['image_max_size'] == "1024,768"){echo "SELECTED";}?> >1024 x 768</option>
+            <option value='1920,1080' <?php if($data['image_max_size'] == "1920,1080"){echo "SELECTED";}?> >1920 x 1080</option>
+          </select>
+        </div>
+        <div style='margin-bottom: 25px'>
+          <i>Default: 800x600</i> - Select the default image max resize limit.  The larger the size, the larger the file.
+        </div>
+      </div>
+    </div>
+  </div>
+
     <div class='col-lg-12 col-md-12 col-sm-12'>
         <button class="btn btn-md btn-success" name="submit" type="submit">
             Update Site Advanced Settings

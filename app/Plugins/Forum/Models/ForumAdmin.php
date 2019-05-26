@@ -210,7 +210,7 @@ class ForumAdmin extends Models {
    *
    * @return boolean returns true/false
    */
-  public function updateGlobalSettings($forum_on_off,$forum_title,$forum_description,$forum_topic_limit,$forum_topic_reply_limit,$forum_posts_group_change_enable,$forum_posts_group_change){
+  public function updateGlobalSettings($forum_on_off,$forum_title,$forum_description,$forum_topic_limit,$forum_topic_reply_limit,$forum_posts_group_change_enable,$forum_posts_group_change,$forum_max_image_size){
     // Update groups table
     $query[] = $this->db->update(PREFIX.'forum_settings', array('setting_value' => $forum_on_off), array('setting_title' => 'forum_on_off'));
     $query[] = $this->db->update(PREFIX.'forum_settings', array('setting_value' => $forum_title), array('setting_title' => 'forum_title'));
@@ -219,6 +219,7 @@ class ForumAdmin extends Models {
     $query[] = $this->db->update(PREFIX.'forum_settings', array('setting_value' => $forum_topic_reply_limit), array('setting_title' => 'forum_topic_reply_limit'));
     $query[] = $this->db->update(PREFIX.'forum_settings', array('setting_value' => $forum_posts_group_change_enable), array('setting_title' => 'forum_posts_group_change_enable'));
     $query[] = $this->db->update(PREFIX.'forum_settings', array('setting_value' => $forum_posts_group_change), array('setting_title' => 'forum_posts_group_change'));
+    $query[] = $this->db->update(PREFIX.'forum_settings', array('setting_value' => $forum_max_image_size), array('setting_title' => 'forum_max_image_size'));
     $count = count($query);
     // Check to make sure something was updated
     if($count > 0){

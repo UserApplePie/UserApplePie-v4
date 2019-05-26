@@ -6,7 +6,12 @@ https://www.userapplepie.com
 ----------------------------------------------------------------------------------------
 UAP v4.2.1 to v4.2.2
 ----------------------------------------------------------------------------------------
+Updated User Profile
+ - Added input group styling
+ - Added image max size option in Admin Settings
+ - Added Forum signature to view profile
 Updated Forum Plugin
+ - Added Image Max Size option to Admin Settings
  - Added BBcode buttons for text areas
  - Fixed issues when users try to post php code to the forum
 Registration Bot Fix
@@ -30,6 +35,7 @@ reCAPTCHA
  - Setup where if user leaves keys blank the site will not load reCAPTCHA
 Database
  - Updated database to check if table exist during install
+ - Added Image Max Size setting to Site Settings and Forum Settings
 
 ----------------------------------------------------------------------------------------
 UAP v4.2.0 to v4.2.1

@@ -330,6 +330,7 @@ class AdminPanel extends Controller{
                     $message_pageinator_limit = Request::post('message_pageinator_limit');
                     $sweet_title_display = Request::post('sweet_title_display');
                     $sweet_button_display = Request::post('sweet_button_display');
+                    $image_max_size = Request::post('image_max_size');
 
                     if($this->model->updateSetting('site_user_invite_code', $site_user_invite_code)){}else{ $errors[] = 'site_user_invite_code Error'; }
                     if($this->model->updateSetting('max_attempts', $max_attempts)){}else{ $errors[] = 'max_attempts Error'; }
@@ -350,6 +351,7 @@ class AdminPanel extends Controller{
                     if($this->model->updateSetting('message_pageinator_limit', $message_pageinator_limit)){}else{ $errors[] = 'message_pageinator_limit Error'; }
                     if($this->model->updateSetting('sweet_title_display', $sweet_title_display)){}else{ $errors[] = 'sweet_title_display Error'; }
                     if($this->model->updateSetting('sweet_button_display', $sweet_button_display)){}else{ $errors[] = 'sweet_button_display Error'; }
+                    if($this->model->updateSetting('image_max_size', $image_max_size)){}else{ $errors[] = 'image_max_size Error'; }
 
                     // Run the update settings script
                     if(!isset($errors) || count($errors) == 0){
@@ -402,6 +404,7 @@ class AdminPanel extends Controller{
         $data['message_pageinator_limit'] = $this->model->getSettings('message_pageinator_limit');
         $data['sweet_title_display'] = $this->model->getSettings('sweet_title_display');
         $data['sweet_button_display'] = $this->model->getSettings('sweet_button_display');
+        $data['image_max_size'] = $this->model->getSettings('image_max_size');
 
         /* Setup Token for Form */
         $data['csrfToken'] = Csrf::makeToken('settings');

@@ -40,6 +40,7 @@ return [
 	'members_profile_lastlogin' => "Dernière connexion",
 	'members_profile_signup' => "Membre depuis",
 	'members_profile_allabout' => "À propos",
+	'members_profile_signature' => "Signature de forum",
 
 	/** Members Search Page **/
 	'members_search_title' => "Recherche de membres",

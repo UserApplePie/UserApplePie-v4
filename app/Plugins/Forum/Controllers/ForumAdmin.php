@@ -66,8 +66,9 @@ class ForumAdmin extends Controller{
             $forum_topic_reply_limit = Request::post('forum_topic_reply_limit');
             $forum_posts_group_change_enable = Request::post('forum_posts_group_change_enable');
             $forum_posts_group_change = Request::post('forum_posts_group_change');
+            $forum_max_image_size = Request::post('forum_max_image_size');
             // Run Forum Settings Update
-            if($this->forum->updateGlobalSettings($forum_on_off,$forum_title,$forum_description,$forum_topic_limit,$forum_topic_reply_limit,$forum_posts_group_change_enable,$forum_posts_group_change)){
+            if($this->forum->updateGlobalSettings($forum_on_off,$forum_title,$forum_description,$forum_topic_limit,$forum_topic_reply_limit,$forum_posts_group_change_enable,$forum_posts_group_change,$forum_max_image_size)){
               // Success
               \Libs\SuccessMessages::push('You Have Successfully Updated Forum Global Settings', 'AdminPanel-Forum-Settings');
             }else{
@@ -127,6 +128,7 @@ class ForumAdmin extends Controller{
     $data['forum_topic_reply_limit'] = $this->forum->globalForumSetting('forum_topic_reply_limit');
     $data['forum_posts_group_change_enable'] = $this->forum->globalForumSetting('forum_posts_group_change_enable');
     $data['forum_posts_group_change'] = $this->forum->globalForumSetting('forum_posts_group_change');
+    $data['forum_max_image_size'] = $this->forum->globalForumSetting('forum_max_image_size');
 
     // Get user groups data
     $data_groups = $this->model->getAllGroups();

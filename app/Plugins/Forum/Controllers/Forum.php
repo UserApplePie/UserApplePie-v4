@@ -32,6 +32,7 @@ use App\System\Controller,
     private $forum_description;
     private $forum_topic_limit;
     private $forum_topic_reply_limit;
+    private $forum_max_image_size;
 
   	public function __construct(){
   		parent::__construct();
@@ -41,6 +42,7 @@ use App\System\Controller,
         $this->forum_description = $this->model->globalForumSetting('forum_description');
         $this->forum_topic_limit = $this->model->globalForumSetting('forum_topic_limit');
         $this->forum_topic_reply_limit = $this->model->globalForumSetting('forum_topic_reply_limit');
+        $this->forum_max_image_size = $this->model->globalForumSetting('forum_max_image_size');
         $this->pagesTopic = new \Libs\Paginator($this->forum_topic_limit);
         $this->pagesReply = new \Libs\Paginator($this->forum_topic_reply_limit);
   	}
@@ -90,7 +92,12 @@ use App\System\Controller,
     }
 
     // Forum Topic List Display
-    public function topics($id, $current_page = null){
+    public function topics($id = null, $current_page = null){
+
+      /** Check to see if user entered a Topic ID **/
+      if(!$id){
+        ErrorMessages::push('The Forum Topics entered do not exist!', 'Forum');
+      }
 
       /** Check to see if user is logged in **/
       if($data['isLoggedIn'] = $this->auth->isLogged()){
@@ -148,7 +155,12 @@ use App\System\Controller,
     }
 
     // Forum Topic Display
-    public function topic($id, $current_page = null){
+    public function topic($id = null, $current_page = null){
+
+        /** Check to see if user entered a Topic ID **/
+        if(!$id){
+          ErrorMessages::push('The Forum Topic entered does not exist!', 'Forum');
+        }
 
         /** Check to see if user is logged in **/
         if($data['isLoggedIn'] = $this->auth->isLogged()){
@@ -340,7 +352,8 @@ use App\System\Controller,
                           $image = new SimpleImage($picture['tmp_name']);
                           $new_image_name = "forum-image-topic-reply-uid{$u_id}-fid{$id}-ftid{$reply_id}";
                           $img_name = $new_image_name.'.gif';
-                          $image->best_fit(400,300)->save(ROOTDIR.$img_dir_forum_reply.$img_name);
+                          $img_max_size = explode(',', $this->forum_max_image_size);
+                          $image->best_fit($img_max_size[0],$img_max_size[1])->save(ROOTDIR.$img_dir_forum_reply.$img_name);
                           // Make sure image was Successfull
                           if($img_name){
                             // Add new image to database
@@ -521,7 +534,8 @@ use App\System\Controller,
                           $image = new SimpleImage($picture['tmp_name']);
                           $new_image_name = "forum-image-topic-reply-uid{$u_id}-fid{$id}-ftid{$reply_id}";
                           $img_name = $new_image_name.'.gif';
-                          $image->best_fit(400,300)->save(ROOTDIR.$img_dir_forum_topic.$img_name);
+                          $img_max_size = explode(',', $this->forum_max_image_size);
+                          $image->best_fit($img_max_size[0],$img_max_size[1])->save(ROOTDIR.$img_dir_forum_topic.$img_name);
                           // Make sure image was Successfull
                           if($img_name){
                             // Add new image to database
