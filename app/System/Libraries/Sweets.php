@@ -141,7 +141,7 @@ class Sweets
           // Get count to see if user has already submitted a sweet
           $sweet_count = count($sweet_data);
         }
-//echo " ($sweet_count) ";
+        //echo " ($sweet_count) ";
         // Setup Sweet Button Form
         $sweet_button_display = Form::open(array('method' => 'post', 'style' => 'display:inline'));
         // Check to see if user has alreadyed sweeted

@@ -476,6 +476,7 @@ use App\System\Controller,
       $data['current_userID'] = $u_id;
 
       // Get Requested Topic's Title and Description
+      $data['forum_cat_id'] = $id;
       $data['forum_cat'] = $this->model->forum_cat($id);
       $data['forum_cat_des'] = $this->model->forum_cat_des($id);
       $data['forum_topics'] = $this->model->forum_topics($id);
@@ -494,100 +495,137 @@ use App\System\Controller,
       (isset($_POST['forum_title'])) ? $data['forum_title'] = strip_tags(Request::post('forum_title')) : $data['forum_title'] = "";
       (isset($_POST['forum_content'])) ? $data['forum_content'] = htmlspecialchars(Request::post('forum_content')) : $data['forum_content'] = "";
 
-      // Check to see if user is submitting a new topic
-  		if(isset($_POST['submit'])){
-
-  			// Check to make sure the csrf token is good
-  			if (Csrf::isTokenValid('forum')) {
-
-            // Check to make sure user completed all required fields in form
-            if(empty($data['forum_title'])){
-              // Username field is empty
-              $error[] = 'Topic Title Field is Blank!';
+      //var_dump($_POST);
+      // Check for autosave
+      if(isset($_POST['forum_topic_autosave'])){
+        if($_POST['forum_topic_autosave'] == "autosave_topic"){
+          /** Forum Auto Save **/
+          // Check to make sure the csrf token is good
+          if (Csrf::isTokenValid('forum')) {
+            /** Token Good **/
+            if(!empty($data['forum_post_id'])){
+              //var_dump($_POST);
+              $update_topic = $this->model->updateSavedTopic($data['forum_post_id'], $data['forum_title'], $data['forum_content']);
+              //echo $update_topic;
+            }else{
+              /** New Forum Post - Create new post **/
+              $new_topic = $this->model->sendTopic($u_id, $id, $data['forum_title'], $data['forum_content']);
+              echo $new_topic;
             }
-            if(empty($data['forum_content'])){
-              // Subject field is empty
-              $error[] = 'Topic Content Field is Blank!';
-            }
-            // Check for errors before sending message
-            if(!isset($error)){
-                // No Errors, lets submit the new topic to db
-                $new_topic = $this->model->sendTopic($u_id, $id, $data['forum_title'], $data['forum_content']);
-                if($new_topic){
-                  // New Topic Successfully Created Now Check if User is Uploading Image
-                  // Check for image upload with this topic
-                  $picture = file_exists($_FILES['forumImage']['tmp_name']) || is_uploaded_file($_FILES['forumImage']['tmp_name']) ? $_FILES['forumImage'] : array ();
-                    // Make sure image is being uploaded before going further
-                    if(sizeof($picture)>0 && ($data['is_new_user'] != true)){
-                      // Get image size
-                      $check = getimagesize ( $picture['tmp_name'] );
-                      // Get file size for db
-                      $file_size = $picture['size'];
-                      // Get the Img Forum Topic Directory
-                      $img_dir_forum_topic = IMG_DIR_FORUM_TOPIC;
-                      // Make sure image size is not too large
-                      if($picture['size'] < 5000000 && $check && ($check['mime'] == "image/jpeg" || $check['mime'] == "image/png" || $check['mime'] == "image/gif")){
-                          if(!file_exists(ROOTDIR.$img_dir_forum_topic)){
-                            mkdir(ROOTDIR.$img_dir_forum_topic,0777,true);
-                          }
-                          // Upload the image to server
-                          $image = new SimpleImage($picture['tmp_name']);
-                          $new_image_name = "forum-image-topic-reply-uid{$u_id}-fid{$id}-ftid{$reply_id}";
-                          $img_name = $new_image_name.'.gif';
-                          $img_max_size = explode(',', $this->forum_max_image_size);
-                          $image->best_fit($img_max_size[0],$img_max_size[1])->save(ROOTDIR.$img_dir_forum_topic.$img_name);
-                          // Make sure image was Successfull
-                          if($img_name){
-                            // Add new image to database
-                            if($this->model->sendNewImage($u_id, $img_name, $img_dir_forum_topic, $file_size, $id, $new_topic)){
-                              $img_success = "<br> Image Successfully Uploaded";
-                            }else{
-                              $img_success = "<br> No Image Uploaded";
+          }
+        }
+      }else{
+
+        // Check to see if user is submitting a new topic
+    		if(isset($_POST['submit'])){
+
+    			// Check to make sure the csrf token is good
+    			if (Csrf::isTokenValid('forum')) {
+
+              // Check to make sure user completed all required fields in form
+              if(empty($data['forum_title'])){
+                // Username field is empty
+                $error[] = 'Topic Title Field is Blank!';
+              }
+              if(empty($data['forum_content'])){
+                // Subject field is empty
+                $error[] = 'Topic Content Field is Blank!';
+              }
+              // Check for errors before sending message
+              if(!isset($error)){
+                if(!empty($data['forum_post_id'])){
+                  //Update if already saved as draft
+                  $update_topic = $this->model->updateSavedTopic($data['forum_post_id'], $data['forum_title'], $data['forum_content'], "1");
+                }else{
+                  // No Errors, lets submit the new topic to db
+                  $new_topic = $this->model->sendTopic($u_id, $id, $data['forum_title'], $data['forum_content'], "1");
+                }
+                if(empty($new_topic)){ $new_topic = $data['forum_post_id']; }
+                  if($new_topic){
+                    // New Topic Successfully Created Now Check if User is Uploading Image
+                    // Check for image upload with this topic
+                    $picture = file_exists($_FILES['forumImage']['tmp_name']) || is_uploaded_file($_FILES['forumImage']['tmp_name']) ? $_FILES['forumImage'] : array ();
+                      // Make sure image is being uploaded before going further
+                      if(sizeof($picture)>0 && ($data['is_new_user'] != true)){
+                        // Get image size
+                        $check = getimagesize ( $picture['tmp_name'] );
+                        // Get file size for db
+                        $file_size = $picture['size'];
+                        // Get the Img Forum Topic Directory
+                        $img_dir_forum_topic = IMG_DIR_FORUM_TOPIC;
+                        // Make sure image size is not too large
+                        if($picture['size'] < 5000000 && $check && ($check['mime'] == "image/jpeg" || $check['mime'] == "image/png" || $check['mime'] == "image/gif")){
+                            if(!file_exists(ROOTDIR.$img_dir_forum_topic)){
+                              mkdir(ROOTDIR.$img_dir_forum_topic,0777,true);
                             }
-                          }
+                            // Upload the image to server
+                            $image = new SimpleImage($picture['tmp_name']);
+                            $new_image_name = "forum-image-topic-reply-uid{$u_id}-fid{$id}-ftid{$reply_id}";
+                            $img_name = $new_image_name.'.gif';
+                            $img_max_size = explode(',', $this->forum_max_image_size);
+                            $image->best_fit($img_max_size[0],$img_max_size[1])->save(ROOTDIR.$img_dir_forum_topic.$img_name);
+                            // Make sure image was Successfull
+                            if($img_name){
+                              // Add new image to database
+                              if($this->model->sendNewImage($u_id, $img_name, $img_dir_forum_topic, $file_size, $id, $new_topic)){
+                                $img_success = "<br> Image Successfully Uploaded";
+                              }else{
+                                $img_success = "<br> No Image Uploaded";
+                              }
+                            }
+                        }else{
+                          $img_success = "<br> Image was NOT uploaded because the file size was too large!";
+                        }
                       }else{
-                        $img_success = "<br> Image was NOT uploaded because the file size was too large!";
+                        $img_success = "<br> No Image Selected to Be Uploaded";
                       }
-                    }else{
-                      $img_success = "<br> No Image Selected to Be Uploaded";
-                    }
-        					// Success
-                  SuccessMessages::push('You Have Successfully Created a New Topic'.$img_success, 'Topic/'.$new_topic);
-                  $data['hide_form'] = "true";
-        				}else{
-        					// Fail
-                  $error[] = 'New Topic Create Failed';
-        				}
-            }// End Form Complete Check
-  			}
-  		}
+          					// Success
+                    SuccessMessages::push('You Have Successfully Created a New Topic'.$img_success, 'Topic/'.$new_topic);
+                    $data['hide_form'] = "true";
+          				}else{
+          					// Fail
+                    $error[] = 'New Topic Create Failed';
+          				}
+              }// End Form Complete Check
+    			}
+    		}else{
+          // Check to see if user has unpublished work.  If so then display it.
+          $data['forum_post_id'] = $this->model->getUnPublishedWork($data['current_userID'], $data['forum_cat_id']);
+          if($data['forum_post_id']){
+            $data['forum_title'] = $this->model->topic_title($data['forum_post_id']);
+            $data['forum_content'] = $this->model->topic_content($data['forum_post_id']);
+          }
+        }
 
-        // Output errors if any
-        if(!empty($error)){ $data['error'] = $error; };
+          // Output errors if any
+          if(!empty($error)){ $data['error'] = $error; };
 
-      // Get Recent Posts List for Sidebar
-      $data['forum_recent_posts'] = $this->model->forum_recent_posts();
+        // Get Recent Posts List for Sidebar
+        $data['forum_recent_posts'] = $this->model->forum_recent_posts();
 
-      // Setup Breadcrumbs
-  		$data['breadcrumbs'] = "
-        <li class='breadcrumb-item'><a href='".DIR."Forum'>".$this->forum_title."</a></li>
-        <li class='breadcrumb-item'><a href='".DIR."Topics/$id'>".$data['forum_cat']."</a>
-  			<li class='breadcrumb-item active'>".$data['title']."</li>
-  		";
+        // Setup Breadcrumbs
+    		$data['breadcrumbs'] = "
+          <li class='breadcrumb-item'><a href='".DIR."Forum'>".$this->forum_title."</a></li>
+          <li class='breadcrumb-item'><a href='".DIR."Topics/$id'>".$data['forum_cat']."</a>
+    			<li class='breadcrumb-item active'>".$data['title']."</li>
+    		";
 
-      // Ready the token!
-      $data['csrf_token'] = Csrf::makeToken('forum');
+        // Ready the token!
+        $data['csrf_token'] = Csrf::makeToken('forum');
 
-      /* Get user's forum groups data */
-      $data['group_forum_perms_post'] = $this->model->group_forum_perms($u_id, "users");
-      $data['group_forum_perms_mod'] = $this->model->group_forum_perms($u_id, "mods");
-      $data['group_forum_perms_admin'] = $this->model->group_forum_perms($u_id, "admins");
+        /* Get user's forum groups data */
+        $data['group_forum_perms_post'] = $this->model->group_forum_perms($u_id, "users");
+        $data['group_forum_perms_mod'] = $this->model->group_forum_perms($u_id, "mods");
+        $data['group_forum_perms_admin'] = $this->model->group_forum_perms($u_id, "admins");
 
-      /* Add Java Stuffs */
-      $data['js'] = "<script src='".Url::templatePath()."js/bbcode.js'></script>";
+        /* Add Java Stuffs */
+        $data['js'] = "<script src='".Url::templatePath()."js/bbcode.js'></script>";
+        $data['js'] .= "<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js'></script>";
+        $data['js'] .= "<script src='".Url::templatePath()."js/forum_autosave_topic.js'></script>";
 
-        /* Send data to view */
-        Load::ViewPlugin("newtopic", $data, "forum_sidebar::Right", "Forum");
+          /* Send data to view */
+          Load::ViewPlugin("newtopic", $data, "forum_sidebar::Right", "Forum");
+      }
     }
 
     /* Forum Search Function */

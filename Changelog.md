@@ -11,6 +11,7 @@ Updated User Profile
  - Added image max size option in Admin Settings
  - Added Forum signature to view profile
 Updated Forum Plugin
+ - Added Auto Save Draft feature to new topics with auto recover.
  - Added Image Max Size option to Admin Settings
  - Added BBcode buttons for text areas
  - Fixed issues when users try to post php code to the forum
