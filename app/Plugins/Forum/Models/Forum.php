@@ -114,8 +114,7 @@ class Forum extends Models {
               LEFT JOIN ".PREFIX."forum_post_replies fpr
               ON fp.forum_post_id = fpr.fpr_post_id
               WHERE fp.allow = 'TRUE'
-              AND fp.forum_publish = '1'
-              AND fpr.forum_publish = '1'
+              AND (fp.forum_publish = '1' OR fpr.forum_publish = '1')
           ORDER BY tstamp DESC
           LIMIT $limit
       ");
