@@ -203,6 +203,7 @@ class ForumStats
                             ON fp.forum_post_id = fpr.fpr_post_id
                             WHERE fp.forum_id = :forum_id
                             AND fp.allow = 'TRUE'
+							AND (fp.forum_publish = '1' OR fpr.forum_publish = '1')
                     ) sub2
                         ORDER BY tstamp DESC
                 ) sub1
