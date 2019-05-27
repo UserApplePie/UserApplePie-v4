@@ -74,13 +74,15 @@ use Core\Language,
 
               <!-- CSRF Token -->
               <input type="hidden" id="token_forum" name="token_forum" value="<?php echo $data['csrf_token']; ?>" />
-              <input type="hidden" id="forum_post_id" name="forum_post_id" value="" />
+              <input type="hidden" id="forum_cat_id" name="forum_cat_id" value="<?php echo $data['forum_cat_id']; ?>" />
+              <input type="hidden" id="forum_post_id" name="forum_post_id" value="<?php echo $data['forum_post_id']; ?>" />
               <button class="btn btn-md btn-success" name="submit" type="submit" id="submit">
                 <?php // echo Language::show('update_profile', 'Auth'); ?>
                 Submit New Topic
               </button>
             <?php echo Form::close(); ?>
             <div id="autoSave"></div>
+            <div id="forum_post_id"></div>
 
 		</div>
 	</div>

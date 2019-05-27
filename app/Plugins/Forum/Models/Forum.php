@@ -114,6 +114,8 @@ class Forum extends Models {
               LEFT JOIN ".PREFIX."forum_post_replies fpr
               ON fp.forum_post_id = fpr.fpr_post_id
               WHERE fp.allow = 'TRUE'
+              AND fp.forum_publish = '1'
+              AND fpr.forum_publish = '1'
           ORDER BY tstamp DESC
           LIMIT $limit
       ");
@@ -216,6 +218,7 @@ class Forum extends Models {
                     ON fp.forum_post_id = fpr.fpr_post_id
                     WHERE forum_id = :where_id
                     AND fp.allow = 'TRUE'
+                    AND fp.forum_publish = '1'
             ) sub2
                 ORDER BY tstamp DESC
         ) sub1
@@ -531,11 +534,11 @@ class Forum extends Models {
      *
      * @return booleen true/false
      */
-    public function sendTopic($forum_user_id, $forum_id, $forum_title, $forum_content){
+    public function sendTopic($forum_user_id, $forum_id, $forum_title, $forum_content, $forum_publish = "0"){
       // Format the Content for database
       //$forum_content = nl2br($forum_content);
       // Update messages table
-      $query = $this->db->insert(PREFIX.'forum_posts', array('forum_id' => $forum_id, 'forum_user_id' => $forum_user_id, 'forum_title' => $forum_title, 'forum_content' => $forum_content));
+      $query = $this->db->insert(PREFIX.'forum_posts', array('forum_id' => $forum_id, 'forum_user_id' => $forum_user_id, 'forum_title' => $forum_title, 'forum_content' => $forum_content, 'forum_publish' => $forum_publish));
       $last_insert_id = $this->db->lastInsertId('forum_post_id');
       $query_track = $this->db->insert(PREFIX.'forum_post_tracker', array('forum_post_id' => $last_insert_id));
       $count = $query + $query_track;
@@ -614,6 +617,54 @@ class Forum extends Models {
       // Check to make sure Topic was Created
       if($query > 0){
         return true;
+      }else{
+        return false;
+      }
+    }
+
+    /**
+     * topic_is_published
+     *
+     * get Topic Content last edit date for age
+     *
+     * @param int $where_id = forum_post_id
+     *
+     * @return string returns forum topic data (forum_edit_date)
+     */
+    public function topic_is_published($where_id){
+      $data = $this->db->select("
+        SELECT forum_publish
+        FROM ".PREFIX."forum_posts
+        WHERE forum_post_id = :where_id
+        LIMIT 1
+      ",
+      array(':where_id' => $where_id));
+      return $data[0]->forum_publish;
+    }
+
+    /**
+     * updateSavedTopic
+     *
+     * edit/update saved topic
+     *
+     * @param int $id Current Topic's ID
+     * @param string $forum_title Topic's title
+     * @param string $forum_content Topic's content
+     *
+     * @return booleen true/false
+     */
+    public function updateSavedTopic($id, $forum_title, $forum_content, $forum_publish = "0"){
+      // Check to see if Topic is already published.  If so then block edits.
+      $is_published = SELF::topic_is_published($id);
+      if($is_published == "0"){
+        // Update messages table
+        $query = $this->db->update(PREFIX.'forum_posts', array('forum_title' => $forum_title, 'forum_content' => $forum_content, 'forum_publish' => $forum_publish), array('forum_post_id' => $id));
+        // Check to make sure Topic was Created
+        if($query > 0){
+          return true;
+        }else{
+          return false;
+        }
       }else{
         return false;
       }
@@ -997,6 +1048,7 @@ class Forum extends Models {
           forum_title as title,
           forum_user_id,
           forum_status,
+          forum_publish,
           allow,
           'main_post' AS post_type
         FROM
@@ -1006,7 +1058,9 @@ class Forum extends Models {
         OR
           forum_title LIKE :search)
         AND
-          allow = 'TRUE')
+          allow = 'TRUE'
+        AND
+          forum_publish = '1')
       UNION ALL
       (SELECT
           fpr.fpr_id,
@@ -1016,6 +1070,7 @@ class Forum extends Models {
           fp.forum_title as title,
           fpr.fpr_user_id as forum_user_id,
           fp.forum_status as forum_status,
+          fpr.forum_publish,
           fpr.allow,
           'reply_post' AS post_type
         FROM
@@ -1027,7 +1082,9 @@ class Forum extends Models {
         WHERE
           fpr_content LIKE :search
         AND
-          fpr.allow = 'TRUE')
+          fpr.allow = 'TRUE'
+        AND
+          fpr.forum_publish = '1')
       ORDER BY tstamp DESC
       $limit
       ",
@@ -1138,6 +1195,29 @@ class Forum extends Models {
             /* No user data */
             return false;
         }
+    }
+
+    /**
+     * getUnPublishedWork
+     *
+     * get category data for current topic (Title)
+     *
+     * @param int $where_id = forum_id
+     *
+     * @return string returns forum category data (forum_title)
+     */
+    public function getUnPublishedWork($forum_user_id, $forum_id){
+      $data = $this->db->select("
+        SELECT forum_post_id
+        FROM ".PREFIX."forum_posts
+        WHERE forum_user_id = :forum_user_id
+        AND forum_id = :forum_id
+        AND forum_publish = '0'
+        ORDER BY forum_post_id DESC
+        LIMIT 1
+      ",
+      array(':forum_user_id' => $forum_user_id, ':forum_id' => $forum_id));
+      return $data[0]->forum_post_id;
     }
 
 }
