@@ -5,7 +5,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.1
+* @version 4.3.0
 */
 
 namespace App;
@@ -76,6 +76,7 @@ class Routes {
         $routes[] = self::add('AdminPanel-SiteLinks', 'AdminPanel', 'SiteLinks', '(:any)/(:any)/(:any)');
         $routes[] = self::add('AdminPanel-SiteLink', 'AdminPanel', 'SiteLink', '(:any)/(:any)/(:any)');
         $routes[] = self::add('AdminPanel-Adds', 'AdminPanel', 'Adds');
+        $routes[] = self::add('AdminPanel-Upgrade', 'AdminPanel', 'Upgrade');
         /* End Admin Panel Routing */
 
         /* Language Code Change */

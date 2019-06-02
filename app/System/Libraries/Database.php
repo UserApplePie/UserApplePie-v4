@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.1
+* @version 4.3.0
 */
 
 namespace Libs;
@@ -206,7 +206,7 @@ class Database extends \PDO {
         $stmt->execute();
         return $stmt->rowCount();
     }
-	
+
     /**
      * update where not method
      * @param  string $table table name
@@ -256,7 +256,7 @@ class Database extends \PDO {
         $stmt->execute();
         return $stmt->rowCount();
     }
-	
+
     /**
      * Open Delete method
      *
@@ -275,6 +275,15 @@ class Database extends \PDO {
     public function truncate($table)
     {
         return $this->exec("TRUNCATE TABLE $table");
+    }
+    /**
+     * run update exec for database updates
+     * @param  string $sql sql command
+     * @return return query
+     */
+    public function upgrade($sql)
+    {
+        return $this->exec($sql);
     }
 
 }

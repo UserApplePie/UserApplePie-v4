@@ -4,7 +4,7 @@
 *
 * UserApplePie - Forum Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 2.1.1 for UAP v.4.2.1
+* @version 2.1.2 for UAP v.4.3.0
 */
 
 /** Forum controller **/
@@ -325,7 +325,7 @@ use App\System\Controller,
               // Check for errors before sending message
               if(!isset($error)){
                   // No Errors, lets submit the new topic to db
-          				if($this->model->sendTopicReply($u_id, $id, $topic_forum_id, $data['fpr_content'], $data['is_user_subscribed'])){
+          				if($this->model->sendTopicReply($u_id, $id, $topic_forum_id, $data['fpr_content'], $data['is_user_subscribed'], "1")){
                     // Get Submitted Reply ID
                     $reply_id = $this->model->lastTopicReplyID($id);
                     // Check to see if post is going on a new page

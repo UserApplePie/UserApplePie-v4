@@ -4,7 +4,7 @@
  *
  * UserApplePie
  * @author David (DaVaR) Sargent <davar@userapplepie.com>
- * @version 4.2.1
+ * @version 4.3.0
  */
 
 namespace App\Controllers;
@@ -17,6 +17,7 @@ use App\System\Controller,
     App\Models\AdminPanel as AdminPanelModel,
     App\System\Error,
     App\Models\Members as MembersModel,
+    App\Models\DatabaseUpgrades as UpgradeModel,
     App\Routes;
 
 class AdminPanel extends Controller{
@@ -126,6 +127,10 @@ class AdminPanel extends Controller{
       $friends_status = "NOT Installed";
     }
     $data['apd_plugin_friends'] = $friends_status;
+
+    /** Check to see if UAP Files are Newer than Database Version **/
+    $data['uap_files_version'] = UAPVersion;
+    $data['uap_database_version'] = $this->model->getDatabaseVersion();
 
     // Setup Breadcrumbs
     $data['breadcrumbs'] = "
@@ -1510,4 +1515,74 @@ class AdminPanel extends Controller{
         Load::View("AdminPanel/Adds", $data, "", "AdminPanel");
     }
 
+    public function Upgrade(){
+      /** Get data for the Upgrade Page **/
+      $data['current_page'] = $_SERVER['REQUEST_URI'];
+      $data['title'] = "Upgrade Database";
+      $data['welcomeMessage'] = "Welcome to the Admin Panel Database Upgrade Page!";
+
+      /** Check to see if user is logged in **/
+      if($data['isLoggedIn'] = $this->auth->isLogged()){
+          /** User is logged in - Get their data **/
+          $u_id = $this->auth->user_info();
+          $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+          if($data['isAdmin'] = $this->user->checkIsAdmin($u_id) == 'false'){
+              /** User Not Admin - kick them out **/
+              \Libs\ErrorMessages::push('You are Not Admin', '');
+          }
+      }else{
+          /** User Not logged in - kick them out **/
+          \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
+      }
+
+      /** Check to see if UAP Files are Newer than Database Version **/
+      $data['uap_files_version'] = UAPVersion;
+      $data['uap_database_version'] = $this->model->getDatabaseVersion();
+
+      /* Setup Upgrade Model */
+      $this->upgrade = new UpgradeModel();
+
+      /* Check to see if Admin is submiting form data */
+      if(isset($_POST['submit'])){
+        /* Check to see if site is a demo site */
+        if(DEMO_SITE != 'TRUE'){
+            /* Check to make sure the csrf token is good */
+            if (Csrf::isTokenValid('upgrade')) {
+                /* Check to make sure Admin is updating settings */
+                if($_POST['upgrade_database'] == "update421to430"){
+                  /* Run the upgrade database script */
+                  $test = $this->upgrade->update421to430();
+                  var_dump($test);
+                  if($this->upgrade->update421to430()){
+                      /* Success */
+                      \Libs\SuccessMessages::push('You Have Successfully Upgraded the Database', 'AdminPanel-Upgrade');
+                    }else{
+                        /* Error Message Display */
+                        \Libs\ErrorMessages::push('Error Upgrading Database', 'AdminPanel-Upgrade');
+                    }
+                }else{
+                    /* Error Message Display */
+                    \Libs\ErrorMessages::push('Error Upgrading Database', 'AdminPanel-Upgrade');
+                }
+            }else{
+                /* Error Message Display */
+                \Libs\ErrorMessages::push('Error Invalid Token', 'AdminPanel-Upgrade');
+            }
+        }else{
+            /* Error Message Display */
+            \Libs\ErrorMessages::push('Demo Limit - Upgrade Disabled', 'AdminPanel-Upgrade');
+        }
+      }
+
+      /* Setup Token for Form */
+      $data['csrfToken'] = Csrf::makeToken('upgrade');
+
+      /* Setup Breadcrumbs */
+      $data['breadcrumbs'] = "
+        <li class='breadcrumb-item'><a href='".SITE_URL."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+        <li class='breadcrumb-item active'><i class='fa fa-fw fa-dashboard'></i> ".$data['title']."</li>
+      ";
+
+      Load::View("AdminPanel/Upgrade", $data, "", "AdminPanel");
+    }
 }

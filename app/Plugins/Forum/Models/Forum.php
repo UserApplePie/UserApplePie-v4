@@ -4,7 +4,7 @@
 *
 * UserApplePie - Forum Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 2.1.1 for UAP v.4.2.1
+* @version 2.1.2 for UAP v.4.3.0
 */
 
 /** Forum model **/
@@ -701,11 +701,11 @@ class Forum extends Models {
      *
      * @return booleen true/false
      */
-    public function sendTopicReply($fpr_user_id, $fpr_post_id, $fpr_id, $fpr_content, $subscribe){
+    public function sendTopicReply($fpr_user_id, $fpr_post_id, $fpr_id, $fpr_content, $subscribe, $forum_publish = "0"){
       // Check for email subscription status
       if($subscribe == true){$subscribe = "true";}else{$subscribe = "false";}
       // Update messages table
-      $query = $this->db->insert(PREFIX.'forum_post_replies', array('fpr_post_id' => $fpr_post_id, 'fpr_user_id' => $fpr_user_id, 'fpr_id' => $fpr_id, 'fpr_content' => $fpr_content, 'subscribe_email' => $subscribe));
+      $query = $this->db->insert(PREFIX.'forum_post_replies', array('fpr_post_id' => $fpr_post_id, 'fpr_user_id' => $fpr_user_id, 'fpr_id' => $fpr_id, 'fpr_content' => $fpr_content, 'subscribe_email' => $subscribe, 'forum_publish' => $forum_publish));
       $last_insert_id = $this->db->lastInsertId('id');
       $query_track = $this->db->insert(PREFIX.'forum_post_tracker', array('forum_post_id' => $fpr_post_id, 'forum_reply_id' => $last_insert_id));
       $count = $query + $query_track;
