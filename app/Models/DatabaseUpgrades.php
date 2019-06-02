@@ -62,9 +62,6 @@ class DatabaseUpgrades extends Models {
       ALTER TABLE ".PREFIX."forum_post_replies MODIFY COLUMN forum_publish int(1) NOT NULL DEFAULT '0';
     ";
     $sql_data[] = "
-      ALTER TABLE ".PREFIX."links ADD PRIMARY KEY (id);
-    ";
-    $sql_data[] = "
       ALTER TABLE ".PREFIX."links MODIFY COLUMN id int(11) NOT NULL AUTO_INCREMENT;
     ";
     $sql_data[] = "
@@ -79,8 +76,9 @@ class DatabaseUpgrades extends Models {
         `version` varchar(30) DEFAULT NULL,
         PRIMARY KEY (`id`)
       ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
-
-      INSERT INTO `uap4_version` (`version`) VALUES ('4.3.0');
+    ";
+    $sql_data[] = "
+      INSERT INTO `".PREFIX."version` (`version`) VALUES ('4.3.0');
     ";
 
     foreach ($sql_data as $query) {
