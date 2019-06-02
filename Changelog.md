@@ -6,6 +6,8 @@ https://www.userapplepie.com
 ----------------------------------------------------------------------------------------
 UAP v4.2.1 to v4.3.0
 ----------------------------------------------------------------------------------------
+Friends
+ - Added email notification for new friend requests
 Updated Home controller
  - Set to show Recent Friends Activity if logged in
 Added Admin Panel Database Upgrade

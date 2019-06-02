@@ -125,7 +125,7 @@ use Libs\Language,
             }
           }else{
             /** User Does not have any friends **/
-            echo "You don't have any friends. :( <Br><Br>";
+            echo "Your friends don't have any recent activity. :( <Br><Br>";
             echo "<a href='".DIR."Members'>Browse Site Members</a>";
           }
 

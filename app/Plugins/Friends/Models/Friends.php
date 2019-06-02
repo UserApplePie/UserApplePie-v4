@@ -263,6 +263,38 @@ class Friends extends Models {
     public function addfriend($userID, $friend_id){
         $data = $this->db->insert(PREFIX.'friends', array('uid1' => $userID, 'uid2' => $friend_id, 'status1' => '1'));
         if($data > 0){
+            /* Email the user and let them know that they have a friend request */
+            // Get to user data
+            $email_data = $this->db->select("
+              SELECT email, username
+              FROM ".PREFIX."users
+              WHERE userID = :where_id
+              LIMIT 1
+            ",
+            array(':where_id' => $friend_id));
+            // Get from user data
+            $email_from_data = $this->db->select("
+              SELECT username
+              FROM ".PREFIX."users
+              WHERE userID = :where_id
+              LIMIT 1
+            ",
+            array(':where_id' => $userID));
+            //EMAIL MESSAGE USING PHPMAILER
+            $mail = new \Libs\PhpMailer\Mail();
+            $mail->setFrom(SITEEMAIL, EMAIL_FROM_NAME);
+            $mail->addAddress($email_data[0]->email);
+            $mail_subject = SITE_TITLE . " - Friends - ".$email_from_data[0]->username." sent you a Friend Request";
+            $mail->subject($mail_subject);
+            $body = "Hello ".$email_data[0]->username."<br/><br/>";
+            $body .= SITE_TITLE . " - New Friend Request Notification<br/>
+                                  ************************<br/>
+                                  ".$email_from_data[0]->username." wants to be your friend on ".SITE_TITLE."
+                                  ************************<br/>";
+            $body .= "You may approve or reject at: <b><a href=\"" . SITE_URL . "/\">" . SITE_TITLE . "</a></b>";
+            $mail->body($body);
+            $mail->send();
+
             return true;
         }else{
             return false;

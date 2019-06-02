@@ -131,6 +131,7 @@ class AdminPanel extends Controller{
     /** Check to see if UAP Files are Newer than Database Version **/
     $data['uap_files_version'] = UAPVersion;
     $data['uap_database_version'] = $this->model->getDatabaseVersion();
+    if(empty($data['uap_database_version'])){ $data['uap_database_version'] = "4.2.1"; }
 
     // Setup Breadcrumbs
     $data['breadcrumbs'] = "
@@ -1538,6 +1539,7 @@ class AdminPanel extends Controller{
       /** Check to see if UAP Files are Newer than Database Version **/
       $data['uap_files_version'] = UAPVersion;
       $data['uap_database_version'] = $this->model->getDatabaseVersion();
+      if(!isset($data['uap_database_version'])){ $data['uap_database_version'] = "4.2.1"; }
 
       /* Setup Upgrade Model */
       $this->upgrade = new UpgradeModel();
