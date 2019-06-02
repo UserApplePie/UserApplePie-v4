@@ -28,7 +28,7 @@ class Home extends Controller {
     }
 
     /* Home Method */
-    public function Home($limit = '20'){
+    public function Home($limit = '10'){
 
         $data['title'] = $this->language->get('homeText');
         $data['bodyText'] = $this->language->get('homeMessage');
@@ -52,6 +52,8 @@ class Home extends Controller {
           $data['friends'] = $Recent->getFriendsIDs($u_id, '15');
           $data['suggested_friends'] = $Recent->getSuggestedFriends($u_id);
           $data['recent'] = $Recent->getRecent($u_id, $limit);
+          $data['recent_total'] = $Recent->getRecentTotal($u_id);
+          $data['recent_limit'] = $limit;
           /** Setup Friends Search Feature **/
           $data['js'] = "
             <script>
