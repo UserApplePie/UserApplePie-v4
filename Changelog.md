@@ -4,8 +4,17 @@ https://www.userapplepie.com
 ----------------------------------------------------------------------------------------
 
 ----------------------------------------------------------------------------------------
-UAP v4.3.0 to v4.3.0
+UAP v4.2.1 to v4.3.0
 ----------------------------------------------------------------------------------------
+Updated Home controller
+ - Set to show Recent Friends Activity if logged in
+Added Admin Panel Database Upgrade
+ - Checks to see if site version matches database version
+ - Runs update script based on current version
+Added Recent Friends Activity
+ - If Forum and Friends Plugins are installed show recents when logged in
+ - Added Friends sidebar with friends list and suggested friends
+ - Added Fourm sidebar
 Updated User Profile
  - Added input group styling
  - Added image max size option in Admin Settings
