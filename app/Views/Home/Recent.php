@@ -23,6 +23,9 @@ use Libs\Language,
           /** Get Recent Data **/
           if(!empty($data['recent'])){
             foreach ($data['recent'] as $recent) {
+              /** Setup Anchor Count **/
+              if(isset($vm_id_a)){ $vm_id_a++; }else{ $vm_id_a = '1'; };
+              echo "<a class='anchor' name='viewmore$vm_id_a'></a>";
               /** Get Posted User Data **/
               $recent_userName = CurrentUserData::getUserName($recent->RP_06);
               $recent_userImage = CurrentUserData::getUserImage($recent->RP_06);
@@ -123,12 +126,29 @@ use Libs\Language,
 
               echo "<hr>";
             }
-          }else{
-            /** User Does not have any friends **/
-            echo "Your friends don't have any recent activity. :( <Br><Br>";
-            echo "<a href='".DIR."Members'>Browse Site Members</a>";
-          }
-
+            /** Check to see if there are most recents than currently shown **/
+            echo "<div class='card'><div class='card-body text-center'>";
+              if(isset($recent_limit)){}else{$recent_limit = "0";}
+              if($recent_limit >= $recent_total){
+                echo "Currently Showing $recent_total of $recent_total Recent Posts";
+              }else{
+                echo "Currently Showing $recent_limit of $recent_total Recent Posts";
+              }
+              if(!isset($recent_total)){$recent_total = "0";}else{
+                if(isset($limitfriendstatus)){}else{ $limitfriendstatus = "10"; }
+                if($recent_limit < $recent_total){
+                  $vm_id = $recent_limit + 1;
+                  echo "<span class='btn btn-default'>";
+                    echo "<a href=\"".SITE_URL."Home/" . ($recent_limit + 10) . "#viewmore$vm_id\">Show More Recent Posts</a> ";
+                  echo "</span>";
+                }
+              }
+            echo "</div></div>";
+            }else{
+              /** User Does not have any friends **/
+              echo "Your friends don't have any recent activity. :( <Br><Br>";
+              echo "<a href='".SITE_URL."Members'>Browse Site Members</a>";
+            }
         ?>
         </div>
     </div>

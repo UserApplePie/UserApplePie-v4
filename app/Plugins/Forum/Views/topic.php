@@ -434,11 +434,14 @@ use Core\Language,
               if($data['is_new_user'] != true){
              ?>
                 <!-- Image Upload -->
-                <div class='input-group' style='margin-bottom: 25px'>
+                <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class='input-group-text'><i class='fas fa-image'></i> </span>
+                    <span class="input-group-text" id="inputGroupFileAddon01"><i class='fas fa-image'></i></span>
                   </div>
-                  <?php echo Form::input(array('type' => 'file', 'name' => 'forumImage', 'id' => 'forumImage', 'class' => 'form-control', 'accept' => 'image/jpeg,image/png,image/gif')); ?>
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" accept="image/jpeg, image/gif, image/x-png" id="forumImage" name="forumImage" aria-describedby="inputGroupFileAddon01">
+                    <label class="custom-file-label" for="inputGroupFile01">Select Image File</label>
+                  </div>
                 </div>
             <?php } ?>
 
