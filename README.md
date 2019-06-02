@@ -2,7 +2,7 @@
 
 ---
 
-# UAP Version 4.2.1
+# UAP Version 4.3.0
 
 [![Software License](http://img.shields.io/badge/License-BSD--3-brightgreen.svg)](LICENSE)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/UserApplePie/UAP-MVC-CMS-3/master/license.txt)

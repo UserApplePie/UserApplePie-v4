@@ -7,7 +7,7 @@
 -- Server version: 5.5.47-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.14
 
--- UserApplePie v4.2.1
+-- UserApplePie v4.3.0
 
 -- Instructions
 -- Import this file to your mySQL database
@@ -18,6 +18,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `uap4`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `uap4_version`
+--
+
+CREATE TABLE IF NOT EXISTS `uap4_version` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `version` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Dumping data for table `uap4_users_groups`
+-- Sets first user as Admin
+--
+
+INSERT INTO `uap4_version` (`version`) VALUES
+('4.3.0');
 
 -- --------------------------------------------------------
 
@@ -260,7 +282,7 @@ CREATE TABLE IF NOT EXISTS `uap4_forum_posts` (
   `forum_user_id` int(20) DEFAULT NULL,
   `forum_title` varchar(255) DEFAULT NULL,
   `forum_content` text DEFAULT NULL,
-  `forum_publish` int(11) NOT NULL DEFAULT '0',
+  `forum_publish` int(1) NOT NULL DEFAULT '0',
   `forum_edit_date` varchar(20) DEFAULT NULL,
   `forum_status` int(11) NOT NULL DEFAULT '1',
   `subscribe_email` varchar(10) NOT NULL DEFAULT 'true',
@@ -285,7 +307,7 @@ CREATE TABLE IF NOT EXISTS `uap4_forum_post_replies` (
   `fpr_user_id` int(20) DEFAULT NULL,
   `fpr_title` varchar(255) DEFAULT NULL,
   `fpr_content` text DEFAULT NULL,
-  `forum_publish` int(11) NOT NULL DEFAULT '0',
+  `forum_publish` int(1) NOT NULL DEFAULT '0',
   `subscribe_email` varchar(10) NOT NULL DEFAULT 'true',
   `fpr_edit_date` varchar(20) DEFAULT NULL,
   `allow` varchar(11) NOT NULL DEFAULT 'TRUE',

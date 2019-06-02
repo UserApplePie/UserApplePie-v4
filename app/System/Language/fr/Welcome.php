@@ -7,7 +7,7 @@
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
 * @translator Eddy Beaupré <eddy@beaupre.biz>
-* @version 4.2.1
+* @version 4.3.0
 */
 
 return [
@@ -51,6 +51,9 @@ return [
 	'uap_error' => "Erreur",
 	'uap_pages_displaying' => "Affichage",
 	'uap_friends' => "Amis",
+
+	// Recent
+	'recent_posts' => "Activité récente des amis",
 
 	// Lang Change Success Message
 	'lang_change_success' => "Vous avez changé la langue du site.",

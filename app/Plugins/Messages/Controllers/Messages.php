@@ -4,7 +4,7 @@
 *
 * UserApplePie - Messages Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 2.1.0 for UAP v.4.2.1
+* @version 2.1.1 for UAP v.4.3.0
 */
 
 namespace App\Plugins\Messages\Controllers;
@@ -409,10 +409,10 @@ class Messages extends Controller{
 			// Check to make sure the csrf token is good
 			if (Csrf::isTokenValid('messages')) {
 				// Get data from post
-				$to_username = Request::post('to_username');
-				$subject = Request::post('subject');
-				$content = Request::post('content');
-                $reply = Request::post('reply');
+        (isset($_POST['to_username'])) ? $to_username = strip_tags(Request::post('to_username')) : $to_username = "";
+        (isset($_POST['subject'])) ? $subject = strip_tags(Request::post('subject')) : $subject = "";
+        (isset($_POST['content'])) ? $content = htmlspecialchars(Request::post('content')) : $content = "";
+        (isset($_POST['reply'])) ? $reply = htmlspecialchars(Request::post('reply')) : $reply = "";
 
                 // Check to see if this is coming from a reply button
                 if($reply != "true"){
@@ -457,9 +457,9 @@ class Messages extends Controller{
                     }// End Form Complete Check
                 }else{
                     // Get data from reply $_POST
-                    $subject = Request::post('subject');
-                    $content = Request::post('content');
-                    $date_sent = Request::post('date_sent');
+                    (isset($_POST['subject'])) ? $subject = strip_tags(Request::post('subject')) : $subject = "";
+                    (isset($_POST['content'])) ? $content = htmlspecialchars(str_replace("<br />", " ", Request::post('content'))) : $content = "";
+                    (isset($_POST['date_sent'])) ? $date_sent = strip_tags(Request::post('date_sent')) : $date_sent = "";
                     // Add Reply details to subject ex: RE:
                     $data['subject'] = "RE: ".$subject;
                     // Clean up content so it looks pretty

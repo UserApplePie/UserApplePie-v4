@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.1
+* @version 4.3.0
 */
 
 if(isset($cur_uap_version) || isset($cur_uap_messages_version) || isset($cur_uap_forum_version) || isset($cur_uap_friends_version)){
@@ -34,6 +34,17 @@ if(isset($cur_uap_version) || isset($cur_uap_messages_version) || isset($cur_uap
 	echo "</div>";
 	echo "</div>";
 }
+if($uap_files_version > $uap_database_version){
+	echo "<div class='col-lg-12 col-md-12 col-sm-12'>";
+	echo "<div class='alert alert-danger'>";
+		echo "<b>UAP Database is out of Date. <br>";
+		echo "New Version:</b> $uap_files_version <br>";
+		echo "<b>Current Version:</b> $uap_database_version <br>";
+		echo "<a href='".SITE_URL."AdminPanel-Upgrade'>Click Here to Upgrade</a>";
+	echo "</div>";
+	echo "</div>";
+}
+
 ?>
 <div class='col-lg-12 col-md-12 col-sm-12'>
 	<div class='row'>
@@ -102,7 +113,7 @@ if(isset($cur_uap_version) || isset($cur_uap_messages_version) || isset($cur_uap
                 <i class="fa fa-angle-right"></i>
               </span>
             </a>
-			</div>			
+			</div>
 		</div>
 	</div>
 

@@ -4,7 +4,7 @@
 *
 * UserApplePie - Messages Plugin
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 2.1.0 for UAP v.4.2.1
+* @version 2.1.1 for UAP v.4.3.0
 */
 
 // Message New Displays form for user to create a new message to send

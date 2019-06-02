@@ -5,7 +5,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.1
+* @version 4.3.0
 */
 
 use App\System\Controller,
@@ -15,7 +15,8 @@ use App\System\Controller,
     App\System\Error,
     Libs\Auth\Auth as AuthHelper,
     App\Models\Users as Users,
-    App\Models\Members as MembersModel;
+    App\Models\Members as MembersModel,
+    App\Models\Recent as Recent;
 
 class Home extends Controller {
 
@@ -27,7 +28,7 @@ class Home extends Controller {
     }
 
     /* Home Method */
-    public function Home(){
+    public function Home($limit = '20'){
 
         $data['title'] = $this->language->get('homeText');
         $data['bodyText'] = $this->language->get('homeMessage');
@@ -43,7 +44,30 @@ class Home extends Controller {
         $data['activatedAccounts'] = count($onlineUsers->getActivatedAccounts());
         $data['onlineAccounts'] = count($onlineUsers->getOnlineAccounts());
 
-        Load::View("Home::Home", $data, "Members::Member-Stats-Sidebar::Right");
+        /** Check to see if user is logged in - if so then display recent stuff **/
+        if($data['isLoggedIn'] = $this->auth->isLogged() && file_exists(ROOTDIR.'app/Plugins/Forum/Controllers/Forum.php') && file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php')){
+          /** Load the Recent Model **/
+          $Recent = new Recent();
+          /** Get Current User's Friends **/
+          $data['friends'] = $Recent->getFriendsIDs($u_id, '15');
+          $data['suggested_friends'] = $Recent->getSuggestedFriends($u_id);
+          $data['recent'] = $Recent->getRecent($u_id, $limit);
+          /** Setup Friends Search Feature **/
+          $data['js'] = "
+            <script>
+            function process()
+              {
+              var url='".SITE_URL."Friends/UN-ASC/1/' + document.getElementById('forumSearch').value;
+              location.href=url;
+              return false;
+              }
+            </script>
+          ";
+
+          Load::View("Home::Recent", $data, "Home::Member-Forum-Sidebar::Right", DEFAULT_TEMPLATE, true, "Home::Member-Friends-Sidebar::Left");
+        }else{
+          Load::View("Home::Home", $data, "Members::Member-Stats-Sidebar::Right");
+        }
     }
 
     /* About Method */

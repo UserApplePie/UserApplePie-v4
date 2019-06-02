@@ -6,7 +6,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.1
+* @version 4.3.0
 */
 
 return [
@@ -49,6 +49,9 @@ return [
 	'uap_success' => "Éxito",
 	'uap_error' => "¡Error",
 	'uap_pages_displaying' => "Viendo",
+
+	// Recent
+	'recent_posts' => "Actividad reciente de amigos",
 
 	// Lang Change Success Message
 	'lang_change_success' => "Has cambiar con éxito el idioma del sitio.",

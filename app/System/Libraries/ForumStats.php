@@ -4,7 +4,7 @@
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
-* @version 4.2.1
+* @version 4.3.0
 */
 
 namespace Libs;
@@ -107,7 +107,7 @@ class ForumStats
               WHERE fp.forum_post_id = :forum_post_id
               AND fpr.id = :forum_reply_id
               AND fp.allow = 'TRUE'
-			  AND (fp.forum_publish = '1' OR fpr.forum_publish = '1')
+			        AND (fp.forum_publish = '1' OR fpr.forum_publish = '1')
               LIMIT 1
             ", array(':forum_post_id' => $forum_post_id, ':forum_reply_id' => $forum_reply_id));
         }else{
@@ -127,7 +127,7 @@ class ForumStats
               ON fp.forum_post_id = fpr.fpr_post_id
               WHERE fp.forum_post_id = :forum_post_id
               AND fp.allow = 'TRUE'
-			  AND (fp.forum_publish = '1' OR fpr.forum_publish = '1')
+			        AND (fp.forum_publish = '1' OR fpr.forum_publish = '1')
               LIMIT 1
             ", array(':forum_post_id' => $forum_post_id));
         }
@@ -297,6 +297,25 @@ class ForumStats
           LIMIT $limit
         ");
         return $data;
+    }
+
+    /**
+     * getForumPostTitle
+     *
+     * get Forum Post Data for recents.
+     *
+     * @return array returns top forum post data
+     */
+    public static function getForumPostTitle($post_id){
+        self::$db = Database::get();
+        $data = self::$db->select("
+          SELECT forum_title
+          FROM ".PREFIX."forum_posts
+          WHERE forum_post_id = :post_id
+          LIMIT 1
+        ", array(':post_id' => $post_id));
+        (isset($data[0]->forum_title)) ? $forum_title = $data[0]->forum_title : $forum_title = "";
+        return $forum_title;
     }
 
 }
