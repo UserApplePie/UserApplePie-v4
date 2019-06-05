@@ -87,8 +87,9 @@ use Libs\Assets,
                               <div class="col-4" align="center">
                                 <div class="col-centered" align="center">
                                   <?php // Check to see if user has a profile image
-                                    if(!empty($currentUserData[0]->userImage)){
-                                      echo "<img src='".SITE_URL.IMG_DIR_PROFILE.$currentUserData[0]->userImage."' class='rounded img-fluid'>";
+                                    $user_image_display = \Libs\CurrentUserData::getUserImage($currentUserData[0]->userID);
+                                    if(!empty($user_image_display)){
+                                      echo "<img src='".SITE_URL.IMG_DIR_PROFILE.$user_image_display."' class='rounded img-fluid'>";
                                     }else{
                                       echo "<span class='fas fa-user icon-size'></span>";
                                     }

@@ -26,7 +26,6 @@ class CurrentUserData
 					u.username,
 					u.firstName,
 					u.gender,
-					u.userImage,
 					u.email,
 					u.LastLogin,
 					u.SignUp,
@@ -129,7 +128,7 @@ class CurrentUserData
 	 */
 	public static function getUserImage($where_id){
     self::$db = Database::get();
-		$data = self::$db->select("SELECT userImage FROM ".PREFIX."users WHERE userID = :userID",
+		$data = self::$db->select("SELECT userImage FROM ".PREFIX."users_images WHERE userID = :userID AND defaultImage = '1' ",
 			array(':userID' => $where_id));
         (isset($data[0]->userImage)) ? $userImage = $data[0]->userImage : $userImage = "";
 		return $userImage;

@@ -9,7 +9,8 @@
 
 use Libs\Language,
 		Libs\ErrorMessages,
-		Libs\SuccessMessages;
+		Libs\SuccessMessages,
+		Libs\CurrentUserData;
 
 $orderby = $data['orderby'];
 
@@ -97,9 +98,10 @@ $orderby = $data['orderby'];
 								      <div class='modal-body'>
 												<div class='row'>
 							";
-													if(!empty($row->userImage)){
+													$user_image_display = \Libs\CurrentUserData::getUserImage($row->userID);
+													if(!empty($user_image_display)){
 														echo "<div class='col-lg-6 col-md-6 col-sm-6'>";
-														echo "<img alt='$row->username's Profile Picture' src='".SITE_URL.$row->userImage."' class='rounded img-fluid'>";
+														echo "<img alt='$row->username's Profile Picture' src='".SITE_URL.IMG_DIR_PROFILE.$user_image_display."' class='rounded img-fluid'>";
 														echo "</div>";
 														echo "<div class='col-lg-6 col-md-6 col-sm-6'>";
 													}else{

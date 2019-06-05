@@ -59,15 +59,15 @@ class Members extends Models
 					u.userID,
 					u.username,
 					u.firstName,
-                    u.lastName,
-                    u.userImage,
+          u.lastName,
 					u.isactive,
 					ug.userID,
 					ug.groupID,
 					g.groupID,
 					g.groupName,
 					g.groupFontColor,
-					g.groupFontWeight
+					g.groupFontWeight,
+          ui.userImage
 				FROM
 					".PREFIX."users u
 				LEFT JOIN
@@ -76,10 +76,15 @@ class Members extends Models
 				LEFT JOIN
 					".PREFIX."groups g
 					ON ug.groupID = g.groupID
+        LEFT JOIN
+          ".PREFIX."users_images ui
+          ON u.userID = ui.userID
 				WHERE
-                    (u.username LIKE :search OR u.firstName LIKE :search OR u.lastName LIKE :search)
-                AND
+          (u.username LIKE :search OR u.firstName LIKE :search OR u.lastName LIKE :search)
+        AND
 					u.isactive = true
+        AND
+          ui.defaultImage = '1'
 				GROUP BY
 					u.userID
                 ORDER BY
@@ -94,14 +99,14 @@ class Members extends Models
                     u.username,
                     u.firstName,
                     u.lastName,
-                    u.userImage,
                     u.isactive,
                     ug.userID,
                     ug.groupID,
                     g.groupID,
                     g.groupName,
                     g.groupFontColor,
-                    g.groupFontWeight
+                    g.groupFontWeight,
+                    ui.userImage
                 FROM
                     ".PREFIX."users u
                 LEFT JOIN
@@ -110,8 +115,13 @@ class Members extends Models
                 LEFT JOIN
                     ".PREFIX."groups g
                     ON ug.groupID = g.groupID
+                LEFT JOIN
+                  ".PREFIX."users_images ui
+                  ON u.userID = ui.userID
                 WHERE
-                    u.isactive = true
+                  u.isactive = true
+                AND
+                  ui.defaultImage = '1'
                 GROUP BY
                     u.userID
                 ORDER BY
@@ -178,15 +188,15 @@ class Members extends Models
 					u.userID,
 					u.username,
 					u.firstName,
-                    u.lastName,
-                    u.userImage,
+          u.lastName,
 					uo.userID,
 					ug.userID,
 					ug.groupID,
 					g.groupID,
 					g.groupName,
 					g.groupFontColor,
-					g.groupFontWeight
+					g.groupFontWeight,
+          ui.userImage
 				FROM
 					".PREFIX."users_online uo
 				LEFT JOIN
@@ -198,6 +208,10 @@ class Members extends Models
 				LEFT JOIN
 					".PREFIX."groups g
 					ON ug.groupID = g.groupID
+        LEFT JOIN
+          ".PREFIX."users_images ui
+          ON u.userID = ui.userID
+          WHERE defaultImage = '1'
 				GROUP BY
 					u.userID
 				ORDER BY
@@ -221,14 +235,14 @@ class Members extends Models
             u.firstName,
             u.lastName,
             u.gender,
-            u.userImage,
             u.LastLogin,
             u.SignUp,
             u.website,
             u.aboutme,
             u.signature
           FROM " . PREFIX . "users u
-          WHERE u.userID = :userID",
+          WHERE u.userID = :userID
+          ",
             array(':userID' => $user));
       }else{
         // Requested profile information based on Name
@@ -239,14 +253,14 @@ class Members extends Models
   						u.firstName,
               u.lastName,
   						u.gender,
-  						u.userImage,
   						u.LastLogin,
   						u.SignUp,
   						u.website,
   						u.aboutme,
               u.signature
   					FROM " . PREFIX . "users u
-  					WHERE u.username = :username",
+  					WHERE u.username = :username
+            ",
               array(':username' => $user));
       }
       if(isset($profile_data)){
@@ -261,9 +275,9 @@ class Members extends Models
         return $this->db->select("SELECT userID,username FROM ".PREFIX."users WHERE userID=:id",array(":id"=>$id));
     }
 
-    public function updateProfile($u_id, $firstName, $lastName, $gender, $website, $userImage, $aboutme, $signature)
+    public function updateProfile($u_id, $firstName, $lastName, $gender, $website, $aboutme, $signature)
     {
-        return $this->db->update(PREFIX.'users', array('firstName' => $firstName, 'lastName' => $lastName, 'gender' => $gender, 'userImage' => $userImage, 'website' => $website, 'aboutme' => $aboutme, 'signature' => $signature), array('userID' => $u_id));
+        return $this->db->update(PREFIX.'users', array('firstName' => $firstName, 'lastName' => $lastName, 'gender' => $gender, 'website' => $website, 'aboutme' => $aboutme, 'signature' => $signature), array('userID' => $u_id));
     }
 
     public function updateUPrivacy($u_id, $privacy_massemail, $privacy_pm)
@@ -275,4 +289,29 @@ class Members extends Models
           return false;
         }
     }
+
+    public function addUserImage($u_id, $userImage)
+    {
+        /* Check if image is set as default */
+        $data = $this->db->select("SELECT userImage FROM ".PREFIX."users_images WHERE userID=:id AND defaultImage = '1' ",array(":id"=>$u_id));
+        if(!empty($data[0]->userImage)){
+          return $this->db->insert(PREFIX.'users_images', array('userID' => $u_id, 'userImage' => $userImage, 'defaultImage' => '0'));
+        }else{
+          return $this->db->insert(PREFIX.'users_images', array('userID' => $u_id, 'userImage' => $userImage, 'defaultImage' => '1'));
+        }
+    }
+
+    public function getUserImageMain($id)
+    {
+        $data = $this->db->select("SELECT userImage FROM ".PREFIX."users_images WHERE userID=:id AND defaultImage = '1' ",array(":id"=>$id));
+
+        return $data[0]->userImage;
+    }
+
+    public function getUserImages($id, $limit = '20')
+    {
+        $limit = "LIMIT ".$limit;
+       return $this->db->select("SELECT userImage FROM ".PREFIX."users_images WHERE userID=:id ORDER BY timestamp DESC $limit",array(":id"=>$id));
+    }
+
 }

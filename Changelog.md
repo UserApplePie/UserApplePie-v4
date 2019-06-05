@@ -6,6 +6,8 @@ https://www.userapplepie.com
 ----------------------------------------------------------------------------------------
 UAP v4.2.1 to v4.3.0
 ----------------------------------------------------------------------------------------
+System Fixes
+ - Setup a auto add member to group if not a member of any
 Friends
  - Added email notification for new friend requests
 Updated Home controller
@@ -21,6 +23,7 @@ Updated User Profile
  - Added input group styling
  - Added image max size option in Admin Settings
  - Added Forum signature to view profile
+ - Added ability to upload multiple photos to user profiles
 Updated Forum Plugin
  - Added Auto Save Draft feature to new topics with auto recover.
  - Added Image Max Size option to Admin Settings

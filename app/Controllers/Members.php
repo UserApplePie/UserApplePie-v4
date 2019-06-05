@@ -154,13 +154,15 @@ class Members extends Controller
      * Get profile by username
      * @param $username
      */
-    public function viewProfile($user)
+    public function viewProfile($user = "")
     {
         $onlineUsers = new MembersModel();
         $profile = $onlineUsers->getUserProfile($user);
+        $main_image = $onlineUsers->getUserImageMain($profile[0]->userID);
         if($profile){
             $data['title'] = $profile[0]->username . "'s ".$this->language->get('members_profile_title');
             $data['profile'] = $profile[0];
+            $data['main_image'] = $main_image;
 
             /** Check to see if user is logged in **/
             if($data['isLoggedIn'] = $this->auth->isLogged()){
@@ -169,6 +171,9 @@ class Members extends Controller
               $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
               $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
             }
+
+            /** Get Users Images **/
+            $data['user_images'] = $onlineUsers->getUserImages($profile[0]->userID, '20');
 
             /** Get User's Groups **/
             $data['user_groups'] = $this->user->getUserGroupName($profile[0]->userID);
@@ -190,8 +195,10 @@ class Members extends Controller
 
         $onlineUsers = new MembersModel();
         $username = $onlineUsers->getUserName($u_id);
-        if(sizeof($username) > 0){
 
+        $main_image = $onlineUsers->getUserImageMain($u_id);
+
+        if(sizeof($username) > 0){
             if (isset($_POST['submit'])) {
                 if(Csrf::isTokenValid('editprofile')) {
                     $firstName = strip_tags(Request::post('firstName'));
@@ -200,46 +207,7 @@ class Members extends Controller
                     $website = strip_tags(preg_replace('#^https?://#', '', Request::post('website')));
                     $aboutMe = nl2br(strip_tags(Request::post('aboutMe')));
                     $signature = nl2br(strip_tags(Request::post('signature')));
-                    $userImage = Request::post('oldImg');
-                    // Check to see if an image is being uploaded
-                    if(!empty($_FILES['profilePic']['tmp_name'])){
-                        $picture = file_exists($_FILES['profilePic']['tmp_name']) || is_uploaded_file($_FILES['profilePic']['tmp_name']) ? $_FILES ['profilePic'] : array ();
-                        if(sizeof($picture)>0){
-                            // Set the User's Profile Image Directory
-                            $img_dir_profile = IMG_DIR_PROFILE.$username[0]->username.'/';
-    				        $check = getimagesize ( $picture['tmp_name'] );
-                            // Check to make sure image is good
-    						if($picture['size'] < 5000000 && $check && ($check['mime'] == "image/jpeg" || $check['mime'] == "image/png" || $check['mime'] == "image/gif")){
-                                // Check to see if Img Upload Directory Exists, if not create it
-    							if(!file_exists(ROOTDIR.$img_dir_profile))
-    								mkdir(ROOTDIR.$img_dir_profile,0777,true);
-                                // Format new image and upload it to server
-    							$image = new SimpleImage($picture['tmp_name']);
-                                $rand_string = substr(str_shuffle(md5(time())), 0, 10);
-                                $img_name = $username[0]->username.'_PROFILE_'.$rand_string.'.jpg';
-    							$dir = $img_dir_profile.$img_name;
-                  $img_max_size = explode(',', IMG_MAX_SIZE);
-    							$image->best_fit($img_max_size[0],$img_max_size[1])->save(ROOTDIR.$dir);
-                                if(file_exists(ROOTDIR.$dir) && (strpos($userImage, ".") !== false)){
-                                    if($userImage == 'default-1.jpg' || $userImage == 'default-2.jpg' || $userImage == 'default-3.jpg' || $userImage == 'default-4.jpg' || $userImage == 'default-5.jpg'){
-                                        // Do Nothing
-                                    }else{
-                                        if(file_exists(ROOTDIR.IMG_DIR_PROFILE.$userImage)) {
-                                            unlink(ROOTDIR.IMG_DIR_PROFILE.$userImage);
-                                        }
-                                    }
-                                }
-    						}else{
-                                // Error Message Display
-                                ErrorMessages::push($this->language->get('edit_profile_photo_error'), 'Edit-Profile');
-                            }
-                        }
-                    }
-                    if(!empty($img_name)){
-                        $db_image = $username[0]->username.'/'.$img_name;
-                    }else{
-                        $db_image = $userImage;
-                    }
+
                     /* Check to make sure First Name does not have any html char in it */
                     if($firstName != strip_tags($firstName)){
                         /* Error Message Display */
@@ -261,7 +229,7 @@ class Members extends Controller
                     $aboutMe = strip_tags($aboutMe, "<br>");
                     $signature = strip_tags($signature, "<br>");
 
-                    $onlineUsers->updateProfile($u_id, $firstName, $lastName, $gender, $website, $db_image, $aboutMe, $signature);
+                    $onlineUsers->updateProfile($u_id, $firstName, $lastName, $gender, $website, $aboutMe, $signature);
                     // Success Message Display
                     SuccessMessages::push($this->language->get('edit_profile_success'), 'Edit-Profile');
                 }else{
@@ -277,6 +245,7 @@ class Members extends Controller
             $data['title'] = $username . "'s ".$this->language->get('edit_profile_title');
             $data['profile'] = $profile[0];
             $data['csrfToken'] = Csrf::makeToken('editprofile');
+            $data['main_image'] = $main_image;
 
             /** Check to see if user is logged in **/
             if($data['isLoggedIn'] = $this->auth->isLogged()){
@@ -296,6 +265,123 @@ class Members extends Controller
             ";
 
             Load::View("Members/Edit-Profile", $data, "Members/Member-Account-Sidebar::Left");
+
+        }else{
+          /** User Not logged in - kick them out **/
+          \Libs\ErrorMessages::push($this->language->get('user_not_logged_in'), 'Login');
+        }
+    }
+
+    public function editProfileImages()
+    {
+        $u_id = $this->auth->currentSessionInfo()['uid'];
+
+        $onlineUsers = new MembersModel();
+        $username = $onlineUsers->getUserName($u_id);
+
+        $main_image = $onlineUsers->getUserImageMain($u_id);
+
+        /** Get Users Images **/
+        $data['user_images'] = $onlineUsers->getUserImages($u_id, '20');
+
+        if(sizeof($username) > 0){
+            if (isset($_POST['submit'])) {
+                if(Csrf::isTokenValid('editprofile')) {
+                    $userImage = Request::post('oldImg');
+                    /** Ready site to upload Files **/
+                    $countfiles = count($_FILES['profilePic']['name']);
+                    var_dump($_FILES['profilePic']['name'][0]);
+                    if(!empty($_FILES['profilePic']['name'][0])){
+                      for($i=0;$i<$countfiles;$i++){
+                        // Check to see if an image is being uploaded
+                        if(!empty($_FILES['profilePic']['tmp_name'][$i])){
+                            $picture = file_exists($_FILES['profilePic']['tmp_name'][$i]) || is_uploaded_file($_FILES['profilePic']['tmp_name'][$i]) ? $_FILES ['profilePic']['tmp_name'][$i] : array ();
+                            if($picture != ""){
+                                // Set the User's Profile Image Directory
+                                $img_dir_profile = IMG_DIR_PROFILE.$username[0]->username.'/';
+        				                $check = getimagesize ( $picture );
+                                // Check to make sure image is good
+        						            if($check['size'] < 5000000 && $check && ($check['mime'] == "image/jpeg" || $check['mime'] == "image/png" || $check['mime'] == "image/gif")){
+                                    // Check to see if Img Upload Directory Exists, if not create it
+        							              if(!file_exists(ROOTDIR.$img_dir_profile))
+        								                mkdir(ROOTDIR.$img_dir_profile,0777,true);
+                                    // Format new image and upload it to server
+        							              $image = new SimpleImage($picture);
+                                    $rand_string = substr(str_shuffle(md5(time())), 0, 10);
+                                    $img_name = $username[0]->username.'_PROFILE_'.$rand_string.'.jpg';
+        							              $dir = $img_dir_profile.$img_name;
+                                    $img_max_size = explode(',', IMG_MAX_SIZE);
+        							              $image->best_fit($img_max_size[0],$img_max_size[1])->save(ROOTDIR.$dir);
+                                    if(file_exists(ROOTDIR.$dir) && (strpos($userImage, ".") !== false)){
+                                        if($userImage == 'default-1.jpg' || $userImage == 'default-2.jpg' || $userImage == 'default-3.jpg' || $userImage == 'default-4.jpg' || $userImage == 'default-5.jpg'){
+                                            // Do Nothing
+                                        }else{
+                                            /** Remove Temp Image File **/
+                                            //if(file_exists(ROOTDIR.IMG_DIR_PROFILE.$userImage)) {
+                                            //    unlink(ROOTDIR.IMG_DIR_PROFILE.$userImage);
+                                            //}
+                                        }
+                                    }
+        						            }else{
+                                    // Error Message Display
+                                    ErrorMessages::push($this->language->get('edit_profile_photo_error'), 'Edit-Profile');
+                                }
+                                /** Check to see if Image name is set **/
+                                if(!empty($img_name)){
+                                    $db_image = $username[0]->username.'/'.$img_name;
+                                }else{
+                                    $db_image = $userImage;
+                                }
+                                if(!$onlineUsers->addUserImage($u_id, $db_image)){
+                                  $image_error[] = true;
+                                }
+                            }
+                        }
+                      }
+                    }else{
+                      $image_error[] = true;
+                    }
+                    /* Check for Image Errors */
+                    if(empty($image_error)){
+                        // Success Message Display
+                        SuccessMessages::push($this->language->get('edit_profile_images_success'), 'Edit-Profile-Images');
+                    }else{
+                        /* Error Message Display */
+                        ErrorMessages::push($this->language->get('edit_profile_photo_error'), 'Edit-Profile-Images');
+                    }
+                }else{
+                    // Error Message Display
+                    ErrorMessages::push($this->language->get('edit_profile_error'), 'Edit-Profile-Images');
+                }
+
+            }
+
+            $username = $username[0]->username;
+            $profile = $onlineUsers->getUserProfile($username);
+
+            $data['title'] = $this->language->get('mem_act_edit_profile_images');
+            $data['profile'] = $profile[0];
+            $data['csrfToken'] = Csrf::makeToken('editprofile');
+            $data['main_image'] = $main_image;
+
+            /** Check to see if user is logged in **/
+            if($data['isLoggedIn'] = $this->auth->isLogged()){
+              //** User is logged in - Get their data **/
+              $u_id = $this->auth->user_info();
+              $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+              $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+            }else{
+              /** User Not logged in - kick them out **/
+              \Libs\ErrorMessages::push($this->language->get('user_not_logged_in'), 'Login');
+            }
+
+            /** Setup Breadcrumbs **/
+        		$data['breadcrumbs'] = "
+              <li class='breadcrumb-item'><a href='".SITE_URL."Account-Settings'>".$this->language->get('mem_act_settings_title')."</a></li>
+        			<li class='breadcrumb-item active'>".$data['title']."</li>
+            ";
+
+            Load::View("Members/Edit-Profile-Images", $data, "Members/Member-Account-Sidebar::Left");
 
         }else{
           /** User Not logged in - kick them out **/
