@@ -79,7 +79,6 @@ class AdminPanel extends Models {
           username,
           firstName,
           lastName,
-          userImage,
           isactive,
           LastLogin,
           SignUp
@@ -107,12 +106,12 @@ class AdminPanel extends Models {
   }
 
   // Update User's Profile Data
-	public function updateProfile($au_id, $au_username, $au_firstName, $au_lastName, $au_email, $au_gender, $au_website, $au_userImage, $au_aboutme, $au_signature){
+	public function updateProfile($au_id, $au_username, $au_firstName, $au_lastName, $au_email, $au_gender, $au_website, $au_aboutme, $au_signature){
 		// Format the About Me for database
 		$au_aboutme = nl2br($au_aboutme);
     $au_signature = nl2br($au_signature);
 		// Update users table
-		$query = $this->db->update(PREFIX.'users', array('username' => $au_username, 'firstName' => $au_firstName, 'lastName' => $au_lastName, 'email' => $au_email, 'gender' => $au_gender, 'userImage' => $au_userImage, 'website' => $au_website, 'aboutme' => $au_aboutme, 'signature' => $au_signature), array('userID' => $au_id));
+		$query = $this->db->update(PREFIX.'users', array('username' => $au_username, 'firstName' => $au_firstName, 'lastName' => $au_lastName, 'email' => $au_email, 'gender' => $au_gender, 'website' => $au_website, 'aboutme' => $au_aboutme, 'signature' => $au_signature), array('userID' => $au_id));
 		if($query > 0){
 			return true;
 		}else{

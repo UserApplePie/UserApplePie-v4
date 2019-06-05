@@ -200,7 +200,6 @@ class Users extends Models
           u.username,
           u.firstName,
           u.lastName,
-          u.userImage,
           u.email,
           u.privacy_massemail,
           u.privacy_pm,
@@ -247,17 +246,24 @@ class Users extends Models
           ug.userID ASC
       ",
         array(':userID' => $userID));
-      foreach($current_user_groups as $user_group_data){
-        $cu_groupID[] = $user_group_data->groupID;
+
+      if(!empty($current_user_groups)){
+        foreach($current_user_groups as $user_group_data){
+          $cu_groupID[] = $user_group_data->groupID;
+        }
+        /* Now to check if user is in admin group (default admin groupID: 4) */
+        /* If more than one admin group just add num to array ex: array('3','4') */
+        $admin_group = array('4','3');
+        foreach ($admin_group as $key) {
+          $admin_check[] = in_array($key,$cu_groupID) ? 'YesAdmin' : 'NoAdmin';
+        }
+
+        /* Return result of admin check */
+        return in_array('YesAdmin',$admin_check) ? 'true' : 'false';
+      }else{
+        $this->db->insert(PREFIX.'users_groups', array('userID' => $userID, 'groupID' => 1));
+        return false;
       }
-      /* Now to check if user is in admin group (default admin groupID: 4) */
-      /* If more than one admin group just add num to array ex: array('3','4') */
-      $admin_group = array('4','3');
-      foreach ($admin_group as $key) {
-        $admin_check[] = in_array($key,$cu_groupID) ? 'YesAdmin' : 'NoAdmin';
-      }
-      /* Return result of admin check */
-      return in_array('YesAdmin',$admin_check) ? 'true' : 'false';
-    }
+  }
 
 }

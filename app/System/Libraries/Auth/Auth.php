@@ -401,12 +401,15 @@ class Auth {
                         // Everything looks good, sign user up
                         $password = $this->hashPass($password);
                         $activekey = $this->randomKey(RANDOM_KEY_LENGTH); // Create a random key for account activation
-                        $info = array("username" => $username, "password" => $password, "email" => $email, "activekey" => $activekey, "userImage"=>"default-".rand(1,5).".jpg", "pass_change_timestamp" => date("Y-m-d H:i:s"));
+                        $info = array("username" => $username, "password" => $password, "email" => $email, "activekey" => $activekey, "pass_change_timestamp" => date("Y-m-d H:i:s"));
                         $user_id = $this->authorize->addIntoDB("users", $info);
-
+												/* Add default User Image to User Profile */
+												$info = array("userID"=>$user_id, "userImage"=>"default-".rand(1,5).".jpg", "defaultImage"=>"1");
+                        $this->authorize->addIntoDB("users_images", $info);
+												/* Add New user to New Members Group */
                         $info = array('userID' => $user_id, 'groupID' => 1);
                         $this->authorize->addIntoDB("users_groups",$info);
-
+												/* Log changes */
                         $this->logActivity($username, "AUTH_REGISTER_SUCCESS", "Account created");
                         $this->successmsg[] = $this->language->get('register_success');
                         // Everything looks good.  Now activate account
@@ -506,9 +509,12 @@ class Auth {
                         // Email address isn't already used
                         $password = $this->hashPass($password);
                         $activekey = $this->randomKey(RANDOM_KEY_LENGTH);
-                        $info = array("username" => $username, "password" => $password, "email" => $email, "activekey" => $activekey, "userImage"=>"default-".rand(1,5).".jpg", "pass_change_timestamp" => date("Y-m-d H:i:s"));
+                        $info = array("username" => $username, "password" => $password, "email" => $email, "activekey" => $activekey, "pass_change_timestamp" => date("Y-m-d H:i:s"));
                         $user_id = $this->authorize->addIntoDB("users", $info);
-
+												/* Add default User Image to User Profile */
+												$info = array("userID"=>$user_id, "userImage"=>"default-".rand(1,5).".jpg", "defaultImage"=>"1");
+                        $this->authorize->addIntoDB("users_images", $info);
+												/* Add New user to New Members Group */
                         $info = array('userID' => $user_id, 'groupID' => 1);
                         $this->authorize->addIntoDB("users_groups",$info);
                         //EMAIL MESSAGE USING PHPMAILER
@@ -1139,14 +1145,18 @@ class Auth {
         }else{
           $cu_groupID[] = "0";
         }
-        // Set which group(s) are admin (4)
-        if(in_array(4,$cu_groupID)){
-          // User is Admin
-          return true;
-        }else{
-          // User Not Admin
-          return false;
-        }
+				if(!empty($cu_groupID)){
+	        // Set which group(s) are admin (4)
+	        if(in_array(4,$cu_groupID)){
+	          // User is Admin
+	          return true;
+	        }else{
+	          // User Not Admin
+	          return false;
+	        }
+				}else{
+					return false;
+				}
     	}
 
       /**
@@ -1166,14 +1176,18 @@ class Auth {
         }else{
           $cu_groupID[] = "0";
         }
-        // Set which group(s) are admin (4)
-        if(in_array(3,$cu_groupID)){
-          // User is Admin
-          return true;
-        }else{
-          // User Not Admin
-          return false;
-        }
+				if(!empty($cu_groupID)){
+	        // Set which group(s) are admin (4)
+	        if(in_array(3,$cu_groupID)){
+	          // User is Admin
+	          return true;
+	        }else{
+	          // User Not Admin
+	          return false;
+	        }
+				}else{
+					return false;
+				}
     	}
 
       /**
@@ -1193,14 +1207,18 @@ class Auth {
         }else{
           $cu_groupID[] = "0";
         }
-        // Set which group(s) are admin (4)
-        if(in_array(1,$cu_groupID)){
-          // User is Admin
-          return true;
-        }else{
-          // User Not Admin
-          return false;
-        }
+				if(!empty($cu_groupID)){
+	        // Set which group(s) are admin (4)
+	        if(in_array(1,$cu_groupID)){
+	          // User is Admin
+	          return true;
+	        }else{
+	          // User Not Admin
+	          return false;
+	        }
+				}else{
+					return false;
+				}
     	}
 
 }

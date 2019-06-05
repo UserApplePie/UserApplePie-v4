@@ -46,6 +46,7 @@ class Routes {
         $routes[] = self::add('Change-Email', 'Auth', 'changeEmail');
         $routes[] = self::add('Change-Password', 'Auth', 'changePassword');
         $routes[] = self::add('Edit-Profile','Members', 'editProfile');
+        $routes[] = self::add('Edit-Profile-Images','Members', 'editProfileImages');
         $routes[] = self::add('Privacy-Settings','Members', 'privacy');
         $routes[] = self::add('Account-Settings','Members', 'account');
         /* End Auth Routing */

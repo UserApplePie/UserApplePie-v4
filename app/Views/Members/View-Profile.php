@@ -18,11 +18,11 @@ use Libs\Language;
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12 col-lg-12" align="center">
-                      <?php if(!empty($data['profile']->userImage)){ ?>
-                        <img alt="<?php echo $data['profile']->username; ?>'s Profile Picture" src="<?php echo SITE_URL.IMG_DIR_PROFILE.$data['profile']->userImage; ?>" class="rounded img-fluid">
+                      <?php if(!empty($data['main_image'])){ ?>
+                        <img alt="<?php echo $data['profile']->username; ?>'s Profile Picture" src="<?php echo SITE_URL.IMG_DIR_PROFILE.$data['main_image']; ?>" class="rounded img-fluid">
                         <?php }else{ ?>
-							<span class='fas fa-user icon-size'></span>
-						<?php } ?>
+            							<span class='fas fa-user icon-size'></span>
+            						<?php } ?>
                         <hr>
                         <?php if($data['isAdmin'] == 'true'){
                             echo " <a href='".SITE_URL."AdminPanel-User/".$data['profile']->userID."' title='Admin - Edit User' class='btn btn-warning btn-block btn-sm'>Admin - Edit User</a> ";
@@ -103,5 +103,24 @@ use Libs\Language;
             </div>
         </div>
       <?php } ?>
+
+      <div class="card mb-3">
+    		<div class="card-header h4">
+    			<?php echo $data['profile']->username; ?>'s Images
+    		</div>
+    		<div class="card-body">
+    				<div class='row'>
+    					<?php
+    						if(isset($data['user_images'])){
+    							foreach ($data['user_images'] as $row) {
+    								echo "<div class='col-lg-2 col-md-3 col-sm-4 col-xs-6' style='padding-bottom: 6px'>";
+    									echo "<a href='".SITE_URL.IMG_DIR_PROFILE."$row->userImage' target='_blank'><img src='".SITE_URL.IMG_DIR_PROFILE."$row->userImage' class='img-thumbnail'></a>";
+    								echo "</div>";
+    							}
+    						}
+    					?>
+    				</div>
+    		</div>
+    	</div>
 
     </div>

@@ -62,30 +62,6 @@ use Libs\Language, Libs\Form;
 									<input id="website" type="website" class="form-control" name="website" placeholder="<?=Language::show('members_profile_website', 'Members'); ?>" value="<?php echo $data['profile']->website; ?>">
 								</div>
 
-
-                <?php if($data['profile']->userImage != ""){ ?>
-	                <input id="oldImg" name="oldImg" type="hidden" value="<?php echo $data['profile']->userImage; ?>"">
-	                <div class="card mb-3">
-										<div class="card-header">
-	                  	<?=Language::show('members_profile_cur_photo', 'Members'); ?>
-										</div>
-										<div class="card-body text-center">
-	                  	<img alt="User Pic" src="<?php echo SITE_URL.IMG_DIR_PROFILE.$data['profile']->userImage; ?>" class="rounded img-fluid">
-										</div>
-	                </div>
-                <?php } ?>
-
-
-								<div class="input-group mb-3">
-								  <div class="input-group-prepend">
-								    <span class="input-group-text" id="inputGroupFileAddon01"><?=Language::show('members_profile_new_photo', 'Members'); ?></span>
-								  </div>
-								  <div class="custom-file">
-										<input type="file" class="custom-file-input" accept="image/jpeg, image/gif, image/x-png" id="profilePic" name="profilePic" aria-describedby="inputGroupFileAddon01">
-								    <label class="custom-file-label" for="inputGroupFile01">Select Image File</label>
-								  </div>
-								</div>
-
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
 											<div class="input-group-text"><?=Language::show('edit_profile_aboutme', 'Members'); ?></div>
