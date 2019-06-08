@@ -88,7 +88,7 @@ class Load {
         (isset($templateHeader)) ? require_once $templateHeader : "";
         ($addsEnable) ? require_once $mainAddsTop : "";
 
-        if(isset($leftSidebar) || isset($leftSidebar2)){ echo "<div class='col-lg-4 col-md-4 col-sm-12'>"; }
+        if(isset($leftSidebar) || isset($leftSidebar2)){ echo "<div class='col-lg-3 col-md-4 col-sm-12'>"; }
         ((isset($leftSidebar) || isset($leftSidebar2)) && $addsEnable) ? require_once $sidebarAddsTop : "";
         (isset($leftSidebar)) ? require_once $leftSidebar : "";
         (isset($leftSidebar2)) ? require_once $leftSidebar2 : "";
@@ -97,7 +97,7 @@ class Load {
 
         require_once $viewFile;
 
-        if(isset($rightSidebar) || isset($rightSidebar2)){ echo "<div class='col-lg-4 col-md-4 col-sm-12'>"; }
+        if(isset($rightSidebar) || isset($rightSidebar2)){ echo "<div class='col-lg-3 col-md-4 col-sm-12'>"; }
         ((isset($rightSidebar) || isset($rightSidebar2)) && $addsEnable) ? require_once $sidebarAddsTop : "";
         (isset($rightSidebar)) ? require_once $rightSidebar : "";
         (isset($rightSidebar2)) ? require_once $rightSidebar2 : "";

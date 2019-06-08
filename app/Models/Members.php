@@ -270,16 +270,37 @@ class Members extends Models
       }
     }
 
+    /**
+    * getUserName
+    *
+    * get User Name based on userID
+    *
+    * @return array userID, username
+    */
     public function getUserName($id)
     {
         return $this->db->select("SELECT userID,username FROM ".PREFIX."users WHERE userID=:id",array(":id"=>$id));
     }
 
+    /**
+    * updateProfile
+    *
+    * Update user profile
+    *
+    * @return int rows
+    */
     public function updateProfile($u_id, $firstName, $lastName, $gender, $website, $aboutme, $signature)
     {
         return $this->db->update(PREFIX.'users', array('firstName' => $firstName, 'lastName' => $lastName, 'gender' => $gender, 'website' => $website, 'aboutme' => $aboutme, 'signature' => $signature), array('userID' => $u_id));
     }
 
+    /**
+    * updateUPrivacy
+    *
+    * Update user privacy settings
+    *
+    * @return boolean true/false
+    */
     public function updateUPrivacy($u_id, $privacy_massemail, $privacy_pm)
     {
         $data = $this->db->update(PREFIX.'users', array('privacy_massemail' => $privacy_massemail, 'privacy_pm' => $privacy_pm), array('userID' => $u_id));
@@ -290,6 +311,14 @@ class Members extends Models
         }
     }
 
+    /**
+    * addUserImage
+    *
+    * Add user image to database when uploaded.
+    * If no default image then first image is default.
+    *
+    * @return int total rows
+    */
     public function addUserImage($u_id, $userImage)
     {
         /* Check if image is set as default */
@@ -301,6 +330,13 @@ class Members extends Models
         }
     }
 
+    /**
+    * getUserImageMain
+    *
+    * Get User Main Profile Image by userID
+    *
+    * @return string userImage
+    */
     public function getUserImageMain($id)
     {
         $data = $this->db->select("SELECT userImage FROM ".PREFIX."users_images WHERE userID=:id AND defaultImage = '1' ",array(":id"=>$id));
@@ -308,10 +344,97 @@ class Members extends Models
         return $data[0]->userImage;
     }
 
-    public function getUserImages($id, $limit = '20')
+    /**
+    * getUserImages
+    *
+    * Get User Profile Images by userID
+    *
+    * @return array id, userImage
+    */
+    public function getUserImages($id, $limit = 'LIMIT 20')
     {
-        $limit = "LIMIT ".$limit;
-       return $this->db->select("SELECT userImage FROM ".PREFIX."users_images WHERE userID=:id ORDER BY timestamp DESC $limit",array(":id"=>$id));
+        return $this->db->select("SELECT id, userImage FROM ".PREFIX."users_images WHERE userID=:id ORDER BY timestamp DESC $limit",array(":id"=>$id));
+    }
+
+    /**
+    * getUserImage
+    *
+    * Get User Main Profile Image by ID
+    *
+    * @return string userImage
+    */
+    public function getUserImage($userID, $imageID)
+    {
+        $data = $this->db->select("SELECT userImage FROM ".PREFIX."users_images WHERE id = :imageID AND userID = :userID ",array(":imageID"=>$imageID, ":userID"=>$userID));
+
+        return $data[0]->userImage;
+    }
+
+    /**
+    * getUserImageMainID
+    *
+    * Get User Main Profile Image ID
+    *
+    * @return int id
+    */
+    public function getUserImageMainID($id)
+    {
+        $data = $this->db->select("SELECT id FROM ".PREFIX."users_images WHERE userID=:id AND defaultImage = '1' ",array(":id"=>$id));
+
+        return $data[0]->id;
+    }
+
+    /**
+    * updateUserImage
+    *
+    * Update Photo in database
+    *
+    * @return boolean true/false
+    */
+    public function updateUserImage($userID, $imageID, $action)
+    {
+        $data = $this->db->update(PREFIX.'users_images', array('defaultImage' => $action), array('id' => $imageID, 'userID' => $userID));
+        if($data > 0){
+          return true;
+        }else{
+          return false;
+        }
+    }
+
+    /**
+    * deleteUserImage
+    *
+    * Delete Photo from database
+    *
+    * @return boolean true/false
+    */
+    public function deleteUserImage($userID, $imageID)
+    {
+        $data = $this->db->delete(PREFIX.'users_images', array('id' => $imageID, 'userID' => $userID));
+        if($data > 0){
+          return true;
+        }else{
+          return false;
+        }
+    }
+
+    /**
+    * getTotalImages
+    *
+    * Gets total count of images that belong to user
+    *
+    * @return int count
+    */
+    public function getTotalImages($userID){
+      $data = $this->db->select("
+          SELECT
+            *
+          FROM
+            ".PREFIX."users_images
+          WHERE
+  					userID = :userID
+          ", array(':userID' => $userID));
+      return count($data);
     }
 
 }

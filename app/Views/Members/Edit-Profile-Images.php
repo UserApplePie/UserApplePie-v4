@@ -1,6 +1,6 @@
 <?php
 /**
-* Account Edit Profile View
+* Account Edit Profile Images View
 *
 * UserApplePie
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
@@ -10,7 +10,7 @@
 use Libs\Language, Libs\Form;
 ?>
 
-<div class="col-lg-8 col-md-8 col-sm-12">
+<div class="col-lg-9 col-md-8 col-sm-12">
 	<div class="card mb-3">
 		<div class="card-header h4">
 			<?=$title;?>
@@ -57,12 +57,20 @@ use Libs\Language, Libs\Form;
 						if(isset($data['user_images'])){
 							foreach ($data['user_images'] as $row) {
 								echo "<div class='col-lg-2 col-md-3 col-sm-4 col-xs-6' style='padding-bottom: 6px'>";
-									echo "<a href='".SITE_URL.IMG_DIR_PROFILE."$row->userImage' target='_blank'><img src='".SITE_URL.IMG_DIR_PROFILE."$row->userImage' class='img-thumbnail'></a>";
+									echo "<a href='".SITE_URL."Edit-Profile-Images/$row->id'><img src='".SITE_URL.IMG_DIR_PROFILE."$row->userImage' class='img-thumbnail'></a>";
 								echo "</div>";
 							}
 						}
 					?>
 				</div>
 		</div>
+		<?php
+			// Check to see if there is more than one page
+			if($data['pageLinks'] > "1"){
+				echo "<div class='card-footer text-muted' style='text-align: center'>";
+				echo $data['pageLinks'];
+				echo "</div>";
+			}
+		?>
 	</div>
 </div>

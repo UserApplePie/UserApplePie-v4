@@ -154,11 +154,21 @@ class Members extends Controller
      * Get profile by username
      * @param $username
      */
-    public function viewProfile($user = "")
+    public function viewProfile($user = '', $current_page = '1')
     {
         $onlineUsers = new MembersModel();
         $profile = $onlineUsers->getUserProfile($user);
         $main_image = $onlineUsers->getUserImageMain($profile[0]->userID);
+
+        // Set total number of rows for paginator
+        $total_num_images = $onlineUsers->getTotalImages($profile[0]->userID);
+        $this->pages->setTotal($total_num_images);
+
+        // Send page links to view
+        $pageFormat = SITE_URL."Profile/".$profile[0]->username."/"; // URL page where pages are
+        $data['pageLinks'] = $this->pages->pageLinks($pageFormat, '', $current_page);
+        $data['current_page_num'] = $current_page;
+
         if($profile){
             $data['title'] = $profile[0]->username . "'s ".$this->language->get('members_profile_title');
             $data['profile'] = $profile[0];
@@ -173,7 +183,7 @@ class Members extends Controller
             }
 
             /** Get Users Images **/
-            $data['user_images'] = $onlineUsers->getUserImages($profile[0]->userID, '20');
+            $data['user_images'] = $onlineUsers->getUserImages($profile[0]->userID, $this->pages->getLimit($current_page, USERS_PAGEINATOR_LIMIT));
 
             /** Get User's Groups **/
             $data['user_groups'] = $this->user->getUserGroupName($profile[0]->userID);
@@ -189,9 +199,21 @@ class Members extends Controller
             Error::profileError();
     }
 
+    /**
+     * Edit User Profile
+     */
     public function editProfile()
     {
-        $u_id = $this->auth->currentSessionInfo()['uid'];
+        /** Check to see if user is logged in **/
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+          //** User is logged in - Get their data **/
+          $u_id = $this->auth->user_info();
+          $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+          $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+        }else{
+          /** User Not logged in - kick them out **/
+          \Libs\ErrorMessages::push($this->language->get('user_not_logged_in'), 'Login');
+        }
 
         $onlineUsers = new MembersModel();
         $username = $onlineUsers->getUserName($u_id);
@@ -230,15 +252,16 @@ class Members extends Controller
                     $signature = strip_tags($signature, "<br>");
 
                     $onlineUsers->updateProfile($u_id, $firstName, $lastName, $gender, $website, $aboutMe, $signature);
-                    // Success Message Display
+                    /** Success Message Display **/
                     SuccessMessages::push($this->language->get('edit_profile_success'), 'Edit-Profile');
                 }else{
-                    // Error Message Display
+                    /** Error Message Display **/
                     ErrorMessages::push($this->language->get('edit_profile_error'), 'Edit-Profile');
                 }
 
             }
 
+            /** Get User data **/
             $username = $username[0]->username;
             $profile = $onlineUsers->getUserProfile($username);
 
@@ -246,17 +269,6 @@ class Members extends Controller
             $data['profile'] = $profile[0];
             $data['csrfToken'] = Csrf::makeToken('editprofile');
             $data['main_image'] = $main_image;
-
-            /** Check to see if user is logged in **/
-            if($data['isLoggedIn'] = $this->auth->isLogged()){
-              //** User is logged in - Get their data **/
-              $u_id = $this->auth->user_info();
-              $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
-              $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
-            }else{
-              /** User Not logged in - kick them out **/
-              \Libs\ErrorMessages::push($this->language->get('user_not_logged_in'), 'Login');
-            }
 
             /** Setup Breadcrumbs **/
         		$data['breadcrumbs'] = "
@@ -272,9 +284,22 @@ class Members extends Controller
         }
     }
 
-    public function editProfileImages()
+    /**
+     * Edit User Profile Images
+     */
+    public function editProfileImages($imageID = '', $current_page = '1')
     {
-        $u_id = $this->auth->currentSessionInfo()['uid'];
+
+        /** Check to see if user is logged in **/
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+          /** User is logged in - Get their data **/
+          $u_id = $this->auth->user_info();
+          $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+          $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+        }else{
+          /** User Not logged in - kick them out **/
+          \Libs\ErrorMessages::push($this->language->get('user_not_logged_in'), 'Login');
+        }
 
         $onlineUsers = new MembersModel();
         $username = $onlineUsers->getUserName($u_id);
@@ -282,9 +307,18 @@ class Members extends Controller
         $main_image = $onlineUsers->getUserImageMain($u_id);
 
         /** Get Users Images **/
-        $data['user_images'] = $onlineUsers->getUserImages($u_id, '20');
+        $data['user_images'] = $onlineUsers->getUserImages($u_id, $this->pages->getLimit($current_page, USERS_PAGEINATOR_LIMIT));
 
-        if(sizeof($username) > 0){
+        // Set total number of rows for paginator
+        $total_num_images = $onlineUsers->getTotalImages($u_id);
+        $this->pages->setTotal($total_num_images);
+
+        // Send page links to view
+        $pageFormat = SITE_URL."Edit-Profile-Images/View/"; // URL page where pages are
+        $data['pageLinks'] = $this->pages->pageLinks($pageFormat, '', $current_page);
+        $data['current_page_num'] = $current_page;
+
+        if(empty($imageID) || $imageID == 'View'){
             if (isset($_POST['submit'])) {
                 if(Csrf::isTokenValid('editprofile')) {
                     $userImage = Request::post('oldImg');
@@ -312,18 +346,8 @@ class Members extends Controller
         							              $dir = $img_dir_profile.$img_name;
                                     $img_max_size = explode(',', IMG_MAX_SIZE);
         							              $image->best_fit($img_max_size[0],$img_max_size[1])->save(ROOTDIR.$dir);
-                                    if(file_exists(ROOTDIR.$dir) && (strpos($userImage, ".") !== false)){
-                                        if($userImage == 'default-1.jpg' || $userImage == 'default-2.jpg' || $userImage == 'default-3.jpg' || $userImage == 'default-4.jpg' || $userImage == 'default-5.jpg'){
-                                            // Do Nothing
-                                        }else{
-                                            /** Remove Temp Image File **/
-                                            //if(file_exists(ROOTDIR.IMG_DIR_PROFILE.$userImage)) {
-                                            //    unlink(ROOTDIR.IMG_DIR_PROFILE.$userImage);
-                                            //}
-                                        }
-                                    }
         						            }else{
-                                    // Error Message Display
+                                    /** Error Message Display **/
                                     ErrorMessages::push($this->language->get('edit_profile_photo_error'), 'Edit-Profile');
                                 }
                                 /** Check to see if Image name is set **/
@@ -343,19 +367,20 @@ class Members extends Controller
                     }
                     /* Check for Image Errors */
                     if(empty($image_error)){
-                        // Success Message Display
+                        /** Success Message Display **/
                         SuccessMessages::push($this->language->get('edit_profile_images_success'), 'Edit-Profile-Images');
                     }else{
                         /* Error Message Display */
                         ErrorMessages::push($this->language->get('edit_profile_photo_error'), 'Edit-Profile-Images');
                     }
                 }else{
-                    // Error Message Display
+                    /** Error Message Display **/
                     ErrorMessages::push($this->language->get('edit_profile_error'), 'Edit-Profile-Images');
                 }
 
             }
 
+            /** Get user data **/
             $username = $username[0]->username;
             $profile = $onlineUsers->getUserProfile($username);
 
@@ -363,17 +388,6 @@ class Members extends Controller
             $data['profile'] = $profile[0];
             $data['csrfToken'] = Csrf::makeToken('editprofile');
             $data['main_image'] = $main_image;
-
-            /** Check to see if user is logged in **/
-            if($data['isLoggedIn'] = $this->auth->isLogged()){
-              //** User is logged in - Get their data **/
-              $u_id = $this->auth->user_info();
-              $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
-              $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
-            }else{
-              /** User Not logged in - kick them out **/
-              \Libs\ErrorMessages::push($this->language->get('user_not_logged_in'), 'Login');
-            }
 
             /** Setup Breadcrumbs **/
         		$data['breadcrumbs'] = "
@@ -384,8 +398,73 @@ class Members extends Controller
             Load::View("Members/Edit-Profile-Images", $data, "Members/Member-Account-Sidebar::Left");
 
         }else{
-          /** User Not logged in - kick them out **/
-          \Libs\ErrorMessages::push($this->language->get('user_not_logged_in'), 'Login');
+          /** User is editing an image **/
+          $data['title'] = $this->language->get('mem_act_edit_profile_image');
+          $data['profile'] = $profile[0];
+          $data['csrfToken'] = Csrf::makeToken('editprofile');
+          $data['edit_image'] = $onlineUsers->getUserImage($u_id, $imageID);
+          $data['main_image'] = $main_image;
+
+          /** Check if Image requested exists and belongs to member **/
+          if(empty($data['edit_image'])){
+            /** Error Message Display **/
+            ErrorMessages::push($this->language->get('edit_profile_image_error'), 'Edit-Profile-Images');
+          }else{
+            /** Check to see if user is editing a photo **/
+            $data['imageID'] = $imageID;
+            if (isset($_POST['submit'])) {
+                if(Csrf::isTokenValid('editprofile')) {
+                    /** Get Data from the POST **/
+                    $image_action = Request::post('image_action');
+                    $imageID = Request::post('imageID');
+                    /** Check to see if user is setting an image as default or deleting **/
+                    if($image_action == "default"){
+                      /** Change image to default and change old default to regular **/
+                      $main_image_id = $onlineUsers->getUserImageMainID($u_id);
+                      if($onlineUsers->updateUserImage($u_id, $main_image_id, '0')){
+                        if($onlineUsers->updateUserImage($u_id, $imageID, '1')){
+                          /** Error Message Display **/
+                          SuccessMessages::push($this->language->get('edit_profile_image_success'), 'Edit-Profile-Images');
+                        }else{
+                          /** Error Message Display **/
+                          ErrorMessages::push($this->language->get('edit_profile_image_error'), 'Edit-Profile-Images');
+                        }
+                      }else{
+                        /** Error Message Display **/
+                        ErrorMessages::push($this->language->get('edit_profile_image_error'), 'Edit-Profile-Images');
+                      }
+
+                    }else if($image_action == "delete"){
+                      /** Remove the Photo from the server and delete the image **/
+                      if($data['edit_image'] == 'default-1.jpg' || $data['edit_image'] == 'default-2.jpg' || $data['edit_image'] == 'default-3.jpg' || $data['edit_image'] == 'default-4.jpg' || $data['edit_image'] == 'default-5.jpg'){
+                        if($onlineUsers->deleteUserImage($u_id, $imageID)){
+                          /** Error Message Display **/
+                          SuccessMessages::push($this->language->get('edit_profile_image_success'), 'Edit-Profile-Images');
+                        }
+                      }else{
+                        if(file_exists(ROOTDIR.IMG_DIR_PROFILE.$data['edit_image'])) {
+                            unlink(ROOTDIR.IMG_DIR_PROFILE.$data['edit_image']);
+                            if($onlineUsers->deleteUserImage($u_id, $imageID)){
+                              /** Error Message Display **/
+                              SuccessMessages::push($this->language->get('edit_profile_image_success'), 'Edit-Profile-Images');
+                            }
+                        }
+                      }
+                    }
+                }else{
+                  /** Error Message Display **/
+                  ErrorMessages::push($this->language->get('edit_profile_image_error'), 'Edit-Profile-Images');
+                }
+            }
+          }
+
+          /** Setup Breadcrumbs **/
+          $data['breadcrumbs'] = "
+            <li class='breadcrumb-item'><a href='".SITE_URL."Account-Settings'>".$this->language->get('mem_act_settings_title')."</a></li>
+            <li class='breadcrumb-item active'>".$data['title']."</li>
+          ";
+
+          Load::View("Members/Edit-Profile-Image", $data, "Members/Member-Account-Sidebar::Left");
         }
     }
 

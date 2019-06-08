@@ -11,7 +11,7 @@ use Libs\Language,
     Libs\CurrentUserData;
 ?>
 
-<div class="col-lg-8 col-md-8 col-sm-12">
+<div class="col-lg-9 col-md-8 col-sm-12">
 	<div class="card mb-3">
 		<div class="card-header h4">
 			Pending Received Friend Requests

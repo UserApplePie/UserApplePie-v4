@@ -130,7 +130,7 @@ class Auth extends Controller
             $this->user->remove($u_id);
             $this->auth->logout();
         }
-        // Success Message Display
+        /** Success Message Display **/
         SuccessMessages::push($this->language->get('logout'), '');
     }
 
@@ -167,7 +167,7 @@ class Auth extends Controller
                 $site_user_invite_code_db = SITE_USER_INVITE_CODE;
                 if(!empty($site_user_invite_code_db)){
                   if($site_user_invite_code != $site_user_invite_code_db){
-                    // Error Message Display
+                    /** Error Message Display **/
                     ErrorMessages::push($this->language->get('register_error'), 'Register');
                   }
                 }
@@ -198,21 +198,21 @@ class Auth extends Controller
                         }else{
                             $data['message'] = $this->language->get('register_success_noact');
                         }
-                        // Success Message Display
+                        /** Success Message Display **/
                         SuccessMessages::push($data['message'], 'Register');
                     }
                     else{
-                        // Error Message Display
+                        /** Error Message Display **/
                         ErrorMessages::push($this->language->get('register_error'), 'Register');
                     }
                 }
                 else{
-                    // Error Message Display
+                    /** Error Message Display **/
                     ErrorMessages::push($this->language->get('register_error_recap'), 'Register');
                 }
             }
             else{
-                // Error Message Display
+                /** Error Message Display **/
                 ErrorMessages::push($this->language->get('register_error'), 'Register');
             }
         }
@@ -281,11 +281,11 @@ class Auth extends Controller
             Url::redirect();
 
         if($this->auth->activateAccount($username, $activekey)) {
-            // Success Message Display
+            /** Success Message Display **/
             SuccessMessages::push($this->language->get('activate_success'), 'Login');
         }
         else{
-            // Error Message Display
+            /** Error Message Display **/
             ErrorMessages::push($this->language->get('activate_fail'), 'Resend-Activation-Email');
         }
 
@@ -322,11 +322,11 @@ class Auth extends Controller
                 $u_username = $this->auth->currentSessionInfo()['username'];
 
                 if($this->auth->changePass($u_username, $currentPassword, $newPassword, $confirmPassword)){
-                    // Success Message Display
+                    /** Success Message Display **/
                     SuccessMessages::push($this->language->get('resetpass_success'), 'Change-Password');
                 }
                 else{
-                    // Error Message Display
+                    /** Error Message Display **/
                     ErrorMessages::push($this->language->get('resetpass_error'), 'Change-Password');
                 }
             }
@@ -386,11 +386,11 @@ class Auth extends Controller
                 $username = $this->auth->currentSessionInfo()['username'];
 
                 if($this->auth->changeEmail($username, $newEmail, $password)){
-                    // Success Message Display
+                    /** Success Message Display **/
                     SuccessMessages::push($this->language->get('changeemail_success'), 'Change-Email');
                 }
                 else{
-                    // Error Message Display
+                    /** Error Message Display **/
                     ErrorMessages::push($this->language->get('changeemail_error'), 'Change-Email');
                 }
             }
@@ -450,10 +450,10 @@ class Auth extends Controller
                 $email = Request::post('email');
 
                 if($this->auth->resetPass($email)){
-                    // Success Message Display
+                    /** Success Message Display **/
                     SuccessMessages::push($this->language->get('resetpass_email_sent'), 'Forgot-Password');
                 }else{
-                    // Error Message Display
+                    /** Error Message Display **/
                     ErrorMessages::push($this->language->get('resetpass_email_error'), 'Forgot-Password');
                 }
             }
@@ -493,11 +493,11 @@ class Auth extends Controller
                     $confirm_password = Request::post('confirmPassword');
 
                     if($this->auth->resetPass('', $username, $resetkey, $password, $confirm_password)){
-                        // Success Message Display
+                        /** Success Message Display **/
                         SuccessMessages::push($this->language->get('resetpass_success'), 'Login');
                     }
                     else{
-                        // Error Message Display
+                        /** Error Message Display **/
                         ErrorMessages::push($this->language->get('resetpass_error'), 'Forgot-Password');
                     }
                 }
@@ -505,7 +505,7 @@ class Auth extends Controller
         }
         else{
             $data['message'] = "Some Error Occurred";
-            // Error Message Display
+            /** Error Message Display **/
             ErrorMessages::push($data['message'], 'Forgot-Password');
         }
 
@@ -538,11 +538,11 @@ class Auth extends Controller
             $email = Request::post('email');
 
             if($this->auth->resendActivation($email)){
-                // Success Message Display
+                /** Success Message Display **/
                 SuccessMessages::push($this->language->get('resendactivation_success'), 'Login');
             }
             else{
-                // Error Message Display
+                /** Error Message Display **/
                 ErrorMessages::push($this->language->get('resendactivation_error'), 'Resend-Activation-Email');
             }
         }
