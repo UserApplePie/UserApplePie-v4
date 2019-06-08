@@ -13,7 +13,7 @@ use Libs\Language,
     Libs\ForumStats;
 ?>
 
-<div class="col-lg-4 col-md-4 col-sm-12">
+<div class="col-lg-6 col-md-4 col-sm-12">
 	<div class="card mb-3">
         <div class="card-header h4">
             <?php echo Language::show('recent_posts', 'Welcome'); ?>
@@ -41,7 +41,7 @@ use Libs\Language,
                       echo "<a href='".DIR."Profile/{$recent_userName}'>";
                         echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$recent_userImage." class='rounded' style='height: 25px'>";
                       echo "</a>";
-                      echo " $recent_userName sweeted a Forum Topic..";
+                      echo " <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> sweeted a Forum Topic..";
                     echo "</div>";
                     echo "<div class='card-body'>";
                       echo "<strong>";
@@ -64,7 +64,7 @@ use Libs\Language,
                       echo "<a href='".DIR."Profile/{$recent_userName}'>";
                         echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$recent_userImage." class='rounded' style='height: 25px'>";
                       echo "</a>";
-                      echo " $recent_userName sweeted a Forum Topic Reply..";
+                      echo " <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> sweeted a Forum Topic Reply..";
                     echo "</div>";
                     echo "<div class='card-body'>";
                       echo "<strong>";
@@ -87,7 +87,7 @@ use Libs\Language,
                     echo "<a href='".DIR."Profile/{$recent_userName}'>";
                       echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$recent_userImage." class='rounded' style='height: 25px'>";
                     echo "</a>";
-                    echo " $recent_userName Created a new Forum Post..";
+                    echo " <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> Created a new Forum Post..";
                   echo "</div>";
                   echo "<div class='card-body'>";
                     echo "<strong>";
@@ -110,7 +110,7 @@ use Libs\Language,
                     echo "<a href='".DIR."Profile/{$recent_userName}'>";
                       echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$recent_userImage." class='rounded' style='height: 25px'>";
                     echo "</a>";
-                    echo " $recent_userName Replied to a Forum Post..";
+                    echo " <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> Replied to a Forum Post..";
                   echo "</div>";
                   echo "<div class='card-body'>";
                     echo "<strong>";
@@ -122,6 +122,38 @@ use Libs\Language,
                     echo TimeDiff::dateDiff("now", "$recent->RP_01", 1) . " ago ";
                   echo "</div>";
                 echo "</div>";
+              }
+
+              /** Check to see if recent default image **/
+              else if($recent->post_type == "default_images"){
+                /** Display the data for current recent **/
+                echo "<div class='card bg-secondary mb-3'>";
+                  echo "<div class='card-header'>";
+                    echo "<a href='".DIR."Profile/{$recent_userName}'>";
+                      echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$recent_userImage." class='rounded' style='height: 25px'>";
+                    echo "</a>";
+                    echo " <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> changed their default photo..";
+                  echo "</div>";
+                  echo "<div class='card-body'>";
+                    echo "<a href='#imageModal".$recent->RP_02."' data-toggle='modal' data-target='#imageModal".$recent->RP_02."'>";
+                    echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$recent->RP_03." class='rounded img-responsive' style='height: 100px'>";
+                    echo "</a>";
+                  echo "</div>";
+                  echo "<div class='card-footer'>";
+                    echo TimeDiff::dateDiff("now", "$recent->RP_01", 1) . " ago ";
+                  echo "</div>";
+                echo "</div>";
+
+                /** Image Model **/
+                echo "
+                  <div id='imageModal".$recent->RP_02."' class='modal fade' tabindex='-1' role='dialog'>
+                    <div class='modal-dialog modal-dialog-centered modal-lg'>
+                      <div class='modal-content'>
+                        <img src='".SITE_URL.IMG_DIR_PROFILE."$recent->RP_03' class='img-responsive'>
+                      </div>
+                    </div>
+                  </div>
+                ";
               }
 
               echo "<hr>";
@@ -138,6 +170,7 @@ use Libs\Language,
                 if(isset($limitfriendstatus)){}else{ $limitfriendstatus = "10"; }
                 if($recent_limit < $recent_total){
                   $vm_id = $recent_limit + 1;
+                  echo "<hr>";
                   echo "<span class='btn btn-default'>";
                     echo "<a href=\"".SITE_URL."Home/" . ($recent_limit + 10) . "#viewmore$vm_id\">Show More Recent Posts</a> ";
                   echo "</span>";

@@ -46,7 +46,7 @@ class Routes {
         $routes[] = self::add('Change-Email', 'Auth', 'changeEmail');
         $routes[] = self::add('Change-Password', 'Auth', 'changePassword');
         $routes[] = self::add('Edit-Profile','Members', 'editProfile');
-        $routes[] = self::add('Edit-Profile-Images','Members', 'editProfileImages');
+        $routes[] = self::add('Edit-Profile-Images','Members', 'editProfileImages', '(:any)/(:num)');
         $routes[] = self::add('Privacy-Settings','Members', 'privacy');
         $routes[] = self::add('Account-Settings','Members', 'account');
         /* End Auth Routing */
@@ -59,7 +59,7 @@ class Routes {
         /* Member Routing */
         $routes[] = self::add('Members', 'Members', 'members', '(:any)/(:any)/(:any)');
         $routes[] = self::add('Online-Members', 'Members', 'online',  '(:any)/(:any)');
-        $routes[] = self::add('Profile', 'Members', 'viewProfile', '(:any)');
+        $routes[] = self::add('Profile', 'Members', 'viewProfile', '(:any)/(:num)');
         /* End Member Routing */
 
         /* Admin Panel Routing */

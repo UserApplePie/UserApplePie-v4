@@ -107,6 +107,7 @@ class Recent extends Models {
       $sweets = SELF::sweets();
       $forum_posts = SELF::forum_posts();
       $forum_post_replies = SELF::forum_post_replies();
+      $default_images = SELF::default_images();
 
       /** Get Recents from databasse **/
       $data = $this->db->select("
@@ -115,6 +116,8 @@ class Recent extends Models {
         $forum_posts
         UNION ALL
         $forum_post_replies
+        UNION ALL
+        $default_images
         ORDER BY RP_01 DESC
         LIMIT $limit
       ",
@@ -137,6 +140,7 @@ class Recent extends Models {
       $sweets = SELF::sweets();
       $forum_posts = SELF::forum_posts();
       $forum_post_replies = SELF::forum_post_replies();
+      $default_images = SELF::default_images();
 
       /** Get Recents from databasse **/
       $data = $this->db->select("
@@ -146,6 +150,8 @@ class Recent extends Models {
           $forum_posts
           UNION ALL
           $forum_post_replies
+          UNION ALL
+          $default_images
         ) as num_rows
       ",
       array(':userID' => $userID));
@@ -262,6 +268,42 @@ class Recent extends Models {
     ";
 
     return $forum_post_replies;
+
+  }
+
+  /**
+  * default_images
+  *
+  * @return array returns sql
+  */
+  public function default_images(){
+
+    /** Get Forum Posts Recent Data **/
+    $default_images = "
+      (SELECT
+        count(*) as count,
+        ui.update_timestamp AS RP_01,
+        ui.id AS RP_02,
+        ui.userImage AS RP_03,
+        ui.defaultImage AS RP_04,
+        ui.timestamp AS RP_05,
+        ui.userID AS RP_06,
+        fri.uid1 AS RP_07,
+        fri.uid2 AS RP_08,
+        fri.status1 AS RP_09,
+        fri.status2 AS RP_10,
+        'default_images' AS post_type
+      FROM ".PREFIX."users_images ui
+        LEFT JOIN ".PREFIX."friends fri
+          ON (ui.userID = fri.uid1 AND fri.uid2 = :userID)
+          OR (ui.userID = fri.uid2 AND fri.uid1 = :userID)
+        WHERE ( fri.status1 = '1' AND fri.status2 = '1'
+          AND NOT ui.userID = :userID )
+          AND ui.defaultImage = '1'
+        GROUP BY ui.id)
+    ";
+
+    return $default_images;
 
   }
 
