@@ -8,7 +8,7 @@
 */
 
 
-/** Include the Config.example.php file to get current settings **/
+/** Include the Example-Config.php file to get current settings **/
 if (file_exists(ROOTDIR.'app/Example-Config.php')) {
 	require ROOTDIR.'app/Example-Config.php';
 	new \App\Config();

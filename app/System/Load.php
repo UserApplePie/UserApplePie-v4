@@ -170,13 +170,13 @@ class Load {
         /* Load files needed to make the page work */
         (isset($templateHeader)) ? require_once $templateHeader : "";
         ($addsEnable) ? require_once $mainAddsTop : "";
-        if(isset($leftSidebar)){ echo "<div class='col-lg-4 col-md-4 col-sm-12'>"; }
+        if(isset($leftSidebar)){ echo "<div class='col-lg-3 col-md-4 col-sm-12'>"; }
         (isset($leftSidebar) && $addsEnable) ? require_once $sidebarAddsTop : "";
         (isset($leftSidebar)) ? require_once $leftSidebar : "";
         (isset($leftSidebar) && $addsEnable) ? require_once $sidebarAddsBottom : "";
         if(isset($leftSidebar)){ echo "</div>"; }
         require_once $viewFile;
-        if(isset($rightSidebar)){ echo "<div class='col-lg-4 col-md-4 col-sm-12'>"; }
+        if(isset($rightSidebar)){ echo "<div class='col-lg-3 col-md-4 col-sm-12'>"; }
         (isset($rightSidebar) && $addsEnable) ? require_once $sidebarAddsTop : "";
         (isset($rightSidebar)) ? require_once $rightSidebar : "";
         (isset($rightSidebar) && $addsEnable) ? require_once $sidebarAddsBottom : "";

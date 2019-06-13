@@ -437,4 +437,24 @@ class Members extends Models
       return count($data);
     }
 
+    /**
+    * getUserStatusUpdates
+    *
+    * Gets total count of images that belong to user
+    *
+    * @return int count
+    */
+    public function getUserStatusUpdates($userID){
+      $data = $this->db->select("
+          SELECT
+            *
+          FROM
+            ".PREFIX."status
+          WHERE
+            status_userID = :userID
+          ORDER BY timestamp DESC
+          ", array(':userID' => $userID));
+      return $data;
+    }
+
 }

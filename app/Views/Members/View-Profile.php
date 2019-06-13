@@ -7,7 +7,15 @@
 * @version 4.3.0
 */
 
-use Libs\Language;
+use Libs\Language,
+    Libs\Sweets,
+    Libs\Form,
+    Libs\BBCode,
+    Libs\TimeDiff,
+    Libs\CurrentUserData;
+
+    $recent_userName = CurrentUserData::getUserName($data['profile']->userID);
+    $recent_userImage = CurrentUserData::getUserImage($data['profile']->userID);
 ?>
 
     <div class="col-md-4 col-lg-4 col-md-12">
@@ -82,6 +90,63 @@ use Libs\Language;
                 </div>
             </div>
         </div>
+
+        <div class='card mb-3'>
+            <div class='card-header h4'>
+                <h3><?php echo $data['profile']->username; ?>'s Friends</h3>
+            </div>
+            <ul class="list-group list-group-flush">
+              <?php
+                if(!empty($friends)){
+                  /** Get User's Friends **/
+                  foreach ($friends as $friend) {
+                    /** Get User's Friends Data **/
+                    $friend_userName = CurrentUserData::getUserName($friend->userID);
+                    $friend_userImage = CurrentUserData::getUserImage($friend->userID);
+                    echo "<li class='list-group-item'>";
+                      echo "<a href='".DIR."Profile/{$friend_userName}'>";
+                        echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$friend_userImage." class='rounded' style='height: 25px'>";
+                      echo "</a>&nbsp;";
+                      echo "<a href='".DIR."Profile/{$friend_userName}'>";
+                        echo "$friend_userName";
+                      echo "</a>";
+                    echo "</li>";
+                  }
+                }else{
+                  echo "<li class='list-group-item'>User does not have any friends. :(</li>";
+                }
+              ?>
+            </ul>
+        </div>
+
+        <div class='card mb-3'>
+            <div class='card-header h4'>
+                <h3>Mutual Friends</h3>
+            </div>
+            <ul class="list-group list-group-flush">
+              <?php
+                if(!empty($mutual_friends)){
+                  /** Get User's Friends **/
+                  foreach ($mutual_friends as $friend) {
+                    /** Get User's Friends Data **/
+                    $friend_userName = CurrentUserData::getUserName($friend);
+                    $friend_userImage = CurrentUserData::getUserImage($friend);
+                    echo "<li class='list-group-item'>";
+                      echo "<a href='".DIR."Profile/{$friend_userName}'>";
+                        echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$friend_userImage." class='rounded' style='height: 25px'>";
+                      echo "</a>&nbsp;";
+                      echo "<a href='".DIR."Profile/{$friend_userName}'>";
+                        echo "$friend_userName";
+                      echo "</a>";
+                    echo "</li>";
+                  }
+                }else{
+                  echo "<li class='list-group-item'>You don't have any mutual friends. :(</li>";
+                }
+              ?>
+            </ul>
+        </div>
+
     </div>
 
     <div class="col-md-8 col-lg-8">
@@ -141,5 +206,58 @@ use Libs\Language;
           }
         ?>
     	</div>
+
+      <div class="card mb-3">
+        <div class="card-header h4">
+            <?php echo $data['profile']->username; ?>'s <?php echo Language::show('status_updates', 'Members'); ?>
+        </div>
+        <div class="card-body">
+          <?php
+              /** Check to see if user has status updates **/
+              if(!empty($data['status_updates'])){
+                foreach($data['status_updates'] as $recent){
+                  /** Display the data for current recent **/
+                  $status_content = BBCode::getHtml($recent->status_content);
+
+                  if(isset($recent_limit)){}else{$recent_limit = "0";}
+                  echo "<div class='card border-secondary mb-3'>";
+                    echo "<div class='card-header'>";
+                      echo "<a href='".DIR."Profile/{$recent_userName}'>";
+                        echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$recent_userImage." class='rounded' style='height: 25px'>";
+                      echo "</a>";
+                      echo " <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> is feeling $recent->status_feeling..";
+                    echo "</div>";
+                    echo "<div class='card-body forum' style='overflow: hidden; height: auto;'>";
+                      echo $status_content;
+                    echo "</div>";
+                    echo "<div class='card-footer'>";
+                      echo TimeDiff::dateDiff("now", "$recent->timestamp", 1) . " ago ";
+                      echo "<div class='float-right'>";
+                        // Hide button if they are currently editing this reply
+                        if($data['action'] != "status_edit" && $data['current_userID'] == $recent->status_userID){
+                          echo Form::open(array('method' => 'post', 'action' => '../', 'style' => 'display:inline'));
+                          // Topic Reply Edit True
+                          echo "<input type='hidden' name='action' value='status_edit' />";
+                          // Topic Reply ID for editing
+                          echo "<input type='hidden' name='edit_status_id' value='".$recent->id."' />";
+                          // CSRF Token
+                          echo "<input type='hidden' name='token_status' value='".$data['csrfToken']."' />";
+                          // Display Submit Button
+                          echo "<button class='btn btn-sm btn-info' name='submit' type='submit'>Edit Status</button>";
+                          echo Form::close();
+                        }
+                        /** Start Sweet **/
+                        echo Sweets::getSweets($recent->id, 'Status', $recent->status_userID);
+                      echo "</div>";
+                    echo "</div>";
+                  echo "</div>";
+                }
+                echo "<hr>";
+              }else{
+                echo "User has not yet shared a status update.";
+              }
+          ?>
+        </div>
+      </div>
 
     </div>

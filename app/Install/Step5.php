@@ -9,7 +9,7 @@
 
 /** Install Success **/
 
-/** Last thing we need to do is Copy Config.example.php to Config.php **/
+/** Last thing we need to do is Copy Example-Config.php to Config.php **/
 if (file_exists(ROOTDIR.'app/Example-Config.php') && is_writable(ROOTDIR.'app')) {
 	if(copy(ROOTDIR.'app/Example-Config.php', ROOTDIR.'app/Config.php')){
 		$copy_file = true;
@@ -21,7 +21,7 @@ if (file_exists(ROOTDIR.'app/Example-Config.php') && is_writable(ROOTDIR.'app'))
 }
 
 if(!$copy_file){
-	echo "<div class='alert alert-danger'>There was an error creating Config.php.  You must manually rename Config.example.php to Config.php in the /app/ folder.</div>";
+	echo "<div class='alert alert-danger'>There was an error creating Config.php.  You must manually rename Example-Config.php to Config.php in the /app/ folder.</div>";
 }else{
 ?>
 

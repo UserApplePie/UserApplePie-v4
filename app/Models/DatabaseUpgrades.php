@@ -99,6 +99,16 @@ class DatabaseUpgrades extends Models {
     $sql_data[] = "
       ALTER TABLE uap4_users DROP userImage;
     ";
+    $sql_data[] = "
+      CREATE TABLE IF NOT EXISTS `uap4_status` (
+        `id` int(11) NOT NULL AUTO_INCREMENT,
+        `status_userID` int(11) DEFAULT NULL,
+        `status_feeling` varchar(255) DEFAULT NULL,
+        `status_content` text,
+        `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (`id`)
+      ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+    ";
 
     foreach ($sql_data as $query) {
       if(!$this->db->upgrade($query)){ $error[] = true; }

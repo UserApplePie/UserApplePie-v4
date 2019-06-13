@@ -101,13 +101,13 @@ function process()
 <?php
 }else{
 ?>
-<div class="col-lg-8 col-md-8 col-sm-8">
+<div class="col-lg-9 col-md-8 col-sm-8">
 	<div class="card mb-3">
 		<div class="card-header h4">
 			<h1><?=$title?></h1>
 		</div>
         <div class='card-body'>
-            Sorry, You don't have any friends yet. :(
+            Sorry, No results for your search. :(
         </div>
     </div>
 </div>

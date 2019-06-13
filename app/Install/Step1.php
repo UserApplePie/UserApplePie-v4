@@ -156,7 +156,7 @@ if(folder_writable('assets/images/profile-pics/')){
 			<table class="table">
 				<th> Folder </th><th> Status </th>
 				<tr><td> ../app/ </td><td> <?=$write_app?> </td></tr>
-				<tr><td> ../app/Config.example.php </td><td> <?=$write_config?> </td></tr>
+				<tr><td> ../app/Example-Config.php </td><td> <?=$write_config?> </td></tr>
 				<tr><td> ../assets/images/ </td><td> <?=$write_images?> </td></tr>
 				<tr><td> ../assets/images/profile-images/ </td><td> <?=$write_profile_images?> </td></tr>
 			</table>

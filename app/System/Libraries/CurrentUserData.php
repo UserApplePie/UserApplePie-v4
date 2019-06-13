@@ -259,9 +259,7 @@ class CurrentUserData
   }
 
     /**
-    *
-    *
-    *
+    * Get Friend requests count
     */
     public static function getFriendRequests($where_id){
         if(ctype_digit($where_id)){
@@ -292,9 +290,7 @@ class CurrentUserData
     }
 
     /**
-    *
-    *
-    *
+    * Get Friend status
     */
     public static function getFriendStatus($userID,$friend_id){
         self::$db = Database::get();
@@ -351,9 +347,7 @@ class CurrentUserData
     }
 
     /**
-    *
-    *
-    *
+    * Get total number of friends for user
     */
     public static function getFriendsCount($userID){
         self::$db = Database::get();
@@ -375,6 +369,25 @@ class CurrentUserData
             GROUP BY
                 uid1, uid2
         ", array(':userID' => $userID)));
+    }
+
+    /**
+    * Get profile images that are within 10 min of given image
+    */
+    public static function getProfileImages10min($userID, $timestamp){
+      self::$db = Database::get();
+      $user_groups = self::$db->select("
+          SELECT
+            *
+          FROM
+            ".PREFIX."users_images
+          WHERE
+            userID = :userID
+          AND
+            (timestamp >= :timestamp - INTERVAL 5 MINUTE AND timestamp <= :timestamp + INTERVAL 5 MINUTE)
+          ",
+        array(':userID' => $userID, ':timestamp' => $timestamp));
+      return $user_groups;
     }
 
 }

@@ -6,6 +6,10 @@ https://www.userapplepie.com
 ----------------------------------------------------------------------------------------
 UAP v4.2.1 to v4.3.0
 ----------------------------------------------------------------------------------------
+Styles
+ - Updated styles on many pages to look better on computer screens.
+Install
+ - Updated Example-Config.php title in install files (visual)
 System Fixes
  - Setup a auto add member to group if not a member of any
 Friends
@@ -19,11 +23,15 @@ Added Recent Friends Activity
  - If Forum and Friends Plugins are installed show recents when logged in
  - Added Friends sidebar with friends list and suggested friends
  - Added Fourm sidebar
+ - Added Status Update feature.  Users can post and edit with BBCode
+ - Added Profile images to recents.  Grouped multi uploads if within 10 min.
 Updated User Profile
  - Added input group styling
  - Added image max size option in Admin Settings
  - Added Forum signature to view profile
  - Added ability to upload multiple photos to user profiles
+ - Added ability for user to set default and delete photos
+ - Added Mutual Friends list
 Updated Forum Plugin
  - Added Auto Save Draft feature to new topics with auto recover.
  - Added Image Max Size option to Admin Settings

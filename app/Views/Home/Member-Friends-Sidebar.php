@@ -94,8 +94,7 @@
               /** Get User's Friends **/
               foreach ($suggested_friends as $key => $friend) {
                 /** Get User's Friends Data **/
-                //var_dump($key, $friend);
-                $num_mutual_friends = count($friend['mutual_friends']);
+                $num_mutual_friends = $friend['mutual_friends'];
                 $friend_userName = CurrentUserData::getUserName($key);
                 $friend_userImage = CurrentUserData::getUserImage($key);
                 echo "<li class='list-group-item'>";

@@ -16,7 +16,12 @@ use App\System\Controller,
     Libs\Auth\Auth as AuthHelper,
     App\Models\Users as Users,
     App\Models\Members as MembersModel,
-    App\Models\Recent as Recent;
+    App\Models\Recent as Recent,
+    Libs\Csrf,
+    Libs\SuccessMessages,
+    Libs\ErrorMessages,
+    Libs\Url,
+    Libs\Request;
 
 class Home extends Controller {
 
@@ -38,6 +43,7 @@ class Home extends Controller {
           $u_id = $this->auth->user_info();
           $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
           $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+          $data['current_userID'] = $u_id;
         }
         /** Get Data For Member Totals Stats Sidebar **/
         $onlineUsers = new MembersModel();
@@ -54,6 +60,43 @@ class Home extends Controller {
           $data['recent'] = $Recent->getRecent($u_id, $limit);
           $data['recent_total'] = $Recent->getRecentTotal($u_id);
           $data['recent_limit'] = $limit;
+          /** Check for user status Update **/
+          $data['csrfToken'] = Csrf::makeToken('status');
+          if (isset($_POST['submit'])) {
+            if(Csrf::isTokenValid('status')) {
+              $status_feeling = htmlspecialchars(Request::post('status_feeling'));
+              $status_content = htmlspecialchars(Request::post('status_content'));
+              $edit_status_id = strip_tags(Request::post('edit_status_id'));
+              $data['action'] = strip_tags(Request::post('action'));
+              if($data['action'] == 'status_update'){
+                if($Recent->addStatus($u_id, $status_feeling, $status_content)){
+                  /** Success Message Display **/
+                  SuccessMessages::push($this->language->get('status_update_success'), '');
+                }else{
+                  /** Error Message Display **/
+                  ErrorMessages::push($this->language->get('status_update_error'), '');
+                }
+              }else if($data['action'] == 'status_edit' && isset($edit_status_id)){
+                /** Get data for status user is editing **/
+                $get_status = $Recent->getStatus($u_id, $edit_status_id);
+                $data['status_feeling'] = $get_status[0]->status_feeling;
+                $data['status_content'] = $get_status[0]->status_content;
+                $data['edit_status_id'] = $get_status[0]->id;
+              }else if($data['action'] == 'status_edit_update' && isset($edit_status_id)){
+                /** Update status user is editing **/
+                if($Recent->updateStatus($u_id, $edit_status_id, $status_feeling, $status_content)){
+                  /** Success Message Display **/
+                  SuccessMessages::push($this->language->get('status_update_success'), '');
+                }else{
+                  /** Error Message Display **/
+                  ErrorMessages::push($this->language->get('status_update_error'), '');
+                }
+              }
+            }else{
+              /** Error Message Display **/
+              ErrorMessages::push($this->language->get('status_update_error'), '');
+            }
+          }
           /** Setup Friends Search Feature **/
           $data['js'] = "
             <script>
@@ -65,6 +108,11 @@ class Home extends Controller {
               }
             </script>
           ";
+
+          /* Add Java Stuffs */
+          $data['js'] = "<script src='".Url::templatePath()."js/bbcode.js'></script>";
+          //$data['js'] .= "<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js'></script>";
+          //$data['js'] .= "<script src='".Url::templatePath()."js/forum_autosave_topic.js'></script>";
 
           Load::View("Home::Recent", $data, "Home::Member-Forum-Sidebar::Right", DEFAULT_TEMPLATE, true, "Home::Member-Friends-Sidebar::Left");
         }else{
