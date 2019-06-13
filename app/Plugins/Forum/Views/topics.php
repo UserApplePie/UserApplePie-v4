@@ -21,7 +21,7 @@ use App\System\Language,
   Libs\ForumStats;
 
 ?>
-<div class='col-lg-8 col-md-8'>
+<div class='col-lg-9 col-md-8'>
 
 	<div class='card mb-3'>
 		<div class='card-header h4'>

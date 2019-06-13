@@ -572,3 +572,18 @@ INSERT INTO `uap4_links` (`id`, `title`, `url`, `alt_text`, `location`, `link_or
 (8, 'Footer', 'Home', 'Footer', 'footer', 1, 0, 0, 0, NULL, '2018-07-15 22:12:13'),
 (10, 'New', 'New', 'New', 'new', 1, 0, 0, 0, '', '2018-07-21 12:28:44'),
 (11, 'Contact Us', 'Contact', '', 'header_main', 2, 2, NULL, 2, '', '2018-08-17 00:25:19');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `uap4_status`
+--
+
+CREATE TABLE IF NOT EXISTS `uap4_status` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `status_userID` int(11) DEFAULT NULL,
+  `status_feeling` varchar(255) DEFAULT NULL,
+  `status_content` text,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

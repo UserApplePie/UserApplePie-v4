@@ -20,7 +20,7 @@ if($data['msg_error'] == 'true'){$panelclass = "card-danger";}else{$panelclass =
 
 ?>
 
-<div class='col-lg-8 col-md-8'>
+<div class='col-lg-9 col-md-8'>
 
 
 	<div class='card <?php echo $panelclass; ?>'>

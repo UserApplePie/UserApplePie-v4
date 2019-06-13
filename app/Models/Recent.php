@@ -60,37 +60,73 @@ class Recent extends Models {
   *
   * @param int current userID
   *
-  * @return array returns all friends ids
+  * @return array returns all suggested friends ids
   */
   public function getSuggestedFriends($userID){
       /** Get list of User's friends and return their UserIDs **/
       $friends = SELF::getFriendsIDs($userID);
       $suggestedFriends = [];
 
+      /** Clean up Friends array to only userIDs **/
+      foreach ($friends as $friend) {
+        $user_friends[] = $friend->userID;
+      }
+
       foreach ($friends as $friendId) {
-        # Friends friends list.
+        /** Friends friends list. **/
         $ff_list = SELF::getFriendsIDs($friendId->userID);
 
         foreach ($ff_list as $ffriendId) {
-          # If the friendsFriend(ff) is not us, and not our friend, he can be suggested
-          if ($ffriendId->userID != $userID && !in_array($ffriendId->userID, $friends)) {
-
-            # The key is the suggested friend
+          /** If the friendsFriend(ff) is not us, and not our friend, he can be suggested **/
+          if ($ffriendId->userID != $userID && !in_array($ffriendId->userID, $user_friends)) {
+            /** The key is the suggested friend **/
             $suggestedFriends[$ffriendId->userID] = ['mutual_friends' => []];
             $ff_friends = SELF::getFriendsIDs($ffriendId->userID);
 
             foreach ($ff_friends as $ff_friendId) {
-              if (in_array($ff_friendId, $friends)) {
-                # If he is a friend of the current user, he is a mutual friend
-                $suggestedFriends[$ffriendId->userID]['mutual_friends'][] = $ff_friendId->userID;
+              /** If the friendsFriend(ff) is not us, and not our friend, he can be suggested **/
+              if($ff_friendId->userID != $userID){
+                /** If he is a friend of the current user, he is a mutual friend **/
+                $suggestedFriends[$ffriendId->userID]['mutual_friends'] = count(SELF::getMutualFriendsIDs($userID, $ffriendId->userID));
               }
             }
-
           }
         }
 
       }
       return $suggestedFriends;
+  }
+
+  /**
+  * getMutualFriendsIDs
+  *
+  * get list of users not friends with current user, but friends of friends.
+  *
+  * @param int current userID
+  *
+  * @return array returns all suggested friends ids
+  */
+  public function getMutualFriendsIDs($userID, $cur_userID){
+      /** Get list of User's friends and return their UserIDs **/
+      $friends = SELF::getFriendsIDs($userID);
+      $user_friends = [];
+      /** Clean up Friends array to only userIDs **/
+      foreach ($friends as $friend) {
+        $user_friends[] = $friend->userID;
+      }
+
+      $mutual_friends = [];
+
+      $ff_list = SELF::getFriendsIDs($cur_userID);
+
+      foreach ($ff_list as $ffriendId) {
+        /** If the friendsFriend(ff) is not us, and our friend, he can be mutual **/
+        if ($ffriendId->userID != $userID && $ffriendId->userID != $cur_userID && in_array($ffriendId->userID, $user_friends)) {
+          $mutual_friends[] = $ffriendId->userID;
+        }
+      }
+
+      return $mutual_friends;
   }
 
   /**
@@ -108,6 +144,9 @@ class Recent extends Models {
       $forum_posts = SELF::forum_posts();
       $forum_post_replies = SELF::forum_post_replies();
       $default_images = SELF::default_images();
+      $profile_images = SELF::profile_images();
+      $status = SELF::status();
+      $status_cur_user = SELF::status_cur_user();
 
       /** Get Recents from databasse **/
       $data = $this->db->select("
@@ -118,6 +157,12 @@ class Recent extends Models {
         $forum_post_replies
         UNION ALL
         $default_images
+        UNION ALL
+        $profile_images
+        UNION ALL
+        $status
+        UNION ALL
+        $status_cur_user
         ORDER BY RP_01 DESC
         LIMIT $limit
       ",
@@ -141,6 +186,9 @@ class Recent extends Models {
       $forum_posts = SELF::forum_posts();
       $forum_post_replies = SELF::forum_post_replies();
       $default_images = SELF::default_images();
+      $profile_images = SELF::profile_images();
+      $status = SELF::status();
+      $status_cur_user = SELF::status_cur_user();
 
       /** Get Recents from databasse **/
       $data = $this->db->select("
@@ -152,6 +200,12 @@ class Recent extends Models {
           $forum_post_replies
           UNION ALL
           $default_images
+          UNION ALL
+          $profile_images
+          UNION ALL
+          $status
+          UNION ALL
+          $status_cur_user
         ) as num_rows
       ",
       array(':userID' => $userID));
@@ -189,6 +243,7 @@ class Recent extends Models {
           OR (swe.sweet_owner_userid = fri.uid2 AND fri.uid1 = :userID)
         WHERE ( fri.status1 = '1' AND fri.status2 = '1'
           AND NOT swe.sweet_owner_userid = :userID )
+          AND NOT swe.sweet_location = 'status'
         GROUP BY swe.sid)
     ";
 
@@ -305,6 +360,170 @@ class Recent extends Models {
 
     return $default_images;
 
+  }
+
+  /**
+  * profile_images
+  *
+  * @return array returns sql
+  */
+  public function profile_images(){
+
+    /** Get Forum Posts Recent Data **/
+    $profile_images = "
+      (SELECT
+        count(*) as count,
+        ui.timestamp AS RP_01,
+        ui.id AS RP_02,
+        ui.userImage AS RP_03,
+        ui.defaultImage AS RP_04,
+        ui.timestamp AS RP_05,
+        ui.userID AS RP_06,
+        fri.uid1 AS RP_07,
+        fri.uid2 AS RP_08,
+        fri.status1 AS RP_09,
+        fri.status2 AS RP_10,
+        'profile_images' AS post_type
+      FROM ".PREFIX."users_images ui
+        LEFT JOIN ".PREFIX."friends fri
+          ON (ui.userID = fri.uid1 AND fri.uid2 = :userID)
+          OR (ui.userID = fri.uid2 AND fri.uid1 = :userID)
+        WHERE ( fri.status1 = '1' AND fri.status2 = '1'
+          AND NOT ui.userID = :userID )
+        GROUP BY UNIX_TIMESTAMP(ui.timestamp) DIV 600)
+    ";
+
+    return $profile_images;
+
+  }
+
+  /**
+  * status
+  *
+  * @return array returns sql
+  */
+  public function status(){
+
+    /** Get Status Recent Data **/
+    $status = "
+      (SELECT
+        count(*) as count,
+        s.timestamp AS RP_01,
+        s.id AS RP_02,
+        s.status_feeling AS RP_03,
+        s.status_content AS RP_04,
+        s.timestamp AS RP_05,
+        s.status_userID AS RP_06,
+        fri.uid1 AS RP_07,
+        fri.uid2 AS RP_08,
+        fri.status1 AS RP_09,
+        fri.status2 AS RP_10,
+        'status' AS post_type
+      FROM ".PREFIX."status s
+        LEFT JOIN ".PREFIX."friends fri
+          ON (s.status_userID = fri.uid1 AND fri.uid2 = :userID)
+          OR (s.status_userID = fri.uid2 AND fri.uid1 = :userID)
+        WHERE ( fri.status1 = '1' AND fri.status2 = '1'
+          AND NOT s.status_userID = :userID )
+        GROUP BY s.id)
+    ";
+
+    return $status;
+
+  }
+
+  /**
+  * status_cur_user
+  *
+  * @return array returns sql
+  */
+  public function status_cur_user(){
+
+    /** Get Status Recent Data **/
+    $status_cur_user = "
+      (SELECT
+        count(*) as count,
+        s.timestamp AS RP_01,
+        s.id AS RP_02,
+        s.status_feeling AS RP_03,
+        s.status_content AS RP_04,
+        s.timestamp AS RP_05,
+        s.status_userID AS RP_06,
+        fri.uid1 AS RP_07,
+        fri.uid2 AS RP_08,
+        fri.status1 AS RP_09,
+        fri.status2 AS RP_10,
+        'status' AS post_type
+      FROM ".PREFIX."status s
+        LEFT JOIN ".PREFIX."friends fri
+          ON (s.status_userID = fri.uid1 AND fri.uid2 = :userID)
+          OR (s.status_userID = fri.uid2 AND fri.uid1 = :userID)
+        WHERE ( s.status_userID = :userID )
+        GROUP BY s.id)
+    ";
+
+    return $status_cur_user;
+
+  }
+
+  /**
+  * addStatus
+  *
+  * add status update for current user
+  *
+  * @param int current userID
+  * @param string status_feeling
+  * @param string status_content
+  *
+  * @return boolean true/false
+  */
+  public function addStatus($userID = '', $status_feeling = '', $status_content = ''){
+    return $this->db->insert(PREFIX.'status', array('status_userID' => $userID, 'status_feeling' => $status_feeling, 'status_content' => $status_content));
+  }
+
+  /**
+  * getStatus
+  *
+  * get status data based on user and status id.
+  *
+  * @param int current userID
+  * @param int current id
+  *
+  * @return array returns status data
+  */
+  public function getStatus($userID, $id){
+      /** Get Status Data **/
+      $data = $this->db->select("
+        SELECT
+          s.timestamp,
+          s.id,
+          s.status_feeling,
+          s.status_content,
+          s.timestamp,
+          s.status_userID
+        FROM ".PREFIX."status s
+          WHERE s.status_userID = :userID
+          AND s.id = :id
+          GROUP BY s.id
+      ",
+      array(':userID' => $userID, ':id' => $id));
+
+      return $data;
+  }
+
+  /**
+  * updateStatus
+  *
+  * update status update for current user
+  *
+  * @param int current userID
+  * @param string status_feeling
+  * @param string status_content
+  *
+  * @return boolean true/false
+  */
+  public function updateStatus($userID = '', $id = '', $status_feeling = '', $status_content = ''){
+    return $this->db->update(PREFIX.'status', array('status_feeling' => $status_feeling, 'status_content' => $status_content), array('id' => $id, 'status_userID' => $userID));
   }
 
 }

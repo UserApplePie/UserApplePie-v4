@@ -17,6 +17,7 @@ use App\System\Controller,
     Libs\Auth\Auth as AuthHelper,
     App\Models\Users as Users,
     App\Models\Members as MembersModel,
+    App\Models\Recent as Recent,
     Libs\ErrorMessages,
     Libs\SuccessMessages,
     Libs\SimpleImage,
@@ -156,7 +157,12 @@ class Members extends Controller
      */
     public function viewProfile($user = '', $current_page = '1')
     {
+        /** Load the Members Model **/
         $onlineUsers = new MembersModel();
+
+        /** Load the Recent Model **/
+        $Recent = new Recent();
+
         $profile = $onlineUsers->getUserProfile($user);
         $main_image = $onlineUsers->getUserImageMain($profile[0]->userID);
 
@@ -180,7 +186,20 @@ class Members extends Controller
               $u_id = $this->auth->user_info();
               $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
               $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
+              $data['current_userID'] = $u_id;
             }
+
+            /** Set the CSRF Token **/
+            $data['csrfToken'] = Csrf::makeToken('status');
+
+            /** Get 15 of the users friends **/
+            $data['friends'] = $Recent->getFriendsIDs($profile[0]->userID, '15');
+
+            /** Get 15 of the users friends **/
+            $data['mutual_friends'] = $Recent->getMutualFriendsIDs($profile[0]->userID, $u_id, '15');
+
+            /** Get Users Status Updates **/
+            $data['status_updates'] = $onlineUsers->getUserStatusUpdates($profile[0]->userID);
 
             /** Get Users Images **/
             $data['user_images'] = $onlineUsers->getUserImages($profile[0]->userID, $this->pages->getLimit($current_page, USERS_PAGEINATOR_LIMIT));

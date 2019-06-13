@@ -17,7 +17,7 @@ use Libs\ErrorMessages,
 	Libs\SuccessMessages,
 	Libs\Url;
 
-/** Function to update Config.example.php file **/
+/** Function to update Example-Config.php file **/
 function update_config($default, $new){
 	$fname = ROOTDIR."app/Example-Config.php";
 	$fhandle = fopen($fname,"r");
