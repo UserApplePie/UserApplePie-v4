@@ -110,7 +110,7 @@ class Home extends Controller {
           ";
 
           /* Add Java Stuffs */
-          $data['js'] = "<script src='".Url::templatePath()."js/bbcode.js'></script>";
+          $data['js'] = "<script src='".Url::templatePath()."js/bbcode_status.js'></script>";
           //$data['js'] .= "<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js'></script>";
           //$data['js'] .= "<script src='".Url::templatePath()."js/forum_autosave_topic.js'></script>";
 

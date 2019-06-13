@@ -81,12 +81,13 @@ class DatabaseUpgrades extends Models {
       INSERT INTO `".PREFIX."version` (`version`) VALUES ('4.3.0');
     ";
     $sql_data[] = "
-      CREATE TABLE `uap4_users_images` (
+      CREATE TABLE IF NOT EXISTS `uap4_users_images` (
         `id` int(11) NOT NULL AUTO_INCREMENT,
         `userID` int(11) DEFAULT NULL,
         `userImage` varchar(255) DEFAULT NULL,
-        `defaultImage` int(11) NOT NULL DEFAULT '1',
+        `defaultImage` int(11) NOT NULL DEFAULT '0',
         `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        `update_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (`id`)
       ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
     ";

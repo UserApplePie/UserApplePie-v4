@@ -565,13 +565,30 @@ CREATE TABLE IF NOT EXISTS `uap4_links` (
 --
 
 INSERT INTO `uap4_links` (`id`, `title`, `url`, `alt_text`, `location`, `link_order`, `link_order_drop_down`, `drop_down`, `drop_down_for`, `require_plugin`, `timestamp`) VALUES
-(1, 'Home', 'Home', 'Home Page', 'header_main', 1, 0, 0, 0, NULL, '2018-07-08 10:47:22'),
-(2, 'About', 'About', 'About Us', 'header_main', 2, 0, 1, 0, NULL, '2018-07-08 10:48:40'),
-(3, 'Contact', 'Contact', 'Contact Us', 'header_main', 3, 0, 0, 0, '', '2018-07-08 10:49:16'),
-(6, 'About', 'About', 'About', 'header_main', 2, 1, 0, 2, NULL, '2018-07-08 12:28:20'),
-(8, 'Footer', 'Home', 'Footer', 'footer', 1, 0, 0, 0, NULL, '2018-07-15 22:12:13'),
-(10, 'New', 'New', 'New', 'new', 1, 0, 0, 0, '', '2018-07-21 12:28:44'),
-(11, 'Contact Us', 'Contact', '', 'header_main', 2, 2, NULL, 2, '', '2018-08-17 00:25:19');
+(1, 'Home', 'Home', 'Home Page', 'header_main', 1, 0, 0, 0, NULL, NOW()),
+(2, 'About', 'About', 'About Us', 'header_main', 2, 0, 1, 0, NULL, NOW()),
+(3, 'Contact', 'Contact', 'Contact Us', 'header_main', 3, 0, 0, 0, '', NOW()),
+(6, 'About', 'About', 'About', 'header_main', 2, 1, 0, 2, NULL, NOW()),
+(8, 'Footer', 'Home', 'Footer', 'footer', 1, 0, 0, 0, NULL, NOW()),
+(10, 'New', 'New', 'New', 'new', 1, 0, 0, 0, '', NOW()),
+(11, 'Contact Us', 'Contact', '', 'header_main', 2, 2, NULL, 2, '', NOW()),
+(12, 'Forum', 'Forum', 'Forum', 'header_main', 4, 0, 0, 0, 'Forum', NOW());
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `uap4_users_images`
+--
+
+CREATE TABLE IF NOT EXISTS `uap4_users_images` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) DEFAULT NULL,
+  `userImage` varchar(255) DEFAULT NULL,
+  `defaultImage` int(11) NOT NULL DEFAULT '0',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
