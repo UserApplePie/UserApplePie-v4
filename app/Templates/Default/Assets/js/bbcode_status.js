@@ -1,5 +1,5 @@
 function wrapText(elementID, openTag, closeTag) {
-    var textArea = document.getElementById('forum_content');
+    var textArea = document.getElementById('status_content');
 
     if (typeof(textArea.selectionStart) != "undefined") {
         var begin = textArea.value.substr(0, textArea.selectionStart);
