@@ -99,13 +99,13 @@ use Libs\Language,
         </div>
         <div class="card-body">
         <?php
-          $vm_id_a = '1';
           /** Get Recent Data **/
           if(!empty($data['recent'])){
             foreach ($data['recent'] as $recent) {
               /** Setup Anchor Count **/
               if(isset($vm_id_a)){ $vm_id_a++; }else{ $vm_id_a = '1'; };
               echo "<a class='anchor' name='viewmore$vm_id_a'></a>";
+              $sweet_url = "Home/".$recent_limit."#viewmore$vm_id_a";
               /** Get Posted User Data **/
               $recent_userName = CurrentUserData::getUserName($recent->RP_06);
               $recent_userImage = CurrentUserData::getUserImage($recent->RP_06);
@@ -267,7 +267,7 @@ use Libs\Language,
                           <div id='imageModal".$photo->id."' class='modal fade' tabindex='-1' role='dialog'>
                             <div class='modal-dialog modal-dialog-centered modal-lg'>
                               <div class='modal-content'>
-                                <img src='".SITE_URL.IMG_DIR_PROFILE."$photo->userImage' class='img-responsive'>
+                                <img src='".SITE_URL.IMG_DIR_PROFILE."$photo->userImage' class='img-responsive' style='width: 100%'>
                               </div>
                             </div>
                           </div>
@@ -284,7 +284,7 @@ use Libs\Language,
                         <div id='imageModal".$recent->RP_02."' class='modal fade' tabindex='-1' role='dialog'>
                           <div class='modal-dialog modal-dialog-centered modal-lg'>
                             <div class='modal-content'>
-                              <img src='".SITE_URL.IMG_DIR_PROFILE."$recent->RP_03' class='img-responsive'>
+                              <img src='".SITE_URL.IMG_DIR_PROFILE."$recent->RP_03' class='img-responsive' style='width: 100%'>
                             </div>
                           </div>
                         </div>
@@ -303,7 +303,6 @@ use Libs\Language,
               else if($recent->post_type == "status"){
                 /** Display the data for current recent **/
                 $status_content = BBCode::getHtml($recent->RP_04);
-                $sweet_url = "Home/".$recent_limit."#viewmore$vm_id_a";
                 if(isset($recent_limit)){}else{$recent_limit = "0";}
                 echo "<div class='card border-secondary mb-3'>";
                   echo "<div class='card-header'>";
@@ -338,7 +337,6 @@ use Libs\Language,
                   echo "</div>";
                 echo "</div>";
               }
-
               echo "<hr>";
             }
             /** Check to see if there are most recents than currently shown **/

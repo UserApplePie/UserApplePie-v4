@@ -99,6 +99,9 @@ use Libs\ErrorMessages,
 						<li>
 							<a href="<?php echo DIR; ?>AdminPanel-Forum-Blocked-Content">Blocked Content</a>
 						</li>
+						<li>
+							<a href="<?php echo DIR; ?>AdminPanel-Forum-Unpublished-Content">Unpublished Content</a>
+						</li>
           </ul>
         </li>
 			<?php } ?>

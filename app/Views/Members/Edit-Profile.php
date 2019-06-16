@@ -46,7 +46,7 @@ use Libs\Language, Libs\Form;
 									<div class="input-group-prepend">
 										<div class="input-group-text"><?=Language::show('members_profile_gender', 'Members'); ?> </div>
 									</div>
-									<select class='form-control' id='gender' name='gender'>
+									<select class='custom-select' id='gender' name='gender'>
 											<option value='male' <?php if($data['profile']->gender == "Male") echo "selected";?> >Male</option>
 											<option value='female' <?php if($data['profile']->gender == "Female") echo "selected";?> >Female</option>
 									</select>

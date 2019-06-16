@@ -114,7 +114,7 @@ class Forum extends Models {
               LEFT JOIN ".PREFIX."forum_post_replies fpr
               ON fp.forum_post_id = fpr.fpr_post_id
               WHERE fp.allow = 'TRUE'
-              AND (fp.forum_publish = '1' OR fpr.forum_publish = '1')
+              AND ((fp.forum_publish = '1' AND fpr.forum_publish = '1') OR fp.forum_publish = '1' OR fpr.forum_publish = '1')
           ORDER BY tstamp DESC
           LIMIT $limit
       ");
@@ -217,7 +217,7 @@ class Forum extends Models {
                     ON fp.forum_post_id = fpr.fpr_post_id
                     WHERE forum_id = :where_id
                     AND fp.allow = 'TRUE'
-                    AND fp.forum_publish = '1'
+                    AND ((fp.forum_publish = '1' AND fpr.forum_publish = '1') OR fp.forum_publish = '1' OR fpr.forum_publish = '1')
             ) sub2
                 ORDER BY tstamp DESC
         ) sub1
@@ -487,6 +487,8 @@ class Forum extends Models {
           ".PREFIX."forum_post_replies
         WHERE
           fpr_post_id = :where_id
+        AND
+          forum_publish = '1'
         ORDER BY
           id
         ASC
@@ -513,6 +515,8 @@ class Forum extends Models {
           ".PREFIX."forum_post_replies
         WHERE
           fpr_post_id = :where_id
+        AND
+          forum_publish = '1'
         ORDER BY
           id
         ASC
@@ -594,9 +598,7 @@ class Forum extends Models {
         AND forumTopicReplyID IS NULL
       ",
       array(':topic_id' => $topic_id));
-      if(isset($data)){
-          return $data[0]->imageLocation.$data[0]->imageName;
-      }
+      return $data;
     }
 
     /**
@@ -624,11 +626,11 @@ class Forum extends Models {
     /**
      * topic_is_published
      *
-     * get Topic Content last edit date for age
+     * check if Forum topic is published
      *
      * @param int $where_id = forum_post_id
      *
-     * @return string returns forum topic data (forum_edit_date)
+     * @return string returns forum topic data (forum_publish)
      */
     public function topic_is_published($where_id){
       $data = $this->db->select("
@@ -657,7 +659,7 @@ class Forum extends Models {
       $is_published = SELF::topic_is_published($id);
       if($is_published == "0"){
         // Update messages table
-        $query = $this->db->update(PREFIX.'forum_posts', array('forum_title' => $forum_title, 'forum_content' => $forum_content, 'forum_publish' => $forum_publish), array('forum_post_id' => $id));
+        $query = $this->db->update(PREFIX.'forum_posts', array('forum_title' => $forum_title, 'forum_content' => $forum_content, 'forum_publish' => $forum_publish, 'forum_timestamp' => date('Y-m-d H:i:s')), array('forum_post_id' => $id));
         // Check to make sure Topic was Created
         if($query > 0){
           return true;
@@ -699,21 +701,27 @@ class Forum extends Models {
      * @param int $fpr_id Current Topic ID
      * @param string $forum_content New Reply's Content
      *
-     * @return booleen true/false
+     * @return booleen/int ID or false
      */
-    public function sendTopicReply($fpr_user_id, $fpr_post_id, $fpr_id, $fpr_content, $subscribe, $forum_publish = "0"){
+    public function sendTopicReply($fpr_user_id, $fpr_post_id, $fpr_id, $fpr_content, $subscribe, $forum_publish = "1", $afpr_post_id = ""){
       // Check for email subscription status
       if($subscribe == true){$subscribe = "true";}else{$subscribe = "false";}
-      // Update messages table
-      $query = $this->db->insert(PREFIX.'forum_post_replies', array('fpr_post_id' => $fpr_post_id, 'fpr_user_id' => $fpr_user_id, 'fpr_id' => $fpr_id, 'fpr_content' => $fpr_content, 'subscribe_email' => $subscribe, 'forum_publish' => $forum_publish));
-      $last_insert_id = $this->db->lastInsertId('id');
+      if(!empty($afpr_post_id)){
+        // Update Reply
+        $query = $this->db->update(PREFIX.'forum_post_replies', array('fpr_content' => $fpr_content, 'fpr_timestamp' => date('Y-m-d H:i:s'), 'forum_publish' => '1'), array('id' => $afpr_post_id));
+        $last_insert_id = true;
+      }else{
+        // Insert Reply
+        $query = $this->db->insert(PREFIX.'forum_post_replies', array('fpr_post_id' => $fpr_post_id, 'fpr_user_id' => $fpr_user_id, 'fpr_id' => $fpr_id, 'fpr_content' => $fpr_content, 'subscribe_email' => $subscribe, 'forum_publish' => $forum_publish, 'fpr_timestamp' => date("Y-m-d H:i:s")));
+        $last_insert_id = $this->db->lastInsertId('id');
+      }
       $query_track = $this->db->insert(PREFIX.'forum_post_tracker', array('forum_post_id' => $fpr_post_id, 'forum_reply_id' => $last_insert_id));
       $count = $query + $query_track;
       // Check to make sure Topic was Created
       if($count > 0){
         // Run post count group checker
         self::newMemberPostsChecker($fpr_user_id);
-        return true;
+        return $last_insert_id;
       }else{
         return false;
       }
@@ -750,15 +758,86 @@ class Forum extends Models {
      *
      * @return booleen true/false
      */
-    public function updateTopicReply($id, $fpr_content){
+    public function updateTopicReply($id, $fpr_content, $userID){
       // Update messages table
-      $query = $this->db->update(PREFIX.'forum_post_replies', array('fpr_content' => $fpr_content, 'fpr_edit_date' => date('Y-m-d H:i:s')), array('id' => $id));
+      $query = $this->db->update(PREFIX.'forum_post_replies', array('fpr_content' => $fpr_content, 'fpr_edit_date' => date('Y-m-d H:i:s')), array('id' => $id, 'fpr_user_id' => $userID));
       // Check to make sure Topic was Created
       if($query > 0){
         return true;
       }else{
         return false;
       }
+    }
+
+    /**
+     * updateTopicReplySavedReply
+     *
+     * edit topic reply
+     *
+     * @param int $id Current Topic ID
+     * @param string $fpr_content New Reply's Content
+     *
+     * @return booleen true/false
+     */
+    public function updateSavedTopicReply($id, $fpr_content){
+      // Check to see if Topic is already published.  If so then block edits.
+      $is_published = SELF::topic_reply_is_published($id);
+      if($is_published == "0"){
+        // Update forum post reply
+        $query = $this->db->update(PREFIX.'forum_post_replies', array('fpr_content' => $fpr_content, 'fpr_timestamp' => date('Y-m-d H:i:s')), array('id' => $id));
+        // Check to make sure Topic was Created
+        if($query > 0){
+          return true;
+        }else{
+          return false;
+        }
+      }else{
+        return false;
+      }
+    }
+
+    /**
+     * topic_reply_is_published
+     *
+     * check if forum reply is published
+     *
+     * @param int $where_id = id
+     *
+     * @return string returns forum reply data (forum_publish)
+     */
+    public function topic_reply_is_published($where_id){
+      $data = $this->db->select("
+        SELECT forum_publish
+        FROM ".PREFIX."forum_post_replies
+        WHERE id = :where_id
+        LIMIT 1
+      ",
+      array(':where_id' => $where_id));
+      return $data[0]->forum_publish;
+    }
+
+    /**
+     * getReplyContent
+     *
+     * get content for selected forum topic reply
+     *
+     * @param int $where_id = id
+     *
+     * @return array returns forum topic reply
+     */
+    public function getReplyContent($where_id){
+      $data = $this->db->select("
+        SELECT
+          fpr_content
+        FROM
+          ".PREFIX."forum_post_replies
+        WHERE
+          id = :where_id
+        AND
+          forum_publish = '0'
+      ",
+      array(':where_id' => $where_id));
+      return $data[0]->fpr_content;
     }
 
     /**
@@ -1217,6 +1296,29 @@ class Forum extends Models {
       ",
       array(':forum_user_id' => $forum_user_id, ':forum_id' => $forum_id));
       return $data[0]->forum_post_id;
+    }
+
+    /**
+     * getUnPublishedWorkReply
+     *
+     * get un published topic reply for selected topic and user
+     *
+     * @param int $where_id = forum_id
+     *
+     * @return string
+     */
+    public function getUnPublishedWorkReply($forum_user_id, $topic_id){
+      $data = $this->db->select("
+        SELECT id
+        FROM ".PREFIX."forum_post_replies
+        WHERE fpr_user_id = :forum_user_id
+        AND fpr_post_id = :fpr_post_id
+        AND forum_publish = '0'
+        ORDER BY id DESC
+        LIMIT 1
+      ",
+      array(':forum_user_id' => $forum_user_id, ':fpr_post_id' => $topic_id));
+      return $data[0]->id;
     }
 
 }

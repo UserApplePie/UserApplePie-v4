@@ -21,7 +21,6 @@ use Libs\Language, Libs\Form;
 			<?php echo Form::open(array('method' => 'post')); ?>
 
 				<!-- Username -->
-				<div class='form-group'>
 					<div class='form-group'>
 						<div class='input-group mb-3'>
 							<div class='input-group-prepend'>
@@ -33,10 +32,8 @@ use Libs\Language, Libs\Form;
 							</div>
 						</div>
 					</div>
-				</div>
 
 				<!-- Password 1 -->
-				<div class='form-group'>
 					<div class='form-group'>
 						<div class='input-group mb-3'>
 							<div class='input-group-prepend'>
@@ -48,10 +45,8 @@ use Libs\Language, Libs\Form;
 							</div>
 						</div>
 					</div>
-				</div>
 
 				<!-- Password 2 -->
-				<div class='form-group'>
 					<div class='form-group'>
 						<div class='input-group mb-3'>
 							<div class='input-group-prepend'>
@@ -63,7 +58,6 @@ use Libs\Language, Libs\Form;
 							</div>
 						</div>
 					</div>
-				</div>
 
 				<!-- Email -->
 				<div class='form-group'>

@@ -69,7 +69,7 @@ use Core\Language,
                     <span class="input-group-text" id="inputGroupFileAddon01"><i class='fas fa-image'></i></span>
                   </div>
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept="image/jpeg, image/gif, image/x-png" id="forumImage" name="forumImage" aria-describedby="inputGroupFileAddon01">
+                    <input type="file" class="custom-file-input" accept="image/jpeg, image/gif, image/x-png" id="forumImage" name="forumImage[]" aria-describedby="inputGroupFileAddon01" multiple="multiple">
                     <label class="custom-file-label" for="inputGroupFile01">Select Image File</label>
                   </div>
                 </div>

@@ -21,13 +21,25 @@ use Libs\Language;
       <form class="form" method="post">
           <div class="col-xs-12">
               <div class="form-group">
-                  <label class="control-label"><?=Language::show('login_field_username', 'Auth')?></label>
-                  <input  class="form-control" type="text" id="username" name="username" placeholder="<?=Language::show('login_field_username', 'Auth')?>">
+								<div class="input-group mb-3">
+									<div class='input-group-prepend'>
+										<span class='input-group-text'>
+											<?=Language::show('login_field_username', 'Auth')?>
+										</span>
+									</div>
+                	<input  class="form-control" type="text" id="username" name="username" placeholder="<?=Language::show('login_field_username', 'Auth')?>">
+								</div>
               </div>
-              <div class="form-group">
-                  <label class="control-label"><?=Language::show('login_field_password', 'Auth')?></label>
-                  <input class="form-control" type="password" id="password" name="password" placeholder="<?=Language::show('login_field_password', 'Auth')?>">
-              </div>
+							<div class="form-group">
+								<div class="input-group mb-3">
+									<div class='input-group-prepend'>
+										<span class='input-group-text'>
+											<?=Language::show('login_field_password', 'Auth')?>
+										</span>
+									</div>
+									<input class="form-control" type="password" id="password" name="password" placeholder="<?=Language::show('login_field_password', 'Auth')?>">
+								</div>
+							</div>
               <div class="form-inline">
                   <label class="control-label"><?=Language::show('login_field_rememberme', 'Auth')?></label>
                   <input class="form-control" type="checkbox" id="rememberMe" name="rememberMe">

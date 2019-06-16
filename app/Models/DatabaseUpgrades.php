@@ -95,7 +95,7 @@ class DatabaseUpgrades extends Models {
       Insert into uap4_users_images (userID, userImage)  select userID, userImage from uap4_users;
     ";
     $sql_data[] = "
-      ALTER TABLE uap4_users_images MODIFY COLUMN defaultImage int(11) NOT NULL DEFAULT '0';
+      ALTER TABLE uap4_users_images MODIFY COLUMN defaultImage int(11) NOT NULL DEFAULT '1';
     ";
     $sql_data[] = "
       ALTER TABLE uap4_users DROP userImage;
@@ -109,6 +109,24 @@ class DatabaseUpgrades extends Models {
         `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (`id`)
       ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+    ";
+    $sql_data[] = "
+      ALTER TABLE uap4_users_images MODIFY COLUMN defaultImage int(11) NOT NULL DEFAULT '1';
+    ";
+    $sql_data[]  = "
+      CREATE INDEX index_username ON uap4_users(username);
+    ";
+    $sql_data[]  = "
+      CREATE INDEX index_timestamp ON uap4_sitelogs(timestamp);
+    ";
+    $sql_data[]  = "
+      CREATE INDEX index_posts_title ON uap4_forum_posts(forum_title);
+    ";
+    $sql_data[]  = "
+      CREATE FULLTEXT INDEX index_posts_content ON uap4_forum_posts(forum_content);
+    ";
+    $sql_data[]  = "
+      CREATE FULLTEXT INDEX index_posts_content ON uap4_forum_post_replies(fpr_content);
     ";
 
     foreach ($sql_data as $query) {

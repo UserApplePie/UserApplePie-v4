@@ -343,7 +343,6 @@ class Members extends Controller
                     $userImage = Request::post('oldImg');
                     /** Ready site to upload Files **/
                     $countfiles = count($_FILES['profilePic']['name']);
-                    var_dump($_FILES['profilePic']['name'][0]);
                     if(!empty($_FILES['profilePic']['name'][0])){
                       for($i=0;$i<$countfiles;$i++){
                         // Check to see if an image is being uploaded

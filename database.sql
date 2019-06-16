@@ -130,6 +130,8 @@ CREATE TABLE IF NOT EXISTS `uap4_users` (
   PRIMARY KEY (`userID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
+CREATE INDEX index_username ON uap4_users(username);
+
 -- --------------------------------------------------------
 
 --
@@ -176,6 +178,8 @@ CREATE TABLE IF NOT EXISTS `uap4_sitelogs` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 PACK_KEYS=0 AUTO_INCREMENT=1 ;
+
+CREATE INDEX index_timestamp ON uap4_sitelogs(timestamp);
 
 -- --------------------------------------------------------
 
@@ -294,6 +298,9 @@ CREATE TABLE IF NOT EXISTS `uap4_forum_posts` (
   PRIMARY KEY (`forum_post_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+CREATE INDEX index_posts_title ON uap4_forum_posts(forum_title);
+CREATE FULLTEXT INDEX index_posts_content ON uap4_forum_posts(forum_content);
+
 -- --------------------------------------------------------
 
 --
@@ -305,7 +312,6 @@ CREATE TABLE IF NOT EXISTS `uap4_forum_post_replies` (
   `fpr_post_id` int(20) DEFAULT NULL,
   `fpr_id` int(20) DEFAULT NULL,
   `fpr_user_id` int(20) DEFAULT NULL,
-  `fpr_title` varchar(255) DEFAULT NULL,
   `fpr_content` text DEFAULT NULL,
   `forum_publish` int(1) NOT NULL DEFAULT '0',
   `subscribe_email` varchar(10) NOT NULL DEFAULT 'true',
@@ -317,6 +323,8 @@ CREATE TABLE IF NOT EXISTS `uap4_forum_post_replies` (
   `fpr_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE FULLTEXT INDEX index_posts_content ON uap4_forum_post_replies(fpr_content);
 
 -- --------------------------------------------------------
 

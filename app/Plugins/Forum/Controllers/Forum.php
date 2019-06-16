@@ -250,213 +250,253 @@ use App\System\Controller,
         (isset($_POST['action'])) ? $data['action'] = Request::post('action') : $data['action'] = "";
         (isset($_POST['edit_reply_id'])) ? $data['edit_reply_id'] = Request::post('edit_reply_id') : $data['edit_reply_id'] = "";
 
-        // Check to see if user is submitting a new topic reply
-  		if(isset($_POST['submit'])){
+        /** Check to see if user has any unpublished replies for this topic **/
+        $data['user_reply_id'] = $this->model->getUnPublishedWorkReply($u_id, $id);
+        $data['fpr_content'] = $this->model->getReplyContent($data['user_reply_id']);
 
-  			// Check to make sure the csrf token is good
-  			if (Csrf::isTokenValid('forum')) {
-
-          // Check to see if user is editing topic
-          if($data['action'] == "update_topic"){
-            // Get data from post
-    				$data['forum_content'] = htmlspecialchars(Request::post('forum_content'));
-            $data['forum_title'] = strip_tags(Request::post('forum_title'));
-              // Check to make sure user completed all required fields in form
-              if(empty($data['forum_title'])){
-                // Subject field is empty
-                $error[] = 'Topic Title Field is Blank!';
+        // Check for topic reply autosave
+        if(isset($_POST['forum_topic_reply_autosave'])){
+          if($_POST['forum_topic_reply_autosave'] == "autosave_topic_reply"){
+            /** Forum Auto Save **/
+            // Check to make sure the csrf token is good
+            if (Csrf::isTokenValid('forum')) {
+              /** Token Good **/
+              $data['fpr_content'] = htmlspecialchars(Request::post('fpr_content'));
+              $data['fpr_post_id'] = htmlspecialchars(Request::post('fpr_post_id'));
+              if(!empty($data['fpr_post_id'])){
+                $update_topic = $this->model->updateSavedTopicReply($data['fpr_post_id'], $data['fpr_content'], $u_id);
+                echo $data['fpr_post_id'];
+              }else{
+                /** New Forum Post - Create new post **/
+                $new_topic = $this->model->sendTopicReply($u_id, $id, $topic_forum_id, $data['fpr_content'], $data['is_user_subscribed'], "0");
+                echo $new_topic;
               }
-              if(empty($data['forum_content'])){
-                // Subject field is empty
-                $error[] = 'Topic Content Field is Blank!';
-              }
-              // Check to make sure user owns the content they are trying to edit
-              // Get the id of the user that owns the post that is getting edited
-              if($u_id != $this->model->getTopicOwner($id)){
-                // User does not own this content
-                $error[] = 'You Do Not Own The Content You Were Trying To Edit!';
-              }
-              // Check for errors before sending message
-              if(!isset($error)){
-                  // No Errors, lets submit the new topic to db
-          				if($this->model->updateTopic($id, $data['forum_title'], $data['forum_content'])){
-          					// Success
-                    SuccessMessages::push('You Have Successfully Updated a Topic', 'Topic/'.$id);
-          				}else{
-          					// Fail
-                    $error[] = 'Edit Topic Failed';
-          				}
-              }// End Form Complete Check
+            }
           }
-          // Check to see if user is editing or creating topic reply
-          else if($data['action'] == "update_reply"){
-            // Get data from post
-    				$data['fpr_content'] = htmlspecialchars(Request::post('fpr_content'));
-              // Check to make sure user completed all required fields in form
-              if(empty($data['fpr_content'])){
-                // Subject field is empty
-                $error[] = 'Topic Reply Content Field is Blank!';
-              }
-              // Check to make sure user owns the content they are trying to edit
-              // Get the id of the user that owns the post that is getting edited
-              if($u_id != $this->model->getReplyOwner($data['edit_reply_id'])){
-                // User does not own this content
-                $error[] = 'You Do Not Own The Content You Were Trying To Edit!';
-              }
-              // Check for errors before sending message
-              if(!isset($error)){
-                  // No Errors, lets submit the new topic to db
-          				if($this->model->updateTopicReply($data['edit_reply_id'], $data['fpr_content'])){
-          					// Success
-                    SuccessMessages::push('You Have Successfully Updated a Topic Reply', 'Topic/'.$id.'/'.$redirect_page_num.'#topicreply'.$data['edit_reply_id']);
-          				}else{
-          					// Fail
-                    $error[] = 'Edit Topic Reply Failed';
-          				}
-              }// End Form Complete Check
-          }else if($data['action'] == "new_reply"){
-    				// Get data from post
-    				$data['fpr_content'] = htmlspecialchars(Request::post('fpr_content'));
-              // Check to make sure user completed all required fields in form
-              if(empty($data['fpr_content'])){
-                // Subject field is empty
-                $error[] = 'Topic Reply Content Field is Blank!';
-              }
-              // Check for errors before sending message
-              if(!isset($error)){
-                  // No Errors, lets submit the new topic to db
-          				if($this->model->sendTopicReply($u_id, $id, $topic_forum_id, $data['fpr_content'], $data['is_user_subscribed'], "1")){
-                    // Get Submitted Reply ID
-                    $reply_id = $this->model->lastTopicReplyID($id);
-                    // Check to see if post is going on a new page
-                    $page_reply_limit = $this->forum_topic_reply_limit;
-                    $redirect_page_num = ceil(($total_num_replys + 1) / $page_reply_limit);
-                    // Send emails to those who are subscribed to this topic
-                    $this->model->sendTopicSubscribeEmails($id, $u_id, $data['title'], $data['forum_cat'], $data['fpr_content']);
+        }else{
 
-                    // Check for image upload with this topic
-                    $picture = file_exists($_FILES['forumImage']['tmp_name']) || is_uploaded_file($_FILES['forumImage']['tmp_name']) ? $_FILES['forumImage'] : array ();
-                      // Make sure image is being uploaded before going further
-                      if(sizeof($picture)>0 && ($data['is_new_user'] != true)){
-                        // Get image size
-                        $check = getimagesize ( $picture['tmp_name'] );
-                        // Get file size for db
-                        $file_size = $picture['size'];
-                        $img_dir_forum_reply = IMG_DIR_FORUM_REPLY;
-                        // Make sure image size is not too large
-                        if($picture['size'] < 5000000 && $check && ($check['mime'] == "image/jpeg" || $check['mime'] == "image/png" || $check['mime'] == "image/gif")){
-                          if(!file_exists(ROOTDIR.$img_dir_forum_reply)){
-                            mkdir(ROOTDIR.$img_dir_forum_reply,0777,true);
-                          }
-                          // Upload the image to server
-                          $image = new SimpleImage($picture['tmp_name']);
-                          $new_image_name = "forum-image-topic-reply-uid{$u_id}-fid{$id}-ftid{$reply_id}";
-                          $img_name = $new_image_name.'.gif';
-                          $img_max_size = explode(',', $this->forum_max_image_size);
-                          $image->best_fit($img_max_size[0],$img_max_size[1])->save(ROOTDIR.$img_dir_forum_reply.$img_name);
-                          // Make sure image was Successfull
-                          if($img_name){
-                            // Add new image to database
-                            if($this->model->sendNewImage($u_id, $img_name, $img_dir_forum_reply, $file_size, $topic_forum_id, $id, $reply_id)){
-                              $img_success = "<br> Image Successfully Uploaded";
+          // Check to see if user is submitting a new topic reply
+      		if(isset($_POST['submit'])){
+
+      			// Check to make sure the csrf token is good
+      			if (Csrf::isTokenValid('forum')) {
+
+              // Check to see if user is editing topic
+              if($data['action'] == "update_topic"){
+                // Get data from post
+        				$data['forum_content'] = htmlspecialchars(Request::post('forum_content'));
+                $data['forum_title'] = strip_tags(Request::post('forum_title'));
+                  // Check to make sure user completed all required fields in form
+                  if(empty($data['forum_title'])){
+                    // Subject field is empty
+                    $error[] = 'Topic Title Field is Blank!';
+                  }
+                  if(empty($data['forum_content'])){
+                    // Subject field is empty
+                    $error[] = 'Topic Content Field is Blank!';
+                  }
+                  // Check to make sure user owns the content they are trying to edit
+                  // Get the id of the user that owns the post that is getting edited
+                  if($u_id != $this->model->getTopicOwner($id)){
+                    // User does not own this content
+                    $error[] = 'You Do Not Own The Content You Were Trying To Edit!';
+                  }
+                  // Check for errors before sending message
+                  if(!isset($error)){
+                      // No Errors, lets submit the new topic to db
+              				if($this->model->updateTopic($id, $data['forum_title'], $data['forum_content'])){
+              					// Success
+                        SuccessMessages::push('You Have Successfully Updated a Topic', 'Topic/'.$id);
+              				}else{
+              					// Fail
+                        $error[] = 'Edit Topic Failed';
+              				}
+                  }// End Form Complete Check
+              }
+              // Check to see if user is editing or creating topic reply
+              else if($data['action'] == "update_reply"){
+                // Get data from post
+        				$data['fpr_content'] = htmlspecialchars(Request::post('fpr_content'));
+                  // Check to make sure user completed all required fields in form
+                  if(empty($data['fpr_content'])){
+                    // Subject field is empty
+                    $error[] = 'Topic Reply Content Field is Blank!';
+                  }
+                  // Check to make sure user owns the content they are trying to edit
+                  // Get the id of the user that owns the post that is getting edited
+                  if($u_id != $this->model->getReplyOwner($data['edit_reply_id'])){
+                    // User does not own this content
+                    $error[] = 'You Do Not Own The Content You Were Trying To Edit!';
+                  }
+                  // Check for errors before sending message
+                  if(!isset($error)){
+                      // No Errors, lets submit the new topic to db
+              				if($this->model->updateTopicReply($data['edit_reply_id'], $data['fpr_content'])){
+              					// Success
+                        SuccessMessages::push('You Have Successfully Updated a Topic Reply', 'Topic/'.$id.'/'.$redirect_page_num.'#topicreply'.$data['edit_reply_id']);
+              				}else{
+              					// Fail
+                        $error[] = 'Edit Topic Reply Failed';
+              				}
+                  }// End Form Complete Check
+              }else if($data['action'] == "new_reply"){
+        				// Get data from post
+                $afpr_post_id = strip_tags(Request::post('fpr_post_id'));
+        				$data['fpr_content'] = htmlspecialchars(Request::post('fpr_content'));
+                  // Check to make sure user completed all required fields in form
+                  if(empty($data['fpr_content'])){
+                    // Subject field is empty
+                    $error[] = 'Topic Reply Content Field is Blank!';
+                  }
+                  // Check for errors before sending message
+                  if(!isset($error)){
+                      // No Errors, lets submit the new topic to db
+              				if($this->model->sendTopicReply($u_id, $id, $topic_forum_id, $data['fpr_content'], $data['is_user_subscribed'], "1", $afpr_post_id)){
+                        // Get Submitted Reply ID
+                        $reply_id = $this->model->lastTopicReplyID($id);
+                        // Check to see if post is going on a new page
+                        $page_reply_limit = $this->forum_topic_reply_limit;
+                        $redirect_page_num = ceil(($total_num_replys + 1) / $page_reply_limit);
+                        // Send emails to those who are subscribed to this topic
+                        $this->model->sendTopicSubscribeEmails($id, $u_id, $data['title'], $data['forum_cat'], $data['fpr_content']);
+
+                        /** Ready site to upload Files for TOPIC REPLY **/
+                        if(!empty($_FILES['forumImage']['name'][0])){
+                          $countfiles = count($_FILES['forumImage']['name']);
+                          for($i=0;$i<$countfiles;$i++){
+                            // Check to see if an image is being uploaded
+                            if(!empty($_FILES['forumImage']['tmp_name'][$i])){
+                                $picture = file_exists($_FILES['forumImage']['tmp_name'][$i]) || is_uploaded_file($_FILES['forumImage']['tmp_name'][$i]) ? $_FILES ['forumImage']['tmp_name'][$i] : array ();
+                                if($picture != ""){
+                                    // Get file size for db
+                                    $check = getimagesize ( $picture );
+                                    $img_dir_forum_reply = IMG_DIR_FORUM_REPLY;
+                                    // Check to make sure image is good
+                                    if($check['size'] < 5000000 && $check && ($check['mime'] == "image/jpeg" || $check['mime'] == "image/png" || $check['mime'] == "image/gif")){
+                                        // Check to see if Img Upload Directory Exists, if not create it
+                                        if(!file_exists(ROOTDIR.$img_dir_forum_reply)){
+                                          mkdir(ROOTDIR.$img_dir_forum_reply,0777,true);
+                                        }
+                                        // Format new image and upload it to server
+                                        $image = new SimpleImage($picture);
+                                        $new_image_name = "forum-image-topic-reply-uid{$u_id}-fid{$id}-ftid{$reply_id}";
+                                        $rand_string = substr(str_shuffle(md5(time())), 0, 10);
+                                        $img_name = $new_image_name.'-'.$rand_string.'.gif';
+                                        $img_max_size = explode(',', $this->forum_max_image_size);
+                                        $image->best_fit($img_max_size[0],$img_max_size[1])->save(ROOTDIR.$img_dir_forum_reply.$img_name);
+                                        // Make sure image was Successfull
+                                        if($img_name){
+                                          // Add new image to database
+                                          if($this->model->sendNewImage($u_id, $img_name, $img_dir_forum_reply, $file_size, $topic_forum_id, $id, $reply_id)){
+                                            $img_success = "<br> Image Successfully Uploaded";
+                                          }else{
+                                            $img_success = "<br> No Image Uploaded";
+                                          }
+                                        }
+                                    }else{
+                                      $img_success = "<br> Image was NOT uploaded because the file size was too large!";
+                                    }
+                                }else{
+                                    $img_success = "<br> No Image Selected to Be Uploaded";
+                                }
                             }else{
-                              $img_success = "<br> No Image Uploaded";
+                                $img_success = "<br> No Image Selected to Be Uploaded";
                             }
                           }
                         }else{
-                          $img_success = "<br> Image was NOT uploaded because the file size was too large!";
+                          $img_success = "<br> No Image Selected to Be Uploaded";
                         }
-                      }else{
-                        $img_success = "<br> No Image Selected to Be Uploaded";
-                      }
 
-          					// Success
-                    SuccessMessages::push('You Have Successfully Created a New Topic Reply'.$img_success, 'Topic/'.$id.'/'.$redirect_page_num.'#topicreply'.$reply_id);
-                    $data['hide_form'] = "true";
-          				}else{
-          					// Fail
-                    $error[] = 'New Topic Reply Create Failed';
-          				}
-              }// End Form Complete Check
-          }else if($data['action'] == "lock_topic" && ($data['is_admin'] == true || $data['is_mod'] == true)){
-            // Update database with topic locked (2)
-            if($this->model->updateTopicLockStatus($id, "2")){
-              SuccessMessages::push('You Have Successfully Locked This Topic', 'Topic/'.$id);
-            }
-          }else if($data['action'] == "unlock_topic" && ($data['is_admin'] == true || $data['is_mod'] == true)){
-            // Update the database with topic unlocked (1)
-            if($this->model->updateTopicLockStatus($id, "1")){
-              SuccessMessages::push('You Have Successfully UnLocked This Topic', 'Topic/'.$id);
-            }
-          }else if($data['action'] == "hide_topic" && ($data['is_admin'] == true || $data['is_mod'] == true)){
-            // Update database with topic hidden (TRUE)
-            $hide_reason = Request::post('hide_reason');
-            if($this->model->updateTopicHideStatus($id, "FALSE", $u_id, $hide_reason)){
-              SuccessMessages::push('You Have Successfully Hidden This Topic', 'Topic/'.$id);
-            }
-          }else if($data['action'] == "unhide_topic" && ($data['is_admin'] == true || $data['is_mod'] == true)){
-            // Update the database with topic unhide (FALSE)
-            if($this->model->updateTopicHideStatus($id, "TRUE", $u_id, "UnHide")){
-              SuccessMessages::push('You Have Successfully UnHide This Topic', 'Topic/'.$id);
-            }
-          }else if($data['action'] == "hide_reply" && ($data['is_admin'] == true || $data['is_mod'] == true)){
-            // Update database with topic reply hidden (TRUE)
-            $hide_reason = Request::post('hide_reason');
-            $reply_id = Request::post('reply_id');
-            $reply_url = Request::post('reply_url');
-            if($this->model->updateReplyHideStatus($reply_id, "FALSE", $u_id, $hide_reason)){
-              SuccessMessages::push('You Have Successfully Hidden Topic Reply', $reply_url);
-            }
-          }else if($data['action'] == "unhide_reply" && ($data['is_admin'] == true || $data['is_mod'] == true)){
-            // Update the database with topic reply unhide (FALSE)
-            $reply_id = Request::post('reply_id');
-            $reply_url = Request::post('reply_url');
-            if($this->model->updateReplyHideStatus($reply_id, "TRUE", $u_id, "UnHide")){
-              SuccessMessages::push('You Have Successfully UnHide Topic Reply', $reply_url);
-            }
-          }else if($data['action'] == "subscribe" && isset($u_id)){
-            // Update users topic subcrition status as true
-            if($this->model->updateTopicSubcrition($id, $u_id, "true")){
-              SuccessMessages::push('You Have Successfully Subscribed to this Topic', 'Topic/'.$id);
-            }
-          }else if($data['action'] == "unsubscribe" && isset($u_id)){
-            // Update users topic subcrition status as false
-            if($this->model->updateTopicSubcrition($id, $u_id, "false")){
-              SuccessMessages::push('You Have Successfully UnSubscribed from this Topic', 'Topic/'.$id);
-            }
-          }// End Action Check
-  			} // End token check
-  		} // End post check
+              					// Success
+                        SuccessMessages::push('You Have Successfully Created a New Topic Reply'.$img_success, 'Topic/'.$id.'/'.$redirect_page_num.'#topicreply'.$reply_id);
+                        $data['hide_form'] = "true";
+              				}else{
+              					// Fail
+                        $error[] = 'New Topic Reply Create Failed';
+              				}
+                  }// End Form Complete Check
+              }else if($data['action'] == "lock_topic" && ($data['is_admin'] == true || $data['is_mod'] == true)){
+                // Update database with topic locked (2)
+                if($this->model->updateTopicLockStatus($id, "2")){
+                  SuccessMessages::push('You Have Successfully Locked This Topic', 'Topic/'.$id);
+                }
+              }else if($data['action'] == "unlock_topic" && ($data['is_admin'] == true || $data['is_mod'] == true)){
+                // Update the database with topic unlocked (1)
+                if($this->model->updateTopicLockStatus($id, "1")){
+                  SuccessMessages::push('You Have Successfully UnLocked This Topic', 'Topic/'.$id);
+                }
+              }else if($data['action'] == "hide_topic" && ($data['is_admin'] == true || $data['is_mod'] == true)){
+                // Update database with topic hidden (TRUE)
+                $hide_reason = Request::post('hide_reason');
+                if($this->model->updateTopicHideStatus($id, "FALSE", $u_id, $hide_reason)){
+                  SuccessMessages::push('You Have Successfully Hidden This Topic', 'Topic/'.$id);
+                }
+              }else if($data['action'] == "unhide_topic" && ($data['is_admin'] == true || $data['is_mod'] == true)){
+                // Update the database with topic unhide (FALSE)
+                if($this->model->updateTopicHideStatus($id, "TRUE", $u_id, "UnHide")){
+                  SuccessMessages::push('You Have Successfully UnHide This Topic', 'Topic/'.$id);
+                }
+              }else if($data['action'] == "hide_reply" && ($data['is_admin'] == true || $data['is_mod'] == true)){
+                // Update database with topic reply hidden (TRUE)
+                $hide_reason = Request::post('hide_reason');
+                $reply_id = Request::post('reply_id');
+                $reply_url = Request::post('reply_url');
+                if($this->model->updateReplyHideStatus($reply_id, "FALSE", $u_id, $hide_reason)){
+                  SuccessMessages::push('You Have Successfully Hidden Topic Reply', $reply_url);
+                }
+              }else if($data['action'] == "unhide_reply" && ($data['is_admin'] == true || $data['is_mod'] == true)){
+                // Update the database with topic reply unhide (FALSE)
+                $reply_id = Request::post('reply_id');
+                $reply_url = Request::post('reply_url');
+                if($this->model->updateReplyHideStatus($reply_id, "TRUE", $u_id, "UnHide")){
+                  SuccessMessages::push('You Have Successfully UnHide Topic Reply', $reply_url);
+                }
+              }else if($data['action'] == "subscribe" && isset($u_id)){
+                // Update users topic subcrition status as true
+                if($this->model->updateTopicSubcrition($id, $u_id, "true")){
+                  SuccessMessages::push('You Have Successfully Subscribed to this Topic', 'Topic/'.$id);
+                }
+              }else if($data['action'] == "unsubscribe" && isset($u_id)){
+                // Update users topic subcrition status as false
+                if($this->model->updateTopicSubcrition($id, $u_id, "false")){
+                  SuccessMessages::push('You Have Successfully UnSubscribed from this Topic', 'Topic/'.$id);
+                }
+              }// End Action Check
+      			} // End token check
+      		} // End post check
 
-        // Output errors if any
-        if(!empty($error)){ $data['error'] = $error; };
+            // Output errors if any
+            if(!empty($error)){ $data['error'] = $error; };
 
-      // Update and Get Views Data
-      $data['PageViews'] = PageViews::views('true', $id, 'Forum_Topic', $u_id);
+          // Update and Get Views Data
+          $data['PageViews'] = PageViews::views('true', $id, 'Forum_Topic', $u_id);
 
-      // Get Recent Posts List for Sidebar
-      $data['forum_recent_posts'] = $this->model->forum_recent_posts();
+          // Get Recent Posts List for Sidebar
+          $data['forum_recent_posts'] = $this->model->forum_recent_posts();
 
-      // Setup Breadcrumbs
-  		$data['breadcrumbs'] = "
-        <li class='breadcrumb-item'><a href='".DIR."Forum'>".$this->forum_title."</a></li>
-        <li class='breadcrumb-item'><a href='".DIR."Topics/$topic_forum_id'>".$data['forum_cat']."</a>
-  			<li class='breadcrumb-item active'>".$data['title']."</li>
-  		";
+          // Setup Breadcrumbs
+      		$data['breadcrumbs'] = "
+            <li class='breadcrumb-item'><a href='".DIR."Forum'>".$this->forum_title."</a></li>
+            <li class='breadcrumb-item'><a href='".DIR."Topics/$topic_forum_id'>".$data['forum_cat']."</a>
+      			<li class='breadcrumb-item active'>".$data['title']."</li>
+      		";
 
-      // Ready the token!
-      $data['csrf_token'] = Csrf::makeToken('forum');
+          // Ready the token!
+          $data['csrf_token'] = Csrf::makeToken('forum');
 
-      /* Get user's forum groups data */
-      $data['group_forum_perms_post'] = $this->model->group_forum_perms($u_id, "users");
-      $data['group_forum_perms_mod'] = $this->model->group_forum_perms($u_id, "mods");
-      $data['group_forum_perms_admin'] = $this->model->group_forum_perms($u_id, "admins");
+          /* Get user's forum groups data */
+          $data['group_forum_perms_post'] = $this->model->group_forum_perms($u_id, "users");
+          $data['group_forum_perms_mod'] = $this->model->group_forum_perms($u_id, "mods");
+          $data['group_forum_perms_admin'] = $this->model->group_forum_perms($u_id, "admins");
 
-      /* Add Java Stuffs */
-      $data['js'] = "<script src='".Url::templatePath()."js/bbcode.js'></script>";
+          /* Add Java Stuffs */
+          $data['js'] = "<script src='".Url::templatePath()."js/bbcode.js'></script>";
+          $data['js'] .= "<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js'></script>";
+          $data['js'] .= "<script src='".Url::templatePath()."js/forum_autosave_topic_reply.js'></script>";
 
-        /* Send data to view */
-        Load::ViewPlugin("topic", $data, "forum_sidebar::Right", "Forum");
+            /* Send data to view */
+            Load::ViewPlugin("topic", $data, "forum_sidebar::Right", "Forum");
+        }
     }
 
     // Forum New Topic Form Display
@@ -544,41 +584,54 @@ use App\System\Controller,
                   if($new_topic){
                     // New Topic Successfully Created Now Check if User is Uploading Image
                     // Check for image upload with this topic
-                    $picture = file_exists($_FILES['forumImage']['tmp_name']) || is_uploaded_file($_FILES['forumImage']['tmp_name']) ? $_FILES['forumImage'] : array ();
-                      // Make sure image is being uploaded before going further
-                      if(sizeof($picture)>0 && ($data['is_new_user'] != true)){
-                        // Get image size
-                        $check = getimagesize ( $picture['tmp_name'] );
-                        // Get file size for db
-                        $file_size = $picture['size'];
-                        // Get the Img Forum Topic Directory
-                        $img_dir_forum_topic = IMG_DIR_FORUM_TOPIC;
-                        // Make sure image size is not too large
-                        if($picture['size'] < 5000000 && $check && ($check['mime'] == "image/jpeg" || $check['mime'] == "image/png" || $check['mime'] == "image/gif")){
-                            if(!file_exists(ROOTDIR.$img_dir_forum_topic)){
-                              mkdir(ROOTDIR.$img_dir_forum_topic,0777,true);
-                            }
-                            // Upload the image to server
-                            $image = new SimpleImage($picture['tmp_name']);
-                            $new_image_name = "forum-image-topic-reply-uid{$u_id}-fid{$id}-ftid{$reply_id}";
-                            $img_name = $new_image_name.'.gif';
-                            $img_max_size = explode(',', $this->forum_max_image_size);
-                            $image->best_fit($img_max_size[0],$img_max_size[1])->save(ROOTDIR.$img_dir_forum_topic.$img_name);
-                            // Make sure image was Successfull
-                            if($img_name){
-                              // Add new image to database
-                              if($this->model->sendNewImage($u_id, $img_name, $img_dir_forum_topic, $file_size, $id, $new_topic)){
-                                $img_success = "<br> Image Successfully Uploaded";
-                              }else{
-                                $img_success = "<br> No Image Uploaded";
-                              }
+                    /** Ready site to upload Files TOPIC **/
+                    if(!empty($_FILES['forumImage']['name'][0])){
+                      $countfiles = count($_FILES['forumImage']['name']);
+                      for($i=0;$i<$countfiles;$i++){
+                        // Check to see if an image is being uploaded
+                        if(!empty($_FILES['forumImage']['tmp_name'][$i])){
+                            $picture = file_exists($_FILES['forumImage']['tmp_name'][$i]) || is_uploaded_file($_FILES['forumImage']['tmp_name'][$i]) ? $_FILES ['forumImage']['tmp_name'][$i] : array ();
+                            if($picture != ""){
+                                // Get file size for db
+                                $check = getimagesize ( $picture );
+                                $img_dir_forum_topic = IMG_DIR_FORUM_TOPIC;
+                                // Check to make sure image is good
+                                if($check['size'] < 5000000 && $check && ($check['mime'] == "image/jpeg" || $check['mime'] == "image/png" || $check['mime'] == "image/gif")){
+                                    // Check to see if Img Upload Directory Exists, if not create it
+                                    if(!file_exists(ROOTDIR.$img_dir_forum_topic)){
+                                      mkdir(ROOTDIR.$img_dir_forum_topic,0777,true);
+                                    }
+                                    // Format new image and upload it to server
+                                    $image = new SimpleImage($picture);
+                                    $new_image_name = "forum-image-topic-uid{$u_id}-fid{$id}";
+                                    $rand_string = substr(str_shuffle(md5(time())), 0, 10);
+                                    $img_name = $new_image_name.'-'.$rand_string.'.gif';
+                                    $img_max_size = explode(',', $this->forum_max_image_size);
+                                    $image->best_fit($img_max_size[0],$img_max_size[1])->save(ROOTDIR.$img_dir_forum_topic.$img_name);
+                                    // Make sure image was Successfull
+                                    if($img_name){
+                                      // Add new image to database
+                                      if($this->model->sendNewImage($u_id, $img_name, $img_dir_forum_topic, $file_size, $id, $new_topic)){
+                                        $img_success = "<br> Images Successfully Uploaded";
+                                      }else{
+                                        $img_success = "<br> No Images Uploaded";
+                                      }
+                                    }
+                                }else{
+                                  $img_success = "<br> Image was NOT uploaded because the file size was too large!";
+                                }
+                            }else{
+                                $img_success = "<br> No Image Selected to Be Uploaded";
                             }
                         }else{
-                          $img_success = "<br> Image was NOT uploaded because the file size was too large!";
+                            $img_success = "<br> No Image Selected to Be Uploaded";
                         }
-                      }else{
-                        $img_success = "<br> No Image Selected to Be Uploaded";
                       }
+                    }else{
+                      $img_success = "<br> No Image Selected to Be Uploaded";
+                    }
+
+
           					// Success
                     SuccessMessages::push('You Have Successfully Created a New Topic'.$img_success, 'Topic/'.$new_topic);
                     $data['hide_form'] = "true";

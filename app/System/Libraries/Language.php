@@ -109,6 +109,25 @@ class Language
         if (!empty($array[$value])) {
             return $array[$value];
         } else {
+            /** Selected lang value not in lang file
+            *   Log the value so that we know to add
+            **/
+            $file = ROOTDIR.'/errors/missing-lang.log';
+            $string = "'$value' => '',";
+            $url = $_SERVER['REQUEST_URI'];
+            $logMessage = "//$name - $url \n $string\n";
+            $handle = fopen($file, 'r');
+            $valid = false; // init as false
+            while (($buffer = fgets($handle)) !== false) {
+                if (strpos($buffer, $string) !== false) {
+                    $valid = TRUE;
+                    break; // Once you find the string, you should break out the loop.
+                }
+            }
+            fclose($handle);
+            if($valid == FALSE){
+              file_put_contents($file, $logMessage, FILE_APPEND);
+            }
             return $value;
         }
     }

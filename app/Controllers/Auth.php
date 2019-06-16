@@ -481,7 +481,7 @@ class Auth extends Controller
      * @param $username
      * @param $resetkey
      */
-    public function resetPassword($val1 = null, $username, $val2 = null, $resetkey)
+    public function resetPassword($val1 = null, $username = null, $val2 = null, $resetkey = null)
     {
         if($this->auth->isLogged())
             Url::redirect();

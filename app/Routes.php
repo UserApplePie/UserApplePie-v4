@@ -97,6 +97,7 @@ class Routes {
                 $routes[] = self::add('NewTopic', 'Plugins\Forum\Controllers\Forum','newtopic','(:num)');
                 $routes[] = self::add('AdminPanel-Forum-Categories', 'Plugins\Forum\Controllers\ForumAdmin','forum_categories','(:any)/(:any)/(:any)');
                 $routes[] = self::add('AdminPanel-Forum-Blocked-Content', 'Plugins\Forum\Controllers\ForumAdmin','forum_blocked');
+                $routes[] = self::add('AdminPanel-Forum-Unpublished-Content', 'Plugins\Forum\Controllers\ForumAdmin','forum_unpublished');
                 $routes[] = self::add('SearchForum', 'Plugins\Forum\Controllers\Forum','forumSearch','(:any)/(:num)');
             }
             $routes[] = self::add('AdminPanel-Forum-Settings', 'Plugins\Forum\Controllers\ForumAdmin','forum_settings');

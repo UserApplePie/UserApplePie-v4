@@ -6,6 +6,12 @@ https://www.userapplepie.com
 ----------------------------------------------------------------------------------------
 UAP v4.2.1 to v4.3.0
 ----------------------------------------------------------------------------------------
+Auth
+ - Fixed styles in auth pages to match rest of site
+Sweets
+ - Fixed bug with Sweets that would cause bad redirects
+Missing Lang Logger
+ - Logs any missing language fields so that they can be added to lang files.
 Styles
  - Updated styles on many pages to look better on computer screens.
 Install
@@ -33,10 +39,13 @@ Updated User Profile
  - Added ability for user to set default and delete photos
  - Added Mutual Friends list
 Updated Forum Plugin
- - Added Auto Save Draft feature to new topics with auto recover.
+ - Added Auto Save Draft feature to new topics and replies with auto recover.
  - Added Image Max Size option to Admin Settings
  - Added BBcode buttons for text areas
  - Fixed issues when users try to post php code to the forum
+ - Added ability to upload multiple photos to Topics and Replies
+ - Added Admin pubish and delete page for unpublished posts
+ - Limited recent posts display to published posts
 Registration Bot Fix
  - Added a simple hidden empty text field to the form
  - Set site to block registration if field has data
@@ -59,6 +68,7 @@ reCAPTCHA
 Database
  - Updated database to check if table exist during install
  - Added Image Max Size setting to Site Settings and Forum Settings
+ - Added Indexes to a couple tables to help speed things up
 
 ----------------------------------------------------------------------------------------
 UAP v4.2.0 to v4.2.1
