@@ -706,4 +706,98 @@ class ForumAdmin extends Controller{
 
   }
 
+  public function forum_unpublished(){
+    /** Check to see if user is logged in **/
+    if($data['isLoggedIn'] = $this->auth->isLogged()){
+      /** User is logged in - Get their data **/
+      $u_id = $this->auth->user_info();
+      $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+      if($data['isAdmin'] = $this->user->checkIsAdmin($u_id) == 'false'){
+        /** User Not Admin - kick them out **/
+        \Libs\ErrorMessages::push('You are Not Admin', '');
+      }
+    }else{
+      /** User Not logged in - kick them out **/
+      \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
+    }
+
+    // Get data for dashboard
+    $data['current_page'] = $_SERVER['REQUEST_URI'];
+    $data['title'] = "Forum Unpublished Content";
+    $data['welcome_message'] = "Welcom to the Admin Panel Unpublished Content Listing!";
+
+    // Check to make sure admin is trying to update
+    if(isset($_POST['action'])){
+      /* Check to see if site is a demo site */
+      if(DEMO_SITE != 'TRUE'){
+        // Check to make sure the csrf token is good
+        if (Csrf::isTokenValid('unpublished')) {
+          if($_POST['action'] == "delete_topic"){
+            // Get data from post
+            $forum_post_id = Request::post('forum_post_id');
+            if($this->forum->deleteUnpublishedTopic($forum_post_id)){
+              // Success
+              \Libs\SuccessMessages::push('You Have Successfully Deleted Unpublished Topic', 'AdminPanel-Forum-Unpublished-Content');
+            }else{
+              /* Error Message Display */
+              \Libs\ErrorMessages::push('Unable to Delete Post', 'AdminPanel-Forum-Unpublished-Content');
+            }
+          }else if($_POST['action'] == "delete_reply"){
+            // Get data from post
+            $id = Request::post('id');
+            if($this->forum->deleteUnpublishedTopicReply($id)){
+              // Success
+              \Libs\SuccessMessages::push('You Have Successfully Deleted Unpublished Reply', 'AdminPanel-Forum-Unpublished-Content');
+            }else{
+              /* Error Message Display */
+              \Libs\ErrorMessages::push('Unable to Delete Post', 'AdminPanel-Forum-Unpublished-Content');
+            }
+          }else if($_POST['action'] == "publish_topic"){
+            // Get data from post
+            $forum_post_id = Request::post('forum_post_id');
+            if($this->forum->updatePublishTopic($forum_post_id)){
+              // Success
+              \Libs\SuccessMessages::push('You Have Successfully Published Topic', 'AdminPanel-Forum-Unpublished-Content');
+            }else{
+              /* Error Message Display */
+              \Libs\ErrorMessages::push('Unable to Publish Post', 'AdminPanel-Forum-Unpublished-Content');
+            }
+          }else if($_POST['action'] == "publish_reply"){
+            // Get data from post
+            $id = Request::post('id');
+            if($this->forum->updatePublishTopicReply($id)){
+              // Success
+              \Libs\SuccessMessages::push('You Have Successfully Published Topic Reply', 'AdminPanel-Forum-Unpublished-Content');
+            }else{
+              /* Error Message Display */
+              \Libs\ErrorMessages::push('Unable to Publish Post', 'AdminPanel-Forum-Unpublished-Content');
+            }
+          }
+        }
+      }else{
+      	/* Error Message Display */
+      	\Libs\ErrorMessages::push('Demo Limit - Forum Admin Disabled', 'AdminPanel-Forum-Unpublished-Content');
+      }
+    }
+
+    // Setup CSRF token
+    $data['csrfToken'] = Csrf::makeToken('unpublished');
+
+    // Get list of unpublished topics
+    $data['unpublished_topics'] = $this->forum->getUnpublishedTopics();
+
+    // Get list of unpublished topic replies
+    $data['unpublished_replies'] = $this->forum->getUnpublishedReplies();
+
+    // Setup Breadcrumbs
+    $data['breadcrumbs'] = "
+      <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+      <li class='breadcrumb-item active'><i class='fa fa-fw fa-ban'></i> ".$data['title']."</li>
+    ";
+
+    Load::ViewPlugin("forum_unpublished", $data, "", "Forum", "AdminPanel");
+
+  }
+
+
 }

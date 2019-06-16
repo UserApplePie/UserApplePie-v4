@@ -39,20 +39,20 @@ use Libs\Language, Libs\Form;
 								$button_display_delete .= " <input type='hidden' name='token_editprofile' value='$csrfToken' /> ";
 								$button_display_delete .= " <button type='submit' class='btn btn-danger' value='submit' name='submit'>".Language::show('edit_profile_images_button_delete', 'Members')." </button> ";
 							$button_display_delete .= Form::close();;
-							echo "<a href='#DeleteModal' class='btn btn-sm btn-danger trigger-btn' data-toggle='modal'>Delete Photo</a>";
+							echo "<a href='#DeleteModal' class='btn btn-sm btn-danger trigger-btn' data-toggle='modal'>".Language::show('edit_profile_images_button_delete', 'Members')."</a>";
 
 							echo "
 								<div class='modal fade' id='DeleteModal' tabindex='-1' role='dialog' aria-labelledby='DeleteLabel' aria-hidden='true'>
 									<div class='modal-dialog' role='document'>
 										<div class='modal-content'>
 											<div class='modal-header'>
-												<h5 class='modal-title' id='DeleteLabel'>Delete Profile Photo</h5>
+												<h5 class='modal-title' id='DeleteLabel'>".Language::show('ep_delete_profile_photo', 'Members')."</h5>
 												<button type='button' class='close' data-dismiss='modal' aria-label='Close'>
 													<span aria-hidden='true'>&times;</span>
 												</button>
 											</div>
 											<div class='modal-body'>
-												Do you want to Delete this Photo?
+												".Language::show('ep_delete_profile_photo_question', 'Members')."
 											</div>
 											<div class='modal-footer'>
 												<button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancel</button>

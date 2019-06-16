@@ -833,4 +833,110 @@ class ForumAdmin extends Models {
     return $data;
   }
 
+  /**
+   * getUnpublishedTopics
+   *
+   * get list of topics that are current unpublished
+   *
+   * @return array returns forum topics list data
+   */
+  public function getUnpublishedTopics(){
+    $data = $this->db->select("
+      SELECT *
+      FROM ".PREFIX."forum_posts
+      WHERE forum_publish = '0'
+      ORDER BY hide_timestamp DESC
+    ");
+    return $data;
+  }
+
+  /**
+   * getUnpublishedReplies
+   *
+   * get list of topics that are current unpublished
+   *
+   * @return array returns forum replies list data
+   */
+  public function getUnpublishedReplies(){
+    $data = $this->db->select("
+      SELECT *
+      FROM ".PREFIX."forum_post_replies
+      WHERE forum_publish = '0'
+      ORDER BY hide_timestamp DESC
+    ");
+    return $data;
+  }
+
+  /**
+   * deleteUnpublishedTopic
+   *
+   * delete forum topic by id
+   *
+   * @param int forum_id
+   *
+   * @return boolean true/false
+   */
+  public function deleteUnpublishedTopic($forum_post_id){
+    $data = $this->db->delete(PREFIX.'forum_posts', array('forum_post_id' => $forum_post_id, 'forum_publish' => '0'));
+    if($data > 0){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  /**
+   * deleteUnpublishedTopicReply
+   *
+   * delete forum topic reply by id
+   *
+   * @param int forum_id
+   *
+   * @return boolean true/false
+   */
+  public function deleteUnpublishedTopicReply($id){
+    $data = $this->db->delete(PREFIX.'forum_post_replies', array('id' => $id, 'forum_publish' => '0'));
+    if($data > 0){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  /**
+   * updatePublishTopic
+   *
+   * update forum_publish to 1 based on forum_post_id
+   *
+   * @param int forum_post_id
+   *
+   * @return boolean true/false
+   */
+  public function updatePublishTopic($forum_post_id){
+    $data = $this->db->update(PREFIX.'forum_posts', array('forum_publish' => '1'), array('forum_post_id' => $forum_post_id));
+    if($data > 0){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  /**
+   * updatePublishTopicReply
+   *
+   * update forum_publish to 1 based on id
+   *
+   * @param int id
+   *
+   * @return boolean true/false
+   */
+  public function updatePublishTopicReply($id){
+    $data = $this->db->update(PREFIX.'forum_post_replies', array('forum_publish' => '1'), array('id' => $id));
+    if($data > 0){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
 }

@@ -20,16 +20,29 @@ use Libs\Language, Libs\Form;
         <div class="row">
             <form class="form" method="post">
                 <div class="col-xs-12">
-                    <div class="form-group">
-                        <label class="control-label">New Password</label>
-                        <input  class="form-control" type="password" id="password" name="password" placeholder="New Password">
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Confirm New Password</label>
-                        <input  class="form-control" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm New Password">
-                    </div>
+									<div class="form-group">
+										<div class="input-group mb-3">
+											<div class='input-group-prepend'>
+												<span class='input-group-text'>
+													<?=Language::show('new_password_label', 'Auth'); ?>
+												</span>
+											</div>
+											<input  class="form-control" type="password" id="password" name="password" placeholder="<?=Language::show('new_password_label', 'Auth'); ?>">
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="input-group mb-3">
+											<div class='input-group-prepend'>
+												<span class='input-group-text'>
+													<?=Language::show('confirm_new_password_label', 'Auth'); ?>
+												</span>
+											</div>
+											<input  class="form-control" type="password" id="confirmPassword" name="confirmPassword" placeholder="<?=Language::show('confirm_new_password_label', 'Auth'); ?>">
+										</div>
+									</div>
+    
                     <input type="hidden" name="token_resetpassword" value="<?=$csrfToken;?>" />
-                    <button class="btn btn-primary" type="submit" name="submit">Change my Password</button>
+                    <button class="btn btn-primary" type="submit" name="submit"><?=Language::show('change_my_password_button', 'Auth'); ?></button>
                 </div>
 
             </form>

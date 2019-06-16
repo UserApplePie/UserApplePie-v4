@@ -49,7 +49,7 @@ class ForumStats
      *
      * @return array returns all recent forum posts
      */
-    public static function forum_recent_posts($limit = "10", $forum_id = ""){
+    public static function forum_recent_posts($limit = "15", $forum_id = ""){
         // Setup to get data based on forum_id if one is set
         if(!empty($forum_id)){
             $forum_id_data = "AND forum_id = $forum_id";
@@ -72,7 +72,7 @@ class ForumStats
                         LEFT JOIN ".PREFIX."forum_post_replies fpr
                         ON fp.forum_post_id = fpr.fpr_post_id
                         WHERE fp.allow = 'TRUE'
-						AND (fp.forum_publish = '1' OR fpr.forum_publish = '1')
+						            AND ((fp.forum_publish = '1' AND fpr.forum_publish = '1') OR fp.forum_publish = '1' OR fpr.forum_publish = '1')
                         $forum_id_data
                     ORDER BY tstamp DESC
                     LIMIT $limit
@@ -107,7 +107,7 @@ class ForumStats
               WHERE fp.forum_post_id = :forum_post_id
               AND fpr.id = :forum_reply_id
               AND fp.allow = 'TRUE'
-			        AND (fp.forum_publish = '1' OR fpr.forum_publish = '1')
+			        AND ((fp.forum_publish = '1' AND fpr.forum_publish = '1') OR fp.forum_publish = '1' OR fpr.forum_publish = '1')
               LIMIT 1
             ", array(':forum_post_id' => $forum_post_id, ':forum_reply_id' => $forum_reply_id));
         }else{
@@ -127,7 +127,7 @@ class ForumStats
               ON fp.forum_post_id = fpr.fpr_post_id
               WHERE fp.forum_post_id = :forum_post_id
               AND fp.allow = 'TRUE'
-			        AND (fp.forum_publish = '1' OR fpr.forum_publish = '1')
+			        AND ((fp.forum_publish = '1' AND fpr.forum_publish = '1') OR fp.forum_publish = '1' OR fpr.forum_publish = '1')
               LIMIT 1
             ", array(':forum_post_id' => $forum_post_id));
         }
@@ -203,7 +203,7 @@ class ForumStats
                             ON fp.forum_post_id = fpr.fpr_post_id
                             WHERE fp.forum_id = :forum_id
                             AND fp.allow = 'TRUE'
-							AND (fp.forum_publish = '1' OR fpr.forum_publish = '1')
+							              AND ((fp.forum_publish = '1' AND fpr.forum_publish = '1') OR fp.forum_publish = '1' OR fpr.forum_publish = '1')
                     ) sub2
                         ORDER BY tstamp DESC
                 ) sub1
@@ -266,6 +266,7 @@ class ForumStats
           LEFT JOIN ".PREFIX."forum_posts fp
           ON v.view_id = fp.forum_post_id
           WHERE v.view_location = 'Forum_Topic'
+          AND (fp.forum_publish = '1')
           GROUP BY v.view_id
           ORDER BY total_views DESC
           LIMIT $limit
@@ -292,6 +293,7 @@ class ForumStats
           ON s.sweet_id = fp.forum_post_id
           WHERE s.sweet_location = 'Forum_Topic'
           OR s.sweet_location = 'Forum_Topic_Reply'
+          AND (fp.forum_publish = '1')
           GROUP BY s.sweet_id
           ORDER BY total_sweets DESC
           LIMIT $limit

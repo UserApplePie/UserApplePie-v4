@@ -27,7 +27,7 @@ use Libs\Language,
                 <div class="row">
                     <div class="col-md-12 col-lg-12" align="center">
                       <?php if(!empty($data['main_image'])){ ?>
-                        <img alt="<?php echo $data['profile']->username; ?>'s Profile Picture" src="<?php echo SITE_URL.IMG_DIR_PROFILE.$data['main_image']; ?>" class="rounded img-fluid">
+                        <img alt="<?php echo $data['profile']->username; ?>'s <?=Language::show('mem_act_profile_photo', 'Members'); ?>" src="<?php echo SITE_URL.IMG_DIR_PROFILE.$data['main_image']; ?>" class="rounded img-fluid">
                         <?php }else{ ?>
             							<span class='fas fa-user icon-size'></span>
             						<?php } ?>
@@ -93,7 +93,7 @@ use Libs\Language,
 
         <div class='card mb-3'>
             <div class='card-header h4'>
-                <h3><?php echo $data['profile']->username; ?>'s Friends</h3>
+                <h3><?php echo $data['profile']->username; ?>'s <?=Language::show('friends', 'Members'); ?></h3>
             </div>
             <ul class="list-group list-group-flush">
               <?php
@@ -113,7 +113,7 @@ use Libs\Language,
                     echo "</li>";
                   }
                 }else{
-                  echo "<li class='list-group-item'>User does not have any friends. :(</li>";
+                  echo "<li class='list-group-item'>".Language::show('user_does_not_have_friends', 'Members').". :(</li>";
                 }
               ?>
             </ul>
@@ -121,7 +121,7 @@ use Libs\Language,
 
         <div class='card mb-3'>
             <div class='card-header h4'>
-                <h3>Mutual Friends</h3>
+                <h3><?=Language::show('mutual_friends', 'Members'); ?></h3>
             </div>
             <ul class="list-group list-group-flush">
               <?php
@@ -141,7 +141,7 @@ use Libs\Language,
                     echo "</li>";
                   }
                 }else{
-                  echo "<li class='list-group-item'>You don't have any mutual friends. :(</li>";
+                  echo "<li class='list-group-item'>".Language::show('user_does_not_have_mutual_friends', 'Members').". :(</li>";
                 }
               ?>
             </ul>
@@ -254,7 +254,7 @@ use Libs\Language,
                 }
                 echo "<hr>";
               }else{
-                echo "User has not yet shared a status update.";
+                echo Language::show('no_status_update', 'Members').".";
               }
           ?>
         </div>

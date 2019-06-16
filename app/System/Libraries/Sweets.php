@@ -172,12 +172,11 @@ class Sweets
         $post_sweet_location = Request::post('sweet_location');
         $post_sweet_owner_userid = Request::post('sweet_owner_userid');
         $post_sweet_sec_id = Request::post('sweet_sec_id');
-        if($submit_sweet == "true" && $post_sweet_sec_id == $sweet_sec_id){
+        if($submit_sweet == "true" && $post_sweet_id == $sweet_id){
           self::addSweet($post_sweet_id, $post_sweet_location, $post_sweet_owner_userid, $post_sweet_sec_id, $sweet_url);
-        }else if($delete_sweet == "true" && $post_sweet_sec_id == $sweet_sec_id){
+        }else if($delete_sweet == "true" && $post_sweet_id == $sweet_id){
           self::removeSweet($post_sweet_id, $post_sweet_location, $post_sweet_owner_userid, $post_sweet_sec_id, $sweet_url);
         }
-
         // Ouput the sweet/unsweet button
         return $sweet_button_display;
     }

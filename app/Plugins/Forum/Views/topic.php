@@ -159,7 +159,27 @@ use Core\Language,
             if(!empty($data['forum_topic_images'])){
               echo "<hr style='margin-bottom: 0px'><font size='1'><i>Image Attachments</i></font>";
               echo "<hr style='margin-top: 0px'>";
-              echo "<div align='center' style='margin-bottom: 8px'><a href='".SITE_URL."{$data['forum_topic_images']}' target='_blank'><img src='".DIR."{$data['forum_topic_images']}' height='100px'></a></div>";
+              echo "<div class='row'>";
+              foreach($data['forum_topic_images'] as $check_for_image){
+                /** Display Image **/
+                echo "<div class='col-lg-2 col-md-3 col-sm-4 col-xs-6' style='padding-bottom: 6px'>";
+                echo "<a href='#imageModal".$check_for_image->imageName."' data-toggle='modal' data-target='#imageModal".$check_for_image->imageName."'>";
+                echo "<img src=".SITE_URL."{$check_for_image->imageLocation}{$check_for_image->imageName} class='img-thumbnail' style='height: 100px'>";
+                echo "</a>";
+                echo "</div>";
+
+                /** Image Model **/
+                echo "
+                  <div id='imageModal".$check_for_image->imageName."' class='modal fade' tabindex='-1' role='dialog'>
+                    <div class='modal-dialog modal-dialog-centered modal-lg'>
+                      <div class='modal-content'>
+                        <img src='".SITE_URL."{$check_for_image->imageLocation}{$check_for_image->imageName}' class='img-responsive' style='width: 100%'>
+                      </div>
+                    </div>
+                  </div>
+                ";
+              }
+              echo "</div>";
             }
           echo "</div>";
   			echo "</div>";
@@ -324,11 +344,31 @@ use Core\Language,
                     }
                   }
                   // Check to see if there are any images attaced to this post
-                  $check_for_image = Images::getForumImagesTopicReply($rf_p_id, $rf_p_main_id);
-                  if(!empty($check_for_image)){
+                  $check_for_images = Images::getForumImagesTopicReply($rf_p_id, $rf_p_main_id);
+                  if(!empty($check_for_images)){
                     echo "<hr style='margin-bottom: 0px'><font size='1'><i>Image Attachments</i></font>";
                     echo "<hr style='margin-top: 0px'>";
-                    echo "<div align='center' style='margin-bottom: 8px'><a href='".SITE_URL."{$check_for_image}' target='_blank'><img src='".SITE_URL."{$check_for_image}' height='100px'></a></div>";
+                    echo "<div class='row'>";
+                    foreach($check_for_images as $check_for_image){
+                      /** Display Image **/
+                      echo "<div class='col-lg-2 col-md-3 col-sm-4 col-xs-6' style='padding-bottom: 6px'>";
+                      echo "<a href='#imageModal".$check_for_image->imageName."' data-toggle='modal' data-target='#imageModal".$check_for_image->imageName."'>";
+                      echo "<img src=".SITE_URL."{$check_for_image->imageLocation}{$check_for_image->imageName} class='img-thumbnail' style='height: 100px'>";
+                      echo "</a>";
+                      echo "</div>";
+
+                      /** Image Model **/
+                      echo "
+                        <div id='imageModal".$check_for_image->imageName."' class='modal fade' tabindex='-1' role='dialog'>
+                          <div class='modal-dialog modal-dialog-centered modal-lg'>
+                            <div class='modal-content'>
+                              <img src='".SITE_URL."{$check_for_image->imageLocation}{$check_for_image->imageName}' class='img-responsive' style='width: 100%'>
+                            </div>
+                          </div>
+                        </div>
+                      ";
+                    }
+                    echo "</div>";
                   }
                 }else{
                   // Mod/Admin has disallowed this reply.  Show message
@@ -426,7 +466,7 @@ use Core\Language,
                 </span>
               </div>
               <?php (isset($data['fpr_content'])) ? $data['fpr_content'] = $data['fpr_content'] : $data['fpr_content'] = ""; ?>
-              <?php echo Form::textBox(array('type' => 'text', 'id' => 'forum_content', 'name' => 'fpr_content', 'class' => 'form-control', 'value' => $data['fpr_content'], 'placeholder' => 'Topic Reply Content', 'rows' => '6')); ?>
+              <?php echo Form::textBox(array('type' => 'text', 'id' => 'fpr_content', 'name' => 'fpr_content', 'class' => 'form-control', 'value' => $data['fpr_content'], 'placeholder' => 'Topic Reply Content', 'rows' => '6')); ?>
             </div>
 
             <?php
@@ -439,20 +479,24 @@ use Core\Language,
                     <span class="input-group-text" id="inputGroupFileAddon01"><i class='fas fa-image'></i></span>
                   </div>
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept="image/jpeg, image/gif, image/x-png" id="forumImage" name="forumImage" aria-describedby="inputGroupFileAddon01">
+                    <input type="file" class="custom-file-input" accept="image/jpeg, image/gif, image/x-png" id="forumImage" name="forumImage[]" aria-describedby="inputGroupFileAddon01" multiple="multiple">
                     <label class="custom-file-label" for="inputGroupFile01">Select Image File</label>
                   </div>
                 </div>
             <?php } ?>
 
               <!-- CSRF Token -->
-              <input type="hidden" name="token_forum" value="<?php echo $data['csrf_token']; ?>" />
+              <input type="hidden" id="token_forum" name="token_forum" value="<?php echo $data['csrf_token']; ?>" />
+              <input type="hidden" id="topic_id" name="topic_id" value="<?php echo $data['topic_id']; ?>" />
+              <input type="hidden" id="fpr_post_id" name="fpr_post_id" value="<?php echo $data['user_reply_id']; ?>" />
               <input type='hidden' name='action' value='new_reply' />
-              <button class="btn btn-md btn-success" name="submit" type="submit">
+              <button class="btn btn-md btn-success" name="submit" type="submit" id="submit">
                 <?php // echo Language::show('update_profile', 'Auth'); ?>
                 Submit New Reply
               </button>
             <?php echo Form::close(); ?>
+            <div id="autoSave"></div>
+            <div id="fpr_post_id"></div>
             <hr>
 <?php
           }
