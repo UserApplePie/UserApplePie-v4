@@ -4,6 +4,11 @@ https://www.userapplepie.com
 ----------------------------------------------------------------------------------------
 UAP v4.2.1 to v4.3.0
 ----------------------------------------------------------------------------------------
+### Language
+ - Added misc lang data
+### Header
+ - Added Site Wide Message to the header to show if set
+ - Added a check to let user know if profile is still default
 ### Auth
  - Fixed styles in auth pages to match rest of site
 ### Sweets
@@ -36,6 +41,9 @@ UAP v4.2.1 to v4.3.0
  - Added ability to upload multiple photos to user profiles
  - Added ability for user to set default and delete photos
  - Added Mutual Friends list
+ - Added Privacy Settings
+ - Added Location
+ - Updated Account home page
 ### Updated Forum Plugin
  - Added Auto Save Draft feature to new topics and replies with auto recover.
  - Added Image Max Size option to Admin Settings
@@ -50,6 +58,11 @@ UAP v4.2.1 to v4.3.0
  - Updated for more strict email check
 ### Admin panel
  - Updated admin panel to not show adds
+ - Fixed a bug in the settings that created duplicate entries
+ - Added Site Wide Message in the settings
+ - Moved Email settings to it's own page
+ - Set auto router to add link to site links
+ - Added top referer stats to dashboard
 ### User Auth
  - Updated user auth pages to not show adds
 ### Mass Email

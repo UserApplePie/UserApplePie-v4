@@ -23,16 +23,39 @@ class AdminPanel extends Models {
                 ".PREFIX."settings
             WHERE
                 setting_title = :setting
+            ORDER BY
+                setting_id DESC
         ",
         array(':setting' => $setting));
         return $settings_data[0]->setting_data;
     }
 
+    /* Check Site Setting in Database */
+    public function checkSetting($setting){
+        $settings_data = $this->db->selectCount("
+            SELECT
+                setting_title
+            FROM
+                ".PREFIX."settings
+            WHERE
+                setting_title = :setting
+        ",
+        array(':setting' => $setting));
+
+        if($settings_data > 0){
+          return true;
+        }else{
+          return false;
+        }
+    }
+
     /* Update Site Setting Data */
   	public function updateSetting($setting_title, $setting_data){
       /* Check to see if data is the same */
+      $check_title = SELF::checkSetting($setting_title);
       $cur_setting = SELF::getSettings($setting_title);
-      if(isset($cur_setting)){
+
+      if($check_title){
         if($cur_setting == $setting_data){
           return true;
         }else{
@@ -931,6 +954,35 @@ class AdminPanel extends Models {
         }else{
           return "4.2.1";
         }
+    }
+
+    /**
+    * getTopRefer
+    *
+    * Checks database for controller and method
+    *
+    * @return int count
+    */
+    public function getTopRefer($days = '10'){
+        $thissite = SITE_URL;
+        $thissite = trim($thissite, '/');
+        $thissite = parse_url($thissite);
+        $data = $this->db->select("
+          SELECT refer, COUNT(refer) as refer_count FROM `".PREFIX."sitelogs`
+            WHERE server = '".$_SERVER['SERVER_NAME']."'
+            AND refer != ''
+            AND refer NOT LIKE :thissite
+            AND refer NOT LIKE '%localhost%'
+            AND timestamp >= CURDATE() - INTERVAL :days DAY
+            GROUP BY refer
+            ORDER BY refer_count DESC
+            LIMIT 5
+        ", array(':days' => $days, ':thissite' => '%'.$thissite['host'].'%'));
+      if(isset($data)){
+          return $data;
+      }else{
+          return false;
+      }
     }
 
 }

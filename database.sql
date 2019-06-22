@@ -117,6 +117,7 @@ CREATE TABLE IF NOT EXISTS `uap4_users` (
   `gender` varchar(8) DEFAULT NULL,
   `userImage` varchar(255) DEFAULT NULL,
   `website` varchar(255) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
   `aboutme` text DEFAULT NULL,
   `signature` text DEFAULT NULL,
   `isactive` tinyint(1) NOT NULL DEFAULT '0',
@@ -125,6 +126,7 @@ CREATE TABLE IF NOT EXISTS `uap4_users` (
   `LastLogin` datetime DEFAULT NULL,
   `privacy_massemail` varchar(5) NOT NULL DEFAULT 'true',
   `privacy_pm` varchar(5) NOT NULL DEFAULT 'true',
+  `privacy_profile` varchar(20) NOT NULL DEFAULT 'Public',
   `SignUp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
   PRIMARY KEY (`userID`)
@@ -457,7 +459,8 @@ INSERT INTO `uap4_settings` (`setting_id`, `setting_title`, `setting_data`) VALU
 (31, 'message_pageinator_limit', '10'),
 (32, 'sweet_title_display', 'Sweets'),
 (33, 'sweet_button_display', 'Sweet'),
-(34, 'image_max_size', '800,600');
+(34, 'image_max_size', '800,600'),
+(34, 'site_message', '');
 
 -- --------------------------------------------------------
 

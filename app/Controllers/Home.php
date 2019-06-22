@@ -21,7 +21,8 @@ use App\System\Controller,
     Libs\SuccessMessages,
     Libs\ErrorMessages,
     Libs\Url,
-    Libs\Request;
+    Libs\Request,
+    Libs\Language;
 
 class Home extends Controller {
 
@@ -44,6 +45,19 @@ class Home extends Controller {
           $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
           $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
           $data['current_userID'] = $u_id;
+          /** Check to see if user is missing anything in their profile **/
+          $firstNameCheck = $data['currentUserData'][0]->firstName;
+          $aboutmeCheck = $data['currentUserData'][0]->aboutme;
+          $defaultImageCheck = $this->user->getUserImageMain($u_id);
+          if(empty($firstNameCheck)){
+            $data['info_alert'] = Language::show('edit_profile_first_name_not_set', 'Members')." <a href='".SITE_URL."Edit-Profile'>".Language::show('edit_profile', 'Members')."</a>";
+          }else if(empty($aboutmeCheck)){
+            $data['info_alert'] = Language::show('edit_profile_aboutme_not_set', 'Members')." <a href='".SITE_URL."Edit-Profile'>".Language::show('edit_profile', 'Members')."</a>";
+          }else{
+            if(strpos($defaultImageCheck, 'default-') !== false){
+              $data['info_alert'] = Language::show('edit_profile_default_image_not_set', 'Members')." <a href='".SITE_URL."Edit-Profile-Images'>".Language::show('mem_act_edit_profile_images', 'Members')."</a>";
+            }
+          }
         }
         /** Get Data For Member Totals Stats Sidebar **/
         $onlineUsers = new MembersModel();

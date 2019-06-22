@@ -234,12 +234,14 @@ class Members extends Models
             u.username,
             u.firstName,
             u.lastName,
+            u.location,
             u.gender,
             u.LastLogin,
             u.SignUp,
             u.website,
             u.aboutme,
-            u.signature
+            u.signature,
+            u.privacy_profile
           FROM " . PREFIX . "users u
           WHERE u.userID = :userID
           ",
@@ -252,12 +254,14 @@ class Members extends Models
   						u.username,
   						u.firstName,
               u.lastName,
+              u.location,
   						u.gender,
   						u.LastLogin,
   						u.SignUp,
   						u.website,
   						u.aboutme,
-              u.signature
+              u.signature,
+              u.privacy_profile
   					FROM " . PREFIX . "users u
   					WHERE u.username = :username
             ",
@@ -289,9 +293,9 @@ class Members extends Models
     *
     * @return int rows
     */
-    public function updateProfile($u_id, $firstName, $lastName, $gender, $website, $aboutme, $signature)
+    public function updateProfile($u_id, $firstName, $lastName, $gender, $website, $aboutme, $signature, $location)
     {
-        return $this->db->update(PREFIX.'users', array('firstName' => $firstName, 'lastName' => $lastName, 'gender' => $gender, 'website' => $website, 'aboutme' => $aboutme, 'signature' => $signature), array('userID' => $u_id));
+        return $this->db->update(PREFIX.'users', array('firstName' => $firstName, 'lastName' => $lastName, 'gender' => $gender, 'website' => $website, 'aboutme' => $aboutme, 'signature' => $signature, 'location' => $location), array('userID' => $u_id));
     }
 
     /**
@@ -301,9 +305,9 @@ class Members extends Models
     *
     * @return boolean true/false
     */
-    public function updateUPrivacy($u_id, $privacy_massemail, $privacy_pm)
+    public function updateUPrivacy($u_id, $privacy_massemail, $privacy_pm, $privacy_profile)
     {
-        $data = $this->db->update(PREFIX.'users', array('privacy_massemail' => $privacy_massemail, 'privacy_pm' => $privacy_pm), array('userID' => $u_id));
+        $data = $this->db->update(PREFIX.'users', array('privacy_massemail' => $privacy_massemail, 'privacy_pm' => $privacy_pm, 'privacy_profile' => $privacy_profile), array('userID' => $u_id));
         if($data > 0){
           return true;
         }else{

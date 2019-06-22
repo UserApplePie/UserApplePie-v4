@@ -165,7 +165,7 @@ body.fixed-nav {
     padding: 0;
   }
   #mainNav .navbar-collapse .navbar-sidenav > .nav-item > .nav-link {
-    padding: 1em;
+    padding: 0.25em;
   }
   #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-second-level,
   #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-third-level {
@@ -178,7 +178,7 @@ body.fixed-nav {
   }
   #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-second-level > li > a,
   #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-third-level > li > a {
-    padding: 1em;
+    padding: 0.25em;
   }
   #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-second-level > li > a {
     padding-left: 2.75em;

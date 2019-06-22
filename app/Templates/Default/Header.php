@@ -22,6 +22,8 @@ use Libs\Assets,
     /** Check to see if Meta Tags are set by Controller **/
     if(!empty($data['site_keywords'])){ $site_keywords = $data['site_keywords']; }else{ $site_keywords = SITE_KEYWORDS; }
     if(!empty($data['site_description'])){ $site_description = $data['site_description']; }else{ $site_description = SITE_DESCRIPTION; }
+    $site_wide_message = SITE_WIDE_MESSAGE;
+    if(!empty($site_wide_message)){ $info_alert = $site_wide_message; }
 
 ?>
 
@@ -159,6 +161,9 @@ use Libs\Assets,
         <div class="container-fluid">
             <div class="row">
 
+              <!-- Under Header Content -->
+              <?php if(!empty($data['underHeader'])){ echo $data['underHeader']; } ?>
+
               <!-- BreadCrumbs -->
               <?php
               // Display Breadcrumbs if set
@@ -179,4 +184,5 @@ use Libs\Assets,
               echo SuccessMessages::display();
               if(isset($error)) { echo ErrorMessages::display_raw($error); }
               if(isset($success)) { echo SuccessMessages::display_raw($success); }
+              if(isset($info_alert)) { echo SuccessMessages::display_raw_info($info_alert); }
               ?>

@@ -28,9 +28,9 @@ class SiteStats
     /** The filename of the currently executing script, relative to the document root. **/
     $cfile = $_SERVER['PHP_SELF'];
     /** Prints the exact path and filename relative to the DOCUMENT_ROOT of your site. **/
-	$uri = $_SERVER['REQUEST_URI'];
+	  $uri = $_SERVER['REQUEST_URI'];
     /** Contains the IP address of the user requesting the PHP script from the server. **/
-	$ipaddy = $_SERVER['REMOTE_ADDR'];
+	  $ipaddy = $_SERVER['REMOTE_ADDR'];
     /** Get Server Name Site is Accessed On. **/
     $server = $_SERVER['SERVER_NAME'];
 

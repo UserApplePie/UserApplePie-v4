@@ -44,6 +44,13 @@ use Libs\Language, Libs\Form;
 
 								<div class="input-group mb-3">
 									<div class="input-group-prepend">
+										<div class="input-group-text"><?=Language::show('members_profile_location', 'Members'); ?> </div>
+									</div>
+									<input id="location" type="text" class="form-control" name="location" placeholder="<?=Language::show('members_profile_location', 'Members'); ?>" value="<?php echo $data['profile']->location; ?>">
+								</div>
+
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
 										<div class="input-group-text"><?=Language::show('members_profile_gender', 'Members'); ?> </div>
 									</div>
 									<select class='custom-select' id='gender' name='gender'>

@@ -17,6 +17,22 @@ use Libs\Language;
 		</div>
 		<div class="card-body">
 			<p><?=$welcomeMessage;?></p>
+			<hr>
+			<a href='<?=DIR?>Edit-Profile' rel='nofollow'><?=Language::show('mem_act_edit_profile', 'Members'); ?></a><br>
+			<?=Language::show('mem_act_edit_profile_description', 'Members'); ?>
+			<hr>
+			<a href='<?=DIR?>Edit-Profile-Images' rel='nofollow'><?=Language::show('mem_act_edit_profile_images', 'Members'); ?></a><br>
+			<?=Language::show('mem_act_edit_profile_images_description', 'Members'); ?>
+			<hr>
+			<a href='<?=DIR?>Change-Email' rel='nofollow'><?=Language::show('mem_act_change_email', 'Members'); ?></a><br>
+			<?=Language::show('mem_act_change_email_description', 'Members'); ?>
+			<hr>
+			<a href='<?=DIR?>Change-Password' rel='nofollow'><?=Language::show('mem_act_change_pass', 'Members'); ?></a><br>
+			<?=Language::show('mem_act_change_pass_description', 'Members'); ?>
+			<hr>
+			<a href='<?=DIR?>Privacy-Settings' rel='nofollow'><?=Language::show('mem_act_privacy_settings', 'Members'); ?></a><br>
+			<?=Language::show('mem_act_privacy_settings_description', 'Members'); ?>
+
     </div>
   </div>
 </div>
