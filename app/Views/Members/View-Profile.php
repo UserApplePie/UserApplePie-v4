@@ -16,6 +16,42 @@ use Libs\Language,
 
     $recent_userName = CurrentUserData::getUserName($data['profile']->userID);
     $recent_userImage = CurrentUserData::getUserImage($data['profile']->userID);
+
+    /** Check for User's Profile Privacy Settings **/
+    $user_privacy = $data['profile']->privacy_profile;
+    /** Get current users relationship **/
+    /* Check to see if Friends Plugin is installed, if it is show link */
+    if(file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php') && $currentUserData[0]->username != $data['profile']->username){
+      /** Check to see if users are friends or if a request is pending **/
+      $friends_status = \Libs\CurrentUserData::getFriendStatus($currentUserData[0]->userID, $data['profile']->userID);
+    }
+    if($friends_status == "Friends"){
+      $users_relationship = "Friends";
+    }else if(isset($data['current_userID'])){
+      $users_relationship = "Member";
+    }else{
+      $users_relationship = "Guest";
+    }
+    /** Check to see if current user can view profile **/
+    if($data['profile']->userID == $data['current_userID']){
+      $allow_profile = true;
+    }else if($user_privacy == 'Friends'){
+      /** Users Must be friends **/
+      if($users_relationship == 'Friends'){
+        $allow_profile = true;
+      }else{
+        $allow_profile = false;
+      }
+    }else if($user_privacy == 'Members'){
+      /** Current user must be logged in **/
+      if($users_relationship != 'Guest'){
+        $allow_profile = true;
+      }else{
+        $allow_profile = false;
+      }
+    }else if($user_privacy == 'Public'){
+      $allow_profile = true;
+    }
 ?>
 
     <div class="col-md-4 col-lg-4 col-md-12">
@@ -69,6 +105,7 @@ use Libs\Language,
                               ?>
                               <tr><td><?=Language::show('members_profile_firstname', 'Members'); ?></td><td><?php echo $data['profile']->firstName; ?></td></tr>
                               <tr><td><?=Language::show('members_profile_lastname', 'Members'); ?></td><td><?php echo $data['profile']->lastName; ?></td></tr>
+                              <tr><td><?=Language::show('members_profile_location', 'Members'); ?></td><td><?php echo $data['profile']->location; ?></td></tr>
                               <?php
                                 if($data['user_groups']){
                                   echo "<tr><td>".Language::show('members_profile_group', 'Members')."</td><td>";
@@ -84,13 +121,30 @@ use Libs\Language,
 							              <?php } ?>
                             <tr><td><?=Language::show('members_profile_lastlogin', 'Members'); ?></td><td><?php if($data['profile']->LastLogin){ echo date("F d, Y",strtotime($data['profile']->LastLogin)); }else{ echo "Never"; } ?></td></tr>
                             <tr><td><?=Language::show('members_profile_signup', 'Members'); ?></td><td><?php echo date("F d, Y",strtotime($data['profile']->SignUp)); ?></td></tr>
+                            <tr><td><?=Language::show('members_profile_privacy', 'Members'); ?></td><td><?php echo $data['profile']->privacy_profile; ?></td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-
+<?php
+  /** Check to see if profile can be displayed **/
+  if($allow_profile == false){
+    echo "</div>";
+    echo "<div class='col-md-8 col-lg-8'>
+            <div class='card mb-3 bg-danger'>
+                <div class='card-header h4'>
+                    ".$data['profile']->username."
+                </div>
+                <div class='card-body'>
+                    ".Language::show('members_profile_can_not_view', 'Members')."
+                </div>
+            </div>
+          </div>
+    ";
+  }else{
+ ?>
         <div class='card mb-3'>
             <div class='card-header h4'>
                 <h3><?php echo $data['profile']->username; ?>'s <?=Language::show('friends', 'Members'); ?></h3>
@@ -263,3 +317,4 @@ use Libs\Language,
       </div>
 
     </div>
+<?php } ?>

@@ -62,6 +62,10 @@ class AdminPanel extends Controller{
     /** Get total page views count **/
     $data['totalPageViews'] = \Libs\SiteStats::getTotalViews();
 
+    /** Get Top Referers **/
+    $data['topRefer'] = $this->model->getTopRefer('30');
+    $data['topReferYear'] = $this->model->getTopRefer('365');
+
     /** Function to check if the files exist (prevent errors when mother server is down) **/
     function UR_exists($url){
       $headers=get_headers($url);
@@ -193,31 +197,19 @@ class AdminPanel extends Controller{
                     $site_description = Request::post('site_description');
                     $site_keywords = Request::post('site_keywords');
                     $site_user_activation = Request::post('site_user_activation');
-                    $site_email_username = Request::post('site_email_username');
-                    $site_email_password = Request::post('site_email_password');
-                    $site_email_fromname = Request::post('site_email_fromname');
-                    $site_email_host = Request::post('site_email_host');
-                    $site_email_port = Request::post('site_email_port');
-                    $site_email_smtp = Request::post('site_email_smtp');
-                    $site_email_site = Request::post('site_email_site');
                     $site_recapcha_public = Request::post('site_recapcha_public');
                     $site_recapcha_private = Request::post('site_recapcha_private');
                     $site_theme = Request::post('site_theme');
+                    $site_message = Request::post('site_message');
 
                     if($this->model->updateSetting('site_title', $site_title)){}else{ $errors[] = 'Site Title Error'; }
                     if($this->model->updateSetting('site_description', $site_description)){}else{ $errors[] = 'Site Description Error'; }
                     if($this->model->updateSetting('site_keywords', $site_keywords)){}else{ $errors[] = 'Site Keywords Error'; }
                     if($this->model->updateSetting('site_user_activation', $site_user_activation)){}else{ $errors[] = 'Site User Activation Error'; }
-                    if($this->model->updateSetting('site_email_username', $site_email_username)){}else{ $errors[] = 'Site Email Username Error'; }
-                    if($this->model->updateSetting('site_email_password', $site_email_password)){}else{ $errors[] = 'Site Email Password Error'; }
-                    if($this->model->updateSetting('site_email_fromname', $site_email_fromname)){}else{ $errors[] = 'Site Email From Name Error'; }
-                    if($this->model->updateSetting('site_email_host', $site_email_host)){}else{ $errors[] = 'Site Email Host Error'; }
-                    if($this->model->updateSetting('site_email_port', $site_email_port)){}else{ $errors[] = 'Site Email Port Error'; }
-                    if($this->model->updateSetting('site_email_smtp', $site_email_smtp)){}else{ $errors[] = 'Site Email SMTP Auth Error'; }
-                    if($this->model->updateSetting('site_email_site', $site_email_site)){}else{ $errors[] = 'Site Email Error'; }
                     if($this->model->updateSetting('site_recapcha_public', $site_recapcha_public)){}else{ $errors[] = 'Site reCAPCHA Public Error'; }
                     if($this->model->updateSetting('site_recapcha_private', $site_recapcha_private)){}else{ $errors[] = 'Site reCAPCHA Private Error'; }
                     if($this->model->updateSetting('site_theme', $site_theme)){}else{ $errors[] = 'Site Theme Error'; }
+                    if($this->model->updateSetting('site_message', $site_message)){}else{ $errors[] = 'Site Wide Message Error'; }
 
                     // Run the update settings script
                     if(!isset($errors) || count($errors) == 0){
@@ -255,22 +247,11 @@ class AdminPanel extends Controller{
         $data['site_description'] = $this->model->getSettings('site_description');
         $data['site_keywords'] = $this->model->getSettings('site_keywords');
         $data['site_user_activation'] = $this->model->getSettings('site_user_activation');
-        $data['site_email_username'] = $this->model->getSettings('site_email_username');
-        $data['site_email_password'] = $this->model->getSettings('site_email_password');
-        $data['site_email_fromname'] = $this->model->getSettings('site_email_fromname');
-        $data['site_email_host'] = $this->model->getSettings('site_email_host');
-        $data['site_email_port'] = $this->model->getSettings('site_email_port');
-        $data['site_email_smtp'] = $this->model->getSettings('site_email_smtp');
-        $data['site_email_site'] = $this->model->getSettings('site_email_site');
         $data['site_recapcha_public'] = $this->model->getSettings('site_recapcha_public');
         $data['site_recapcha_private'] = $this->model->getSettings('site_recapcha_private');
         $data['site_theme'] = $this->model->getSettings('site_theme');
-        $data['users_pageinator_limit'] = $this->model->getSettings('users_pageinator_limit');
-        $data['friends_pageinator_limit'] = $this->model->getSettings('friends_pageinator_limit');
-        $data['message_quota_limit'] = $this->model->getSettings('message_quota_limit');
-        $data['message_pageinator_limit'] = $this->model->getSettings('message_pageinator_limit');
-        $data['sweet_title_display'] = $this->model->getSettings('sweet_title_display');
-        $data['sweet_button_display'] = $this->model->getSettings('sweet_button_display');
+        $data['site_message'] = $this->model->getSettings('site_message');
+
 
         /* Setup Token for Form */
         $data['csrfToken'] = Csrf::makeToken('settings');
@@ -423,6 +404,108 @@ class AdminPanel extends Controller{
 
         Load::View("AdminPanel/AdvancedSettings", $data, "", "AdminPanel");
     }
+
+    /*
+    ** Admin Panel Site Email Settings
+    ** Allows admins to change all site settings except database
+    */
+    public function EmailSettings(){
+        /* Get data for dashboard */
+        $data['current_page'] = $_SERVER['REQUEST_URI'];
+        $data['title'] = "Site E-Mail Settings";
+        $data['welcomeMessage'] = "Welcome to the Admin Panel Site E-Mail Settings!";
+
+        /** Check to see if user is logged in **/
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+            /** User is logged in - Get their data **/
+            $u_id = $this->auth->user_info();
+            $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+            if($data['isAdmin'] = $this->user->checkIsAdmin($u_id) == 'false'){
+                /** User Not Admin - kick them out **/
+                \Libs\ErrorMessages::push('You are Not Admin', '');
+            }
+        }else{
+            /** User Not logged in - kick them out **/
+            \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
+        }
+
+        /* Check to see if Admin is submiting form data */
+        if(isset($_POST['submit'])){
+          /* Check to see if site is a demo site */
+          if(DEMO_SITE != 'TRUE'){
+            /* Check to make sure the csrf token is good */
+            if (Csrf::isTokenValid('settings')) {
+                /* Check to make sure Admin is updating settings */
+                if($_POST['update_settings'] == "true"){
+                    /* Get data sbmitted by form */
+                    $site_email_username = Request::post('site_email_username');
+                    $site_email_password = Request::post('site_email_password');
+                    $site_email_fromname = Request::post('site_email_fromname');
+                    $site_email_host = Request::post('site_email_host');
+                    $site_email_port = Request::post('site_email_port');
+                    $site_email_smtp = Request::post('site_email_smtp');
+                    $site_email_site = Request::post('site_email_site');
+
+                    if($this->model->updateSetting('site_email_username', $site_email_username)){}else{ $errors[] = 'Site Email Username Error'; }
+                    if($this->model->updateSetting('site_email_password', $site_email_password)){}else{ $errors[] = 'Site Email Password Error'; }
+                    if($this->model->updateSetting('site_email_fromname', $site_email_fromname)){}else{ $errors[] = 'Site Email From Name Error'; }
+                    if($this->model->updateSetting('site_email_host', $site_email_host)){}else{ $errors[] = 'Site Email Host Error'; }
+                    if($this->model->updateSetting('site_email_port', $site_email_port)){}else{ $errors[] = 'Site Email Port Error'; }
+                    if($this->model->updateSetting('site_email_smtp', $site_email_smtp)){}else{ $errors[] = 'Site Email SMTP Auth Error'; }
+                    if($this->model->updateSetting('site_email_site', $site_email_site)){}else{ $errors[] = 'Site Email Error'; }
+
+                    // Run the update settings script
+                    if(!isset($errors) || count($errors) == 0){
+                        // Success
+                        \Libs\SuccessMessages::push('You Have Successfully Updated Site E-Mail Settings', 'AdminPanel-EmailSettings');
+                    }else{
+                        // Error
+                        if(isset($errors)){
+                            $error_data = "<hr>";
+                            foreach($errors as $row){
+                                $error_data .= " - ".$row."<br>";
+                            }
+                        }else{
+                            $error_data = "";
+                        }
+                        /* Error Message Display */
+                        \Libs\ErrorMessages::push('Error Updating Site E-Mail Settings'.$error_data, 'AdminPanel-EmailSettings');
+                    }
+                }else{
+                    /* Error Message Display */
+                    \Libs\ErrorMessages::push('Error Updating Site E-Mail Settings', 'AdminPanel-EmailSettings');
+                }
+            }else{
+                /* Error Message Display */
+                \Libs\ErrorMessages::push('Error Updating Site E-Mail Settings', 'AdminPanel-EmailSettings');
+            }
+          }else{
+          	/* Error Message Display */
+          	\Libs\ErrorMessages::push('Demo Limit - E-Mail Settings Disabled', 'AdminPanel-EmailSettings');
+          }
+        }
+
+        /* Get Settings Data */
+        $data['site_email_username'] = $this->model->getSettings('site_email_username');
+        $data['site_email_password'] = $this->model->getSettings('site_email_password');
+        $data['site_email_fromname'] = $this->model->getSettings('site_email_fromname');
+        $data['site_email_host'] = $this->model->getSettings('site_email_host');
+        $data['site_email_port'] = $this->model->getSettings('site_email_port');
+        $data['site_email_smtp'] = $this->model->getSettings('site_email_smtp');
+        $data['site_email_site'] = $this->model->getSettings('site_email_site');
+
+        /* Setup Token for Form */
+        $data['csrfToken'] = Csrf::makeToken('settings');
+
+        /* Setup Breadcrumbs */
+        $data['breadcrumbs'] = "
+          <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+          <li class='breadcrumb-item active'><i class='fa fa-fw fa-dashboard'></i> ".$data['title']."</li>
+        ";
+
+        Load::View("AdminPanel/EmailSettings", $data, "", "AdminPanel");
+    }
+
 
     /*
     ** Admin Panel Users
@@ -1052,6 +1135,11 @@ class AdminPanel extends Controller{
               /** Add Controller and Method to Database **/
               if($this->model->addRoute($single_route['controller'], $single_route['method'])){
                   $new_routes[] = $single_route['controller']." - ".$single_route['method']."<Br>";
+                  /** New Route added to database.  Add to site Links **/
+                  if($this->model->addSiteLink($single_route['method'], $single_route['method'], $single_route['controller']." - ".$single_route['method'], 'header_main', '0', '')){
+                    /** Success **/
+                    $new_routes[] = $single_route['controller']." - ".$single_route['method']." Added to Site Links<Br>";
+                  }
               }
             }
           }

@@ -125,6 +125,12 @@ class DatabaseUpgrades extends Models {
     $sql_data[]  = "
       CREATE FULLTEXT INDEX index_posts_content ON ".PREFIX."forum_post_replies(fpr_content);
     ";
+    $sql_data[] = "
+      ALTER TABLE `".PREFIX."users` ADD `privacy_profile` VARCHAR(20) NOT NULL DEFAULT 'Public' AFTER `privacy_pm`;
+    ";
+    $sql_data[] = "
+      ALTER TABLE `".PREFIX."users` ADD `location` VARCHAR(255) NULL DEFAULT NULL AFTER `website`;
+    ";
 
     foreach ($sql_data as $query) {
       if(!$this->db->upgrade($query)){ $error[] = true; }

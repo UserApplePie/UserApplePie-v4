@@ -201,8 +201,10 @@ class Users extends Models
           u.firstName,
           u.lastName,
           u.email,
+          u.aboutme,
           u.privacy_massemail,
           u.privacy_pm,
+          u.privacy_profile,
           ug.userID,
           ug.groupID,
           g.groupID,
@@ -264,6 +266,20 @@ class Users extends Models
         $this->db->insert(PREFIX.'users_groups', array('userID' => $userID, 'groupID' => 1));
         return false;
       }
+  }
+
+  /**
+  * getUserImageMain
+  *
+  * Get User Main Profile Image by userID
+  *
+  * @return string userImage
+  */
+  public function getUserImageMain($id)
+  {
+      $data = $this->db->select("SELECT userImage FROM ".PREFIX."users_images WHERE userID=:id AND defaultImage = '1' ",array(":id"=>$id));
+
+      return $data[0]->userImage;
   }
 
 }

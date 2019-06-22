@@ -112,5 +112,18 @@ return [
 	'no_status_update' => "User has not posted a status update yet.",
 	'user_does_not_have_friends' => "User does not have any friends.",
 	'confirm_new_password_label' => "Confirm New Password",
+	'mem_act_edit_profile_description' => "Edit your basic profiles information and your about me.",
+	'mem_act_edit_profile_images_description' => "Add and edit your profile photos.",
+	'mem_act_change_email_description' => "Change your E-Mail address.",
+	'mem_act_change_pass_description' => "Check your password.",
+	'mem_act_privacy_settings_description' => "Set your site privacy settings.",
+	'ps_profile_settings' => "Profile Privacy Settings",
+	'ps_profile_settings_description' => "Set who can view your profile.",
+	'members_profile_privacy' => "Profile Privacy",
+	'members_profile_can_not_view' => "User has set thier pofile privacy settings to limit who can view their profile.",
+	'members_profile_location' => "Location",
+	'edit_profile_first_name_not_set' => "Your First Name is not set yet in your User Profile.",
+	'edit_profile_aboutme_not_set' => "Your About Me is not set yet in your User Profile.",
+	'edit_profile_default_image_not_set' => "Your Profile Image is set to a default photo. Upload a new one and set as main.",
 
 ];

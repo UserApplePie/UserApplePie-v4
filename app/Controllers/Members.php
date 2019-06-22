@@ -244,6 +244,7 @@ class Members extends Controller
                 if(Csrf::isTokenValid('editprofile')) {
                     $firstName = strip_tags(Request::post('firstName'));
                     $lastName = strip_tags(Request::post('lastName'));
+                    $location = strip_tags(Request::post('location'));
                     $gender = Request::post('gender') == 'male' ? 'Male' : 'Female';
                     $website = strip_tags(preg_replace('#^https?://#', '', Request::post('website')));
                     $aboutMe = nl2br(strip_tags(Request::post('aboutMe')));
@@ -270,7 +271,7 @@ class Members extends Controller
                     $aboutMe = strip_tags($aboutMe, "<br>");
                     $signature = strip_tags($signature, "<br>");
 
-                    $onlineUsers->updateProfile($u_id, $firstName, $lastName, $gender, $website, $aboutMe, $signature);
+                    $onlineUsers->updateProfile($u_id, $firstName, $lastName, $gender, $website, $aboutMe, $signature, $location);
                     /** Success Message Display **/
                     SuccessMessages::push($this->language->get('edit_profile_success'), 'Edit-Profile');
                 }else{
@@ -539,11 +540,12 @@ class Members extends Controller
             if(Csrf::isTokenValid('editprivacy')) {
                 $privacy_massemail = Request::post('privacy_massemail');
                 $privacy_pm = Request::post('privacy_pm');
+                $privacy_profile = Request::post('privacy_profile');
 
                 if($privacy_massemail != "true"){$privacy_massemail = "false";}
                 if($privacy_pm != "true"){$privacy_pm = "false";}
 
-                if($onlineUsers->updateUPrivacy($u_id, $privacy_massemail, $privacy_pm)){
+                if($onlineUsers->updateUPrivacy($u_id, $privacy_massemail, $privacy_pm, $privacy_profile)){
                   SuccessMessages::push($this->language->get('ps_success'), 'Privacy-Settings');
                 }else{
                   ErrorMessages::push($this->language->get('ps_error'), 'Privacy-Settings');
@@ -558,6 +560,12 @@ class Members extends Controller
         /** Check users settings to see if privacy private message is enabled or not **/
         if($data['currentUserData'][0]->privacy_pm == "true"){
           $data['ppm_checked'] = "checked";
+        }
+        /** Check for User Profile Privacy Setting **/
+        if(!empty($data['currentUserData'][0]->privacy_profile)){
+          $data['privacy_profile'] = $data['currentUserData'][0]->privacy_profile;
+        }else{
+          $data['privacy_profile'] = "Public";
         }
 
         /** Setup Breadcrumbs **/

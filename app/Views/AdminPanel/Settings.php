@@ -32,13 +32,13 @@ use Libs\Form,
     				<?php echo Form::input(array('type' => 'text', 'name' => 'site_title', 'class' => 'form-control', 'value' => $site_title, 'placeholder' => 'Site Title', 'maxlength' => '255')); ?>
     			</div>
 
-                <!-- Site Description -->
-                <div class='input-group mb-3' style='margin-bottom: 25px'>
-                  <div class="input-group-prepend">
-                    <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Site Description</span>
-                  </div>
-                    <?php echo Form::input(array('type' => 'text', 'name' => 'site_description', 'class' => 'form-control', 'value' => $site_description, 'placeholder' => 'Site Description' , 'maxlength' => '255')); ?>
-                </div>
+          <!-- Site Description -->
+          <div class='input-group mb-3' style='margin-bottom: 25px'>
+            <div class="input-group-prepend">
+              <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Site Description</span>
+            </div>
+              <?php echo Form::textarea(array('type' => 'text', 'name' => 'site_description', 'class' => 'form-control', 'value' => $site_description, 'placeholder' => 'Site Description')); ?>
+          </div>
 
                 <!-- Site Keywords -->
     			<div class='input-group mb-3' style='margin-bottom: 25px'>
@@ -63,9 +63,9 @@ use Libs\Form,
             <div class="input-group-prepend">
     				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> User Account Activation</span>
             </div>
-            <select class='form-control' id='gender' name='site_user_activation'>
+            <select class='form-control' id='site_user_activation' name='site_user_activation'>
                 <option value='true' <?php if($site_user_activation == "true"){echo "SELECTED";}?> >E-Mail Activation Required</option>
-                <option value='fa fa-fw lse' <?php if($site_user_activation == "false"){echo "SELECTED";}?> >No E-Mail Activation Required</option>
+                <option value='false' <?php if($site_user_activation == "false"){echo "SELECTED";}?> >No E-Mail Activation Required</option>
             </select>
     			</div>
     		</div>
@@ -115,74 +115,6 @@ use Libs\Form,
     <div class='col-lg-12 col-md-12 col-sm-12'>
     	<div class='card mb-3'>
     		<div class='card-header h4'>
-    			<h3 class='jumbotron-heading'>Site E-Mail Settings</h3>
-    		</div>
-    		<div class='card-body'>
-                Site E-Mail Settings and stuff.
-
-                <!-- E-Mail Username -->
-    			<div class='input-group mb-3' style='margin-bottom: 25px'>
-            <div class="input-group-prepend">
-    				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> E-Mail Username</span>
-            </div>
-    				<?php echo Form::input(array('type' => 'text', 'name' => 'site_email_username', 'class' => 'form-control', 'value' => $site_email_username, 'placeholder' => 'E-Mail Username', 'maxlength' => '100')); ?>
-    			</div>
-
-                <!-- E-Mail Password -->
-    			<div class='input-group mb-3' style='margin-bottom: 25px'>
-            <div class="input-group-prepend">
-    				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> E-Mail Password</span>
-            </div>
-    				<?php echo Form::input(array('type' => 'password', 'name' => 'site_email_password', 'class' => 'form-control', 'value' => $site_email_password, 'placeholder' => 'E-Mail Password', 'maxlength' => '100')); ?>
-    			</div>
-
-                <!-- E-Mail From Name -->
-    			<div class='input-group mb-3' style='margin-bottom: 25px'>
-            <div class="input-group-prepend">
-      				<span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> E-Mail From Name</span>
-            </div>
-    				<?php echo Form::input(array('type' => 'text', 'name' => 'site_email_fromname', 'class' => 'form-control', 'value' => $site_email_fromname, 'placeholder' => 'E-Mail From Name', 'maxlength' => '100')); ?>
-    			</div>
-
-                <!-- E-Mail Host -->
-                <div class='input-group mb-3' style='margin-bottom: 25px'>
-                  <div class="input-group-prepend">
-                    <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> E-Mail Host</span>
-                  </div>
-                    <?php echo Form::input(array('type' => 'text', 'name' => 'site_email_host', 'class' => 'form-control', 'value' => $site_email_host, 'placeholder' => 'E-Mail Host Address', 'maxlength' => '100')); ?>
-                </div>
-
-                <!-- E-Mail Port -->
-                <div class='input-group mb-3' style='margin-bottom: 25px'>
-                  <div class="input-group-prepend">
-                    <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> E-Mail Host Port</span>
-                  </div>
-                    <?php echo Form::input(array('type' => 'text', 'name' => 'site_email_port', 'class' => 'form-control', 'value' => $site_email_port, 'placeholder' => 'E-Mail Host Port', 'maxlength' => '100')); ?>
-                </div>
-
-                <!-- E-Mail SMTP Auth Type -->
-                <div class='input-group mb-3' style='margin-bottom: 25px'>
-                  <div class="input-group-prepend">
-                    <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> E-Mail SMTP Auth Type</span>
-                  </div>
-                    <?php echo Form::input(array('type' => 'text', 'name' => 'site_email_smtp', 'class' => 'form-control', 'value' => $site_email_smtp, 'placeholder' => 'E-Mail SMTP Auth Type', 'maxlength' => '100')); ?>
-                </div>
-
-                <!-- E-Mail Site Address -->
-                <div class='input-group mb-3' style='margin-bottom: 25px'>
-                  <div class="input-group-prepend">
-                    <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> E-Mail Site Address</span>
-                  </div>
-                    <?php echo Form::input(array('type' => 'text', 'name' => 'site_email_site', 'class' => 'form-control', 'value' => $site_email_site, 'placeholder' => 'E-Mail Site Address', 'maxlength' => '100')); ?>
-                </div>
-
-    		</div>
-    	</div>
-    </div>
-
-    <div class='col-lg-12 col-md-12 col-sm-12'>
-    	<div class='card mb-3'>
-    		<div class='card-header h4'>
     			<h3 class='jumbotron-heading'>Site reCAPCHA Settings</h3>
     		</div>
     		<div class='card-body'>
@@ -207,6 +139,25 @@ use Libs\Form,
     		</div>
     	</div>
     </div>
+
+    <div class='col-lg-12 col-md-12 col-sm-12'>
+    	<div class='card mb-3'>
+    		<div class='card-header h4'>
+    			<h3 class='jumbotron-heading'>Site Wide Message</h3>
+    		</div>
+    		<div class='card-body'>
+          This message will show to all users on the site.  Let them know about downtime or other site related messages.<Br>
+          Info box will not show if the field below is blank.
+          <div class='input-group mb-3' style='margin-bottom: 25px'>
+            <div class="input-group-prepend">
+              <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Site Description</span>
+            </div>
+              <?php echo Form::textarea(array('type' => 'text', 'name' => 'site_message', 'class' => 'form-control', 'value' => $site_message, 'placeholder' => 'Site Wide Message')); ?>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <div class='col-lg-12 col-md-12 col-sm-12'>
         <button class="btn btn-md btn-success" name="submit" type="submit">

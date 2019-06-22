@@ -56,12 +56,6 @@ use Libs\ErrorMessages,
             <span class="nav-link-text">Main Settings</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="<?php echo DIR; ?>AdminPanel-SystemRoutes">
-            <i class="fa fa-fw fa-map-signs"></i>
-            <span class="nav-link-text">System Routes</span>
-          </a>
-        </li>
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
 					<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-Users">
 						<i class="fa fa-fw fa-users"></i>
@@ -72,12 +66,6 @@ use Libs\ErrorMessages,
 					<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-Groups">
 						<i class="fa fa-fw fa-balance-scale"></i>
 						<span class="nav-link-text">Groups</span>
-					</a>
-				</li>
-				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-					<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-MassEmail">
-						<i class="fa fa-fw fa-envelope-square"></i>
-						<span class="nav-link-text">Mass Email</span>
 					</a>
 				</li>
 			<?php
@@ -112,21 +100,39 @@ use Libs\ErrorMessages,
 				</a>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+				<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-EmailSettings">
+					<i class="fa fa-fw fa-envelope"></i>
+					<span class="nav-link-text">E-Mail Settings</span>
+				</a>
+			</li>
+			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+				<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-SystemRoutes">
+					<i class="fa fa-fw fa-map-signs"></i>
+					<span class="nav-link-text">System Routes</span>
+				</a>
+			</li>
+			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
 				<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-SiteLinks">
 					<i class="fa fa-fw fa-globe"></i>
 					<span class="nav-link-text">Site Links</span>
 				</a>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-				<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-AuthLogs">
-					<i class="fa fa-fw fa-server"></i>
-					<span class="nav-link-text">Auth Logs</span>
+				<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-MassEmail">
+					<i class="fa fa-fw fa-envelope-square"></i>
+					<span class="nav-link-text">Mass Email</span>
 				</a>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
 				<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-Adds">
 					<i class="fa fa-fw fa-adn"></i>
 					<span class="nav-link-text">Site Adds</span>
+				</a>
+			</li>
+			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+				<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-AuthLogs">
+					<i class="fa fa-fw fa-server"></i>
+					<span class="nav-link-text">Auth Logs</span>
 				</a>
 			</li>
 		</ul>

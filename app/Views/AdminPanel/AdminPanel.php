@@ -161,6 +161,40 @@ if($uap_files_version > $uap_database_version){
 			</div>
 		</div>
 
+		<div class='col-lg-6 col-md-6'>
+			<div class='card mb-3'>
+				<div class='card-header h4'>
+					Top Referers Past Month
+				</div>
+				<ul class='list-group list-group-flush'>
+					<?php
+						if(isset($topRefer)){
+							foreach ($topRefer as $refer) {
+								echo "<li class='list-group-item'><span class='pull-left'>$refer->refer</span><span class='pull-right'>$refer->refer_count</span><div class='clearfix'></div></li>";
+							}
+						}
+					?>
+				</ul>
+			</div>
+		</div>
+
+		<div class='col-lg-6 col-md-6'>
+			<div class='card mb-3'>
+				<div class='card-header h4'>
+					Top Referers Past Year
+				</div>
+				<ul class='list-group list-group-flush'>
+					<?php
+						if(isset($topReferYear)){
+							foreach ($topReferYear as $refer) {
+								echo "<li class='list-group-item'><span class='pull-left'>$refer->refer</span><span class='pull-right'>$refer->refer_count</span><div class='clearfix'></div></li>";
+							}
+						}
+					?>
+				</ul>
+			</div>
+		</div>
+
 		<div class='col-lg-12 col-md-12'>
 			<div class='card mb-3'>
 				<div class='card-header h4'>

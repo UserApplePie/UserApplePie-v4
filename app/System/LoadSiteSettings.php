@@ -179,6 +179,13 @@ class LoadSiteSettings {
            *****************/
            // Get Max Image Size
            define('IMG_MAX_SIZE', $this->model->getSettings('image_max_size'));
+           /*****************
+            *                *
+            *  Site Message  *
+            *                *
+            *****************/
+            // Get Site Wide Message
+            define('SITE_WIDE_MESSAGE', $this->model->getSettings('site_message'));
     }
 
 }
