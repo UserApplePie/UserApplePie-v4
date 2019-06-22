@@ -303,7 +303,7 @@ class Recent extends Models {
         fpr.fpr_timestamp AS RP_01,
         fpr.fpr_post_id AS RP_02,
         fpr.fpr_id AS RP_03,
-        fpr.fpr_title AS RP_04,
+        fpr.fpr_id AS RP_04,
         fpr.id AS RP_05,
         fpr.fpr_user_id AS RP_06,
         fri.uid1 AS RP_07,
