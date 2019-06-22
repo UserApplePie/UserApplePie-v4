@@ -460,7 +460,7 @@ INSERT INTO `uap4_settings` (`setting_id`, `setting_title`, `setting_data`) VALU
 (32, 'sweet_title_display', 'Sweets'),
 (33, 'sweet_button_display', 'Sweet'),
 (34, 'image_max_size', '800,600'),
-(34, 'site_message', '');
+(35, 'site_message', '');
 
 -- --------------------------------------------------------
 
