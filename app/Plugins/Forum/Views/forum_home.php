@@ -35,7 +35,7 @@ use Core\Language,
       		$f_order_title = $row->forum_order_title;
 
       		echo "<div class='card mb-3'>";
-      			echo "<div class='card-header h4' style='font-weight: bold'>";
+      			echo "<div class='card-header h4'>";
 
               // Title Output
               echo "$f_title";

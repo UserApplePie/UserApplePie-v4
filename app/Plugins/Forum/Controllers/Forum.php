@@ -60,9 +60,10 @@ use App\System\Controller,
             $u_id = "";
         }
 
-    	// Collect Data for view
-    	$data['title'] = $this->forum_title;
-    	$data['welcome_message'] = $this->forum_description;
+      	// Collect Data for view
+      	$data['title'] = $this->forum_title;
+      	$data['welcome_message'] = $this->forum_description;
+        $data['site_description'] = $this->forum_description;
 
         // Get list of all forum categories
         $data['forum_categories'] = $this->model->forum_categories();
@@ -113,6 +114,7 @@ use App\System\Controller,
       $data['forum_title'] = $this->model->forum_title($id);
       $data['forum_cat'] = $this->model->forum_cat($id);
       $data['forum_cat_des'] = $this->model->forum_cat_des($id);
+      $data['site_description'] = $data['forum_cat_des'];
       $data['forum_topics'] = $this->model->forum_topics($id, $this->pagesTopic->getLimit($current_page, $this->forum_topic_limit));
 
       // Set total number of messages for paginator
@@ -186,6 +188,7 @@ use App\System\Controller,
         $data['topic_creator'] = $this->model->topic_creator($id);
         $data['topic_date'] = $this->model->topic_date($id);
         $data['topic_content'] = $this->model->topic_content($id);
+        $data['site_description'] = substr($data['topic_content'], 0, 255);
         $data['topic_edit_date'] = $this->model->topic_edit_date($id);
         $data['topic_status'] = $this->model->topic_status($id);
         $data['topic_allow'] = $this->model->topic_allow($id);
@@ -331,7 +334,7 @@ use App\System\Controller,
                   // Check for errors before sending message
                   if(!isset($error)){
                       // No Errors, lets submit the new topic to db
-              				if($this->model->updateTopicReply($data['edit_reply_id'], $data['fpr_content'])){
+              				if($this->model->updateTopicReply($data['edit_reply_id'], $data['fpr_content'], $data['current_userID'])){
               					// Success
                         SuccessMessages::push('You Have Successfully Updated a Topic Reply', 'Topic/'.$id.'/'.$redirect_page_num.'#topicreply'.$data['edit_reply_id']);
               				}else{

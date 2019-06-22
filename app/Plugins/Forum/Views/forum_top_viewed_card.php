@@ -17,7 +17,7 @@
 ?>
 
   <div class='card mb-3'>
-    <div class='card-header h4' style='font-weight: bold'>
+    <div class='card-header h4'>
       Top Viewed Forum Posts
     </div>
     <ul class='list-group list-group-flush'>
