@@ -11,7 +11,7 @@ use Libs\Language;
 ?>
 
   <div class='card border-primary mb-3'>
-    <div class='card-header h4' style='font-weight: bold'>
+    <div class='card-header h4'>
       <?=Language::show('mem_act_settings_title', 'Members'); ?>
     </div>
     <ul class='list-group list-group-flush'>

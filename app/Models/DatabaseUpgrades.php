@@ -81,27 +81,27 @@ class DatabaseUpgrades extends Models {
       INSERT INTO `".PREFIX."version` (`version`) VALUES ('4.3.0');
     ";
     $sql_data[] = "
-      CREATE TABLE IF NOT EXISTS `uap4_users_images` (
+      CREATE TABLE IF NOT EXISTS `".PREFIX."users_images` (
         `id` int(11) NOT NULL AUTO_INCREMENT,
         `userID` int(11) DEFAULT NULL,
         `userImage` varchar(255) DEFAULT NULL,
-        `defaultImage` int(11) NOT NULL DEFAULT '0',
+        `defaultImage` int(11) NOT NULL DEFAULT '1',
         `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
         `update_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (`id`)
       ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
     ";
     $sql_data[] = "
-      Insert into uap4_users_images (userID, userImage)  select userID, userImage from uap4_users;
+      Insert into ".PREFIX."users_images (userID, userImage)  select userID, userImage from ".PREFIX."users;
     ";
     $sql_data[] = "
-      ALTER TABLE uap4_users_images MODIFY COLUMN defaultImage int(11) NOT NULL DEFAULT '1';
+      ALTER TABLE ".PREFIX."users_images MODIFY COLUMN defaultImage int(11) NOT NULL DEFAULT '0';
     ";
     $sql_data[] = "
-      ALTER TABLE uap4_users DROP userImage;
+      ALTER TABLE ".PREFIX."users DROP userImage;
     ";
     $sql_data[] = "
-      CREATE TABLE IF NOT EXISTS `uap4_status` (
+      CREATE TABLE IF NOT EXISTS `".PREFIX."status` (
         `id` int(11) NOT NULL AUTO_INCREMENT,
         `status_userID` int(11) DEFAULT NULL,
         `status_feeling` varchar(255) DEFAULT NULL,
@@ -110,23 +110,20 @@ class DatabaseUpgrades extends Models {
         PRIMARY KEY (`id`)
       ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
     ";
-    $sql_data[] = "
-      ALTER TABLE uap4_users_images MODIFY COLUMN defaultImage int(11) NOT NULL DEFAULT '1';
+    $sql_data[]  = "
+      CREATE INDEX index_username ON ".PREFIX."users(username);
     ";
     $sql_data[]  = "
-      CREATE INDEX index_username ON uap4_users(username);
+      CREATE INDEX index_timestamp ON ".PREFIX."sitelogs(timestamp);
     ";
     $sql_data[]  = "
-      CREATE INDEX index_timestamp ON uap4_sitelogs(timestamp);
+      CREATE INDEX index_posts_title ON ".PREFIX."forum_posts(forum_title);
     ";
     $sql_data[]  = "
-      CREATE INDEX index_posts_title ON uap4_forum_posts(forum_title);
+      CREATE FULLTEXT INDEX index_posts_content ON ".PREFIX."forum_posts(forum_content);
     ";
     $sql_data[]  = "
-      CREATE FULLTEXT INDEX index_posts_content ON uap4_forum_posts(forum_content);
-    ";
-    $sql_data[]  = "
-      CREATE FULLTEXT INDEX index_posts_content ON uap4_forum_post_replies(fpr_content);
+      CREATE FULLTEXT INDEX index_posts_content ON ".PREFIX."forum_post_replies(fpr_content);
     ";
 
     foreach ($sql_data as $query) {

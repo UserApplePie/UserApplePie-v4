@@ -101,4 +101,16 @@ return [
 	'ps_success' => "You have Successfully updated your Privacy Settings!",
 	'ps_error' => "Error Updating Privacy Settings!",
 
+	/** New Lang Stuff **/
+	'status_updates' => "Status Updates",
+	'ep_delete_profile_photo' => "Delete Profile Photo",
+	'ep_delete_profile_photo_question' => "Do you want to Delete Profile Photo?",
+	'mem_act_profile_photo' => "Profile Photo",
+	'friends' => "Friends",
+	'mutual_friends' => "Mutual Friends",
+	'user_does_not_have_mutual_friends' => "User does not have any mutual friends.",
+	'no_status_update' => "User has not posted a status update yet.",
+	'user_does_not_have_friends' => "User does not have any friends.",
+	'confirm_new_password_label' => "Confirm New Password",
+
 ];

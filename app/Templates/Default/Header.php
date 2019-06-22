@@ -18,6 +18,11 @@ use Libs\Assets,
   	// If not Home, Login, Register, etc..
   	// Send url to Session
   	PageFunctions::prevpage();
+
+    /** Check to see if Meta Tags are set by Controller **/
+    if(!empty($data['site_keywords'])){ $site_keywords = $data['site_keywords']; }else{ $site_keywords = SITE_KEYWORDS; }
+    if(!empty($data['site_description'])){ $site_description = $data['site_description']; }else{ $site_description = SITE_DESCRIPTION; }
+
 ?>
 
 <!DOCTYPE html>
@@ -27,8 +32,8 @@ use Libs\Assets,
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
         <title><?=SITE_TITLE?><?=(isset($pageTitle)) ? " - ".$pageTitle : " - ".$title ?></title>
-        <meta name="keywords" content="<?=SITE_KEYWORDS?>">
-        <meta name="description" content="<?=SITE_DESCRIPTION?>">
+        <meta name="keywords" content="<?=$site_keywords?>">
+        <meta name="description" content="<?=$site_description?>">
         <link rel='shortcut icon' href='<?=Url::templatePath()?>images/favicon.ico'>
         <?=Assets::css([
             'https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css',

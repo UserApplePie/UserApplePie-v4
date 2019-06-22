@@ -58,11 +58,11 @@ use Libs\Language,
                                         /** Check to see if users are friends or if a request is pending **/
                                         $friends_status = \Libs\CurrentUserData::getFriendStatus($currentUserData[0]->userID, $data['profile']->userID);
                                         if($friends_status == "Friends"){
-                                            echo "<tr><td>".Language::show('Friend', 'Friends')."</td><td> ".Language::show('your_friend', 'Friends')." </td></tr>";
+                                            echo "<tr><td>".Language::show('friends', 'Members')."</td><td> ".Language::show('your_friend', 'Friends')." </td></tr>";
                                         }else if($friends_status == "Pending"){
-                                            echo "<tr><td>".Language::show('Friend', 'Friends')."</td><td> ".Language::show('pending_approval', 'Friends')." </td></tr>";
+                                            echo "<tr><td>".Language::show('friends', 'Members')."</td><td> ".Language::show('pending_approval', 'Friends')." </td></tr>";
                                         }else{
-                                            echo "<tr><td>".Language::show('Friend', 'Friends')."</td><td><a href='".SITE_URL."AddFriend/".$data['profile']->username."' class='btn btn-sm btn-secondary'>".Language::show('send_friend_request', 'Friends')."</a></td></tr>";
+                                            echo "<tr><td>".Language::show('friends', 'Members')."</td><td><a href='".SITE_URL."AddFriend/".$data['profile']->username."' class='btn btn-sm btn-secondary'>".Language::show('send_friend_request', 'Friends')."</a></td></tr>";
                                         }
                                     }
                                 }
@@ -119,6 +119,7 @@ use Libs\Language,
             </ul>
         </div>
 
+        <?php if($currentUserData[0]->username != $data['profile']->username){ ?>
         <div class='card mb-3'>
             <div class='card-header h4'>
                 <h3><?=Language::show('mutual_friends', 'Members'); ?></h3>
@@ -146,6 +147,7 @@ use Libs\Language,
               ?>
             </ul>
         </div>
+      <?php } ?>
 
     </div>
 

@@ -36,7 +36,7 @@ function process()
 
   <div class='card mb-3'>
     <form onSubmit="return process();" class="form" method="post">
-    <div class='card-header h4' style='font-weight: bold'>
+    <div class='card-header h4'>
       Search Forums
     </div>
     <div class='card-body'>
@@ -49,7 +49,7 @@ function process()
   </div>
 
   <div class='card mb-3'>
-    <div class='card-header h4' style='font-weight: bold'>
+    <div class='card-header h4'>
       Forum Recent Posts
     </div>
     <ul class='list-group list-group-flush'>

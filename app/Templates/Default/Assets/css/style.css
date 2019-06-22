@@ -56,3 +56,7 @@ pre.code {
   display:none;
   visibility:hidden;
 }
+legend {
+  opacity: 0.6;
+  font-size: 12px;
+}

@@ -57,7 +57,7 @@ use Core\Language,
         echo "<hr>";
 
         // Topic Display
-    		echo "<div class='card mb-3'>";
+    		echo "<div class='card border-primary mb-3'>";
     			echo "<div class='card-header h4'>";
     				echo "<div class='row'>";
     					echo "<div class='col-lg-6 col-md-6 col-sm-6'>";
@@ -149,22 +149,22 @@ use Core\Language,
             }else{
               // Display Topic Content
     				  echo $data_topic_content;
+              echo "<br><br>";
               // Get user's Signature
               $user_signature = CurrentUserData::getUserSignature($data['topic_creator']);
               if(!empty($user_signature)){
-                echo "<hr style='margin-bottom: 0px'><font size='1'><i>Signature</i></font><hr style='margin-top: 0px'> $user_signature";
+                echo "<fieldset class='border border-secondary p-2'><legend class='w-auto'><i>Signature</i></font></legend> $user_signature</fieldset>";
               }
             }
             // Check to see if there are any images attaced to this post
             if(!empty($data['forum_topic_images'])){
-              echo "<hr style='margin-bottom: 0px'><font size='1'><i>Image Attachments</i></font>";
-              echo "<hr style='margin-top: 0px'>";
+              echo "<fieldset class='border border-secondary p-2'><legend class='w-auto'><i>Image Attachments</i></legend>";
               echo "<div class='row'>";
               foreach($data['forum_topic_images'] as $check_for_image){
                 /** Display Image **/
                 echo "<div class='col-lg-2 col-md-3 col-sm-4 col-xs-6' style='padding-bottom: 6px'>";
                 echo "<a href='#imageModal".$check_for_image->imageName."' data-toggle='modal' data-target='#imageModal".$check_for_image->imageName."'>";
-                echo "<img src=".SITE_URL."{$check_for_image->imageLocation}{$check_for_image->imageName} class='img-thumbnail' style='height: 100px'>";
+                echo "<img src=".SITE_URL."{$check_for_image->imageLocation}{$check_for_image->imageName} class='img-thumbnail border-secondary' style='height: 100px'>";
                 echo "</a>";
                 echo "</div>";
 
@@ -179,8 +179,9 @@ use Core\Language,
                   </div>
                 ";
               }
-              echo "</div>";
+              echo "</div></fieldset>";
             }
+            echo "<br>";
           echo "</div>";
   			echo "</div>";
   			echo "<div class='card-footer text-muted'>";
@@ -250,7 +251,7 @@ use Core\Language,
           echo "<a class='anchor' name='topicreply$rf_p_main_id'></a>";
 
 					// Reply Topic Display
-					echo "<div class='card border-info mb-3'>";
+					echo "<div class='card border-secondary mb-3'>";
 						echo "<div class='card-header h4'>";
 							echo "<div class='row'>";
 								echo "<div class='col-lg-6 col-md-6 col-sm-6'>";
@@ -337,23 +338,23 @@ use Core\Language,
                   }else{
                     // Display Topic Reply Content
     							  echo "$rf_p_content_bb";
+                    echo "<Br><br>";
                     // Get user's Signature
                     $user_signature = CurrentUserData::getUserSignature($rf_p_user_id);
                     if(!empty($user_signature)){
-                      echo "<hr style='margin-bottom: 0px'><font size='1'><i>Signature</i></font><hr style='margin-top: 0px'> $user_signature";
+                      echo "<fieldset class='border border-secondary  p-2'><legend class='w-auto'><i>Signature</i></font></legend> $user_signature</fieldset>";
                     }
                   }
                   // Check to see if there are any images attaced to this post
                   $check_for_images = Images::getForumImagesTopicReply($rf_p_id, $rf_p_main_id);
                   if(!empty($check_for_images)){
-                    echo "<hr style='margin-bottom: 0px'><font size='1'><i>Image Attachments</i></font>";
-                    echo "<hr style='margin-top: 0px'>";
+                    echo "<fieldset class='border border-secondary  p-2'><legend class='w-auto'><i>Image Attachments</i></legend>";
                     echo "<div class='row'>";
                     foreach($check_for_images as $check_for_image){
                       /** Display Image **/
                       echo "<div class='col-lg-2 col-md-3 col-sm-4 col-xs-6' style='padding-bottom: 6px'>";
                       echo "<a href='#imageModal".$check_for_image->imageName."' data-toggle='modal' data-target='#imageModal".$check_for_image->imageName."'>";
-                      echo "<img src=".SITE_URL."{$check_for_image->imageLocation}{$check_for_image->imageName} class='img-thumbnail' style='height: 100px'>";
+                      echo "<img src=".SITE_URL."{$check_for_image->imageLocation}{$check_for_image->imageName} class='img-thumbnail border-secondary' style='height: 100px'>";
                       echo "</a>";
                       echo "</div>";
 
@@ -368,8 +369,9 @@ use Core\Language,
                         </div>
                       ";
                     }
-                    echo "</div>";
+                    echo "</div></fieldset>";
                   }
+                  echo "<br>";
                 }else{
                   // Mod/Admin has disallowed this reply.  Show message
                   echo " <strong><font color='red'>This Reply Has Been Disabled By Mod/Admin.  Contact Mod/Admin for more information.</font></strong> ";

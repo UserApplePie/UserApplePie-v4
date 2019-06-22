@@ -113,7 +113,7 @@ class Language
             *   Log the value so that we know to add
             **/
             $file = ROOTDIR.'/errors/missing-lang.log';
-            $string = "'$value' => '',";
+            $string = "'$value' => \"\",";
             $url = $_SERVER['REQUEST_URI'];
             $logMessage = "//$name - $url \n $string\n";
             $handle = fopen($file, 'r');
