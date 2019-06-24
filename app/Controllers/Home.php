@@ -65,7 +65,7 @@ class Home extends Controller {
         $data['onlineAccounts'] = count($onlineUsers->getOnlineAccounts());
 
         /** Check to see if user is logged in - if so then display recent stuff **/
-        if($data['isLoggedIn'] = $this->auth->isLogged() && file_exists(ROOTDIR.'app/Plugins/Forum/Controllers/Forum.php') && file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php')){
+        if($data['isLoggedIn'] && file_exists(ROOTDIR.'app/Plugins/Forum/Controllers/Forum.php') && file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php')){
           /** Load the Recent Model **/
           $Recent = new Recent();
           /** Get Current User's Friends **/

@@ -13,7 +13,8 @@ use Libs\Language,
     Libs\ForumStats,
     Libs\Form,
     Libs\BBCode,
-    Libs\Sweets;
+    Libs\Sweets,
+    Libs\Comments;
 ?>
 
 <div class="col-lg-6 col-md-4 col-sm-12">
@@ -105,7 +106,7 @@ use Libs\Language,
               /** Setup Anchor Count **/
               if(isset($vm_id_a)){ $vm_id_a++; }else{ $vm_id_a = '1'; };
               echo "<a class='anchor' name='viewmore$vm_id_a'></a>";
-              $sweet_url = "Home/".$recent_limit."#viewmore$vm_id_a";
+              $sweet_url = "Home/".$recent_limit."/#viewmore$vm_id_a";
               /** Get Posted User Data **/
               $recent_userName = CurrentUserData::getUserName($recent->RP_06);
               $recent_userImage = CurrentUserData::getUserImage($recent->RP_06);
@@ -333,7 +334,9 @@ use Libs\Language,
                       /** Start Sweet **/
                       echo Sweets::displaySweetsButton($recent->RP_02, 'Status', $data['current_userID'], $recent->RP_06, $sweet_url);
                       echo Sweets::getSweets($recent->RP_02, 'Status', $recent->RP_06);
+                      echo Comments::getTotalComments($recent->RP_02, 'Status', $recent->RP_06);
                     echo "</div>";
+                    echo Comments::displayComments($recent->RP_02, 'Status', $data['current_userID'], $recent->RP_06, $sweet_url);
                   echo "</div>";
                 echo "</div>";
               }

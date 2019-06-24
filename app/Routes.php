@@ -59,7 +59,7 @@ class Routes {
         /* Member Routing */
         $routes[] = self::add('Members', 'Members', 'members', '(:any)/(:any)/(:any)');
         $routes[] = self::add('Online-Members', 'Members', 'online',  '(:any)/(:any)');
-        $routes[] = self::add('Profile', 'Members', 'viewProfile', '(:any)/(:num)');
+        $routes[] = self::add('Profile', 'Members', 'viewProfile', '(:any)/(:num)/(:num)');
         /* End Member Routing */
 
         /* Admin Panel Routing */

@@ -21,7 +21,8 @@ use App\System\Controller,
     Libs\ErrorMessages,
     Libs\SuccessMessages,
     Libs\SimpleImage,
-    App\System\Error;
+    App\System\Error,
+    Libs\ForumStats;
 
 class Members extends Controller
 {
@@ -155,7 +156,7 @@ class Members extends Controller
      * Get profile by username
      * @param $username
      */
-    public function viewProfile($user = '', $current_page = '1')
+    public function viewProfile($user = '', $current_page = '1', $status_limit = '10')
     {
         /** Load the Members Model **/
         $onlineUsers = new MembersModel();
@@ -192,14 +193,34 @@ class Members extends Controller
             /** Set the CSRF Token **/
             $data['csrfToken'] = Csrf::makeToken('status');
 
-            /** Get 15 of the users friends **/
-            $data['friends'] = $Recent->getFriendsIDs($profile[0]->userID, '15');
+            /** Check to see if Friends Plugins is installed **/
+            if(file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php')){
+              /** Get 15 of the users friends **/
+              $data['friends'] = $Recent->getFriendsIDs($profile[0]->userID, '15');
+              /** Get 15 of the users friends **/
+              $data['mutual_friends'] = $Recent->getMutualFriendsIDs($profile[0]->userID, $u_id, '15');
+            }else{
+              $data['friends_disable'] = true;
+            }
 
-            /** Get 15 of the users friends **/
-            $data['mutual_friends'] = $Recent->getMutualFriendsIDs($profile[0]->userID, $u_id, '15');
+            /** Check to see if Forum Plugins is installed **/
+            if(file_exists(ROOTDIR.'app/Plugins/Forum/Controllers/Forum.php')){
+              /** Get Users Recent Posts **/
+              $data['forum_recent_posts'] = ForumStats::forum_recent_posts_user($profile[0]->userID);
+            }else{
+              $data['forum_disable'] = true;
+            }
 
-            /** Get Users Status Updates **/
-            $data['status_updates'] = $onlineUsers->getUserStatusUpdates($profile[0]->userID);
+            /** Check to see if Forum and Friends Plugins are installed **/
+            if(file_exists(ROOTDIR.'app/Plugins/Forum/Controllers/Forum.php') && file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php')){
+              /** Get Users Status Updates **/
+              $data['status_updates'] = $onlineUsers->getUserStatusUpdates($profile[0]->userID, $status_limit);
+              $data['status_total'] = $onlineUsers->getUserStatusUpdatesTotal($profile[0]->userID);
+              $data['status_limit'] = $status_limit;
+              $data['status_url'] = $pageFormat."".$current_page."/";
+            }else{
+              $data['status_disable'] = true;
+            }
 
             /** Get Users Images **/
             $data['user_images'] = $onlineUsers->getUserImages($profile[0]->userID, $this->pages->getLimit($current_page, USERS_PAGEINATOR_LIMIT));

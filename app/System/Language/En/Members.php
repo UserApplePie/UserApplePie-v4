@@ -125,5 +125,6 @@ return [
 	'edit_profile_first_name_not_set' => "Your First Name is not set yet in your User Profile.",
 	'edit_profile_aboutme_not_set' => "Your About Me is not set yet in your User Profile.",
 	'edit_profile_default_image_not_set' => "Your Profile Image is set to a default photo. Upload a new one and set as main.",
-
+	'members_profile_user_no_posts' => "User has not yet posted in the forum.",
+	'user_profile_forum_recent_posts' => "Recent Posts in Forum",
 ];

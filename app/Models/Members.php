@@ -448,7 +448,7 @@ class Members extends Models
     *
     * @return int count
     */
-    public function getUserStatusUpdates($userID){
+    public function getUserStatusUpdates($userID, $limit = '10'){
       $data = $this->db->select("
           SELECT
             *
@@ -457,8 +457,29 @@ class Members extends Models
           WHERE
             status_userID = :userID
           ORDER BY timestamp DESC
+          LIMIT $limit
           ", array(':userID' => $userID));
       return $data;
+    }
+
+    /**
+    * getUserStatusUpdatesTotal
+    *
+    * Gets total count of images that belong to user
+    *
+    * @return int count
+    */
+    public function getUserStatusUpdatesTotal($userID){
+      $data = $this->db->select("
+          SELECT
+            count(*) as total_rows
+          FROM
+            ".PREFIX."status
+          WHERE
+            status_userID = :userID
+          ORDER BY timestamp DESC
+          ", array(':userID' => $userID));
+      return $data[0]->total_rows;
     }
 
 }
