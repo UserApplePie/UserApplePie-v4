@@ -12,7 +12,8 @@ use Libs\Language,
     Libs\Form,
     Libs\BBCode,
     Libs\TimeDiff,
-    Libs\CurrentUserData;
+    Libs\CurrentUserData,
+    Libs\Comments;
 
     $recent_userName = CurrentUserData::getUserName($data['profile']->userID);
     $recent_userImage = CurrentUserData::getUserImage($data['profile']->userID);
@@ -145,6 +146,10 @@ use Libs\Language,
     ";
   }else{
  ?>
+ <?php
+   /** Check if Status is enabled **/
+   if($data['status_disable'] != true){
+  ?>
         <div class='card mb-3'>
             <div class='card-header h4'>
                 <h3><?php echo $data['profile']->username; ?>'s <?=Language::show('friends', 'Members'); ?></h3>
@@ -202,7 +207,74 @@ use Libs\Language,
             </ul>
         </div>
       <?php } ?>
+<?php } ?>
+<?php
+  /** Check if Status is enabled **/
+  if($data['forum_disable'] != true){
+ ?>
+        <div class='card mb-3'>
+          <div class='card-header h4'>
+            <?php echo $data['profile']->username; ?>'s <?=Language::show('user_profile_forum_recent_posts', 'Members');?>
+          </div>
+          <ul class='list-group list-group-flush'>
+            <?php
+            if(!empty($data['forum_recent_posts'])){
+              foreach($data['forum_recent_posts'] as $row_rp)
+              {
+                $f_p_id = $row_rp->forum_post_id;
+                $f_p_id_cat = $row_rp->forum_id;
+                $f_p_title = $row_rp->forum_title;
+                $f_p_timestamp = $row_rp->forum_timestamp;
+                $f_p_user_id = $row_rp->forum_user_id;
+                $f_p_user_name = CurrentUserData::getUserName($f_p_user_id);
 
+                $f_p_title = stripslashes($f_p_title);
+
+                //Reply information
+                $rp_user_id2 = $row_rp->fpr_user_id;
+                $rp_timestamp2 = $row_rp->fpr_timestamp;
+
+                // Set the incrament of each post
+                if(isset($vm_id_a_rp)){ $vm_id_a_rp++; }else{ $vm_id_a_rp = "1"; };
+
+                $f_p_title = strlen($f_p_title) > 30 ? substr($f_p_title, 0, 34) . ".." : $f_p_title;
+
+                //If no reply show created by
+                if(!isset($rp_timestamp2)){
+                  echo "<ul class='list-group-item'>";
+                  echo "<a href='".DIR."Profile/$f_p_user_id'>$f_p_user_name</a> created.. <br>";
+                  echo "<strong>";
+                  echo "<a href='".DIR."Topic/$f_p_id/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
+                  echo "</strong>";
+                  echo "<br>";
+                  //Display how long ago this was posted
+                  $timestart = $f_p_timestamp;  //Time of post
+                  echo " <font color=green> " . TimeDiff::dateDiff("now", "$timestart", 1) . " ago</font> ";
+                  //echo "($f_p_timestamp)"; // Test timestamp
+                  unset($timestart, $f_p_timestamp);
+                  echo "</ul>";
+                }else{
+                  $rp_user_name2 = CurrentUserData::getUserName($rp_user_id2);
+                  //If reply show the following
+                  echo "<ul class='list-group-item'>";
+                  echo "<a href='".DIR."Profile/$rp_user_id2'>$rp_user_name2</a> posted on.. <br>";
+                  echo "<strong>";
+                  echo "<a href='".DIR."Topic/$f_p_id/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
+                  echo "</strong>";
+                  //Display how long ago this was posted
+                  $timestart = $rp_timestamp2;  //Time of post
+                  echo "<br><font color=green> " . TimeDiff::dateDiff("now", "$timestart", 1) . " ago</font> ";
+                  unset($timestart, $rp_timestamp2);
+                  echo "</ul>";
+                }// End reply check
+              } // End query
+            }else{
+              echo "<ul class='list-group-item'>".Language::show('members_profile_user_no_posts', 'Members')."</ul>";
+            }
+             ?>
+          </ul>
+        </div>
+<?php } ?>
     </div>
 
     <div class="col-md-8 col-lg-8">
@@ -214,7 +286,7 @@ use Libs\Language,
                 <?php echo $data['profile']->aboutme; ?>
             </div>
         </div>
-        <?php if(!empty($data['profile']->signature)){ ?>
+        <?php if(!empty($data['profile']->signature) && $data['forum_disable'] != true){ ?>
         <div class="card mb-3">
             <div class="card-header h4">
                 <?php echo $data['profile']->username; ?>'s <?=Language::show('members_profile_signature', 'Members'); ?>
@@ -263,6 +335,10 @@ use Libs\Language,
         ?>
     	</div>
 
+      <?php
+        /** Check if Status is enabled **/
+        if($data['status_disable'] != true){
+       ?>
       <div class="card mb-3">
         <div class="card-header h4">
             <?php echo $data['profile']->username; ?>'s <?php echo Language::show('status_updates', 'Members'); ?>
@@ -274,7 +350,9 @@ use Libs\Language,
                 foreach($data['status_updates'] as $recent){
                   /** Display the data for current recent **/
                   $status_content = BBCode::getHtml($recent->status_content);
-
+                  if(isset($vm_id_a)){ $vm_id_a++; }else{ $vm_id_a = '1'; };
+                  echo "<a class='anchor' name='viewmore$vm_id_a'></a>";
+                  $sweets_url = "Profile/".$data['profile']->username."/".$current_page_num."/".$status_limit."/#viewmore$vm_id_a";
                   if(isset($recent_limit)){}else{$recent_limit = "0";}
                   echo "<div class='card border-secondary mb-3'>";
                     echo "<div class='card-header'>";
@@ -304,7 +382,9 @@ use Libs\Language,
                         }
                         /** Start Sweet **/
                         echo Sweets::getSweets($recent->id, 'Status', $recent->status_userID);
+                        echo Comments::getComments($recent->id, 'Status', $recent->status_userID);
                       echo "</div>";
+                      echo Comments::displayComments($recent->id, 'Status', $currentUserData[0]->userID, $recent->status_userID, $sweets_url);
                     echo "</div>";
                   echo "</div>";
                 }
@@ -312,9 +392,29 @@ use Libs\Language,
               }else{
                 echo Language::show('no_status_update', 'Members').".";
               }
+              /** Check to see if there are most recents than currently shown **/
+              echo "<div class='card'><div class='card-body text-center'>";
+                if(isset($status_limit)){}else{$status_limit = "0";}
+                if($status_limit >= $status_total){
+                  echo "Currently Showing $status_total of $status_total Status Updates";
+                }else{
+                  echo "Currently Showing $status_limit of $status_total Status Updates";
+                }
+                if(!isset($status_total)){$status_total = "0";}else{
+                  if(isset($limitfriendstatus)){}else{ $limitfriendstatus = "10"; }
+                  if($status_limit < $status_total){
+                    $vm_id = $status_limit + 1;
+                    echo "<hr>";
+                    echo "<span class='btn btn-default'>";
+                      echo "<a href=\"".$status_url."" . ($status_limit + 10) . "#viewmore$vm_id\">Show More Status Updates</a> ";
+                    echo "</span>";
+                  }
+                }
+              echo "</div></div>";
           ?>
         </div>
       </div>
+    <?php } ?>
 
     </div>
 <?php } ?>

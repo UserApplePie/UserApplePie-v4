@@ -81,6 +81,45 @@ class ForumStats
     }
 
     /**
+     * forum_recent_posts
+     *
+     * get list of all recent posts in forum ordered by date.
+     *
+     * @return array returns all recent forum posts
+     */
+    public static function forum_recent_posts_user($userID = "", $limit = "10", $forum_id = ""){
+        // Setup to get data based on forum_id if one is set
+        if(!empty($forum_id)){
+            $forum_id_data = "AND forum_id = $forum_id";
+        }else{
+            $forum_id_data = "";
+        }
+        self::$db = Database::get();
+        $data = self::$db->select("
+                    SELECT
+                        fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
+                        fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
+                        fp.forum_edit_date as forum_edit_date,
+                        fp.forum_timestamp as forum_timestamp, fpr.id as id,
+                        fpr.fpr_post_id as fpr_post_id, fpr.fpr_id as fpr_id,
+                        fpr.fpr_user_id as fpr_user_id,
+                        fpr.fpr_edit_date as fpr_edit_date,
+                        fpr.fpr_timestamp as fpr_timestamp,
+                        GREATEST(fp.forum_timestamp, COALESCE(fpr.fpr_timestamp, '00-00-00 00:00:00')) AS tstamp
+                        FROM ".PREFIX."forum_posts fp
+                        LEFT JOIN ".PREFIX."forum_post_replies fpr
+                        ON fp.forum_post_id = fpr.fpr_post_id
+                        WHERE fp.allow = 'TRUE'
+						            AND ((fp.forum_publish = '1' AND fpr.forum_publish = '1') OR fp.forum_publish = '1' OR fpr.forum_publish = '1')
+                        $forum_id_data
+                        AND (fp.forum_user_id = :userID OR fpr.fpr_user_id = :userID)
+                    ORDER BY tstamp DESC
+                    LIMIT $limit
+        ", array(':userID' => $userID));
+        return $data;
+    }
+
+    /**
      * forum_recent_posts_data
      *
      * get data for requested forum post.

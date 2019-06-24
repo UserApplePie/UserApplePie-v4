@@ -243,7 +243,9 @@ class Recent extends Models {
           OR (swe.sweet_owner_userid = fri.uid2 AND fri.uid1 = :userID)
         WHERE ( fri.status1 = '1' AND fri.status2 = '1'
           AND NOT swe.sweet_owner_userid = :userID )
-          AND NOT swe.sweet_location = 'status'
+          AND NOT swe.sweet_location = 'Status'
+          AND NOT swe.sweet_location = 'CommentStatus'
+          AND NOT swe.sweet_location = 'CommentSecStatus'
         GROUP BY swe.sid)
     ";
 

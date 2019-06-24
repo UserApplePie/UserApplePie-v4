@@ -42,7 +42,7 @@ use Libs\Assets,
             SITE_URL.'assets/themes/'.SITE_THEME.'/bootstrap.css',
             'https://bootswatch.com/_assets/css/custom.min.css',
             'https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css',
-            SITE_URL.'Templates/Default/Assets/css/style.css'
+            Url::templatePath().'css/style.css'
         ])?>
         <?=(isset($css)) ? $css : ""?>
         <?=(isset($header)) ? $header : ""?>

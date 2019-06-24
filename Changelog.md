@@ -4,6 +4,9 @@ https://www.userapplepie.com
 ----------------------------------------------------------------------------------------
 UAP v4.2.1 to v4.3.0
 ----------------------------------------------------------------------------------------
+### Comments Library
+ - Added new comments Library
+ - Setup with status updates
 ### Language
  - Added misc lang data
 ### Header
@@ -13,6 +16,7 @@ UAP v4.2.1 to v4.3.0
  - Fixed styles in auth pages to match rest of site
 ### Sweets
  - Fixed bug with Sweets that would cause bad redirects
+ - Made more strict to better match with content it was clicked in
 ### Missing Lang Logger
  - Logs any missing language fields so that they can be added to lang files.
 ### Styles
@@ -44,6 +48,7 @@ UAP v4.2.1 to v4.3.0
  - Added Privacy Settings
  - Added Location
  - Updated Account home page
+ - Added Forum Recent Post list based on user's id
 ### Updated Forum Plugin
  - Added Auto Save Draft feature to new topics and replies with auto recover.
  - Added Image Max Size option to Admin Settings
