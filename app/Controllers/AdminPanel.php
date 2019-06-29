@@ -196,16 +196,13 @@ class AdminPanel extends Controller{
                     $site_title = Request::post('site_title');
                     $site_description = Request::post('site_description');
                     $site_keywords = Request::post('site_keywords');
-                    $site_user_activation = Request::post('site_user_activation');
                     $site_recapcha_public = Request::post('site_recapcha_public');
                     $site_recapcha_private = Request::post('site_recapcha_private');
                     $site_theme = Request::post('site_theme');
                     $site_message = Request::post('site_message');
-
                     if($this->model->updateSetting('site_title', $site_title)){}else{ $errors[] = 'Site Title Error'; }
                     if($this->model->updateSetting('site_description', $site_description)){}else{ $errors[] = 'Site Description Error'; }
                     if($this->model->updateSetting('site_keywords', $site_keywords)){}else{ $errors[] = 'Site Keywords Error'; }
-                    if($this->model->updateSetting('site_user_activation', $site_user_activation)){}else{ $errors[] = 'Site User Activation Error'; }
                     if($this->model->updateSetting('site_recapcha_public', $site_recapcha_public)){}else{ $errors[] = 'Site reCAPCHA Public Error'; }
                     if($this->model->updateSetting('site_recapcha_private', $site_recapcha_private)){}else{ $errors[] = 'Site reCAPCHA Private Error'; }
                     if($this->model->updateSetting('site_theme', $site_theme)){}else{ $errors[] = 'Site Theme Error'; }
@@ -246,7 +243,6 @@ class AdminPanel extends Controller{
         $data['site_title'] = $this->model->getSettings('site_title');
         $data['site_description'] = $this->model->getSettings('site_description');
         $data['site_keywords'] = $this->model->getSettings('site_keywords');
-        $data['site_user_activation'] = $this->model->getSettings('site_user_activation');
         $data['site_recapcha_public'] = $this->model->getSettings('site_recapcha_public');
         $data['site_recapcha_private'] = $this->model->getSettings('site_recapcha_private');
         $data['site_theme'] = $this->model->getSettings('site_theme');
@@ -298,6 +294,8 @@ class AdminPanel extends Controller{
                 /* Check to make sure Admin is updating settings */
                 if($_POST['update_advanced_settings'] == "true"){
                     /* Get data sbmitted by form */
+                    $site_user_activation = Request::post('site_user_activation');
+                    if($site_user_activation != 'true'){ $site_user_activation = 'false'; }
                     $site_user_invite_code = Request::post('site_user_invite_code');
                     $max_attempts = Request::post('max_attempts');
                     $security_duration = Request::post('security_duration');
@@ -319,6 +317,7 @@ class AdminPanel extends Controller{
                     $sweet_button_display = Request::post('sweet_button_display');
                     $image_max_size = Request::post('image_max_size');
 
+                    if($this->model->updateSetting('site_user_activation', $site_user_activation)){}else{ $errors[] = 'Site User Activation Error'; }
                     if($this->model->updateSetting('site_user_invite_code', $site_user_invite_code)){}else{ $errors[] = 'site_user_invite_code Error'; }
                     if($this->model->updateSetting('max_attempts', $max_attempts)){}else{ $errors[] = 'max_attempts Error'; }
                     if($this->model->updateSetting('security_duration', $security_duration)){}else{ $errors[] = 'security_duration Error'; }
@@ -372,6 +371,7 @@ class AdminPanel extends Controller{
         }
 
         /* Get Advanced Settings Data */
+        $data['site_user_activation'] = $this->model->getSettings('site_user_activation');
         $data['site_user_invite_code'] = $this->model->getSettings('site_user_invite_code');
         $data['max_attempts'] = $this->model->getSettings('max_attempts');
         $data['security_duration'] = $this->model->getSettings('security_duration');

@@ -30,7 +30,8 @@ use Libs\ErrorMessages,
     <?=Assets::css([
 		SITE_URL.'Templates/AdminPanel/Assets/css/bootstrap.min.css',
 		SITE_URL.'Templates/AdminPanel/Assets/css/font-awesome.min.css',
-		SITE_URL.'Templates/AdminPanel/Assets/css/sb-admin.css'
+		SITE_URL.'Templates/AdminPanel/Assets/css/sb-admin.css',
+		'https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css'
     ]);
     ?>
 </head>

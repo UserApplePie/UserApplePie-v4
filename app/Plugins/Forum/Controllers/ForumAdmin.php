@@ -60,6 +60,7 @@ class ForumAdmin extends Controller{
           if($_POST['update_global_settings'] == "true"){
             // Get data from post
             $forum_on_off = Request::post('forum_on_off');
+            if($forum_on_off != 'Enabled'){ $forum_on_off = 'Disabled'; }
             $forum_title = Request::post('forum_title');
             $forum_description = Request::post('forum_description');
             $forum_topic_limit = Request::post('forum_topic_limit');

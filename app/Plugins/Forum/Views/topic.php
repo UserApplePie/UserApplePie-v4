@@ -26,7 +26,7 @@ use Core\Language,
 
 	<div class='card mb-3'>
 		<div class='card-header h4'>
-			<h3 class='jumbotron-heading'><?php echo $data['title'] ?></h3>
+			<?php echo $data['title'] ?>
       <?php
           // Display Locked Message if Topic has been locked by admin
           if($data['topic_status'] == 2){
@@ -593,7 +593,7 @@ use Core\Language,
 
     <div class='card mb-3'>
         <div class='card-header h4'>
-            <b>Forum Permissions</b>
+            Forum Permissions
         </div>
         <div class='card-body'>
             You <b><?php echo $gfp_post; ?></b> post in this forum.<Br>

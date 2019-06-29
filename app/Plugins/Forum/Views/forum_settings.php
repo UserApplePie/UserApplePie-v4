@@ -28,17 +28,14 @@ use Libs\Form,
         <?php echo Form::open(array('method' => 'post')); ?>
 
         <!-- Enable / Disable Forum -->
-				<div class='input-group mb-3'>
-          <div class='input-group-prepend'>
-            <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Forum ON/OFF</span>
+        <div class='input-group mb-3' style='margin-bottom: 25px'>
+          <div class="input-group-prepend">
+            <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Forum Enable</span>
           </div>
-					<select class='form-control' id='forum_on_off' name='forum_on_off'>
-				    <option value='Enabled' <?php if($data['forum_on_off'] == "Enabled"){echo "SELECTED";}?> >Enabled</option>
-				    <option value='Disabled' <?php if($data['forum_on_off'] == "Disabled"){echo "SELECTED";}?> >Disabled</option>
-				  </select>
-				</div>
+          <input type="checkbox" class='form-control' id='forum_on_off' name='forum_on_off' data-toggle="toggle" data-on="Enabled" data-off="Disabled" data-onstyle="success" data-offstyle="warning" value="Enabled" <?php if($forum_on_off == "Enabled"){echo "CHECKED";}?> >
+        </div>
         <div style='margin-bottom: 25px'>
-          <i>Default: Disabled</i> - Turn the Forum ON or OFF. Hides the Forum from all users if Disabled.
+          <i>Default: Enabled</i> - Turn the Forum ON or OFF. Hides the Forum from all users if Disabled.
         </div>
 
         <!-- Forum Name -->

@@ -25,7 +25,8 @@ if(isset($data['ownjs'])){
 		SITE_URL.'Templates/AdminPanel/Assets/js/jquery.easing.min.js',
 		SITE_URL.'Templates/AdminPanel/Assets/js/sb-admin.min.js',
 		SITE_URL.'Templates/AdminPanel/Assets/js/lumino.glyphs.js',
-		SITE_URL.'Templates/AdminPanel/Assets/js/chart.min.js'
+		SITE_URL.'Templates/AdminPanel/Assets/js/chart.min.js',
+		'https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/js/bootstrap4-toggle.min.js'
 ]);
 ?>
 
