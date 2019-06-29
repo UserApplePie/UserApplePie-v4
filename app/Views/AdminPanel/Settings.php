@@ -16,8 +16,8 @@ use Libs\Form,
   <div class='row'>
     <div class='col-lg-12 col-md-12 col-sm-12'>
     	<div class='card mb-3'>
-    		<div class='card-header h4'>
-    			<h3 class='jumbotron-heading'><?php echo $data['title'];  ?></h3>
+    		<div class='card-header'>
+    			<h4><?php echo $data['title'];  ?></h4>
     		</div>
     		<div class='card-body'>
     			<p><?php echo $data['welcomeMessage'] ?></p>
@@ -54,28 +54,8 @@ use Libs\Form,
 
     <div class='col-lg-12 col-md-12 col-sm-12'>
     	<div class='card mb-3'>
-    		<div class='card-header h4'>
-    			<h3 class='jumbotron-heading'>Site User Account Settings</h3>
-    		</div>
-    		<div class='card-body'>
-          Site User Account Settings.
-      	  <div class='input-group mb-3' style='margin-bottom: 25px'>
-            <div class="input-group-prepend">
-    				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> User Account Activation</span>
-            </div>
-            <select class='form-control' id='site_user_activation' name='site_user_activation'>
-                <option value='true' <?php if($site_user_activation == "true"){echo "SELECTED";}?> >E-Mail Activation Required</option>
-                <option value='false' <?php if($site_user_activation == "false"){echo "SELECTED";}?> >No E-Mail Activation Required</option>
-            </select>
-    			</div>
-    		</div>
-    	</div>
-    </div>
-
-    <div class='col-lg-12 col-md-12 col-sm-12'>
-    	<div class='card mb-3'>
-    		<div class='card-header h4'>
-    			<h3 class='jumbotron-heading'>Site Theme Settings</h3>
+    		<div class='card-header'>
+    			<h4>Site Theme Settings</h4>
     		</div>
     		<div class='card-body'>
           Site Theme provided by <a href='https://bootswatch.com/' target='_blank'>Bootswatch</a>.
@@ -114,8 +94,8 @@ use Libs\Form,
 
     <div class='col-lg-12 col-md-12 col-sm-12'>
     	<div class='card mb-3'>
-    		<div class='card-header h4'>
-    			<h3 class='jumbotron-heading'>Site reCAPCHA Settings</h3>
+    		<div class='card-header'>
+    			<h4>Site reCAPCHA Settings</h4>
     		</div>
     		<div class='card-body'>
                 Site reCAPCHA Settings.
@@ -142,8 +122,8 @@ use Libs\Form,
 
     <div class='col-lg-12 col-md-12 col-sm-12'>
     	<div class='card mb-3'>
-    		<div class='card-header h4'>
-    			<h3 class='jumbotron-heading'>Site Wide Message</h3>
+    		<div class='card-header'>
+    			<h4>Site Wide Message</h4>
     		</div>
     		<div class='card-body'>
           This message will show to all users on the site.  Let them know about downtime or other site related messages.<Br>

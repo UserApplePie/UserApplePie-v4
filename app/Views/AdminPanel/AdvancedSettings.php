@@ -17,12 +17,23 @@ use Libs\Form,
     <div class='col-lg-12 col-md-12 col-sm-12'>
     	<div class='card mb-3'>
     		<div class='card-header h4'>
-    			<h3 class='jumbotron-heading'>Site Users Settings</h3>
+    			Site Registration Settings
     		</div>
     		<div class='card-body'>
     			<p><?php echo $data['welcomeMessage'] ?></p>
 
     			<?php echo Form::open(array('method' => 'post')); ?>
+
+          <!-- Site Activation -->
+      	  <div class='input-group mb-3' style='margin-bottom: 25px'>
+            <div class="input-group-prepend">
+    				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> User Account Activation</span>
+            </div>
+            <input type="checkbox" class='form-control' id='site_user_activation' name='site_user_activation' data-toggle="toggle" data-on="Enabled" data-off="Disabled" data-onstyle="success" data-offstyle="warning" value="true" <?php if($site_user_activation == "true"){echo "CHECKED";}?> >
+    			</div>
+          <div style='margin-bottom: 25px'>
+            <i>Default: Disabled</i> - Requires new users to confirm their account via E-Mail activation link.
+          </div>
 
     			<!-- Site Invite Code -->
     			<div class='input-group mb-3' style='margin-bottom: 25px'>
@@ -32,7 +43,7 @@ use Libs\Form,
     				<?php echo Form::input(array('type' => 'text', 'name' => 'site_user_invite_code', 'class' => 'form-control', 'value' => $site_user_invite_code, 'placeholder' => 'Site Invitation Code', 'maxlength' => '255')); ?>
     			</div>
           <div style='margin-bottom: 25px'>
-            <i>Default: blank</i> - Requries new users to use correct Invitation Code to Register for site.  Site does not require if left blank.
+            <i>Default: blank</i> - Requires new users to use correct Invitation Code to Register for site.  Site does not require if left blank.
           </div>
 
           <!-- Max Login Attempts -->
@@ -161,7 +172,7 @@ use Libs\Form,
     <div class='col-lg-12 col-md-12 col-sm-12'>
       <div class='card mb-3'>
         <div class='card-header h4'>
-          <h3 class='jumbotron-heading'>Site Time Zone Settings</h3>
+          Site Time Zone Settings
         </div>
         <div class='card-body'>
 
@@ -183,7 +194,7 @@ use Libs\Form,
     <div class='col-lg-12 col-md-12 col-sm-12'>
       <div class='card mb-3'>
         <div class='card-header h4'>
-          <h3 class='jumbotron-heading'>Paginator Limits</h3>
+          Paginator Limits
         </div>
         <div class='card-body'>
 
@@ -226,7 +237,7 @@ use Libs\Form,
     <div class='col-lg-12 col-md-12 col-sm-12'>
       <div class='card mb-3'>
         <div class='card-header h4'>
-          <h3 class='jumbotron-heading'>Messages Plugin Settings</h3>
+          Messages Plugin Settings
         </div>
         <div class='card-body'>
 
@@ -261,7 +272,7 @@ use Libs\Form,
   <div class='col-lg-12 col-md-12 col-sm-12'>
     <div class='card mb-3'>
       <div class='card-header h4'>
-        <h3 class='jumbotron-heading'>Sweets Settings</h3>
+        Sweets Settings
       </div>
       <div class='card-body'>
 
@@ -294,7 +305,7 @@ use Libs\Form,
   <div class='col-lg-12 col-md-12 col-sm-12'>
     <div class='card mb-3'>
       <div class='card-header h4'>
-        <h3 class='jumbotron-heading'>Max Image Size</h3>
+        Max Profile Image Size
       </div>
       <div class='card-body'>
         <!-- Max Image Size when uploaded to server -->

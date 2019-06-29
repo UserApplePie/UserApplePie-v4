@@ -151,18 +151,26 @@ class LoadSiteSettings {
          *                *
          *****************/
         // Sets up users listing page limit
-        define('USERS_PAGEINATOR_LIMIT', $this->model->getSettings('users_pageinator_limit'));
+        $users_pageinator_limit = $this->model->getSettings('users_pageinator_limit');
+        if(empty($users_pageinator_limit)){ $users_pageinator_limit = 20; }
+        define('USERS_PAGEINATOR_LIMIT', $users_pageinator_limit);
         // Sets up friends listing page limit
-        define('FRIENDS_PAGEINATOR_LIMIT', $this->model->getSettings('friends_pageinator_limit'));
+        $friends_pageinator_limit = $this->model->getSettings('friends_pageinator_limit');
+        if(empty($friends_pageinator_limit)){ $friends_pageinator_limit = 20; }
+        define('FRIENDS_PAGEINATOR_LIMIT', $friends_pageinator_limit);
         /*****************
          *                *
          *   Messages     *
          *                *
          *****************/
          // Inbox and Outbox total Limit
-         define('MESSAGE_QUOTA_LIMIT', $this->model->getSettings('message_quota_limit'));
+         $message_quota_limit = $this->model->getSettings('message_quota_limit');
+         if(empty($message_quota_limit)){ $message_quota_limit = 50; }
+         define('MESSAGE_QUOTA_LIMIT', $message_quota_limit);
          // How many message to display per page
-         define('MESSAGE_PAGEINATOR_LIMIT', $this->model->getSettings('message_pageinator_limit'));
+         $message_pageinator_limit = $this->model->getSettings('message_pageinator_limit');
+         if(empty($message_pageinator_limit)){ $message_pageinator_limit = 20; }
+         define('MESSAGE_PAGEINATOR_LIMIT', $message_pageinator_limit);
          /*****************
           *                *
           *    Sweets      *
