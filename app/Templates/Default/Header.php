@@ -57,7 +57,7 @@ use Libs\Assets,
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav">
-              <?php echo PageFunctions::getLinks('header_main'); ?>
+              <?php echo PageFunctions::getLinks('header_main', $currentUserData[0]->userID); ?>
             </ul>
 
             <ul class="nav navbar-nav ml-auto">

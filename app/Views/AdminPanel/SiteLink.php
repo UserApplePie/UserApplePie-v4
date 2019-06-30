@@ -14,7 +14,8 @@ use Libs\Form,
     Libs\SuccessMessages,
     Libs\Language,
     Libs\PageFunctions,
-    Libs\Url;
+    Libs\Url,
+    Libs\CurrentUserData;
 
 ?>
 
@@ -108,6 +109,24 @@ use Libs\Form,
             <option value='Messages' <?php if($link_data[0]->require_plugin == "Messages"){echo "SELECTED";}?> >Messages</option>
           </select>
         </div>
+
+        <!-- Require Plugin -->
+        <div class='input-group mb-3' style='margin-bottom: 25px'>
+          <div class="input-group-prepend">
+            <span class='input-group-text'><i class='fa fa-fw  fa-user'></i> Permission</span>
+          </div>
+          <select class='form-control' id='permission' name='permission'>
+            <option value='0' <?php if($link_data[0]->permission == "0"){echo "SELECTED";}?> >Public</option>
+            <?php
+              $getGroups = CurrentUserData::getGroups();
+              foreach ($getGroups as $group) {
+                echo "<option value='$group->groupID' "; if($link_data[0]->permission == $group->groupID){echo "SELECTED";} echo ">$group->groupName</option>";
+              }
+
+            ?>
+          </select>
+        </div>
+
     </div>
     <div class='card-footer'>
         <!-- CSRF Token -->
@@ -152,7 +171,7 @@ use Libs\Form,
       </div>
       <table class='table table-hover responsive'>
         <tr>
-          <th>Link Title</th><th>URL</th><th>Alt Text</th><th>Location</th><th>Require Plugin</th><th></th>
+          <th>Link Title</th><th>URL</th><th>Alt Text</th><th>Location</th><th>Require Plugin</th><th>Permission</th><th></th>
         </tr>
         <?php
           if(isset($drop_down_links)){
@@ -163,6 +182,7 @@ use Libs\Form,
               echo "<td>".$link->alt_text."</td>";
               echo "<td>".$link->location."</td>";
               echo "<td>".$link->require_plugin."</td>";
+              echo "<td>".CurrentUserData::getGroupData($link->permission)."</td>";
               echo "<td align='right'>";
               /** Check to see if object is at top **/
               if($link->link_order_drop_down > 1){

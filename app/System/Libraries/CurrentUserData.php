@@ -53,6 +53,8 @@ class CurrentUserData
           ON g.groupID = ug.groupID
         WHERE
           ug.userID = :userID
+        GROUP BY
+          g.groupName
         ",
       array(':userID' => $where_id));
     return $user_groups;
@@ -73,6 +75,44 @@ class CurrentUserData
         ",
       array(':groupID' => $where_id));
     return count($user_groups);
+  }
+
+  /**
+   * Get group data based on groupID
+   */
+  public static function getGroupData($where_id){
+  self::$db = Database::get();
+  	$data = self::$db->select("SELECT groupName, groupFontColor, groupFontWeight FROM ".PREFIX."groups WHERE groupID = :groupID",
+  		array(':groupID' => $where_id));
+      if(!empty($data)){
+        $groupdata = $data;
+      }else{
+        $groupdata = array('groupName'=>'Public');
+        $groupdata[0] = (object) $groupdata;
+      }
+      $groupName = $groupdata[0]->groupName;
+      $groupColor = "color='".$groupdata[0]->groupFontColor."'";
+      $groupWeight = "style='font-weight:".$groupdata[0]->groupFontWeight."'";
+      // Format the output with font style
+      $groupOutput = "<font $groupColor $groupWeight>$groupName</font>";
+  	return $groupOutput;
+  }
+
+  /**
+  * Get Groups
+  */
+  public static function getGroups(){
+    self::$db = Database::get();
+    $user_groups = self::$db->select("
+        SELECT
+          *
+        FROM
+          ".PREFIX."groups
+        ORDER BY
+          groupID
+        ASC
+        ");
+    return $user_groups;
   }
 
   /**

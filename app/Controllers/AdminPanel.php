@@ -17,7 +17,7 @@ use App\System\Controller,
     App\Models\AdminPanel as AdminPanelModel,
     App\System\Error,
     App\Models\Members as MembersModel,
-    App\Models\DatabaseUpgrades as UpgradeModel,
+    App\Update\Update,
     App\Routes;
 
 class AdminPanel extends Controller{
@@ -1398,7 +1398,8 @@ class AdminPanel extends Controller{
           /** Admin is Creating a New Link **/
           $main_link_title = $this->model->getMainLinkTitle($main_link_id);
           $data['title'] = "Site Link Editor - Delete Link: $main_link_title";
-          $data['welcome_message'] = "Do you want to delete link: $main_link_title";
+          $data['welcome_message'] = "Do you want to delete link: $main_link_title <Br><Br>";
+          $data['welcome_message'] .= "<font color=red><b>NOTE</b>: This also deletes all drop down links assigned to this link if dropdown.</font>";
           $data['main_link_id'] = $main_link_id;
           $data['edit_type'] = "deletelink";
           $data['link_data'] = $this->model->getSiteLinkData($main_link_id);
@@ -1453,9 +1454,10 @@ class AdminPanel extends Controller{
             $require_plugin = Request::post('require_plugin');
             $drop_down_for = Request::post('drop_down_for');
             $dd_link_id = Request::post('dd_link_id');
+            $permission = Request::post('permission');
             /** Check if update or new **/
             if($link_action == "update"){
-              if($this->model->updateSiteLink($id, $title, $url, $alt_text, $location, $drop_down, $require_plugin)){
+              if($this->model->updateSiteLink($id, $title, $url, $alt_text, $location, $drop_down, $require_plugin, $permission)){
                 /** Success **/
                 \Libs\SuccessMessages::push('You Have Successfully Updated Site Link', 'AdminPanel-SiteLinks');
               }else{
@@ -1463,7 +1465,7 @@ class AdminPanel extends Controller{
                 \Libs\ErrorMessages::push('Update Site Link Failed', 'AdminPanel-SiteLinks');
               }
             }else if($link_action == "new"){
-              if($this->model->addSiteLink($title, $url, $alt_text, $location, $drop_down, $require_plugin)){
+              if($this->model->addSiteLink($title, $url, $alt_text, $location, $drop_down, $require_plugin, $permission)){
                 /** Success **/
                 \Libs\SuccessMessages::push('You Have Successfully Added New Site Link', 'AdminPanel-SiteLinks');
               }else{
@@ -1479,7 +1481,7 @@ class AdminPanel extends Controller{
                 \Libs\ErrorMessages::push('Delete Site Link Failed', 'AdminPanel-SiteLinks');
               }
             }else if($link_action == "dropdownnew"){
-              if($this->model->addSiteDDLink($title, $url, $alt_text, $location, $drop_down, $require_plugin, $drop_down_for)){
+              if($this->model->addSiteDDLink($title, $url, $alt_text, $location, $drop_down, $require_plugin, $drop_down_for, $permission)){
                 /** Success **/
                 \Libs\SuccessMessages::push('You Have Successfully Added New Site Drop Down Link', 'AdminPanel-SiteLink/'.$drop_down_for);
               }else{
@@ -1487,7 +1489,7 @@ class AdminPanel extends Controller{
                 \Libs\ErrorMessages::push('Create New Site Drop Down Link Failed', 'AdminPanel-SiteLink/'.$drop_down_for);
               }
             }else if($link_action == "dropdownupdate"){
-              if($this->model->updateSiteDDLink($dd_link_id, $title, $url, $alt_text, $location, $drop_down, $require_plugin)){
+              if($this->model->updateSiteDDLink($dd_link_id, $title, $url, $alt_text, $location, $drop_down, $require_plugin, $permission)){
                 /** Success **/
                 \Libs\SuccessMessages::push('You Have Successfully Updated Site Drop Down Link', 'AdminPanel-SiteLink/'.$main_link_id);
               }else{
@@ -1630,7 +1632,7 @@ class AdminPanel extends Controller{
       if(!isset($data['uap_database_version'])){ $data['uap_database_version'] = "4.2.1"; }
 
       /* Setup Upgrade Model */
-      $this->upgrade = new UpgradeModel();
+      $this->upgrade = new Update();
 
       /* Check to see if Admin is submiting form data */
       if(isset($_POST['submit'])){
@@ -1641,15 +1643,7 @@ class AdminPanel extends Controller{
                 /* Check to make sure Admin is updating settings */
                 if($_POST['upgrade_database'] == "update421to430"){
                   /* Run the upgrade database script */
-                  $test = $this->upgrade->update421to430();
-                  var_dump($test);
-                  if($this->upgrade->update421to430()){
-                      /* Success */
-                      \Libs\SuccessMessages::push('You Have Successfully Upgraded the Database', 'AdminPanel-Upgrade');
-                    }else{
-                        /* Error Message Display */
-                        \Libs\ErrorMessages::push('Error Upgrading Database', 'AdminPanel-Upgrade');
-                    }
+                  $this->upgrade->update421to430();
                 }else{
                     /* Error Message Display */
                     \Libs\ErrorMessages::push('Error Upgrading Database', 'AdminPanel-Upgrade');

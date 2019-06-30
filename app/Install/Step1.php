@@ -11,7 +11,7 @@
 /** System Check **/
 
 /** PHP Version Check 5.5 or Greater **/
-if (version_compare(phpversion(), '5.5.0', '<')) {
+if (version_compare(phpversion(), '7.1.3', '<')) {
 	/** PHP Version too old **/
 	$php_version = phpversion();
 	$php_display = "<font color=red><b>Out of Date!</b></font>";
@@ -142,7 +142,7 @@ if(folder_writable('assets/images/profile-pics/')){
 		  <!-- Table -->
 		  <table class="table">
 		    <th> Requirement </th><th> Version </th><th> Status </th>
-				<tr><td> PHP 5.5 or Greater </td><td> <?=$php_version?> </td><td> <?=$php_display?> </td></tr>
+				<tr><td> PHP 7.1.3 or Greater </td><td> <?=$php_version?> </td><td> <?=$php_display?> </td></tr>
 				<tr><td> mySQL Database Server </td><td> <?=$mysql_version?> </td><td> <?=$mysql_display?> </td></tr>
 				<tr><td> URL Rewrite Module </td><td> <?=$mrw_version?> </td><td> <?=$mrw_display?> </td></tr>
 				<tr><td> PHP Fileinfo Enabled </td><td> <?=$fi_version?> </td><td> <?=$fi_display?> </td></tr>
