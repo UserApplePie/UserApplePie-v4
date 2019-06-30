@@ -19,12 +19,12 @@ class Update {
       $conn = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASS);
       // set the PDO error mode to exception
       $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      echo "<font color=green>Database Connected Successfully!</font>";
+      $output .= "<font color=green>Database Connected Successfully!</font>";
       $database_working = true;
     }
     catch(PDOException $e){
-      echo "<font color=red>Database Connection failed:</font> " . $e->getMessage();
-      echo "<a href='/?install_step=2' class='btn btn-danger btn-lg'>Go Back to Step 2 and Fix Database Settings</a>";
+      $output .= "<font color=red>Database Connection failed:</font> " . $e->getMessage();
+      $output .= "<a href='/?install_step=2' class='btn btn-danger btn-lg'>Go Back to Step 2 and Fix Database Settings</a>";
     }
 
     if(isset($database_working)){
@@ -33,9 +33,9 @@ class Update {
       // Reconnect to Database for Import
       $link = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
       if (!$link) {
-      echo "Error: Unable to connect to MySQL." . PHP_EOL;
-      echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
-      echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
+      $output .= "Error: Unable to connect to MySQL." . PHP_EOL;
+      $output .= "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
+      $output .= "Debugging error: " . mysqli_connect_error() . PHP_EOL;
       exit;
       }
 
@@ -67,7 +67,7 @@ class Update {
             }
             // Perform the query
             if(!mysqli_query($link,$templine)){
-              print('<hr><font color=red><b>Error performing query</b></font> \'' . $templine . '\': ' . mysqli_connect_error() . ' ');
+              $output .= "<hr><font color=red><b>Error performing query</b></font> \'" . $templine . "\': " . mysqli_connect_error() . " ";
               $errors[] = "true";
             }
             // Reset temp variable to empty
@@ -77,11 +77,13 @@ class Update {
       }
     }
     if(!isset($errors)){
-      echo "<hr><font color=green><b>Database Updated Successfully!</b></font>";
+      $output .= "<hr><font color=green><b>Database Updated Successfully!</b></font>";
       $database_import = true;
     }else{
     	$database_error = true;
     }
+
+    return $output;
 
   }
 }
