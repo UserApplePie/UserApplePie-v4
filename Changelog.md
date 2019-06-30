@@ -4,6 +4,10 @@ https://www.userapplepie.com
 ----------------------------------------------------------------------------------------
 UAP v4.2.1 to v4.3.0
 ----------------------------------------------------------------------------------------
+### Security Fix
+ - Fixed where only Administrator can see the Admin Panel.  
+### Site Links
+ - Added permission settings to each link.
 ### Comments Library
  - Added new comments Library
  - Setup with status updates

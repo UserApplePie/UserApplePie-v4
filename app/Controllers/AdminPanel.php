@@ -1643,7 +1643,7 @@ class AdminPanel extends Controller{
                 /* Check to make sure Admin is updating settings */
                 if($_POST['upgrade_database'] == "update421to430"){
                   /* Run the upgrade database script */
-                  $this->upgrade->update421to430();
+                  $data['welcomeMessage'] = $this->upgrade->update421to430();
                 }else{
                     /* Error Message Display */
                     \Libs\ErrorMessages::push('Error Upgrading Database', 'AdminPanel-Upgrade');
