@@ -255,7 +255,7 @@ class Users extends Models
         }
         /* Now to check if user is in admin group (default admin groupID: 4) */
         /* If more than one admin group just add num to array ex: array('3','4') */
-        $admin_group = array('4','3');
+        $admin_group = array('4');
         foreach ($admin_group as $key) {
           $admin_check[] = in_array($key,$cu_groupID) ? 'YesAdmin' : 'NoAdmin';
         }

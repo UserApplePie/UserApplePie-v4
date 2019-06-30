@@ -719,14 +719,14 @@ class AdminPanel extends Models {
      *
      * @return boolean returns true/false
      */
-    public function addSiteLink($title, $url, $alt_text, $location, $drop_down, $require_plugin = null){
+    public function addSiteLink($title, $url, $alt_text, $location, $drop_down, $require_plugin = null, $permission = 0){
       $link_order_last = SELF::getSiteLinksLastID($location);
       if(isset($link_order_last)){
         $link_order = $link_order_last + 1;
       }else{
         $link_order = "1";
       }
-      $data = $this->db->insert(PREFIX.'links', array('title' => $title, 'url' => $url, 'alt_text' => $alt_text, 'location' => $location, 'drop_down' => $drop_down, 'require_plugin' => $require_plugin, 'link_order' => $link_order));
+      $data = $this->db->insert(PREFIX.'links', array('title' => $title, 'url' => $url, 'alt_text' => $alt_text, 'location' => $location, 'drop_down' => $drop_down, 'require_plugin' => $require_plugin, 'link_order' => $link_order, 'permission' => $permission));
       if($data > 0){
         return true;
       }else{
@@ -741,8 +741,8 @@ class AdminPanel extends Models {
      *
      * @return boolean returns true/false
      */
-  	public function updateSiteLink($id, $title, $url, $alt_text, $location, $drop_down, $require_plugin = null){
-  		$query = $this->db->update(PREFIX.'links', array('title' => $title, 'url' => $url, 'alt_text' => $alt_text, 'location' => $location, 'drop_down' => $drop_down, 'require_plugin' => $require_plugin), array('id' => $id));
+  	public function updateSiteLink($id, $title, $url, $alt_text, $location, $drop_down, $require_plugin = null, $permission = 0){
+  		$query = $this->db->update(PREFIX.'links', array('title' => $title, 'url' => $url, 'alt_text' => $alt_text, 'location' => $location, 'drop_down' => $drop_down, 'require_plugin' => $require_plugin, 'permission' => $permission), array('id' => $id));
   		if($query > 0){
   			return true;
   		}else{
@@ -762,6 +762,7 @@ class AdminPanel extends Models {
     public function deleteSiteLink($id){
       $data = $this->db->delete(PREFIX.'links', array('id' => $id));
       if($data > 0){
+        $this->db->delete(PREFIX.'links', array('drop_down_for' => $id), 1000);
         return true;
       }else{
         return false;
@@ -881,7 +882,7 @@ class AdminPanel extends Models {
      *
      * @return boolean returns true/false
      */
-    public function addSiteDDLink($title, $url, $alt_text, $location, $drop_down, $require_plugin = null, $drop_down_for){
+    public function addSiteDDLink($title, $url, $alt_text, $location, $drop_down, $require_plugin = null, $drop_down_for, $permission = 0){
       $link_order_last = SELF::getSiteDropDownLinksLastID($drop_down_for);
       if(isset($link_order_last)){
         $link_order = $link_order_last + 1;
@@ -891,7 +892,7 @@ class AdminPanel extends Models {
       $current_link_order = $this->db->select("SELECT link_order FROM ".PREFIX."links WHERE id = :id LIMIT 1", array(':id'=>$drop_down_for));
       $get_link_order = $current_link_order[0]->link_order;
       $data = $this->db->insert(PREFIX.'links', array('title' => $title, 'url' => $url, 'alt_text' => $alt_text, 'location' => $location, 'drop_down' => $drop_down, 'require_plugin' => $require_plugin,
-                                                          'link_order_drop_down' => $link_order, 'drop_down_for' => $drop_down_for, 'link_order' => $get_link_order));
+                                                          'link_order_drop_down' => $link_order, 'drop_down_for' => $drop_down_for, 'link_order' => $get_link_order, 'permission' => $permission));
       if($data > 0){
         return true;
       }else{
@@ -918,8 +919,8 @@ class AdminPanel extends Models {
      *
      * @return boolean returns true/false
      */
-  	public function updateSiteDDLink($id, $title, $url, $alt_text, $location, $drop_down, $require_plugin = null){
-  		$query = $this->db->update(PREFIX.'links', array('title' => $title, 'url' => $url, 'alt_text' => $alt_text, 'location' => $location, 'drop_down' => $drop_down, 'require_plugin' => $require_plugin), array('id' => $id));
+  	public function updateSiteDDLink($id, $title, $url, $alt_text, $location, $drop_down, $require_plugin = null, $permission = 0){
+  		$query = $this->db->update(PREFIX.'links', array('title' => $title, 'url' => $url, 'alt_text' => $alt_text, 'location' => $location, 'drop_down' => $drop_down, 'require_plugin' => $require_plugin, 'permission' => $permission), array('id' => $id));
   		if($query > 0){
   			return true;
   		}else{

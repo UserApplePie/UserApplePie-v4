@@ -14,7 +14,8 @@ use Libs\Form,
     Libs\SuccessMessages,
     Libs\Language,
     Libs\PageFunctions,
-    Libs\Url;
+    Libs\Url,
+    Libs\CurrentUserData;
 
 ?>
 
@@ -34,7 +35,7 @@ use Libs\Form,
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <?php echo PageFunctions::getLinks('header_main'); ?>
+            <?php echo PageFunctions::getLinks('header_main', $currentUserData[0]->userID); ?>
           </ul>
         </div>
       </nav>
@@ -47,7 +48,7 @@ use Libs\Form,
     </div>
     <table class='table table-hover responsive'>
       <tr>
-        <th>Link Title</th><th>URL</th><th>Alt Text</th><th>Drop Down</th><th>Require Plugin</th><th></th>
+        <th>Link Title</th><th>URL</th><th>Alt Text</th><th>Drop Down</th><th>Require Plugin</th><th>Permission</th><th></th>
       </tr>
       <?php
         if(isset($main_site_links)){
@@ -60,6 +61,7 @@ use Libs\Form,
               if($link->drop_down == "1"){ echo "Drop Down Link"; }
             echo "</td>";
             echo "<td>".$link->require_plugin."</td>";
+            echo "<td>".CurrentUserData::getGroupData($link->permission)."</td>";
             echo "<td align='right'>";
             /** Check to see if object is at top **/
             if($link->link_order > 1){

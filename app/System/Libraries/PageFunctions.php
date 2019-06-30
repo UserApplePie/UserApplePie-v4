@@ -8,7 +8,8 @@
 */
 namespace Libs;
 
-use Libs\Database;
+use Libs\Database,
+		Libs\CurrentUserData;
 
 class PageFunctions {
 
@@ -39,7 +40,7 @@ class PageFunctions {
 	}
 
 	/* Function that gets urls based on location */
-	public static function getLinks($location){
+	public static function getLinks($location, $userID = 0){
 		self::$db = Database::get();
 		$data = self::$db->select("
 				SELECT
@@ -57,23 +58,40 @@ class PageFunctions {
 			if(isset($data)){
 				foreach ($data as $link) {
 					/* Check to see if is a plugin link and if that plugin exists */
-					if(empty($link->require_plugin)){
-						$link_enable = true;
-					}else	if(isset($link->require_plugin)){
-						if(file_exists(ROOTDIR.'app/Plugins/'.$link->require_plugin.'/Controllers/'.$link->require_plugin.'.php')){
-							$link_enable = true;
-						}else{
+					if(isset($link->require_plugin)){
+						if(!file_exists(ROOTDIR.'app/Plugins/'.$link->require_plugin.'/Controllers/'.$link->require_plugin.'.php')){
 							$link_enable = false;
 						}
-					}else{
-						$link_enable = true;
 					}
+					/** Check to see if user has permission to see the link **/
+					if($userID == 0 || empty($userID)){
+						/** User is not logged in - Only show Public Links **/
+						if($link->permission == 0){
+							/** Permission Match - Show Link **/
+							$link_enable = true;
+						}
+					}else{
+						/** User is logged in - Check for permissions **/
+						$user_groups = CurrentUserData::getCUGroups($userID);
+						/** Check if New Member **/
+						foreach ($user_groups as $user_group) {
+							if($user_group->groupID >= $link->permission){
+								/** Permission Match - Show Link **/
+								$link_enable = true;
+							}
+						}
+					}
+					/** Check if link is enabled **/
+					if($link_enable != true){
+						$link_enable = false;
+					}
+					/** Get output for links display **/
 					if($link_enable == true){
 						if($link->location == "header_main"){ $set_class = "nav-link"; }
 						if($link->drop_down == "1"){
 							$links_output .= "<li class='nav-item dropdown'>";
 							$links_output .= "<a href='#' title='".$link->alt_text."' class='nav-link dropdown-toggle' data-toggle='dropdown' id='links_".$link->id."'> ".$link->title." </a>";
-							$links_output .= SELF::getDropDownLinks($link->id);
+							$links_output .= SELF::getDropDownLinks($link->id, $userID);
 							$links_output .= "</li>";
 						}else{
 							$links_output .= "<li><a class='$set_class' href='".SITE_URL.$link->url."' title='".$link->alt_text."'> ".$link->title." </a></li>";
@@ -86,7 +104,7 @@ class PageFunctions {
 	}
 
 	/* Function that gets urls for dropdown menus */
-	public static function getDropDownLinks($drop_down_for){
+	public static function getDropDownLinks($drop_down_for, $userID){
 		self::$db = Database::get();
 		$data = self::$db->select("
 				SELECT
@@ -102,7 +120,37 @@ class PageFunctions {
 			if(isset($data)){
 				$links_output .= "<div class='dropdown-menu' aria-labelledby='links_".$drop_down_for."'>";
 				foreach ($data as $link) {
-					$links_output .= "<a class='dropdown-item' href='".SITE_URL.$link->url."' title='".$link->alt_text."'> ".$link->title." </a>";
+					/* Check to see if is a plugin link and if that plugin exists */
+					if(isset($link->require_plugin)){
+						if(!file_exists(ROOTDIR.'app/Plugins/'.$link->require_plugin.'/Controllers/'.$link->require_plugin.'.php')){
+							$link_enable = false;
+						}
+					}
+					/** Check to see if user has permission to see the link **/
+					if($userID == 0 || empty($userID)){
+						/** User is not logged in - Only show Public Links **/
+						if($link->permission == 0){
+							/** Permission Match - Show Link **/
+							$link_enable = true;
+						}
+					}else{
+						/** User is logged in - Check for permissions **/
+						$user_groups = CurrentUserData::getCUGroups($userID);
+						/** Check if New Member **/
+						foreach ($user_groups as $user_group) {
+							if($user_group->groupID >= $link->permission){
+								/** Permission Match - Show Link **/
+								$link_enable = true;
+							}
+						}
+					}
+					/** Check if link is enabled **/
+					if($link_enable != true){
+						$link_enable = false;
+					}
+					if($link_enable == true){
+							$links_output .= "<a class='dropdown-item' href='".SITE_URL.$link->url."' title='".$link->alt_text."'> ".$link->title." </a>";
+					}
 				}
 				$links_output .= "</div>";
 			}
