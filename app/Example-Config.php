@@ -32,6 +32,9 @@ class Config {
     /* Default Method */
     define('DEFAULT_METHOD', 'Home');
 
+    /* Default Home Page */
+    define('DEFAULT_HOME', 'Home');
+
     /* Default Template */
     define('DEFAULT_TEMPLATE', 'Default');
 

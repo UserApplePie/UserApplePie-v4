@@ -21,7 +21,7 @@ class Auth extends Models
     /**
      * Gets user account info by username
      * @param $username
-     * @return array
+     * @return array dataset
      */
     public function getAccountInfo($username)
     {
@@ -31,7 +31,7 @@ class Auth extends Models
     /**
      * Gets user account info by email
      * @param $email
-     * @return array
+     * @return array dataset
      */
     public function getAccountInfoEmail($email)
     {
@@ -51,7 +51,7 @@ class Auth extends Models
     /**
      * Gets session info by the hash
      * @param $hash
-     * @return array
+     * @return array dataset
      */
     public function sessionInfo($hash)
     {
@@ -70,7 +70,7 @@ class Auth extends Models
 
     /**
      * Gets all attempts to login all accounts
-     * @return array
+     * @return array dataset
      */
     public function getAttempts()
     {
@@ -80,7 +80,7 @@ class Auth extends Models
     /**
      * Gets login attempt by ip address
      * @param $ip
-     * @return array
+     * @return array dataset
      */
     public function getAttempt($ip)
     {
@@ -123,7 +123,7 @@ class Auth extends Models
     /**
      * Get the user id by username
      * @param $username
-     * @return array
+     * @return array dataset
      */
     public function getUserID($username)
     {
@@ -133,7 +133,7 @@ class Auth extends Models
     /**
      * Check is user is a New Member (groupID = 1)
      * @param $userID
-     * @return array
+     * @return array dataset
      */
     public function getUserGroups($userID)
     {

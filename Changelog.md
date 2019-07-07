@@ -4,6 +4,13 @@ https://www.userapplepie.com
 ----------------------------------------------------------------------------------------
 UAP v4.2.1 to v4.3.0
 ----------------------------------------------------------------------------------------
+### PageFunctions
+ - Added Online Bubble that can be displayed next to user names
+### Pages Permissions
+ - Added a Pages Permissions page to the Admin Panel
+ - Set site to check all page permissions before letting user continue
+### House Cleaning
+ - Cleaned up the code where needed.
 ### Security Fix
  - Fixed where only Administrator can see the Admin Panel.  
 ### Site Links

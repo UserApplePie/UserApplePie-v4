@@ -24,7 +24,9 @@ use App\System\Controller,
 
 class Auth extends Controller
 {
-
+    /**
+     * Call the parent construct
+     */
     public function __construct()
     {
         parent::__construct();
@@ -40,12 +42,15 @@ class Auth extends Controller
         if ($this->auth->isLogged())
             Url::redirect();
 
-        /* Start the Login Process */
-        if (isset($_POST['submit']) && Csrf::isTokenValid('login')) {
+        /* Get User Bot Protection Field - Should be empty if Human */
+        $ubp_name = Request::post('ubp_name');
 
-            $username = Request::post('username');
+        /* Start the Login Process */
+        if (isset($_POST['submit']) && Csrf::isTokenValid('login') && empty($ubp_name)) {
+
+            $username = strip_tags( trim( Request::post('username') ) );
             $password = Request::post('password');
-            $rememberMe = null !=  Request::post('rememberMe');
+            $rememberMe = null !=  strip_tags( trim( Request::post('rememberMe') ) );
 
             $email = $this->auth->checkIfEmail($username);
             $username = $email && (count($email) != 0 ) ? $email[0]->username : $username;
@@ -117,6 +122,7 @@ class Auth extends Controller
             $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
         }
 
+        /** Push data to the view **/
         Load::View("Members/Login", $data);
     }
 
@@ -163,7 +169,7 @@ class Auth extends Controller
                 }
 
                 /** Check for site user invite code **/
-                $site_user_invite_code = Request::post('site_user_invite_code');
+                $site_user_invite_code = strip_tags( trim( Request::post('site_user_invite_code') ) );
                 $site_user_invite_code_db = SITE_USER_INVITE_CODE;
                 if(!empty($site_user_invite_code_db)){
                   if($site_user_invite_code != $site_user_invite_code_db){
@@ -177,10 +183,10 @@ class Auth extends Controller
 
                 //Only continue if captcha did not fail
                 if (!$captcha_fail && empty($ubp_name)) {
-                    $username = Request::post('username');
+                    $username = strip_tags( trim( Request::post('username') ) );
                     $password = Request::post('password');
                     $verifypassword = Request::post('passwordc');
-                    $email = Request::post('email');
+                    $email = trim ( Request::post('email') );
 
                     // Get Account Activation Setting
                     $account_activation = ACCOUNT_ACTIVATION;
@@ -267,18 +273,23 @@ class Auth extends Controller
         /** Check to see if user is logged in **/
         $data['isLoggedIn'] = $this->auth->isLogged();
 
+        /** Push data to the view **/
         Load::View("Members/Register", $data);
     }
 
     /**
      * Activate an account
-     * @param $username
-     * @param $activekey
+     * @param string $val1
+     * @param string $username
+     * @param string $val3
+     * @param string $activekey
      */
-    public function activate($val1 = null, $username, $val3 = null, $activekey)
+    public function activate($val1 = null, $username, $val3 = null, $activekey = null)
     {
         if ($this->auth->isLogged())
             Url::redirect();
+
+        $activekey = trim( $activekey );
 
         if($this->auth->activateAccount($username, $activekey)) {
             /** Success Message Display **/
@@ -297,9 +308,8 @@ class Auth extends Controller
     			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
-
+        /** Push data to the view **/
         Load::View('Members/Activate', $data);
-
     }
 
     /**
@@ -364,7 +374,7 @@ class Auth extends Controller
         $data['js'] .= "<script src='".Url::templatePath()."js/lang.".$langeCode.".js'></script>";
     		$data['js'] .= "<script src='".Url::templatePath()."js/password_strength_match.js'></script>";
 
-
+        /** Push data to the view **/
         Load::View('Members/Change-Password', $data, 'Members/Member-Account-Sidebar::Left');
 
     }
@@ -382,7 +392,7 @@ class Auth extends Controller
 
             if(Csrf::isTokenValid('changeemail')) {
                 $password = Request::post('passwordemail');
-                $newEmail = Request::post('newemail');
+                $newEmail = trim( Request::post('newemail') );
                 $username = $this->auth->currentSessionInfo()['username'];
 
                 if($this->auth->changeEmail($username, $newEmail, $password)){
@@ -432,6 +442,7 @@ class Auth extends Controller
         $data['js'] .= "<script src='".Url::templatePath()."js/lang.".$langeCode.".js'></script>";
     		$data['js'] .= "<script src='".Url::templatePath()."js/live_email.js'></script>";
 
+        /** Push data to the view **/
         Load::View('Members/Change-Email', $data, 'Members/Member-Account-Sidebar::Left');
 
     }
@@ -447,7 +458,7 @@ class Auth extends Controller
         if(isset($_POST['submit'])){
 
             if (Csrf::isTokenValid('forgotpassword')) {
-                $email = Request::post('email');
+                $email = trim( Request::post('email') );
 
                 if($this->auth->resetPass($email)){
                     /** Success Message Display **/
@@ -471,15 +482,17 @@ class Auth extends Controller
     			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
-
+        /** Push data to the view **/
         Load::View('Members/Forgot-Password', $data);
 
     }
 
     /**
      * Reset password
-     * @param $username
-     * @param $resetkey
+     * @param string $val1
+     * @param string $username
+     * @param string $val2
+     * @param string $resetkey
      */
     public function resetPassword($val1 = null, $username = null, $val2 = null, $resetkey = null)
     {
@@ -521,7 +534,7 @@ class Auth extends Controller
     			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
-
+        /** Push data to the view **/
         Load::View('Members/Reset-Password', $data);
 
     }
@@ -535,7 +548,7 @@ class Auth extends Controller
             Url::redirect();
 
         if (isset($_POST['submit']) && Csrf::isTokenValid('resendactivation')) {
-            $email = Request::post('email');
+            $email = trim( Request::post('email') );
 
             if($this->auth->resendActivation($email)){
                 /** Success Message Display **/
@@ -559,7 +572,7 @@ class Auth extends Controller
     			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
-
+        /** Push data to the view **/
         Load::View('Members/Resend-Activation', $data);
 
     }

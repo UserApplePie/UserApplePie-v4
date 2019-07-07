@@ -9,7 +9,8 @@
 use Libs\Form,
     Libs\ErrorMessages,
     Libs\SuccessMessages,
-    Libs\Language;
+    Libs\Language,
+    Libs\PageFunctions;
 
 ?>
 <div class='col-lg-12 col-md-12 col-sm-12'>
@@ -17,7 +18,8 @@ use Libs\Form,
     <div class='col-lg-12 col-md-12 col-sm-12'>
     	<div class='card mb-3'>
     		<div class='card-header h4'>
-    			<h3 class='jumbotron-heading'><?php echo $data['title'];  ?></h3>
+    			<?php echo $data['title'];  ?>
+          <?php echo PageFunctions::displayPopover('Site Adds Settings', 'Site Adds Settings is used to impliment adds to the site.  You can copy and paste the add code below.  The site will then place that code at given locations on the site.  If left blank, add window will not display.', false, 'btn btn-sm btn-light'); ?>
     		</div>
     		<div class='card-body'>
     			<p><?php echo $data['welcomeMessage'] ?></p>

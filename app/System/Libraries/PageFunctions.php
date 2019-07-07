@@ -90,11 +90,11 @@ class PageFunctions {
 						if($link->location == "header_main"){ $set_class = "nav-link"; }
 						if($link->drop_down == "1"){
 							$links_output .= "<li class='nav-item dropdown'>";
-							$links_output .= "<a href='#' title='".$link->alt_text."' class='nav-link dropdown-toggle' data-toggle='dropdown' id='links_".$link->id."'> ".$link->title." </a>";
+							$links_output .= "<a href='#' title='".$link->alt_text."' class='nav-link dropdown-toggle' data-toggle='dropdown' id='links_".$link->id."'><i class='$link->icon'></i> ".$link->title." </a>";
 							$links_output .= SELF::getDropDownLinks($link->id, $userID);
 							$links_output .= "</li>";
 						}else{
-							$links_output .= "<li><a class='$set_class' href='".SITE_URL.$link->url."' title='".$link->alt_text."'> ".$link->title." </a></li>";
+							$links_output .= "<li><a class='$set_class' href='".SITE_URL.$link->url."' title='".$link->alt_text."'><i class='$link->icon'></i> ".$link->title." </a></li>";
 						}
 					}
 				}
@@ -149,13 +149,181 @@ class PageFunctions {
 						$link_enable = false;
 					}
 					if($link_enable == true){
-							$links_output .= "<a class='dropdown-item' href='".SITE_URL.$link->url."' title='".$link->alt_text."'> ".$link->title." </a>";
+							$links_output .= "<a class='dropdown-item' href='".SITE_URL.$link->url."' title='".$link->alt_text."'><i class='$link->icon'></i> ".$link->title." </a>";
 					}
 				}
 				$links_output .= "</div>";
 			}
 			(isset($links_output)) ? $links_output = $links_output : $links_output = "";
 		return $links_output;
+	}
+
+	/** Popover Function to display bootstrap popover **/
+	public static function displayPopover($title, $content, $form = false, $class = 'btn-info'){
+		if($form == true){ $display .= "<div class='input-group-append'>"; }
+		$display .= "<button type='button' class='$class' data-toggle='popover' data-trigger='focus' title='$title' data-content='$content'><i class='far fa-question-circle'></i></button>";
+		if($form == true){ $display .= "</div>"; }
+		return $display;
+	}
+
+	/** Get current pages's groups **/
+  public static function getPagesGroups($page_id){
+    self::$db = Database::get();
+    $pages_groups = self::$db->select("
+        SELECT
+          pp.page_id, pp.group_id, g.groupID, g.groupName, g.groupDescription, g.groupFontColor, g.groupFontWeight
+        FROM
+          ".PREFIX."pages_permissions pp
+        LEFT JOIN
+          ".PREFIX."groups g
+          ON g.groupID = pp.group_id
+        WHERE
+          pp.page_id = :page_id
+        GROUP BY
+          g.groupName
+        ",
+      array(':page_id' => $page_id));
+    return $pages_groups;
+  }
+
+	/** Get current pages's groups ID numbers **/
+  public static function getPagesGroupsID($page_id){
+    self::$db = Database::get();
+    $pages_groups = self::$db->select("
+        SELECT
+          pp.group_id, g.groupID
+        FROM
+          ".PREFIX."pages_permissions pp
+        LEFT JOIN
+          ".PREFIX."groups g
+          ON g.groupID = pp.group_id
+        WHERE
+          pp.page_id = :page_id
+        GROUP BY
+          g.groupName
+        ",
+      array(':page_id' => $page_id));
+    return $pages_groups;
+  }
+
+	/**
+	 * Get current user's Group
+	 */
+	public static function getPageGroupName($where_id){
+		self::$db = Database::get();
+		// Get user's group ID
+		$data = self::$db->select("SELECT group_id FROM ".PREFIX."pages_permissions WHERE page_id = :page_id ORDER BY group_id ASC",
+			array(':page_id' => $where_id));
+		$groupOutput = "";
+		foreach($data as $row){
+			/** Check to see if Public **/
+			if($row->group_id > 0){
+				// Use group ID to get the group name
+				$data2 = self::$db->select("SELECT groupName, groupFontColor, groupFontWeight FROM ".PREFIX."groups WHERE groupID = :groupID",
+					array(':groupID' => $row->group_id));
+				$groupName = $data2[0]->groupName;
+				$groupColor = "color='".$data2[0]->groupFontColor."'";
+				$groupWeight = "style='font-weight:".$data2[0]->groupFontWeight."'";
+			}else{
+				$groupName = "Public";
+				$groupColor = "color=''";
+				$groupWeight = "style='font-weight: normal'";
+			}
+			// Format the output with font style
+			$groupOutput .= " <font $groupColor $groupWeight>$groupName</font> ";
+		}
+		return $groupOutput;
+	}
+
+	/** Get current pages's groups **/
+  public static function checkPageGroup($page_id = null, $group_id = null){
+    self::$db = Database::get();
+    $data = self::$db->selectCount("
+        SELECT
+          *
+        FROM
+          ".PREFIX."pages_permissions
+        WHERE
+          page_id = :page_id
+				AND
+					group_id = :group_id
+        GROUP BY
+          page_id
+        ",
+      array(':page_id' => $page_id, ':group_id' => $group_id));
+		if($data > 0){
+			return true;
+		}else{
+			return false;
+		}
+  }
+
+	/** Check if user can view given page **/
+	public static function systemPagePermission($u_id = null){
+		/** Setup DB **/
+		self::$db = Database::get();
+		/** Set to block page by default **/
+		$allow_page = false;
+		/** Get URL input from browser **/
+		if(isset($_GET["url"])){
+			$url = $_GET['url'];
+			$url = rtrim($url,'/');
+			$parts = explode("/", $url);
+			$page_url = (isset($parts[0])) ? $parts[0] : "";
+		}else{
+			$page_url = DEFAULT_HOME;
+		}
+		/** Get Page ID from Pages Permissions **/
+		$get_page_id = self::$db->select("SELECT id FROM ".PREFIX."pages WHERE url = :url ORDER BY url ASC LIMIT 1",
+			array(':url' => $page_url));
+		/** Get Page Permissions **/
+		$get_page_groups = self::getPagesGroupsID($get_page_id[0]->id);
+		/** Check to see if page permission is public **/
+		foreach ($get_page_groups as $key => $value) {
+			/** Setup page perms array **/
+			$page_perms[] = $value->group_id;
+		}
+		/** Allow page if page Permissions set to Public **/
+		if(isset($page_perms)){
+			if(in_array(0, $page_perms)){
+				$allow_page = true;
+			}else{
+				/** Get User's Groups **/
+	      $current_user_groups = self::$db->select("
+	        SELECT
+	          ug.userID,
+	          ug.groupID
+	        FROM
+	          ".PREFIX."users_groups ug
+	        WHERE
+	          ug.userID = :userID
+	        ORDER BY
+	          ug.userID ASC
+	      ",
+	        array(':userID' => $u_id));
+				/** Get User's Groups and put groupIDs in array **/
+	      if(!empty($current_user_groups)){
+	        foreach($current_user_groups as $user_group_data){
+	          $cu_groupID[] = $user_group_data->groupID;
+	        }
+	        /** Check for matches User Group and Page Group Permissions **/
+	        foreach ($page_perms as $key) {
+	          if(in_array($key,$cu_groupID)){$allow_page=true;}
+	        }
+				}
+			}
+			/** Check if user is not allowed to view the page **/
+			if($allow_page == false){
+				/** Check to see if user is logged in **/
+				if($u_id > 0){
+					/** User is logged in - send them to home page **/
+					\Libs\ErrorMessages::push('You Do Not have permission to view that page!', '');
+				}else{
+					/** User Not logged in - send them to login page **/
+					\Libs\ErrorMessages::push('You Must be Logged In to view that page!', 'Login');
+				}
+			}
+		}
 	}
 
 }

@@ -38,9 +38,10 @@ use Libs\Language,
                             $member_username = CurrentUserData::getUserName($friend_id);
                             $member_firstName = CurrentUserData::getUserFirstName($friend_id);
                             $member_userImage = CurrentUserData::getUserImage($friend_id);
+                            $online_check = CurrentUserData::getUserStatusDot($friend_id);
                             echo "<tr>
                                     <td width='20px'><img src=".SITE_URL.IMG_DIR_PROFILE.$member_userImage." class='rounded' style='height: 25px'></td>
-                                    <td><a href='".DIR."Profile/{$member_username}'> {$member_username}</a></td>
+                                    <td> $online_check <a href='".DIR."Profile/{$member_username}'> {$member_username}</a></td>
                                     <td>{$member_firstName}</td>
                                     <td><a href='".SITE_URL."Profile/{$member_username}' class='btn btn-sm btn-primary'>View Profile</a></td>
                                     <td><a href='".SITE_URL."ApproveFriend/{$member_username}' class='btn btn-sm btn-success'>Approve</a></td>
@@ -84,9 +85,10 @@ use Libs\Language,
                             $member_username = CurrentUserData::getUserName($friend_id);
                             $member_firstName = CurrentUserData::getUserFirstName($friend_id);
                             $member_userImage = CurrentUserData::getUserImage($friend_id);
+                            $online_check = CurrentUserData::getUserStatusDot($friend_id);
                             echo "<tr>
                                     <td width='20px'><img src=".SITE_URL.IMG_DIR_PROFILE.$member_userImage." class='rounded' style='height: 25px'></td>
-                                    <td><a href='".DIR."Profile/{$member_username}'> {$member_username}</a></td>
+                                    <td> $online_check <a href='".DIR."Profile/{$member_username}'> {$member_username}</a></td>
                                     <td>{$member_firstName}</td>
                                     <td><a href='".SITE_URL."Profile/{$member_username}' class='btn btn-sm btn-primary'>View Profile</a></td>
                                     <td><a href='".SITE_URL."CancelFriend/{$member_username}' class='btn btn-sm btn-danger'>Cancel</a></td>

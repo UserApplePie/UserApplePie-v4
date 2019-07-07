@@ -23,7 +23,7 @@ use Core\Language,
 
 	<div class='card mb-3'>
 		<div class='card-header h4'>
-			<h3 class='jumbotron-heading'><?php echo $data['title'] ?></h3>
+			<?php echo $data['title'] ?>
 		</div>
 		<div class='card-body'>
 				<?php echo $data['welcome_message']; ?>

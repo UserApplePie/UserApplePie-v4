@@ -11,14 +11,16 @@
 
 use Libs\Form,
   Core\Success,
-  Core\Language;
+  Core\Language,
+  Libs\PageFunctions;
 
 ?>
 
 <div class='col-lg-12 col-md-12 col-sm-12'>
 	<div class='card mb-3'>
 		<div class='card-header h4'>
-			<h3 class='jumbotron-heading'><?php echo $data['title'];  ?></h3>
+			<?php echo $data['title'];  ?>
+      <?php echo PageFunctions::displayPopover('Froum Categories', 'Forum Categories can be edited, or removed to fit the site needs.', false, 'btn btn-sm btn-light'); ?>
 		</div>
 		<div class='card-body'>
 			<p><?php echo $data['welcome_message'] ?></p>
@@ -34,6 +36,7 @@ use Libs\Form,
                   echo "<div class='card border-primary mb-3'>";
                     echo "<div class='card-header h4'>";
                       echo "<i class='fa fa-fw fa-list'></i> Update Main Category Title";
+                      echo PageFunctions::displayPopover('Froum Category Title', 'Forum Category Title edit.  This updates the title of the selected category.', false, 'btn btn-sm btn-light');
                     echo "</div>";
                     echo "<div class='card-body'>";
                       echo Form::input(array('type' => 'hidden', 'name' => 'prev_forum_title', 'value' => $data['data_cat_main']));
@@ -50,7 +53,7 @@ use Libs\Form,
             }else if($data['cat_sub_list'] == true){
               // Display Main Category Title
               if(isset($data['cat_main_title'])){
-                echo "<div class='well'><h4>Sub Categories for: ".$data['cat_main_title']."</h4></div>";
+                echo "<div class='well'><h4>Sub Categories for ".$data['cat_main_title']."</h4></div>";
               }
               // Display sub categories for requeted main category
               if(isset($data['cat_sub_titles'])){
@@ -96,6 +99,7 @@ use Libs\Form,
                 echo "<div class='card border-info mb-3'>";
                   echo "<div class='card-header h4'>";
                     echo "<i class='fa fa-fw fa-list'></i> Create New Sub Category";
+                    echo PageFunctions::displayPopover('Create New Sub Category', 'Create a new sub category for the selected forum category.', false, 'btn btn-sm btn-light');
                   echo "</div>";
                   echo "<div class='card-body'>";
                     echo Form::input(array('type' => 'hidden', 'name' => 'action', 'value' => 'new_cat_sub'));
@@ -119,6 +123,7 @@ use Libs\Form,
                     echo "<div class='card border-primary mb-3'>";
                       echo "<div class='card-header h4'>";
                         echo "<i class='fa fa-fw fa-list'></i> Edit Sub Category";
+                        echo PageFunctions::displayPopover('Edit Sub Category', 'Edit sub category for the selected forum category.', false, 'btn btn-sm btn-light');
                       echo "</div>";
                       echo "<div class='card-body'>";
                         echo Form::input(array('type' => 'hidden', 'name' => 'action', 'value' => 'edit_cat_sub'));
@@ -141,6 +146,7 @@ use Libs\Form,
                 echo "<div class='card card-danger'>";
                   echo "<div class='card-header h4'>";
                     echo "Delete Forum Main Category: <strong>".$data['delete_cat_main_title']."</strong>";
+                    echo PageFunctions::displayPopover('Delete Forum Main Category', 'Delete the selected forum category. CAN NOT BE UNDONE!', false, 'btn btn-sm btn-light');
                   echo "</div>";
                   echo "<div class='card-body'>";
                     echo "What would you like to do with all Sub Categories, Topics, and Topic Replies that are connected to Main Category: <strong>".$data['delete_cat_main_title']."</strong> ?";
@@ -168,6 +174,7 @@ use Libs\Form,
                 echo "<div class='card card-danger'>";
                   echo "<div class='card-header h4'>";
                     echo "Delete Forum Sub Category: <strong>".$data['delete_cat_sub_title']."</strong>";
+                    echo PageFunctions::displayPopover('Delete Sub Category', 'Delete selected sub category from the selected forum category. CAN NOT BE UNDONE!', false, 'btn btn-sm btn-light');
                   echo "</div>";
                   echo "<div class='card-body'>";
                     echo "What would you like to do with all Topics, and Topic Replies that are connected to Sub Category: <strong>".$data['delete_cat_sub_title']."</strong> ?";
@@ -195,9 +202,7 @@ use Libs\Form,
                 foreach($data['cat_main'] as $row){
                   echo "<div class='card border-primary mb-3'>";
                     echo "<div class='card-header h4'>";
-                      echo "<h3 class='panel-title'>";
                         echo $row->forum_title;
-                      echo "</h3>";
                     echo "</div>";
                     echo "<div class='card-body'>";
                       echo "<div class='col-lg-6 col-md-6' style='text-align: left; margin-bottom: 2px'>";
@@ -236,6 +241,7 @@ use Libs\Form,
                 echo "<div class='card mb-3'>";
                   echo "<div class='card-header h4'>";
                     echo "<i class='fa fa-fw fa-list'></i> New Main Category Title";
+                    echo PageFunctions::displayPopover('New Forum Category', 'New Forum Category can be added to the site forum.', false, 'btn btn-sm btn-light');
                   echo "</div>";
                   echo "<div class='card-body'>";
                     echo Form::input(array('type' => 'hidden', 'name' => 'action', 'value' => 'new_cat_main_title'));

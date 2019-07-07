@@ -8,7 +8,8 @@
 */
 
 use Libs\Language,
-    Libs\Form;
+    Libs\Form,
+    Libs\PageFunctions;
 
 $orderby = $data['orderby'];
 
@@ -19,6 +20,7 @@ $orderby = $data['orderby'];
     <div class='card mb-3 mw-100'>
       <div class='card-header h4'>
         Create New Group
+        <?php echo PageFunctions::displayPopover('Create New User Group', 'New Site User Group can be added and altered to fit your site needs. Click on a group to view and edit that group.', false, 'btn btn-sm btn-light'); ?>
       </div>
       <div class='card-body'>
         <?php echo Form::open(array('method' => 'post')); ?>
@@ -38,6 +40,7 @@ $orderby = $data['orderby'];
   	<div class='card mb-3'>
   		<div class='card-header h4'>
   			All Site Groups
+        <?php echo PageFunctions::displayPopover('User Groups', 'Site User Groups can be altered to fit the site needs.', false, 'btn btn-sm btn-light'); ?>
   		</div>
   		<table class='table table-hover responsive'>
   			<tr>
@@ -102,7 +105,7 @@ $orderby = $data['orderby'];
   						echo "<td><button type='button' class='btn btn-secondary btn-sm' data-toggle='modal' data-target='#myModal-$row->groupID'>$group_name</button></td>";
               echo "<td><font color='$row->groupFontColor' style='font-weight: $row->groupFontWeight'>$row->groupName</font></td>";
               echo "<td align='right'>";
-              echo "<a href='".DIR."AdminPanel-Group/$row->groupID' class='btn btn-sm btn-primary'><span class='fa fa-fw  fa-pencil'></span></a>";
+              echo "<a href='".DIR."AdminPanel-Group/$row->groupID' class='btn btn-sm btn-primary'><span class='fas fa-edit'></span></a>";
               echo "</td>";
   						echo "</tr>";
               echo "

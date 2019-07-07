@@ -45,7 +45,7 @@ if($data['msg_error'] == 'true'){$panelclass = "card-danger";}else{$panelclass =
               echo "</td></tr><tr>";
 							echo "<td>$row->content</td>";
 							echo "</tr><tr><td>";
-                echo Form::open(array('method' => 'post', 'action' => DIR.'NewMessage'));
+                echo Form::open(array('method' => 'post', 'action' => SITE_URL.'NewMessage', 'style' => 'display:inline'));
                   echo "<input type='hidden' name='token_messages' value='${data['csrf_token']}' />";
                   echo "<input type='hidden' name='reply' value='true' />";
                   echo "<input type='hidden' name='to_username' value='$row->username' />";
@@ -56,6 +56,7 @@ if($data['msg_error'] == 'true'){$panelclass = "card-danger";}else{$panelclass =
                     echo "Reply";
                   echo "</button>";
                 echo Form::close();
+                echo "<a href='#DeleteModal' class='btn btn-sm btn-danger trigger-btn float-right' data-toggle='modal'>Delete Message</a>";
               echo "</td></tr>";
 						}
             echo "</table>";
@@ -64,3 +65,32 @@ if($data['msg_error'] == 'true'){$panelclass = "card-danger";}else{$panelclass =
 		</div>
 	</div>
 </div>
+
+  <div class='modal fade' id='DeleteModal' tabindex='-1' role='dialog' aria-labelledby='DeleteLabel' aria-hidden='true'>
+    <div class='modal-dialog' role='document'>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <h5 class='modal-title' id='DeleteLabel'>Message Delete</h5>
+          <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+          </button>
+        </div>
+        <div class='modal-body'>
+          Do you want to delete this message?
+        </div>
+        <div class='modal-footer'>
+          <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancel</button>
+          <?php
+            echo Form::open(array('method' => 'post', 'action' => '', 'style' => 'display:inline'));
+              echo "<input type='hidden' name='token_messages' value='${data['csrf_token']}' />";
+              echo "<input type='hidden' name='delete' value='true' />";
+              echo "<input type='hidden' name='message_id' value='$row->id' />";
+              echo "<button class='btn btn-md btn-danger' name='submit' type='submit'>";
+                echo "Delete";
+              echo "</button>";
+            echo Form::close();
+          ?>
+        </div>
+      </div>
+    </div>
+  </div>

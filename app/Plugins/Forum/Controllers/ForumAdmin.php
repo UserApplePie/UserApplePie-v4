@@ -66,6 +66,7 @@ class ForumAdmin extends Controller{
             $forum_topic_limit = Request::post('forum_topic_limit');
             $forum_topic_reply_limit = Request::post('forum_topic_reply_limit');
             $forum_posts_group_change_enable = Request::post('forum_posts_group_change_enable');
+            if($forum_posts_group_change_enable != 'true'){ $forum_posts_group_change_enable = 'false'; }
             $forum_posts_group_change = Request::post('forum_posts_group_change');
             $forum_max_image_size = Request::post('forum_max_image_size');
             // Run Forum Settings Update
@@ -73,7 +74,8 @@ class ForumAdmin extends Controller{
               // Success
               \Libs\SuccessMessages::push('You Have Successfully Updated Forum Global Settings', 'AdminPanel-Forum-Settings');
             }else{
-              $errors[] = "There was an Error Updating Forum Global Settings";
+              /** Error Message **/
+              \Libs\ErrorMessages::push('There was an Error Updating Forum Global Settings', 'AdminPanel-Forum-Settings');
             }
           }
           // Check to see if admin is editing forum groups
@@ -104,8 +106,8 @@ class ForumAdmin extends Controller{
               // Success
               \Libs\SuccessMessages::push('You Have Successfully Updated Forum Group ('.$forum_edit_group.')', 'AdminPanel-Forum-Settings');
             }else{
-              // Fail
-              $error[] = "Edit Forum Group Failed";
+              /* Error Message Display */
+            	\Libs\ErrorMessages::push('Edit Forum Group Failed', 'AdminPanel-Forum-Settings');
             }
           }
         }
@@ -284,8 +286,8 @@ class ForumAdmin extends Controller{
                   // Success
                   \Libs\SuccessMessages::push('You Have Successfully Updated Forum Main Category Title to <b>'.$new_forum_title.'</b>', 'AdminPanel-Forum-Categories');
                 }else{
-                  // Fail
-                  $error[] = "Edit Forum Main Category Failed";
+                  /* Error Message Display */
+                  \Libs\ErrorMessages::push('Updating Forum Main Category Title', 'AdminPanel-Forum-Categories');
                 }
               }
             }
@@ -304,7 +306,7 @@ class ForumAdmin extends Controller{
           $data['breadcrumbs'] = "
             <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
             <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories'><i class='fa fa-fw fa-list'></i> ".$data['title']."</a></li>
-            <li class='breadcrumb-item active'><i class='fa fa-fw fa-pencil'></i> Edit Main Category</li>
+            <li class='breadcrumb-item active'><i class='fas fa-fw fa-edit'></i> Edit Main Category</li>
           ";
         }
       }else if($action == "CatMainUp"){
@@ -312,16 +314,16 @@ class ForumAdmin extends Controller{
           // Success
           \Libs\SuccessMessages::push('You Have Successfully Moved Up Forum Main Category', 'AdminPanel-Forum-Categories');
         }else{
-          // Fail
-          $error[] = "Move Up Forum Main Category Failed";
+          /* Error Message Display */
+          \Libs\ErrorMessages::push('Move Up Forum Main Category Failed', 'AdminPanel-Forum-Categories');
         }
       }else if($action == "CatMainDown"){
         if($this->forum->moveDownCatMain($id)){
           // Success
           \Libs\SuccessMessages::push('You Have Successfully Moved Down Forum Main Category', 'AdminPanel-Forum-Categories');
         }else{
-          // Fail
-          $error[] = "Move Down Forum Main Category Failed";
+          /* Error Message Display */
+          \Libs\ErrorMessages::push('Move Down Forum Main Category Failed', 'AdminPanel-Forum-Categories');
         }
       }else if($action == 'CatMainNew'){
         // Check to make sure admin is trying to update
@@ -341,8 +343,8 @@ class ForumAdmin extends Controller{
                   // Success
                   \Libs\SuccessMessages::push('You Have Successfully Created New Forum Main Category Title <b>'.$new_forum_title.'</b>', 'AdminPanel-Forum-Categories');
                 }else{
-                  // Fail
-                  $error[] = "New Forum Main Category Failed";
+                  /* Error Message Display */
+                  \Libs\ErrorMessages::push('New Forum Main Category Failed', 'AdminPanel-Forum-Categories');
                 }
               }
             }
@@ -381,8 +383,8 @@ class ForumAdmin extends Controller{
                   // Success
                   \Libs\SuccessMessages::push('You Have Successfully Created Forum Sub Category', 'AdminPanel-Forum-Categories/CatSubList/'.$id);
                 }else{
-                  // Fail
-                  $error[] = "Create Forum Sub Category Failed";
+                  /* Error Message Display */
+                  \Libs\ErrorMessages::push('Create Forum Sub Category Failed', 'AdminPanel-Forum-Categories');
                 }
               }
             }
@@ -403,7 +405,7 @@ class ForumAdmin extends Controller{
           $data['breadcrumbs'] = "
             <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
             <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories'><i class='fa fa-fw fa-list'></i> ".$data['title']."</a></li>
-            <li class='breadcrumb-item active'><i class='fa fa-fw fa-pencil'></i> Sub Categories List</li>
+            <li class='breadcrumb-item active'><i class='fas fa-fw fa-edit'></i> Sub Categories List</li>
           ";
         }
       }else if($action == "CatSubEdit"){
@@ -423,8 +425,8 @@ class ForumAdmin extends Controller{
                   // Success
                   \Libs\SuccessMessages::push('You Have Successfully Updated Forum Sub Category', 'AdminPanel-Forum-Categories/CatSubList/'.$id);
                 }else{
-                  // Fail
-                  $error[] = "Update Forum Sub Category Failed";
+                  /* Error Message Display */
+                  \Libs\ErrorMessages::push('Update Forum Sub Category Failed', 'AdminPanel-Forum-Categories');
                 }
               }
             }
@@ -444,7 +446,7 @@ class ForumAdmin extends Controller{
             <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
             <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories'><i class='fa fa-fw fa-list'></i> ".$data['title']."</a></li>
             <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories/CatSubList/$id'><i class='fa fa-fw fa-list'></i> Sub Categories List</a></li>
-            <li class='breadcrumb-item active'><i class='fa fa-fw fa-pencil'></i> Edit Sub Category</li>
+            <li class='breadcrumb-item active'><i class='fas fa-fw fa-edit'></i> Edit Sub Category</li>
           ";
         }
       }else if($action == "DeleteSubCat"){
@@ -519,18 +521,20 @@ class ForumAdmin extends Controller{
           	\Libs\ErrorMessages::push('Demo Limit - Forum Settings Disabled', 'AdminPanel-Forum-Categories');
           }
         }else{
+          $data['welcome_message'] = "You are about to delete requested sub category.  Please proceed with caution.";
           // Display Delete Cat Sub Form
           $data['delete_cat_sub'] = true;
 
           // Get list of all sub cats except current
           $data['list_all_cat_sub'] = $this->forum->catSubListExceptSel($id);
+          $data['delete_cat_sub_title'] = $this->forum->getCatSub($id);
 
           // Setup Breadcrumbs
           $data['breadcrumbs'] = "
             <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
             <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories'><i class='fa fa-fw fa-list'></i> ".$data['title']."</a></li>
             <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories/CatSubList/".$id."'><i class='fa fa-fw fa-list'></i> Sub Categories List</a></li>
-            <li class='breadcrumb-item active'><i class='fa fa-fw fa-pencil'></i> Delete Sub Category</li>
+            <li class='breadcrumb-item active'><i class='fas fa-fw fa-edit'></i> Delete Sub Category</li>
           ";
         }
       }else if($action == "CatSubUp"){
@@ -541,8 +545,8 @@ class ForumAdmin extends Controller{
           // Success
           \Libs\SuccessMessages::push('You Have Successfully Moved Up Forum Sub Category', 'AdminPanel-Forum-Categories/CatSubList/'.$id);
         }else{
-          // Fail
-          $error[] = "Move Up Forum Main Category Failed";
+          /* Error Message Display */
+          \Libs\ErrorMessages::push('Move Up Forum Main Category Failed', 'AdminPanel-Forum-Categories');
         }
       }else if($action == "CatSubDown"){
         // Get forum_title for cat
@@ -552,8 +556,8 @@ class ForumAdmin extends Controller{
           // Success
           \Libs\SuccessMessages::push('You Have Successfully Moved Down Forum Sub Category', 'AdminPanel-Forum-Categories/CatSubList/'.$id);
         }else{
-          // Fail
-          $error[] = "Move Down Forum Main Category Failed";
+          /* Error Message Display */
+          \Libs\ErrorMessages::push('Move Down Forum Main Category Failed', 'AdminPanel-Forum-Categories');
         }
       }else if($action == "DeleteMainCat"){
         // Check to make sure admin is trying to update
@@ -637,7 +641,7 @@ class ForumAdmin extends Controller{
           $data['breadcrumbs'] = "
             <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
             <li class='breadcrumb-item'><a href='".DIR."AdminPanel-Forum-Categories'><i class='fa fa-fw fa-list'></i> ".$data['title']."</a></li>
-            <li class='breadcrumb-item active'><i class='fa fa-fw fa-pencil'></i> Delete Main Category</li>
+            <li class='breadcrumb-item active'><i class='fas fa-fw fa-edit'></i> Delete Main Category</li>
           ";
         }
       }
@@ -793,7 +797,7 @@ class ForumAdmin extends Controller{
     // Setup Breadcrumbs
     $data['breadcrumbs'] = "
       <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
-      <li class='breadcrumb-item active'><i class='fa fa-fw fa-ban'></i> ".$data['title']."</li>
+      <li class='breadcrumb-item active'><i class='fas fa-file-import'></i> ".$data['title']."</li>
     ";
 
     Load::ViewPlugin("forum_unpublished", $data, "", "Forum", "AdminPanel");

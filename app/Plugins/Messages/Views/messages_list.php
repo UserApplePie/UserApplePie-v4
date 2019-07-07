@@ -13,7 +13,8 @@
 use Libs\Language,
   Libs\ErrorMessages,
   Libs\SuccessMessages,
-  Libs\Form;
+  Libs\Form,
+  Libs\CurrentUserData;
 
 ?>
 
@@ -49,6 +50,11 @@ use Libs\Language,
               echo "</td>";
               echo "<td><a href='".DIR."ViewMessage/$row->id'><b>Subject:</b> $row->subject</a><br>";
 							echo $data['tofrom'];
+              if($data['inboxoutbox'] == 'inbox'){
+                echo CurrentUserData::getUserStatusDot($row->from_userID);
+              }else if($data['inboxoutbox'] == 'outbox'){
+                echo CurrentUserData::getUserStatusDot($row->to_userID);
+              }
               echo " <a href='".DIR."Profile/$row->username'>$row->username</a>";
 							echo " &raquo; ";
 							echo  date("F d, Y - g:i A",strtotime($row->date_sent));

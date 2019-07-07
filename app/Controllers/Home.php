@@ -26,14 +26,19 @@ use App\System\Controller,
 
 class Home extends Controller {
 
-    /* Call the parent construct */
+    /**
+     * Call the parent construct
+     */
     public function __construct()
     {
         parent::__construct();
         $this->language->load('Welcome');
     }
 
-    /* Home Method */
+    /**
+    * Home Method
+    * @param int $limit
+    */
     public function Home($limit = '10'){
 
         $data['title'] = $this->language->get('homeText');
@@ -125,16 +130,18 @@ class Home extends Controller {
 
           /* Add Java Stuffs */
           $data['js'] = "<script src='".Url::templatePath()."js/bbcode_status.js'></script>";
-          //$data['js'] .= "<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js'></script>";
-          //$data['js'] .= "<script src='".Url::templatePath()."js/forum_autosave_topic.js'></script>";
 
+          /** Push data to the view **/
           Load::View("Home::Recent", $data, "Home::Member-Forum-Sidebar::Right", DEFAULT_TEMPLATE, true, "Home::Member-Friends-Sidebar::Left");
         }else{
+          /** Push data to the view **/
           Load::View("Home::Home", $data, "Members::Member-Stats-Sidebar::Right");
         }
     }
 
-    /* About Method */
+    /**
+    * About Method
+    */
     public function About(){
 
         $data['title'] = $this->language->get('aboutText');
@@ -151,12 +158,14 @@ class Home extends Controller {
         $data['activatedAccounts'] = count($onlineUsers->getActivatedAccounts());
         $data['onlineAccounts'] = count($onlineUsers->getOnlineAccounts());
 
+        /** Push data to the view **/
         Load::View("Home::About", $data, "Members::Member-Stats-Sidebar::Left");
     }
 
-    /* Contact Method */
+    /**
+    * Contact Method
+    */
     public function Contact(){
-
         $data['title'] = $this->language->get('contactText');
         $data['bodyText'] = $this->language->get('contactMessage');
         /** Check to see if user is logged in **/
@@ -171,13 +180,14 @@ class Home extends Controller {
         $data['activatedAccounts'] = count($onlineUsers->getActivatedAccounts());
         $data['onlineAccounts'] = count($onlineUsers->getOnlineAccounts());
 
+        /** Push data to the view **/
         Load::View("Home::Contact", $data, "Members::Member-Stats-Sidebar::Right");
     }
 
-    /* Templates Method
+    /**
+    * Templates Method
     * Used to load files within the template assets folder
     */
-
     public function Templates(){
         $extRoutes = $this->routes;
         if(sizeof($extRoutes) == '5' || sizeof($extRoutes) == '6'){
@@ -187,7 +197,8 @@ class Home extends Controller {
         }
     }
 
-    /* Assets Method
+    /**
+    * Assets Method
     * Used to load files within the root assets folder
     */
     public function assets(){

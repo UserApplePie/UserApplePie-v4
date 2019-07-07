@@ -75,9 +75,10 @@ function process()
                             $member_username = CurrentUserData::getUserName($friend_id);
                             $member_firstName = CurrentUserData::getUserFirstName($friend_id);
                             $member_userImage = CurrentUserData::getUserImage($friend_id);
+                            $user_online = CurrentUserData::getUserStatusDot($friend_id);
                             echo "<tr>
                                     <td width='20px'><img src=".SITE_URL.IMG_DIR_PROFILE.$member_userImage." class='rounded' style='height: 25px'></td>
-                                    <td><a href='".DIR."Profile/{$member_username}'> {$member_username}</a></td>
+                                    <td>$user_online<a href='".DIR."Profile/{$member_username}'> {$member_username}</a></td>
                                     <td>{$member_firstName}</td>
                                     <td><div class='float-right'><a href='".SITE_URL."Profile/{$member_username}' class='btn btn-sm btn-primary'>View Profile</a> <a href='".SITE_URL."UnFriend/{$member_username}' class='btn btn-sm btn-secondary'>UnFriend</a></div></td>
                                   </tr>";

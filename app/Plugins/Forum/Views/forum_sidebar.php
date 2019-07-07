@@ -64,6 +64,7 @@ foreach($data['forum_recent_posts'] as $row_rp)
   $f_p_timestamp = $row_rp->forum_timestamp;
   $f_p_user_id = $row_rp->forum_user_id;
   $f_p_user_name = CurrentUserData::getUserName($f_p_user_id);
+  $online_check = CurrentUserData::getUserStatusDot($f_p_user_id);
 
   $f_p_title = stripslashes($f_p_title);
 
@@ -79,7 +80,7 @@ foreach($data['forum_recent_posts'] as $row_rp)
   //If no reply show created by
   if(!isset($rp_timestamp2)){
     echo "<ul class='list-group-item'>";
-    echo "<a href='".DIR."Profile/$f_p_user_id'>$f_p_user_name</a> created.. <br>";
+    echo " $online_check <a href='".DIR."Profile/$f_p_user_id'>$f_p_user_name</a> created.. <br>";
     echo "<strong>";
     echo "<a href='".DIR."Topic/$f_p_id/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
     echo "</strong>";
@@ -92,9 +93,10 @@ foreach($data['forum_recent_posts'] as $row_rp)
     echo "</ul>";
   }else{
     $rp_user_name2 = CurrentUserData::getUserName($rp_user_id2);
+    $online_check2 = CurrentUserData::getUserStatusDot($rp_user_id2);
     //If reply show the following
     echo "<ul class='list-group-item'>";
-    echo "<a href='".DIR."Profile/$rp_user_id2'>$rp_user_name2</a> posted on.. <br>";
+    echo " $online_check2 <a href='".DIR."Profile/$rp_user_id2'>$rp_user_name2</a> posted on.. <br>";
     echo "<strong>";
     echo "<a href='".DIR."Topic/$f_p_id/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
     echo "</strong>";

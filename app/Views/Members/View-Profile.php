@@ -17,6 +17,7 @@ use Libs\Language,
 
     $recent_userName = CurrentUserData::getUserName($data['profile']->userID);
     $recent_userImage = CurrentUserData::getUserImage($data['profile']->userID);
+    $user_status = CurrentUserData::getUserStatus($data['profile']->userID);
 
     /** Check for User's Profile Privacy Settings **/
     $user_privacy = $data['profile']->privacy_profile;
@@ -59,6 +60,7 @@ use Libs\Language,
         <div class="card border-primary mb-3">
             <div class="card-header h4">
                 <?php echo $data['profile']->username; ?>
+                <?php echo "<font class='float-right' size='2'>".$user_status."</font>"; ?>
             </div>
             <div class="card-body">
                 <div class="row">
