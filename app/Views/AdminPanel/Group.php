@@ -10,7 +10,8 @@
 use Libs\Form,
     Libs\ErrorMessages,
     Libs\SuccessMessages,
-    Libs\Language;
+    Libs\Language,
+    Libs\PageFunctions;
 
 ?>
 
@@ -18,6 +19,7 @@ use Libs\Form,
 	<div class='card mb-3'>
 		<div class='card-header h4'>
 			<?php echo $data['title']." - ".$data['g_groupName']  ?>
+      <?php echo PageFunctions::displayPopover('User Group Admin', 'Site User Group Admin allows editing group styles, details, and limits.', false, 'btn btn-sm btn-light'); ?>
 		</div>
 		<div class='card-body'>
 
@@ -28,7 +30,7 @@ use Libs\Form,
 			<!-- Group Name -->
 			<div class='input-group mb-3' style='margin-bottom: 25px'>
         <div class="input-group-prepend">
-				  <span class='input-group-text'><i class='fa fa-fw fa-group'></i> Group Name</span>
+				  <span class='input-group-text'><i class='fas fa-fw fa-users'></i> Group Name</span>
         </div>
 				<?php echo Form::input(array('type' => 'text', 'name' => 'ag_groupName', 'class' => 'form-control', 'value' => $data['g_groupName'], 'placeholder' => 'Group Name', 'maxlength' => '150')); ?>
 			</div>

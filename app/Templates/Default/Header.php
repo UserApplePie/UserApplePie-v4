@@ -62,12 +62,12 @@ use Libs\Assets,
 
             <ul class="nav navbar-nav ml-auto">
               <?php if(!$isLoggedIn){ ?>
-                <li><a class='nav-link' href="<?=SITE_URL?>Login"><?=Language::show('login_button', 'Auth');?></a></li>
-                <li><a class='nav-link' href="<?=SITE_URL?>Register"><?=Language::show('register_button', 'Auth');?></a></li>
+                <li><a class='nav-link' href="<?=SITE_URL?>Login"><i class="fas fa-fw fa-sign-in-alt"></i> <?=Language::show('login_button', 'Auth');?></a></li>
+                <li><a class='nav-link' href="<?=SITE_URL?>Register"><i class="fas fa-fw fa-user-plus"></i> <?=Language::show('register_button', 'Auth');?></a></li>
               <?php }else{ ?>
                   <li class='nav-item dropdown'>
                     <a href='#' title='<?php echo $currentUserData[0]->username; ?>' class='nav-link dropdown-toggle' data-toggle='dropdown' id='themes'>
-                    <span class='fas fa-user' aria-hidden='true'></span> <?php echo $currentUserData[0]->username; ?>
+                    <i class='fas fa-fw fa-user'></i> <?php echo $currentUserData[0]->username; ?>
                     <?php
                       /** Check to see if Friends Plugin is installed, if it is show link **/
                       if(file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php')){
@@ -107,7 +107,7 @@ use Libs\Assets,
                                 <p class="h5"><?php echo $currentUserData[0]->username; if(isset($currentUserData[0]->firstName)){echo " <small class='navbar-login-text'>".$currentUserData[0]->firstName."</small>";}; if(isset($currentUserData[0]->lastName)){echo "  <small class='navbar-login-text'>".$currentUserData[0]->lastName."</small>";} ?></p>
                                 <p class="h6"><?php echo $currentUserData[0]->email; ?></p>
                                 <p>
-                                  <a href='<?php echo SITE_URL."Profile/".$currentUserData[0]->username; ?>' title='View Your Profile' class='btn btn-primary btn-block btn-sm'> <span class='fas fa-user' aria-hidden='true'></span> <?=Language::show('uap_view_profile', 'Welcome');?></a>
+                                  <a href='<?php echo SITE_URL."Profile/".$currentUserData[0]->username; ?>' title='View Your Profile' class='btn btn-primary btn-block btn-sm'> <span class='fas fa-fw fa-user' aria-hidden='true'></span> <?=Language::show('uap_view_profile', 'Welcome');?></a>
                                 </p>
                               </div>
                             </div>
@@ -118,11 +118,11 @@ use Libs\Assets,
                               <div class="row">
                                   <div class="col-lg-12">
                                       <p>
-                        <a href='<?=SITE_URL?>Account-Settings' title='Change Your Account Settings' class='btn btn-info btn-block btn-sm'> <span class='fas fa-briefcase' aria-hidden='true'></span> <?=Language::show('uap_account_settings', 'Welcome');?></a>
+                        <a href='<?=SITE_URL?>Account-Settings' title='Change Your Account Settings' class='btn btn-info btn-block btn-sm'> <span class='fas fa-fw fa-briefcase' aria-hidden='true'></span> <?=Language::show('uap_account_settings', 'Welcome');?></a>
                         <?php
                           /** Check to see if Friends Plugin is installed, if it is show link **/
                           if(file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php')){
-                              echo "<a href='".SITE_URL."Friends' title='Friends' class='btn btn-danger btn-block btn-sm'> <span class='fas fa-user' aria-hidden='true'></span> ".Language::show('uap_friends', 'Welcome');
+                              echo "<a href='".SITE_URL."Friends' title='Friends' class='btn btn-danger btn-block btn-sm'> <span class='fas fa-fw fa-user' aria-hidden='true'></span> ".Language::show('uap_friends', 'Welcome');
                                   /** Check to see if there are any pending friend requests **/
                                   $new_friend_count = \Libs\CurrentUserData::getFriendRequests($currentUserData[0]->userID);
                                   if($new_friend_count >= "1"){
@@ -132,7 +132,7 @@ use Libs\Assets,
                           }
                           /** Check to see if Private Message Plugin is installed, if it is show link **/
                           if(file_exists(ROOTDIR.'app/Plugins/Messages/Controllers/Messages.php')){
-                            echo "<a href='".SITE_URL."Messages' title='Private Messages' class='btn btn-danger btn-block btn-sm'> <span class='fas fa-envelope' aria-hidden='true'></span> ".Language::show('uap_private_messages', 'Welcome');
+                            echo "<a href='".SITE_URL."Messages' title='Private Messages' class='btn btn-danger btn-block btn-sm'> <span class='fas fa-fw fa-envelope' aria-hidden='true'></span> ".Language::show('uap_private_messages', 'Welcome');
                               /** Check to see if there are any unread messages in inbox **/
                               $new_msg_count = \Libs\CurrentUserData::getUnreadMessages($currentUserData[0]->userID);
                               if($new_msg_count >= "1"){
@@ -142,7 +142,7 @@ use Libs\Assets,
                           }
                         ?>
                         <?php if($isAdmin == 'true'){ // Display Admin Panel Links if User Is Admin ?>
-                          <a href='<?php echo SITE_URL; ?>AdminPanel' title='Open Admin Panel' class='btn btn-warning btn-block btn-sm'> <span class='fas fa-tachometer-alt' aria-hidden='true'></span> <?=Language::show('uap_admin_panel', 'Welcome');?></a>
+                          <a href='<?php echo SITE_URL; ?>AdminPanel' title='Open Admin Panel' class='btn btn-warning btn-block btn-sm'> <span class='fa fa-fw fa-cog' aria-hidden='true'></span> <?=Language::show('uap_admin_panel', 'Welcome');?></a>
                         <?php } ?>
                                     </p>
                                 </div>
@@ -150,7 +150,7 @@ use Libs\Assets,
                         </div>
                       </li>
                     </ul>
-                  <li><a class='nav-link' href='<?php echo SITE_URL; ?>Logout'><?=Language::show('uap_logout', 'Welcome');?></a></li>
+                  <li><a class='nav-link' href='<?php echo SITE_URL; ?>Logout'><i class="fas fa-fw fa-sign-out-alt"></i> <?=Language::show('uap_logout', 'Welcome');?></a></li>
               <?php }?>
             </ul>
 

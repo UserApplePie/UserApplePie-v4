@@ -67,7 +67,7 @@ class Update {
             }
             // Perform the query
             if(!mysqli_query($link,$templine)){
-              $output .= "<hr><font color=red><b>Error performing query</b></font> \'" . $templine . "\': " . mysqli_connect_error() . " ";
+              $output .= "<hr><font color=red><b>Error performing query</b></font><Br> <pre>" . $templine . "</pre><Br> " . mysqli_connect_error() . " ";
               $errors[] = "true";
             }
             // Reset temp variable to empty

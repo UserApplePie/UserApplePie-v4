@@ -28,10 +28,10 @@ use Libs\ErrorMessages,
     <title><?php echo $title.' - '.SITE_TITLE.' Admin Panel';?></title>
 		<link rel='shortcut icon' href='<?=Url::templatePath()?>images/favicon.ico'>
     <?=Assets::css([
-		SITE_URL.'Templates/AdminPanel/Assets/css/bootstrap.min.css',
-		SITE_URL.'Templates/AdminPanel/Assets/css/font-awesome.min.css',
+		'https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css',
 		SITE_URL.'Templates/AdminPanel/Assets/css/sb-admin.css',
-		'https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css'
+		'https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css',
+		'https://use.fontawesome.com/releases/v5.9.0/css/all.css'
     ]);
     ?>
 </head>
@@ -47,7 +47,7 @@ use Libs\ErrorMessages,
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
           <a class="nav-link" href="<?php echo DIR; ?>AdminPanel">
-            <i class="fa fa-fw fa-tachometer"></i>
+            <i class="fas fa-fw fa-tachometer-alt"></i>
             <span class="nav-link-text">Dashboard</span>
           </a>
         </li>
@@ -65,7 +65,7 @@ use Libs\ErrorMessages,
 				</li>
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
 					<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-Groups">
-						<i class="fa fa-fw fa-balance-scale"></i>
+						<i class="fa fa-fw fa-users-cog"></i>
 						<span class="nav-link-text">Groups</span>
 					</a>
 				</li>
@@ -80,16 +80,16 @@ use Libs\ErrorMessages,
           </a>
           <ul class="sidenav-second-level collapse" id="collapseForum">
             <li>
-              <a href="<?php echo DIR; ?>AdminPanel-Forum-Settings">Settings</a>
+              <a href="<?php echo DIR; ?>AdminPanel-Forum-Settings"><i class="fa fa-fw fa-cog"></i> Settings</a>
             </li>
             <li>
-              <a href="<?php echo DIR; ?>AdminPanel-Forum-Categories">Categories</a>
+              <a href="<?php echo DIR; ?>AdminPanel-Forum-Categories"><i class="fa fa-fw fa-list"></i> Categories</a>
             </li>
 						<li>
-							<a href="<?php echo DIR; ?>AdminPanel-Forum-Blocked-Content">Blocked Content</a>
+							<a href="<?php echo DIR; ?>AdminPanel-Forum-Blocked-Content"><i class="fa fa-fw fa-ban"></i> Blocked Content</a>
 						</li>
 						<li>
-							<a href="<?php echo DIR; ?>AdminPanel-Forum-Unpublished-Content">Unpublished Content</a>
+							<a href="<?php echo DIR; ?>AdminPanel-Forum-Unpublished-Content"><i class="fas fa-file-import"></i> Unpublished Content</a>
 						</li>
           </ul>
         </li>
@@ -119,14 +119,20 @@ use Libs\ErrorMessages,
 				</a>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+				<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-PagesPermissions">
+					<i class="fas fa-fw fa-unlock-alt"></i>
+					<span class="nav-link-text">Pages Permissions</span>
+				</a>
+			</li>
+			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
 				<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-MassEmail">
-					<i class="fa fa-fw fa-envelope-square"></i>
+					<i class="fas fa-fw fa-mail-bulk"></i>
 					<span class="nav-link-text">Mass Email</span>
 				</a>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
 				<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-Adds">
-					<i class="fa fa-fw fa-adn"></i>
+					<i class="fab fa-fw fa-adn"></i>
 					<span class="nav-link-text">Site Adds</span>
 				</a>
 			</li>
@@ -147,7 +153,7 @@ use Libs\ErrorMessages,
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <a class="nav-link" href="<?php echo SITE_URL ?>">
-            <i class="fa fa-fw fa-sign-out"></i>Main Site
+            <i class="fas fa-sign-out-alt"></i> Main Site
 					</a>
         </li>
       </ul>

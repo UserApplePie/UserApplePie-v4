@@ -114,7 +114,7 @@ class Form
         $o .= (isset($params['type']))      ? " type='{$params['type']}'"                   : 'type="text"';
         $o .= (isset($params['id']))        ? " id='{$params['id']}'"                       : "id='{$params['label']}'";
         $o .= (isset($params['name']))      ? " name='{$params['name']}'"                   : '';
-        $o .= (isset($params['class']))     ? " class='{$params['class']}'" : '';
+        $o .= (isset($params['class']))     ? " class='{$params['class']}'"                 : '';
         $o .= (isset($params['onclick']))   ? " onclick='{$params['onclick']}'"             : '';
         $o .= (isset($params['onkeypress']))? " onkeypress='{$params['onkeypress']}'"       : '';
         $o .= (isset($params['value']))     ? ' value="' . $params['value'] . '"'           : '';
@@ -127,7 +127,8 @@ class Form
         $o .= (isset($params['style']))     ? " style='{$params['style']}'"                 : '';
         $o .= (isset($params['required']))     ? " required='required'"                     : '';
         $o .= (isset($params['autocomplete'])) ? " autocomplete='{$params['autocomplete']}'" : '';
-        $o .= (isset($params['autofocus'])) ? " autofocus" : '';
+        $o .= (isset($params['autofocus'])) ? " autofocus"                                  : '';
+        $o .= (isset($params['extra'])) ? " {$params['extra']}"                             : '';
         $o .= " />\n";
         return $o;
     }
@@ -186,15 +187,15 @@ class Form
         if (!empty($params)) {
             $x = 0;
             foreach ($params as $k => $v) {
-                $v['id'] = (isset($v['id']))        ? $v['id']                                          : "cb_id_{$x}_".rand(1000, 9999);
+                $vid = (isset($v['id']))        ? $v['id']                                          : "cb_id_{$x}_".rand(1000, 9999);
                 $o .= "<input type='checkbox'";
-                $o .= (isset($v['id']))             ? " id='{$v['id']}'"                                : '';
+                $o .= (isset($v['id']))             ? " id='{$v['id']}'"                                : $vid;
                 $o .= (isset($v['name']))           ? " name='{$v['name']}'"                            : '';
                 $o .= (isset($v['value']))          ? " value='{$v['value']}'"                          : '';
                 $o .= (isset($v['class']))          ? " class='{$v['class']}'"                          : '';
                 $o .= (isset($v['checked']))        ? " checked='checked'"                              : '';
                 $o .= (isset($v['disabled']))       ? " disabled='{$v['disabled']}'"                    : '';
-                $o .= (isset($params['style']))     ? " style='{$params['style']}'"                 : '';
+                $o .= (isset($params['style']))     ? " style='{$params['style']}'"                     : '';
                 $o .= " />\n";
                 $o .= (isset($v['label']))          ? "<label for='{$v['id']}'>{$v['label']}</label> "  : '';
                 $x++;
@@ -220,9 +221,9 @@ class Form
         if (!empty($params)) {
             $x = 0;
             foreach ($params as $k => $v) {
-                $v['id'] = (isset($v['id']))        ? $v['id']                                          : "rd_id_{$x}_".rand(1000, 9999);
+                $vid = (isset($v['id']))        ? $v['id']                                          : "rd_id_{$x}_".rand(1000, 9999);
                 $o .= "<input type='radio'";
-                $o .= (isset($v['id']))             ? " id='{$v['id']}'"                                : '';
+                $o .= (isset($v['id']))             ? " id='{$v['id']}'"                                : $vid;
                 $o .= (isset($v['name']))           ? " name='{$v['name']}'"                            : '';
                 $o .= (isset($v['value']))          ? " value='{$v['value']}'"                          : '';
                 $o .= (isset($v['class']))          ? " class='{$v['class']}'"                          : '';

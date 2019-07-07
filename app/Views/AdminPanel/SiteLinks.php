@@ -22,7 +22,8 @@ use Libs\Form,
 <div class='col-lg-12 col-md-12 col-sm-12'>
 	<div class='card mb-3'>
 		<div class='card-header h4'>
-			<h3 class='jumbotron-heading'><?php echo $data['title'];  ?></h3>
+			<?php echo $data['title'];  ?>
+      <?php echo PageFunctions::displayPopover('Site Links', 'Site Links allow the Admin to edit links within a given area of the site and set who can view the links based on groups.', false, 'btn btn-sm btn-light'); ?>
 		</div>
 		<div class='card-body'>
 			<p><?php echo $data['welcome_message'] ?></p>
@@ -45,10 +46,11 @@ use Libs\Form,
   <div class='card mb-3'>
     <div class='card-header h4'>
       Header Main Site Links
+      <?php echo PageFunctions::displayPopover('Site Header Links', 'Site Header Links are located in the top Navbar on the site.  They can be edited here.', false, 'btn btn-sm btn-light'); ?>
     </div>
     <table class='table table-hover responsive'>
       <tr>
-        <th>Link Title</th><th>URL</th><th>Alt Text</th><th>Drop Down</th><th>Require Plugin</th><th>Permission</th><th></th>
+        <th>Link Title</th><th>URL</th><th>Alt Text</th><th>Drop Down</th><th>Require Plugin</th><th>Permission</th><th>Icon</th><th></th>
       </tr>
       <?php
         if(isset($main_site_links)){
@@ -62,6 +64,7 @@ use Libs\Form,
             echo "</td>";
             echo "<td>".$link->require_plugin."</td>";
             echo "<td>".CurrentUserData::getGroupData($link->permission)."</td>";
+            echo "<td> <i class='$link->icon'></i> </td>";
             echo "<td align='right'>";
             /** Check to see if object is at top **/
             if($link->link_order > 1){
@@ -71,7 +74,7 @@ use Libs\Form,
             if($link_order_last != $link->link_order){
               echo "<a href='".DIR."AdminPanel-SiteLinks/LinkDown/$link->location/$link->id/' class='btn btn-primary btn-sm' role='button'><span class='fa fa-fw fa-caret-down' aria-hidden='true'></span></a> ";
             }
-            echo "<a href='".DIR."AdminPanel-SiteLink/$link->id' class='btn btn-sm btn-success'><span class='fa fa-fw  fa-pencil'></span></a>";
+            echo "<a href='".DIR."AdminPanel-SiteLink/$link->id' class='btn btn-sm btn-success'><span class='fas fa-edit'></span></a>";
             echo "</td>";
             echo "</tr>";
           }

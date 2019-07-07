@@ -101,7 +101,7 @@ if(isset($_POST['submit'])){
 				</div>
 				<div class='card-body'>
 					<div class="form-group">
-						<label for="SITE_URL">Website URL</label><span class="label label-danger pull-right">Required</span>
+						<label for="SITE_URL">Website URL</label><span class="label label-danger float-right">Required</span>
 						<input type="text" class="form-control" name="SITE_URL" id="SITE_URL" placeholder="<?=SITE_URL?>" value="<?php if(!empty($_REQUEST['SITE_URL'])){echo $_REQUEST['SITE_URL'];} ?>">
 					</div>
 				</div>
@@ -114,23 +114,23 @@ if(isset($_POST['submit'])){
 				</div>
 				<div class='card-body'>
 					<div class="form-group">
-						<label for="DB_HOST">Host</label><span class="label label-danger pull-right">Required</span>
+						<label for="DB_HOST">Host</label><span class="label label-danger float-right">Required</span>
 						<input type="text" class="form-control" name="DB_HOST" id="DB_HOST" placeholder="<?=DB_HOST?>" value="<?php if(!empty($_REQUEST['DB_HOST'])){echo $_REQUEST['DB_HOST'];} ?>">
 					</div>
 					<div class="form-group">
-						<label for="DB_NAME">Datebase Name</label><span class="label label-danger pull-right">Required</span>
+						<label for="DB_NAME">Datebase Name</label><span class="label label-danger float-right">Required</span>
 						<input type="text" class="form-control" name="DB_NAME" id="DB_NAME" placeholder="<?=DB_NAME?>" value="<?php if(!empty($_REQUEST['DB_NAME'])){echo $_REQUEST['DB_NAME'];} ?>">
 					</div>
 					<div class="form-group">
-						<label for="DB_USER">Username</label><span class="label label-danger pull-right">Required</span>
+						<label for="DB_USER">Username</label><span class="label label-danger float-right">Required</span>
 						<input type="text" class="form-control" name="DB_USER" id="DB_USER" placeholder="<?=DB_USER?>" value="<?php if(!empty($_REQUEST['DB_USER'])){echo $_REQUEST['DB_USER'];} ?>">
 					</div>
 					<div class="form-group">
-						<label for="DB_PASS">Password</label><span class="label label-danger pull-right">Required</span>
+						<label for="DB_PASS">Password</label><span class="label label-danger float-right">Required</span>
 						<input type="password" class="form-control" name="DB_PASS" id="DB_PASS" placeholder="<?=DB_PASS?>" value="<?php if(!empty($_REQUEST['DB_PASS'])){echo $_REQUEST['DB_PASS'];} ?>">
 					</div>
 					<div class="form-group">
-						<label for="PREFIX">Prefix</label><span class="label label-danger pull-right">Required</span>
+						<label for="PREFIX">Prefix</label><span class="label label-danger float-right">Required</span>
 						<input type="text" class="form-control" name="PREFIX" id="PREFIX" placeholder="<?=PREFIX?>" value="<?php if(!empty($_REQUEST['PREFIX'])){echo $_REQUEST['PREFIX'];} ?>">
 					</div>
 				</div>

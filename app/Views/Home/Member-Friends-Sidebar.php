@@ -67,11 +67,12 @@
                 /** Get User's Friends Data **/
                 $friend_userName = CurrentUserData::getUserName($friend->userID);
                 $friend_userImage = CurrentUserData::getUserImage($friend->userID);
+                $online_check = CurrentUserData::getUserStatusDot($friend->userID);
                 echo "<li class='list-group-item'>";
                   echo "<a href='".DIR."Profile/{$friend_userName}'>";
                     echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$friend_userImage." class='rounded' style='height: 25px'>";
                   echo "</a>&nbsp;";
-                  echo "<a href='".DIR."Profile/{$friend_userName}'>";
+                  echo " $online_check <a href='".DIR."Profile/{$friend_userName}'>";
                     echo "$friend_userName";
                   echo "</a>";
                 echo "</li>";
@@ -97,11 +98,12 @@
                 $num_mutual_friends = $friend['mutual_friends'];
                 $friend_userName = CurrentUserData::getUserName($key);
                 $friend_userImage = CurrentUserData::getUserImage($key);
+                $online_check = CurrentUserData::getUserStatusDot($key);
                 echo "<li class='list-group-item'>";
                   echo "<a href='".DIR."Profile/{$friend_userName}'>";
                     echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$friend_userImage." class='rounded' style='height: 25px'>";
                   echo "</a>&nbsp;";
-                  echo "<a href='".DIR."Profile/{$friend_userName}'>";
+                  echo " $online_check <a href='".DIR."Profile/{$friend_userName}'>";
                     echo "$friend_userName";
                   echo "</a>";
                   echo "<div class='float-right'> $num_mutual_friends Mutual Friends </div>";

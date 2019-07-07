@@ -172,6 +172,7 @@ class Messages extends Controller{
 
     // Sets "by" username display
     $data['tofrom'] = " by ";
+    $data['inboxoutbox'] = "inbox";
 
     // Get all message that are to current user
     $data['messages'] = $this->model->getInbox($u_id, $this->pages->getLimit($current_page, MESSAGE_PAGEINATOR_LIMIT));
@@ -283,6 +284,7 @@ class Messages extends Controller{
 
     // Sets "to" username display
     $data['tofrom'] = " to ";
+    $data['inboxoutbox'] = "outbox";
 
     // Get all message that are to current user
     $data['messages'] = $this->model->getOutbox($u_id, $this->pages->getLimit($current_page, MESSAGE_PAGEINATOR_LIMIT));
@@ -347,33 +349,67 @@ class Messages extends Controller{
       \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
     }
 
-    // Check to see if requested message exists and user is related to it
-    if($this->model->checkMessagePerm($u_id, $m_id)){
-      // Message exist and user is related
-  		// Collect Data for view
-  		$data['title'] = "My Private Message";
-  		$data['welcome_message'] = "Welcome to Your Private Message";
-
-      // Get requested message data
-      $data['message'] = $this->model->getMessage($m_id, $u_id);
+    // Check to make sure user is trying to send new message
+    if(isset($_POST['submit'])){
+      // Check to make sure the csrf token is good
+      if (Csrf::isTokenValid('messages')) {
+        $msg_id = Request::post('message_id');
+        if(isset($msg_id)){
+          if($this->model->deleteMessageInbox($u_id, $msg_id)){
+            // Success
+            $m_del_success_inbox = true;
+          }else{
+            if($this->model->deleteMessageOutbox($u_id, $msg_id)){
+              // Success
+              $m_del_success_outbox = true;
+            }else{
+              // Fail
+              $m_del_error = true;
+            }
+          }
+        }
+        if($m_del_success_inbox == true){
+          // Message Delete Success Display
+          SuccessMessages::push('You Have Successfully Deleted Message', 'MessagesInbox');
+        }else if($m_del_success_outbox == true){
+          // Message Delete Success Display
+          SuccessMessages::push('You Have Successfully Deleted Message', 'MessagesOutbox');
+        }else if($m_del_error == true){
+          // Message Delete Error Display
+          ErrorMessages::push('Message Delete Failed', 'Messages');
+        }
+      }
     }else{
-      // User Does not own message or it does not exist
-      $data['title'] = "My Private Message - Error!";
-      $data['welcome_message'] = "The requested private message does not exist!";
-      $data['msg_error'] = "true";
+
+      // Check to see if requested message exists and user is related to it
+      if($this->model->checkMessagePerm($u_id, $m_id)){
+        // Message exist and user is related
+    		// Collect Data for view
+    		$data['title'] = "My Private Message";
+    		$data['welcome_message'] = "Welcome to Your Private Message";
+
+        // Get requested message data
+        $data['message'] = $this->model->getMessage($m_id, $u_id);
+      }else{
+        // User Does not own message or it does not exist
+        $data['title'] = "My Private Message - Error!";
+        $data['welcome_message'] = "The requested private message does not exist!";
+        $data['msg_error'] = "true";
+      }
+      // Setup Breadcrumbs
+  		$data['breadcrumbs'] = "
+  			<li class='breadcrumb-item'><a href='".DIR."Messages'>Private Messages</a></li>
+  			<li class='breadcrumb-item active'>".$data['title']."</li>
+  		";
+      $data['csrf_token'] = Csrf::makeToken('messages');
+
+      // Check for new messages in inbox
+      $data['new_messages_inbox'] = $this->model->getUnreadMessages($u_id);
+
     }
-    // Setup Breadcrumbs
-		$data['breadcrumbs'] = "
-			<li class='breadcrumb-item'><a href='".DIR."Messages'>Private Messages</a></li>
-			<li class='breadcrumb-item active'>".$data['title']."</li>
-		";
-    $data['csrf_token'] = Csrf::makeToken('messages');
 
-    // Check for new messages in inbox
-    $data['new_messages_inbox'] = $this->model->getUnreadMessages($u_id);
-
-        /* Send data to view */
-        Load::ViewPlugin("message_display", $data, "messages_sidebar::Left", "Messages");
+    /* Send data to view */
+    Load::ViewPlugin("message_display", $data, "messages_sidebar::Left", "Messages");
 
 	}
 
@@ -405,7 +441,6 @@ class Messages extends Controller{
 
 		// Check to make sure user is trying to send new message
 		if(isset($_POST['submit'])){
-
 			// Check to make sure the csrf token is good
 			if (Csrf::isTokenValid('messages')) {
 				// Get data from post

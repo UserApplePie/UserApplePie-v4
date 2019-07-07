@@ -12,14 +12,15 @@
 use Libs\Form,
   Libs\ErrorMessages,
   Libs\SuccessMessages,
-  Core\Language;
+  Core\Language,
+  Libs\PageFunctions;
 
 ?>
 
 <div class='col-lg-12 col-md-12 col-sm-12'>
 	<div class='card mb-3'>
 		<div class='card-header h4'>
-			<h3 class='jumbotron-heading'><?php echo $data['title'];  ?></h3>
+			<?php echo $data['title'];  ?>
 		</div>
 		<div class='card-body'>
 			<p><?php echo $data['welcome_message'] ?></p>
@@ -33,9 +34,7 @@ use Libs\Form,
             <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Forum Enable</span>
           </div>
           <input type="checkbox" class='form-control' id='forum_on_off' name='forum_on_off' data-toggle="toggle" data-on="Enabled" data-off="Disabled" data-onstyle="success" data-offstyle="warning" value="Enabled" <?php if($forum_on_off == "Enabled"){echo "CHECKED";}?> >
-        </div>
-        <div style='margin-bottom: 25px'>
-          <i>Default: Enabled</i> - Turn the Forum ON or OFF. Hides the Forum from all users if Disabled.
+          <?php echo PageFunctions::displayPopover('Forum Enable/Disable', 'Default: Enabled - Turn the Forum ON(Enable) or OFF(Disable). Hides the Forum from all users if Disabled.', true, 'input-group-text'); ?>
         </div>
 
         <!-- Forum Name -->
@@ -44,9 +43,7 @@ use Libs\Form,
             <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Forum Title</span>
           </div>
           <?php echo Form::input(array('type' => 'text', 'name' => 'forum_title', 'class' => 'form-control', 'value' => $data['forum_title'], 'placeholder' => 'Global Forum Name/Title', 'maxlength' => '100')); ?>
-        </div>
-        <div style='margin-bottom: 25px'>
-          <i>Default: Forum</i> - Set the Forum Title.
+          <?php echo PageFunctions::displayPopover('Forum Title', 'Default: Forum - Sets the title of the forum.', true, 'input-group-text'); ?>
         </div>
 
         <!-- Forum Description -->
@@ -55,9 +52,7 @@ use Libs\Form,
             <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Forum Description</span>
           </div>
           <?php echo Form::textBox(array('type' => 'text', 'name' => 'forum_description', 'class' => 'form-control', 'value' => $data['forum_description'], 'placeholder' => 'Global Forum Description', 'maxlength' => '255')); ?>
-        </div>
-        <div style='margin-bottom: 25px'>
-          <i>Default: Blank</i> - Set the Forum Description.
+          <?php echo PageFunctions::displayPopover('Forum Description', 'Default: Blank - Sets the description of the forum.', true, 'input-group-text'); ?>
         </div>
 
         <hr>
@@ -68,9 +63,7 @@ use Libs\Form,
             <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Topics Per Page</span>
           </div>
           <?php echo Form::input(array('type' => 'text', 'name' => 'forum_topic_limit', 'class' => 'form-control', 'value' => $data['forum_topic_limit'], 'placeholder' => 'Topics Per Page Limit', 'maxlength' => '100')); ?>
-        </div>
-        <div style='margin-bottom: 25px'>
-          <i>Default: 20</i> - Set the Forum Topics Limit Per Page.
+          <?php echo PageFunctions::displayPopover('Topics Per Page', 'Default: 20 - Sets the total number of topics to display per page.', true, 'input-group-text'); ?>
         </div>
 
         <!-- Forum Topic Reply Limit Per Page -->
@@ -79,9 +72,7 @@ use Libs\Form,
             <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Topic Replies Per Page</span>
           </div>
           <?php echo Form::input(array('type' => 'text', 'name' => 'forum_topic_reply_limit', 'class' => 'form-control', 'value' => $data['forum_topic_reply_limit'], 'placeholder' => 'Topic Replies Per Page Limit', 'maxlength' => '100')); ?>
-        </div>
-        <div style='margin-bottom: 25px'>
-          <i>Default: 10</i> - Set the Forum Topic Replies Limit Per Page.
+          <?php echo PageFunctions::displayPopover('Topic Replies Per Page', 'Default: 10 - Sets the total number of topics to display per page.', true, 'input-group-text'); ?>
         </div>
 
         <hr>
@@ -91,13 +82,8 @@ use Libs\Form,
           <div class='input-group-prepend'>
             <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Auto New Member Group Change</span>
           </div>
-          <select class='form-control' id='forum_posts_group_change_enable' name='forum_posts_group_change_enable'>
-            <option value='true' <?php if($data['forum_posts_group_change_enable'] == "true"){echo "SELECTED";}?> >Enabled</option>
-            <option value='false' <?php if($data['forum_posts_group_change_enable'] == "false"){echo "SELECTED";}?> >Disabled</option>
-          </select>
-        </div>
-        <div style='margin-bottom: 25px'>
-          <i>Default: Enabled</i> - When enabled New Members will automaticly be upgraded to Member group when they post more than set below.
+          <input type="checkbox" class='form-control' id='forum_posts_group_change_enable' name='forum_posts_group_change_enable' data-toggle="toggle" data-on="Enabled" data-off="Disabled" data-onstyle="success" data-offstyle="warning" value="true" <?php if($forum_posts_group_change_enable == "true"){echo "CHECKED";}?> >
+          <?php echo PageFunctions::displayPopover('Auto New Member Group Change', 'Default: Enabled - When enabled, the site will automatically upgrade a user that is a member of the New Member group to the Member group when goal is reached.', true, 'input-group-text'); ?>
         </div>
 
         <!-- Forum Posts Group Change Limit -->
@@ -106,9 +92,7 @@ use Libs\Form,
             <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Auto New Member Group Change Posts Limit</span>
           </div>
           <?php echo Form::input(array('type' => 'text', 'name' => 'forum_posts_group_change', 'class' => 'form-control', 'value' => $data['forum_posts_group_change'], 'placeholder' => 'New Member Group Change Posts Limit', 'maxlength' => '100')); ?>
-        </div>
-        <div style='margin-bottom: 25px'>
-          <i>Default: 15</i> - Set the amount of Post a New Member must post to be upgraded to Member Group if Enabled.
+          <?php echo PageFunctions::displayPopover('New Member Group Change Limit', 'Default: 15 - Sets the total number of posts a New Member must post to upgrade to a Member if Enabled.', true, 'input-group-text'); ?>
         </div>
 
         <!-- Max Image Size when uploaded to server -->
@@ -124,9 +108,7 @@ use Libs\Form,
             <option value='1024,768' <?php if($data['forum_max_image_size'] == "1024,768"){echo "SELECTED";}?> >1024 x 768</option>
             <option value='1920,1080' <?php if($data['forum_max_image_size'] == "1920,1080"){echo "SELECTED";}?> >1920 x 1080</option>
           </select>
-        </div>
-        <div style='margin-bottom: 25px'>
-          <i>Default: 800x600</i> - Select the default image max resize limit.  The larger the size, the larger the file.
+          <?php echo PageFunctions::displayPopover('Forum Image Max Size', 'Default: 800x600 - Sets the max image size that the site will automatically adjust images to when uploaded.  The larger the size, the larger the file.  Use low resolution for slower bandwidth connection on server.', true, 'input-group-text'); ?>
         </div>
 
         <?php echo Form::input(array('type' => 'hidden', 'name' => 'token_ForumAdmin', 'value' => $data['csrf_token'])); ?>
@@ -134,19 +116,17 @@ use Libs\Form,
         <button class='btn btn-sm btn-success' name='submit' type='submit'>Update Forum Settings</button>
         <?php echo Form::close(); ?>
 
-
-
       <!-- End Main forum Settings -->
-
     </div>
-    </div>
+  </div>
 
   <div class='row'>
   <!-- Start of Forum Users groups -->
   <div class='col-lg-4 col-md-4'>
   	<div class='card mb-3'>
   		<div class='card-header h4'>
-  			<h3 class='jumbotron-heading'>Forum User Groups</h3>
+  			Forum User Group
+        <?php echo PageFunctions::displayPopover('Forum User Group', 'Sets which Member Groups can Post on the forum.', false, 'btn btn-sm btn-light float-right'); ?>
   		</div>
 
   			<?php
@@ -222,7 +202,8 @@ use Libs\Form,
   <div class='col-lg-4 col-md-4'>
   	<div class='card mb-3'>
   		<div class='card-header h4'>
-  			<h3 class='jumbotron-heading'>Forum Moderator Groups</h3>
+  			Forum Moderator Group
+        <?php echo PageFunctions::displayPopover('Forum Moderator Group', 'Sets which Member Groups can Moderate the forum.', false, 'btn btn-sm btn-light float-right'); ?>
   		</div>
 
   			<?php
@@ -276,7 +257,8 @@ use Libs\Form,
   <div class='col-lg-4 col-md-4'>
   	<div class='card mb-3'>
   		<div class='card-header h4'>
-  			<h3 class='jumbotron-heading'>Forum Administrator Groups</h3>
+  			Forum Administrator Group
+        <?php echo PageFunctions::displayPopover('Forum Administrator Group', 'Sets which Member Groups can Administrate the forum.', false, 'btn btn-sm btn-light float-right'); ?>
   		</div>
 
   			<?php

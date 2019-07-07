@@ -67,7 +67,7 @@ class Routes {
         $routes[] = self::add('AdminPanel-Settings', 'AdminPanel', 'Settings');
         $routes[] = self::add('AdminPanel-AdvancedSettings', 'AdminPanel', 'AdvancedSettings');
         $routes[] = self::add('AdminPanel-EmailSettings', 'AdminPanel', 'EmailSettings');
-        $routes[] = self::add('AdminPanel-Users', 'AdminPanel', 'Users' , '(:any)/(:any)');
+        $routes[] = self::add('AdminPanel-Users', 'AdminPanel', 'Users' , '(:any)/(:num)/(:any)');
         $routes[] = self::add('AdminPanel-User', 'AdminPanel', 'User', '(:any)');
         $routes[] = self::add('AdminPanel-Groups', 'AdminPanel', 'Groups');
         $routes[] = self::add('AdminPanel-Group', 'AdminPanel', 'Group', '(:any)');
@@ -79,6 +79,8 @@ class Routes {
         $routes[] = self::add('AdminPanel-SiteLink', 'AdminPanel', 'SiteLink', '(:any)/(:any)/(:any)');
         $routes[] = self::add('AdminPanel-Adds', 'AdminPanel', 'Adds');
         $routes[] = self::add('AdminPanel-Upgrade', 'AdminPanel', 'Upgrade');
+        $routes[] = self::add('AdminPanel-PagesPermissions', 'AdminPanel', 'PagesPermissions', '(:any)');
+        $routes[] = self::add('AdminPanel-PagePermissions', 'AdminPanel', 'PagePermissions', '(:num)');
         /* End Admin Panel Routing */
 
         /* Language Code Change */
@@ -111,7 +113,7 @@ class Routes {
             $routes[] = self::add('Messages', 'Plugins\Messages\Controllers\Messages', 'messages');
             $routes[] = self::add('ViewMessage', 'Plugins\Messages\Controllers\Messages', 'view', '(:any)');
             $routes[] = self::add('MessagesInbox', 'Plugins\Messages\Controllers\Messages', 'inbox', '(:any)');
-            $routes[] = self::add('MessagesOutbox/(:any)', 'Plugins\Messages\Controllers\Messages', 'outbox', '(:any)');
+            $routes[] = self::add('MessagesOutbox', 'Plugins\Messages\Controllers\Messages', 'outbox', '(:any)');
             $routes[] = self::add('NewMessage', 'Plugins\Messages\Controllers\Messages', 'newmessage', '(:any)/(:any)');
         }
         /* End Messages Plugin Routing */

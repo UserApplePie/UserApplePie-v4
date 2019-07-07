@@ -17,7 +17,7 @@ use Libs\Form,
     <div class='col-lg-12 col-md-12 col-sm-12'>
     	<div class='card mb-3'>
     		<div class='card-header h4'>
-    			<h3 class='jumbotron-heading'><?php echo $data['title'];  ?></h3>
+    			<?php echo $data['title'];  ?>
     		</div>
     		<div class='card-body'>
     			<p><?php echo $data['welcomeMessage'] ?></p>

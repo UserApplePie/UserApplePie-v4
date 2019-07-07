@@ -7,12 +7,14 @@
 * @version 4.3.0
 */
 
-use Libs\Form;
+use Libs\Form,
+		Libs\PageFunctions;
 ?>
 <div class='col-lg-12 col-md-12 col-sm-12'>
 	<div class="card mb-3">
 		<div class="card-header h4">
 			<?=$title;?>
+			<?php echo PageFunctions::displayPopover('Mass E-mail', 'Mass E-mail sends an email to all activated users on the site.  This is best used to give all users important updates related to the site.  Limit the use of this feature to reduce chance of being marked as spam.  Message is sent as plaintext only.', false, 'btn btn-sm btn-light'); ?>
 		</div>
 		<div class="card-body">
 			<p><?=$welcomeMessage;?></p>
@@ -22,13 +24,17 @@ use Libs\Form;
 
       <!-- Subject -->
       <div class='input-group mb-3' style='margin-bottom: 25px'>
-        <span class='input-group-addon'><i class='fa fa-fw s fa-book'></i> </span>
+				<div class="input-group-prepend">
+        	<span class='input-group-text'><i class='fas fa-fw fa-envelope'></i> </span>
+				</div>
         <?php echo Form::input(array('type' => 'text', 'name' => 'subject', 'class' => 'form-control', 'value' => urldecode($data['subject']), 'placeholder' => 'Subject', 'maxlength' => '100')); ?>
       </div>
 
       <!-- Message Content -->
       <div class='input-group mb-3' style='margin-bottom: 25px'>
-        <span class='input-group-addon'><i class='fa fa-fw s fa-pencil'></i> </span>
+				<div class="input-group-prepend">
+					<span class='input-group-text'><i class='fas fa-fw fa-envelope'></i> </span>
+				</div>
         <?php echo Form::textBox(array('type' => 'text', 'name' => 'content', 'class' => 'form-control', 'value' => $data['content'], 'placeholder' => 'Message Content', 'rows' => '6')); ?>
       </div>
 

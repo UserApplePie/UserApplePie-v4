@@ -110,6 +110,7 @@ use Libs\Language,
               /** Get Posted User Data **/
               $recent_userName = CurrentUserData::getUserName($recent->RP_06);
               $recent_userImage = CurrentUserData::getUserImage($recent->RP_06);
+              $online_check = CurrentUserData::getUserStatusDot($recent->RP_06);
               /** Check to see if recent sweet **/
               if($recent->post_type == "sweet"){
                 /** Check if Forum_Topic **/
@@ -122,7 +123,7 @@ use Libs\Language,
                       echo "<a href='".DIR."Profile/{$recent_userName}'>";
                         echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$recent_userImage." class='rounded' style='height: 25px'>";
                       echo "</a>";
-                      echo " <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> sweeted a Forum Topic..";
+                      echo " $online_check <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> sweeted a Forum Topic..";
                     echo "</div>";
                     echo "<div class='card-body'>";
                       echo "<strong>";
@@ -145,7 +146,7 @@ use Libs\Language,
                       echo "<a href='".DIR."Profile/{$recent_userName}'>";
                         echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$recent_userImage." class='rounded' style='height: 25px'>";
                       echo "</a>";
-                      echo " <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> sweeted a Forum Topic Reply..";
+                      echo " $online_check <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> sweeted a Forum Topic Reply..";
                     echo "</div>";
                     echo "<div class='card-body'>";
                       echo "<strong>";
@@ -168,7 +169,7 @@ use Libs\Language,
                     echo "<a href='".DIR."Profile/{$recent_userName}'>";
                       echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$recent_userImage." class='rounded' style='height: 25px'>";
                     echo "</a>";
-                    echo " <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> Created a new Forum Post..";
+                    echo " $online_check <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> Created a new Forum Post..";
                   echo "</div>";
                   echo "<div class='card-body'>";
                     echo "<strong>";
@@ -191,7 +192,7 @@ use Libs\Language,
                     echo "<a href='".DIR."Profile/{$recent_userName}'>";
                       echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$recent_userImage." class='rounded' style='height: 25px'>";
                     echo "</a>";
-                    echo " <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> Replied to a Forum Post..";
+                    echo " $online_check <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> Replied to a Forum Post..";
                   echo "</div>";
                   echo "<div class='card-body'>";
                     echo "<strong>";
@@ -213,7 +214,7 @@ use Libs\Language,
                     echo "<a href='".DIR."Profile/{$recent_userName}'>";
                       echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$recent_userImage." class='rounded' style='height: 25px'>";
                     echo "</a>";
-                    echo " <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> changed their default photo..";
+                    echo " $online_check <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> changed their default photo..";
                   echo "</div>";
                   echo "<div class='card-body'>";
                     echo "<a href='#imageModal".$recent->RP_02."' data-toggle='modal' data-target='#imageModal".$recent->RP_02."'>";
@@ -245,7 +246,7 @@ use Libs\Language,
                     echo "<a href='".DIR."Profile/{$recent_userName}'>";
                       echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$recent_userImage." class='rounded' style='height: 25px'>";
                     echo "</a>";
-                    echo " <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a>";
+                    echo " $online_check <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a>";
                     $multi_photo = CurrentUserData::getProfileImages10min($recent->RP_06, $recent->RP_01);
                     if(count($multi_photo) > 1){
                       echo " uploaded photos to their profile..";
@@ -310,7 +311,7 @@ use Libs\Language,
                     echo "<a href='".DIR."Profile/{$recent_userName}'>";
                       echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$recent_userImage." class='rounded' style='height: 25px'>";
                     echo "</a>";
-                    echo " <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> is feeling $recent->RP_03..";
+                    echo " $online_check <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> is feeling $recent->RP_03..";
                   echo "</div>";
                   echo "<div class='card-body forum' style='overflow: hidden; height: auto;'>";
                     echo $status_content;

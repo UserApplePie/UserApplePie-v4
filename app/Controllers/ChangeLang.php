@@ -32,6 +32,7 @@ class ChangeLang extends Controller
 
     /**
      * Define the change lang page
+     * @param $new_lang_code
      */
     public function index($new_lang_code = null)
     {

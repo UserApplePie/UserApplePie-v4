@@ -15,13 +15,10 @@
 class Recent extends Models {
 
   /**
-  * getFriendsIDs
-  *
   * get list of all friends for current user.
-  *
-  * @param int current userID
-  *
-  * @return array returns all friends ids
+  * @param int current $userID
+  * @param int $limit
+  * @return array dataset
   */
   public function getFriendsIDs($userID, $limit = '100'){
       /** Get list of User's friends and return their UserIDs **/
@@ -54,35 +51,27 @@ class Recent extends Models {
   }
 
   /**
-  * getSuggestedFriends
-  *
   * get list of users not friends with current user, but friends of friends.
-  *
   * @param int current userID
-  *
-  * @return array returns all suggested friends ids
+  * @return array dataset
   */
   public function getSuggestedFriends($userID){
       /** Get list of User's friends and return their UserIDs **/
       $friends = SELF::getFriendsIDs($userID);
       $suggestedFriends = [];
-
       /** Clean up Friends array to only userIDs **/
       foreach ($friends as $friend) {
         $user_friends[] = $friend->userID;
       }
-
       foreach ($friends as $friendId) {
         /** Friends friends list. **/
         $ff_list = SELF::getFriendsIDs($friendId->userID);
-
         foreach ($ff_list as $ffriendId) {
           /** If the friendsFriend(ff) is not us, and not our friend, he can be suggested **/
           if ($ffriendId->userID != $userID && !in_array($ffriendId->userID, $user_friends)) {
             /** The key is the suggested friend **/
             $suggestedFriends[$ffriendId->userID] = ['mutual_friends' => []];
             $ff_friends = SELF::getFriendsIDs($ffriendId->userID);
-
             foreach ($ff_friends as $ff_friendId) {
               /** If the friendsFriend(ff) is not us, and not our friend, he can be suggested **/
               if($ff_friendId->userID != $userID){
@@ -92,19 +81,15 @@ class Recent extends Models {
             }
           }
         }
-
       }
       return $suggestedFriends;
   }
 
   /**
-  * getMutualFriendsIDs
-  *
   * get list of users not friends with current user, but friends of friends.
-  *
-  * @param int current userID
-  *
-  * @return array returns all suggested friends ids
+  * @param int $userID
+  * @param int $cur_userID
+  * @return array dataset
   */
   public function getMutualFriendsIDs($userID, $cur_userID){
       /** Get list of User's friends and return their UserIDs **/
@@ -114,29 +99,22 @@ class Recent extends Models {
       foreach ($friends as $friend) {
         $user_friends[] = $friend->userID;
       }
-
       $mutual_friends = [];
-
       $ff_list = SELF::getFriendsIDs($cur_userID);
-
       foreach ($ff_list as $ffriendId) {
         /** If the friendsFriend(ff) is not us, and our friend, he can be mutual **/
         if ($ffriendId->userID != $userID && $ffriendId->userID != $cur_userID && in_array($ffriendId->userID, $user_friends)) {
           $mutual_friends[] = $ffriendId->userID;
         }
       }
-
       return $mutual_friends;
   }
 
   /**
-  * getRecent
-  *
   * get list of all friends recent stuff.
-  *
-  * @param int current userID
-  *
-  * @return array returns all friends ids
+  * @param int $userID
+  * @param int $limit
+  * @return array dataset
   */
   public function getRecent($userID, $limit = '10'){
       /** Setup Vars **/
@@ -147,7 +125,6 @@ class Recent extends Models {
       $profile_images = SELF::profile_images();
       $status = SELF::status();
       $status_cur_user = SELF::status_cur_user();
-
       /** Get Recents from databasse **/
       $data = $this->db->select("
         $sweets
@@ -167,18 +144,13 @@ class Recent extends Models {
         LIMIT $limit
       ",
       array(':userID' => $userID));
-
       return $data;
   }
 
   /**
-  * getRecentTotal
-  *
   * get total rows of all friends recent stuff.
-  *
-  * @param int current userID
-  *
-  * @return array returns all friends ids
+  * @param int $userID
+  * @return int count
   */
   public function getRecentTotal($userID){
       /** Setup Vars **/
@@ -189,7 +161,6 @@ class Recent extends Models {
       $profile_images = SELF::profile_images();
       $status = SELF::status();
       $status_cur_user = SELF::status_cur_user();
-
       /** Get Recents from databasse **/
       $data = $this->db->select("
         SELECT sum(count) as total_rows FROM (
@@ -209,19 +180,14 @@ class Recent extends Models {
         ) as num_rows
       ",
       array(':userID' => $userID));
-
       return $data[0]->total_rows;
   }
 
-
-
   /**
-  * sweets
-  *
-  * @return array returns sql
+  * recent friends sweets
+  * @return array dataset
   */
   public function sweets(){
-
     /** Get Sweets Recent Data **/
     $sweets = "
       (SELECT
@@ -248,18 +214,14 @@ class Recent extends Models {
           AND NOT swe.sweet_location = 'CommentSecStatus'
         GROUP BY swe.sid)
     ";
-
     return $sweets;
-
   }
 
   /**
-  * forum_posts
-  *
-  * @return array returns sql
+  * recent friends forum posts
+  * @return array dataset
   */
   public function forum_posts(){
-
     /** Get Forum Posts Recent Data **/
     $forum_posts = "
       (SELECT
@@ -285,19 +247,14 @@ class Recent extends Models {
           AND (fp.forum_publish = '1')
         GROUP BY fp.forum_post_id)
     ";
-
     return $forum_posts;
-
   }
 
-
   /**
-  * forum_post_replies
-  *
-  * @return array returns sql
+  * recent friends forum post replies
+  * @return array dataset
   */
   public function forum_post_replies(){
-
     /** Get Forum Posts Recent Data **/
     $forum_post_replies = "
       (SELECT
@@ -323,18 +280,14 @@ class Recent extends Models {
           AND (fpr.forum_publish = '1')
         GROUP BY fpr.id)
     ";
-
     return $forum_post_replies;
-
   }
 
   /**
-  * default_images
-  *
-  * @return array returns sql
+  * recent friends default images
+  * @return array dataset
   */
   public function default_images(){
-
     /** Get Forum Posts Recent Data **/
     $default_images = "
       (SELECT
@@ -359,18 +312,14 @@ class Recent extends Models {
           AND ui.defaultImage = '1'
         GROUP BY ui.id)
     ";
-
     return $default_images;
-
   }
 
   /**
-  * profile_images
-  *
-  * @return array returns sql
+  * recent friends profile images
+  * @return array dataset
   */
   public function profile_images(){
-
     /** Get Forum Posts Recent Data **/
     $profile_images = "
       (SELECT
@@ -394,18 +343,14 @@ class Recent extends Models {
           AND NOT ui.userID = :userID )
         GROUP BY UNIX_TIMESTAMP(ui.timestamp) DIV 600)
     ";
-
     return $profile_images;
-
   }
 
   /**
-  * status
-  *
-  * @return array returns sql
+  * recent friends status updates
+  * @return array dataset
   */
   public function status(){
-
     /** Get Status Recent Data **/
     $status = "
       (SELECT
@@ -429,15 +374,12 @@ class Recent extends Models {
           AND NOT s.status_userID = :userID )
         GROUP BY s.id)
     ";
-
     return $status;
-
   }
 
   /**
-  * status_cur_user
-  *
-  * @return array returns sql
+  * recent current user status updates
+  * @return array dataset
   */
   public function status_cur_user(){
 
@@ -463,35 +405,25 @@ class Recent extends Models {
         WHERE ( s.status_userID = :userID )
         GROUP BY s.id)
     ";
-
     return $status_cur_user;
-
   }
 
   /**
-  * addStatus
-  *
   * add status update for current user
-  *
-  * @param int current userID
-  * @param string status_feeling
-  * @param string status_content
-  *
-  * @return boolean true/false
+  * @param int $userID
+  * @param string $status_feeling
+  * @param string $status_content
+  * @return int count
   */
   public function addStatus($userID = '', $status_feeling = '', $status_content = ''){
     return $this->db->insert(PREFIX.'status', array('status_userID' => $userID, 'status_feeling' => $status_feeling, 'status_content' => $status_content));
   }
 
   /**
-  * getStatus
-  *
   * get status data based on user and status id.
-  *
-  * @param int current userID
-  * @param int current id
-  *
-  * @return array returns status data
+  * @param int $userID
+  * @param int $id
+  * @return array dataset
   */
   public function getStatus($userID, $id){
       /** Get Status Data **/
@@ -509,20 +441,16 @@ class Recent extends Models {
           GROUP BY s.id
       ",
       array(':userID' => $userID, ':id' => $id));
-
       return $data;
   }
 
   /**
-  * updateStatus
-  *
   * update status update for current user
-  *
-  * @param int current userID
-  * @param string status_feeling
-  * @param string status_content
-  *
-  * @return boolean true/false
+  * @param int $userID
+  * @param int $id
+  * @param string $status_feeling
+  * @param string $status_content
+  * @return int count
   */
   public function updateStatus($userID = '', $id = '', $status_feeling = '', $status_content = ''){
     return $this->db->update(PREFIX.'status', array('status_feeling' => $status_feeling, 'status_content' => $status_content), array('id' => $id, 'status_userID' => $userID));

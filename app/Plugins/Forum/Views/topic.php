@@ -91,12 +91,16 @@ use Core\Language,
             }else{
               echo "<span class='fas fa-user icon-size' style='margin-bottom: 2px'></span>";
             }
-            echo " <strong><a href='".DIR."Profile/$f_p_user_name' class='btn btn-sm btn-secondary'>$f_p_user_name</a></strong> ";
+            echo "<hr class='mt-1 mb-1'>";
+            echo " <a href='".DIR."Profile/$f_p_user_name' class='btn btn-sm btn-secondary'>$f_p_user_name</a> ";
             // Check to see if current user is logged in... if not then hide the pm button
             if(!empty($data['current_userID'])){
               echo " <a href='".DIR."NewMessage/$f_p_user_name' class='btn btn-sm btn-secondary'>PM</a> ";
             }
             echo "<br>";
+            // Show user's online status
+            $user_status = CurrentUserData::getUserStatus($data['topic_creator']);
+            echo "<font size='2'>".$user_status."</font><Br>";
             // Show user's membership status
             foreach(CurrentUserData::getUserGroups($data['topic_creator']) as $row){ echo "<font size='2'>".$row."</font><br>"; };
             echo "<font size='1'>";
@@ -282,12 +286,16 @@ use Core\Language,
                 }else{
                   echo "<span class='fas fa-user icon-size' style='margin-bottom: 2px'></span>";
                 }
-                echo " <strong><a href='".DIR."Profile/".$rf_p_user_name."' class='btn btn-sm btn-secondary'>$rf_p_user_name</a></strong>";
+                echo "<hr class='mt-1 mb-1'>";
+                echo " <a href='".DIR."Profile/".$rf_p_user_name."' class='btn btn-sm btn-secondary'>$rf_p_user_name</a>";
                 // Check to see if current user is logged in... if not then hide the pm button
                 if(!empty($data['current_userID'])){
                   echo " <a href='".DIR."NewMessage/$rf_p_user_name' class='btn btn-sm btn-secondary'>PM</a> ";
                 }
                 echo "<br>";
+                // Show user's online status
+                $user_status = CurrentUserData::getUserStatus($rf_p_user_id);
+                echo "<font size='2'>".$user_status."</font><Br>";
                 // Show user's membership status
                 foreach(CurrentUserData::getUserGroups($rf_p_user_id) as $row){ echo "<font size='2'>".$row."</font><br>"; };
                 echo "<font size='1'>";

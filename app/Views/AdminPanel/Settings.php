@@ -9,18 +9,22 @@
 use Libs\Form,
     Libs\ErrorMessages,
     Libs\SuccessMessages,
-    Libs\Language;
+    Libs\Language,
+    Libs\PageFunctions;
 
 ?>
 <div class='col-lg-12 col-md-12 col-sm-12'>
   <div class='row'>
     <div class='col-lg-12 col-md-12 col-sm-12'>
     	<div class='card mb-3'>
-    		<div class='card-header'>
-    			<h4><?php echo $data['title'];  ?></h4>
+    		<div class='card-header h4'>
+    			<?php echo $data['title'];  ?>
+          <?php echo PageFunctions::displayPopover('Site Main Settings', 'Site Main Settings are mainly used for SEO use.', false, 'btn btn-sm btn-light'); ?>
     		</div>
     		<div class='card-body'>
-    			<p><?php echo $data['welcomeMessage'] ?></p>
+    			<p>
+            <?php echo $data['welcomeMessage'] ?>
+          </p>
 
     			<?php echo Form::open(array('method' => 'post')); ?>
 
@@ -30,6 +34,7 @@ use Libs\Form,
     				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Site Title</span>
             </div>
     				<?php echo Form::input(array('type' => 'text', 'name' => 'site_title', 'class' => 'form-control', 'value' => $site_title, 'placeholder' => 'Site Title', 'maxlength' => '255')); ?>
+            <?php echo PageFunctions::displayPopover('Site Title', 'Site Title is displayed throughout the site where requested. Also displays in the browser title area, and in the Navbar.', true, 'input-group-text'); ?>
     			</div>
 
           <!-- Site Description -->
@@ -38,27 +43,31 @@ use Libs\Form,
               <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Site Description</span>
             </div>
               <?php echo Form::textarea(array('type' => 'text', 'name' => 'site_description', 'class' => 'form-control', 'value' => $site_description, 'placeholder' => 'Site Description')); ?>
+              <?php echo PageFunctions::displayPopover('Site Description', 'Site Description is used in the description meta tag. Mainly used for Search Engines.', true, 'input-group-text'); ?>
           </div>
 
-                <!-- Site Keywords -->
+          <!-- Site Keywords -->
     			<div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
     				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Site Keywords</span>
             </div>
     				<?php echo Form::input(array('type' => 'text', 'name' => 'site_keywords', 'class' => 'form-control', 'value' => $site_keywords, 'placeholder' => 'Site Keywords', 'maxlength' => '255')); ?>
+            <?php echo PageFunctions::displayPopover('Site Keywords', 'Site Keywords are used in the keywords meta tag. Mainly used for Search Engines.', true, 'input-group-text'); ?>
     			</div>
-
-            </div>
+        </div>
     	</div>
     </div>
 
     <div class='col-lg-12 col-md-12 col-sm-12'>
     	<div class='card mb-3'>
-    		<div class='card-header'>
-    			<h4>Site Theme Settings</h4>
+    		<div class='card-header h4'>
+    			Site Theme Settings
+          <?php echo PageFunctions::displayPopover('Site Themes by Bootswatch', 'To see a sample of each theme, visit the Bootswatch website.', false, 'btn btn-sm btn-light'); ?>
     		</div>
     		<div class='card-body'>
-          Site Theme provided by <a href='https://bootswatch.com/' target='_blank'>Bootswatch</a>.
+          <p>
+            Site Theme provided by <a href='https://bootswatch.com/' target='_blank'>Bootswatch</a>
+          </p>
       	  <div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
     				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Theme</span>
@@ -87,6 +96,7 @@ use Libs\Form,
                 <option value='united' <?php if($site_theme == "united"){echo "SELECTED";}?> >United</option>
                 <option value='yeti' <?php if($site_theme == "yeti"){echo "SELECTED";}?> >Yeti</option>
             </select>
+            <?php echo PageFunctions::displayPopover('Site Theme', 'Site Theme changes the look and feel for the site.  It does not affect the admin panel.', true, 'input-group-text'); ?>
     			</div>
     		</div>
     	</div>
@@ -94,26 +104,30 @@ use Libs\Form,
 
     <div class='col-lg-12 col-md-12 col-sm-12'>
     	<div class='card mb-3'>
-    		<div class='card-header'>
-    			<h4>Site reCAPCHA Settings</h4>
+    		<div class='card-header h4'>
+    			Site reCAPCHA Settings
+          <?php echo PageFunctions::displayPopover('Google reCAPCHA', 'Visit Google reCAPCHA website to setup your keys and add security to your website.', false, 'btn btn-sm btn-light'); ?>
     		</div>
     		<div class='card-body'>
-                Site reCAPCHA Settings.
-
-                <!-- reCAPCHA Public Key -->
+          <p>
+            Site reCAPCHA Settings. <a href='https://www.google.com/recaptcha/'>Get reCAPCHA</a>
+          </p>
+          <!-- reCAPCHA Public Key -->
     			<div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
-    				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> reCAPCHA Public Key</span>
+    				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> reCAPCHA Site Key</span>
             </div>
-    				<?php echo Form::input(array('type' => 'text', 'name' => 'site_recapcha_public', 'class' => 'form-control', 'value' => $site_recapcha_public, 'placeholder' => 'reCAPCHA Public Key', 'maxlength' => '100')); ?>
+    				<?php echo Form::input(array('type' => 'text', 'name' => 'site_recapcha_public', 'class' => 'form-control', 'value' => $site_recapcha_public, 'placeholder' => 'reCAPCHA Site Key', 'maxlength' => '100')); ?>
+            <?php echo PageFunctions::displayPopover('reCAPCHA Site Key', 'Google reCAPCHA Site Key for robot check.', true, 'input-group-text'); ?>
     			</div>
 
-                <!-- reCAPCHA Private Key -->
+          <!-- reCAPCHA Private Key -->
     			<div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
-      				<span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> reCAPCHA Private Key</span>
+      				<span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> reCAPCHA Secret Key</span>
             </div>
-    				<?php echo Form::input(array('type' => 'text', 'name' => 'site_recapcha_private', 'class' => 'form-control', 'value' => $site_recapcha_private, 'placeholder' => 'reCAPCHA Private Key', 'maxlength' => '100')); ?>
+    				<?php echo Form::input(array('type' => 'text', 'name' => 'site_recapcha_private', 'class' => 'form-control', 'value' => $site_recapcha_private, 'placeholder' => 'reCAPCHA Secret Key', 'maxlength' => '100')); ?>
+            <?php echo PageFunctions::displayPopover('reCAPCHA Secret Key', 'Google reCAPCHA Secret Key for robot check.', true, 'input-group-text'); ?>
     			</div>
 
     		</div>
@@ -122,17 +136,18 @@ use Libs\Form,
 
     <div class='col-lg-12 col-md-12 col-sm-12'>
     	<div class='card mb-3'>
-    		<div class='card-header'>
-    			<h4>Site Wide Message</h4>
+    		<div class='card-header h4'>
+    			Site Wide Message
+          <?php echo PageFunctions::displayPopover('Site Wide Message', 'Site Wide Messages settings allows Admin to share important data with all users.', false, 'btn btn-sm btn-light'); ?>
     		</div>
     		<div class='card-body'>
-          This message will show to all users on the site.  Let them know about downtime or other site related messages.<Br>
-          Info box will not show if the field below is blank.
+
           <div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
-              <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Site Description</span>
+              <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Site Wide Message</span>
             </div>
               <?php echo Form::textarea(array('type' => 'text', 'name' => 'site_message', 'class' => 'form-control', 'value' => $site_message, 'placeholder' => 'Site Wide Message')); ?>
+              <?php echo PageFunctions::displayPopover('Site Wide Message', 'This message will show to all users on the site.  Let them know about downtime or other site related messages. Info box will not show if the field below is blank.', true, 'input-group-text'); ?>
           </div>
         </div>
       </div>

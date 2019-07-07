@@ -168,6 +168,7 @@ class Comments
             $display_comments .= "<img src=".SITE_URL.IMG_DIR_PROFILE.$com_userImage." class='img-fluid rounded'>";
             $display_comments .= "</a>";
             $display_comments .= "</td><td class='col-12 forum text-break'>";
+            $display_comments .= CurrentUserData::getUserStatusDot($com->com_owner_userid);
             $display_comments .= "<b><a href='".SITE_URL."Profile/{$com_userName}'>$com_userName</a> <font class='text-muted' size='1'> $com_timeago</font></b><br>";
             $display_comments .= $com->com_content;
             $display_comments .= Sweets::displaySweetsLink($com->id, 'Comment'.$com_location, $com_owner_userid, $com_sec_id, $clean_com_url."/#viewcom$com->id");

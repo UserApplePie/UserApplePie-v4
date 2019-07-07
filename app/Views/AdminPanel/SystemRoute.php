@@ -10,7 +10,8 @@
 use Libs\Form,
     Libs\ErrorMessages,
     Libs\SuccessMessages,
-    Libs\Language;
+    Libs\Language,
+    Libs\PageFunctions;
 
 ?>
 
@@ -18,6 +19,7 @@ use Libs\Form,
 	<div class='card mb-3'>
 		<div class='card-header h4'>
 			<?php echo $data['title']." - ".$data['system_route'][0]->controller." - ".$data['system_route'][0]->method;  ?>
+      <?php echo PageFunctions::displayPopover('Site System Route', 'Site System Route lets the site know which Controller and Method to load based on URL request.', false, 'btn btn-sm btn-light'); ?>
 		</div>
 		<div class='card-body'>
 
@@ -28,9 +30,10 @@ use Libs\Form,
 			<!-- Controller -->
 			<div class='input-group mb-3' style='margin-bottom: 25px'>
         <div class="input-group-prepend">
-				  <span class='input-group-text'><i class='fa fa-fw  fa-newspaper-o'></i> Controller</span>
+				  <span class='input-group-text'><i class='fas fa-fw fa-gamepad'></i> Controller</span>
         </div>
 				<?php echo Form::input(array('type' => 'text', 'name' => 'controller', 'class' => 'form-control', 'value' => $data['system_route'][0]->controller, 'placeholder' => 'Controller Class Name', 'maxlength' => '255')); ?>
+        <?php echo PageFunctions::displayPopover('Controller', 'Controller is the File Name and Class Name within the Controllers folder. This is case sensitive.', true, 'input-group-text'); ?>
 			</div>
 
 			<!-- Method -->
@@ -39,23 +42,26 @@ use Libs\Form,
 				  <span class='input-group-text'><i class='fa fa-fw  fa-book'></i> Method</span>
         </div>
 				<?php echo Form::input(array('type' => 'text', 'name' => 'method', 'class' => 'form-control', 'value' => $data['system_route'][0]->method, 'placeholder' => 'Method Function Name', 'maxlength' => '255')); ?>
+        <?php echo PageFunctions::displayPopover('Method', 'Method is the Function name within the Controller selected above.  This is case sensitive.', true, 'input-group-text'); ?>
 			</div>
 
-            <!-- URL -->
+      <!-- URL -->
 			<div class='input-group mb-3' style='margin-bottom: 25px'>
         <div class="input-group-prepend">
 				  <span class='input-group-text'><i class='fa fa-fw  fa-book'></i> URL</span>
         </div>
 				<?php echo Form::input(array('type' => 'text', 'name' => 'url', 'class' => 'form-control', 'value' => $data['system_route'][0]->url, 'placeholder' => 'URL Address Name', 'maxlength' => '255')); ?>
+        <?php echo PageFunctions::displayPopover('Site URL', 'Site URL is what the System Router looks for to know which Controller and Method to load based on the settings within this page. This is case sensitive.', true, 'input-group-text'); ?>
 			</div>
 
-            <!-- Arguments -->
-            <div class='input-group mb-3' style='margin-bottom: 25px'>
-              <div class="input-group-prepend">
-                <span class='input-group-text'><i class='fa fa-fw  fa-book'></i> Arguments</span>
-              </div>
-                <?php echo Form::input(array('type' => 'text', 'name' => 'arguments', 'class' => 'form-control', 'value' => $data['system_route'][0]->arguments, 'placeholder' => 'Route Arguments', 'maxlength' => '255')); ?>
-            </div>
+      <!-- Arguments -->
+      <div class='input-group mb-3' style='margin-bottom: 25px'>
+        <div class="input-group-prepend">
+          <span class='input-group-text'><i class='fa fa-fw  fa-book'></i> Arguments</span>
+        </div>
+          <?php echo Form::input(array('type' => 'text', 'name' => 'arguments', 'class' => 'form-control', 'value' => $data['system_route'][0]->arguments, 'placeholder' => 'Route Arguments', 'maxlength' => '255')); ?>
+          <?php echo PageFunctions::displayPopover('Arguments', 'Arguments lets the System Router what type of arguments and how many can be used for a given controller.  EX: (:any)/(:num)/(:all)', true, 'input-group-text'); ?>
+      </div>
 
 
         <!-- Group Font Weight -->
@@ -67,6 +73,7 @@ use Libs\Form,
             <option value='1' <?php if($data['system_route'][0]->enable == "1"){echo "SELECTED";}?> >Enabled</option>
             <option value='0' <?php if($data['system_route'][0]->enable == "0"){echo "SELECTED";}?> >Disabled</option>
           </select>
+          <?php echo PageFunctions::displayPopover('Route Enabled', 'Route Enabled lets the System Router know if this route can be used or not.  When disabled it give a error page.', true, 'input-group-text'); ?>
 				</div>
 
 				<!-- CSRF Token -->
@@ -79,8 +86,7 @@ use Libs\Form,
 			<?php echo Form::close(); ?>
 
       <?php
-          echo "<br><br>";
-          echo Form::open(array('method' => 'post', 'style' => 'display:inline-block'));
+          echo Form::open(array('method' => 'post', 'class' => 'float-right'));
           echo "<input type='hidden' name='token_route' value='".$data['csrfToken']."'>";
           echo "<input type='hidden' name='delete_route' value='true' />";
           echo "<input type='hidden' name='id' value='".$data['system_route'][0]->id."'>";

@@ -7,7 +7,8 @@
 * @version 4.3.0
 */
 
-use Libs\Language;
+use Libs\Language,
+		Libs\CurrentUserData;
 ?>
 
 <div class="col-lg-9 col-md-8 col-sm-12">
@@ -70,9 +71,10 @@ use Libs\Language;
         <tbody>
         <?php
             foreach($data['members'] as $member){
+								$user_online = CurrentUserData::getUserStatusDot($member->userID);
                 echo "<tr>
                         <td width='20px'><img src=".SITE_URL.IMG_DIR_PROFILE.$member->userImage." class='rounded' style='height: 25px'></td>
-												<td><a href='".DIR."Profile/{$member->username}'> {$member->username}</a></td>
+												<td>$user_online<a href='".DIR."Profile/{$member->username}'> {$member->username}</a></td>
                         <td>{$member->firstName}</td>
                         <td><font color='{$member->groupFontColor}' style='font-weight:{$member->groupFontWeight}'>{$member->groupName}</font></td>
 											</tr>";

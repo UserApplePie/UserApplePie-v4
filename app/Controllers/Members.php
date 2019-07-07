@@ -28,6 +28,9 @@ class Members extends Controller
 {
     private $pages;
 
+    /**
+     * Call the parent construct
+     */
     public function __construct()
     {
         parent::__construct();
@@ -37,6 +40,9 @@ class Members extends Controller
 
     /**
      * Page for list of activated accounts
+     * @param $set_order_by
+     * @param $current_page
+     * @param $search
      */
     public function members($set_order_by = 'ID-ASC', $current_page = '1', $search = null)
     {
@@ -104,11 +110,14 @@ class Members extends Controller
     			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
+        /** Push data to the view **/
         Load::View("Members/Members", $data, "Members/Member-Stats-Sidebar::Left");
     }
 
     /**
      * Page for list of online accounts
+     * @param $set_order_by
+     * @param $current_page
      */
     public function online($set_order_by = 'ID-ASC', $current_page = '1')
     {
@@ -149,12 +158,15 @@ class Members extends Controller
     			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
+        /** Push data to the view **/
         Load::View("Members/Members", $data, "Members/Member-Stats-Sidebar::Left");
     }
 
     /**
      * Get profile by username
-     * @param $username
+     * @param $user
+     * @param $current_page
+     * @param $status_limit
      */
     public function viewProfile($user = '', $current_page = '1', $status_limit = '10')
     {
@@ -233,6 +245,7 @@ class Members extends Controller
         			<li class='breadcrumb-item active'>".$data['title']."</li>
             ";
 
+            /** Push data to the view **/
             Load::View("Members/View-Profile", $data);
         }
         else
@@ -317,6 +330,7 @@ class Members extends Controller
         			<li class='breadcrumb-item active'>".$data['title']."</li>
             ";
 
+            /** Push data to the view **/
             Load::View("Members/Edit-Profile", $data, "Members/Member-Account-Sidebar::Left");
 
         }else{
@@ -327,6 +341,8 @@ class Members extends Controller
 
     /**
      * Edit User Profile Images
+     * @param $imageID
+     * @param $current_page
      */
     public function editProfileImages($imageID = '', $current_page = '1')
     {
@@ -435,6 +451,7 @@ class Members extends Controller
         			<li class='breadcrumb-item active'>".$data['title']."</li>
             ";
 
+            /** Push data to the view **/
             Load::View("Members/Edit-Profile-Images", $data, "Members/Member-Account-Sidebar::Left");
 
         }else{
@@ -504,6 +521,7 @@ class Members extends Controller
             <li class='breadcrumb-item active'>".$data['title']."</li>
           ";
 
+          /** Push data to the view **/
           Load::View("Members/Edit-Profile-Image", $data, "Members/Member-Account-Sidebar::Left");
         }
     }
@@ -532,6 +550,7 @@ class Members extends Controller
     			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
+        /** Push data to the view **/
         Load::View("Members/Account-Settings", $data, "Members/Member-Account-Sidebar::Left");
     }
 
@@ -595,6 +614,7 @@ class Members extends Controller
     			<li class='breadcrumb-item active'>".$data['title']."</li>
         ";
 
+        /** Push data to the view **/
         Load::View("Members/Privacy-Settings", $data, "Members/Member-Account-Sidebar::Left");
     }
 }

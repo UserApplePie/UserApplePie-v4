@@ -58,7 +58,7 @@ if($uap_files_version > $uap_database_version){
             </div>
             <a class="card-footer text-white clearfix small z-1" href="#">
               <span class="float-left">Site Members</span>
-              <span class="float-right">
+              <span class="float-rightt">
                 <i class="fa fa-angle-right"></i>
               </span>
             </a>
@@ -75,7 +75,7 @@ if($uap_files_version > $uap_database_version){
             </div>
             <a class="card-footer text-white clearfix small z-1" href="#">
               <span class="float-left">User Groups</span>
-              <span class="float-right">
+              <span class="float-rightt">
                 <i class="fa fa-angle-right"></i>
               </span>
             </a>
@@ -92,7 +92,7 @@ if($uap_files_version > $uap_database_version){
             </div>
             <a class="card-footer text-white clearfix small z-1" href="#">
               <span class="float-left">Online Members</span>
-              <span class="float-right">
+              <span class="float-rightt">
                 <i class="fa fa-angle-right"></i>
               </span>
             </a>
@@ -109,7 +109,7 @@ if($uap_files_version > $uap_database_version){
             </div>
             <a class="card-footer text-white clearfix small z-1" href="#">
               <span class="float-left">Page Views</span>
-              <span class="float-right">
+              <span class="float-rightt">
                 <i class="fa fa-angle-right"></i>
               </span>
             </a>
@@ -120,7 +120,7 @@ if($uap_files_version > $uap_database_version){
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="card mb-3">
-				<div class="card-header h4">Site Traffic Overview<span class='pull-right'><small><font color='#30a4ff'>Current Year</font> <font color='#dcdcdc'>Previous Year</font></small></span></div>
+				<div class="card-header h4">Site Traffic Overview<span class='float-right'><small><font color='#30a4ff'>Current Year</font> <font color='#dcdcdc'>Previous Year</font></small></span></div>
 				<div class="card-body">
 					<div class="canvas-wrapper">
 						<canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>
@@ -137,11 +137,11 @@ if($uap_files_version > $uap_database_version){
 					Users Signed Up Stats
 				</div>
 				<ul class='list-group list-group-flush'>
-						<li class='list-group-item'><span class='pull-left'>Past Day:</span><span class='pull-right'><?=$mem_signup_past_1?></span><div class='clearfix'></div></li>
-						<li class='list-group-item'><span class='pull-left'>Past Week:</span><span class='pull-right'><?=$mem_signup_past_7?></span><div class='clearfix'></div></li>
-						<li class='list-group-item'><span class='pull-left'>Past 30 Days:</span><span class='pull-right'><?=$mem_signup_past_30?></span><div class='clearfix'></div></li>
-						<li class='list-group-item'><span class='pull-left'>Past 90 Days:</span><span class='pull-right'><?=$mem_signup_past_90?></span><div class='clearfix'></div></li>
-						<li class='list-group-item'><span class='pull-left'>Past Year:</span><span class='pull-right'><?=$mem_signup_past_365?></span><div class='clearfix'></div></li>
+						<li class='list-group-item'><span class='pull-left'>Past Day:</span><span class='float-right'><?=$mem_signup_past_1?></span><div class='clearfix'></div></li>
+						<li class='list-group-item'><span class='pull-left'>Past Week:</span><span class='float-right'><?=$mem_signup_past_7?></span><div class='clearfix'></div></li>
+						<li class='list-group-item'><span class='pull-left'>Past 30 Days:</span><span class='float-right'><?=$mem_signup_past_30?></span><div class='clearfix'></div></li>
+						<li class='list-group-item'><span class='pull-left'>Past 90 Days:</span><span class='float-right'><?=$mem_signup_past_90?></span><div class='clearfix'></div></li>
+						<li class='list-group-item'><span class='pull-left'>Past Year:</span><span class='float-right'><?=$mem_signup_past_365?></span><div class='clearfix'></div></li>
 				</ul>
 			</div>
 		</div>
@@ -152,11 +152,11 @@ if($uap_files_version > $uap_database_version){
 					Users Logged In Stats
 				</div>
 				<ul class='list-group list-group-flush'>
-						<li class='list-group-item'><span class='pull-left'>Past Day:</span><span class='pull-right'><?=$mem_login_past_1?></span><div class='clearfix'></div></li>
-						<li class='list-group-item'><span class='pull-left'>Past Week:</span><span class='pull-right'><?=$mem_login_past_7?></span><div class='clearfix'></div></li>
-						<li class='list-group-item'><span class='pull-left'>Past 30 Days:</span><span class='pull-right'><?=$mem_login_past_30?></span><div class='clearfix'></div></li>
-						<li class='list-group-item'><span class='pull-left'>Past 90 Days:</span><span class='pull-right'><?=$mem_login_past_90?></span><div class='clearfix'></div></li>
-						<li class='list-group-item'><span class='pull-left'>Past Year:</span><span class='pull-right'><?=$mem_login_past_365?></span><div class='clearfix'></div></li>
+						<li class='list-group-item'><span class='pull-left'>Past Day:</span><span class='float-right'><?=$mem_login_past_1?></span><div class='clearfix'></div></li>
+						<li class='list-group-item'><span class='pull-left'>Past Week:</span><span class='float-right'><?=$mem_login_past_7?></span><div class='clearfix'></div></li>
+						<li class='list-group-item'><span class='pull-left'>Past 30 Days:</span><span class='float-right'><?=$mem_login_past_30?></span><div class='clearfix'></div></li>
+						<li class='list-group-item'><span class='pull-left'>Past 90 Days:</span><span class='float-right'><?=$mem_login_past_90?></span><div class='clearfix'></div></li>
+						<li class='list-group-item'><span class='pull-left'>Past Year:</span><span class='float-right'><?=$mem_login_past_365?></span><div class='clearfix'></div></li>
 				</ul>
 			</div>
 		</div>
@@ -170,7 +170,7 @@ if($uap_files_version > $uap_database_version){
 					<?php
 						if(isset($topRefer)){
 							foreach ($topRefer as $refer) {
-								echo "<li class='list-group-item'><span class='pull-left'>$refer->refer</span><span class='pull-right'>$refer->refer_count</span><div class='clearfix'></div></li>";
+								echo "<li class='list-group-item'><span class='pull-left'>$refer->refer</span><span class='float-right'>$refer->refer_count</span><div class='clearfix'></div></li>";
 							}
 						}
 					?>
@@ -187,7 +187,7 @@ if($uap_files_version > $uap_database_version){
 					<?php
 						if(isset($topReferYear)){
 							foreach ($topReferYear as $refer) {
-								echo "<li class='list-group-item'><span class='pull-left'>$refer->refer</span><span class='pull-right'>$refer->refer_count</span><div class='clearfix'></div></li>";
+								echo "<li class='list-group-item'><span class='pull-left'>$refer->refer</span><span class='float-right'>$refer->refer_count</span><div class='clearfix'></div></li>";
 							}
 						}
 					?>
@@ -201,9 +201,31 @@ if($uap_files_version > $uap_database_version){
 					Installed Plugins
 				</div>
 				<ul class='list-group list-group-flush'>
-						<li class='list-group-item'><span class='pull-left'>Forum Plugin:</span><span class='pull-right'><?=$apd_plugin_forum?></span><div class='clearfix'></div></li>
-						<li class='list-group-item'><span class='pull-left'>Private Messages Plugin:</span><span class='pull-right'><?=$apd_plugin_message?></span><div class='clearfix'></div></li>
-						<li class='list-group-item'><span class='pull-left'>Friends Plugin:</span><span class='pull-right'><?=$apd_plugin_friends?></span><div class='clearfix'></div></li>
+						<li class='list-group-item'><span class='pull-left'>Forum Plugin:</span><span class='float-right'><?=$apd_plugin_forum?></span><div class='clearfix'></div></li>
+						<li class='list-group-item'><span class='pull-left'>Private Messages Plugin:</span><span class='float-right'><?=$apd_plugin_message?></span><div class='clearfix'></div></li>
+						<li class='list-group-item'><span class='pull-left'>Friends Plugin:</span><span class='float-right'><?=$apd_plugin_friends?></span><div class='clearfix'></div></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class='col-lg-12 col-md-12'>
+			<div class='card mb-3'>
+				<div class='card-header h4'>
+					UserApplePie Support and Community
+				</div>
+				<ul class='list-group list-group-flush'>
+						<li class='list-group-item'>
+							<i class='fas fa-lg fa-home'></i> <a href='https://www.userapplepie.com/Forum' target='_blank' class='pull-left'>UserApplePie Forums</a>
+							<span class='float-right'><a href='https://discord.gg/tcr4sJE' target='_blank' class='pull-left'>Discord</a> <i class='fab fa-lg fa-discord'></i></span>
+						</li>
+						<li class='list-group-item'>
+							<i class='fab fa-lg fa-github'></i> <a href='https://github.com/UserApplePie/UserApplePie-v4' target='_blank' class='pull-left'>GitHub Repo</a>
+							<span class='float-right'><a href='https://www.facebook.com/Userapplepie/' target='_blank' class='pull-left'>Facebook</a> <i class='fab fa-lg fa-facebook'></i></span>
+						</li>
+						<li class='list-group-item'>
+							<i class='fab fa-lg fa-gitter'></i> <a href='https://gitter.im/User-Apple-Pie/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link' target='_blank' class='pull-left'>Gitter</a>
+							<span class='float-right'><a href='https://twitter.com/UserApplePie' target='_blank' class='pull-left'>Twitter</a> <i class='fab fa-lg fa-twitter'></i></span>
+						</li>
 				</ul>
 			</div>
 		</div>

@@ -10,7 +10,9 @@
 use Libs\Form,
     Libs\ErrorMessages,
     Libs\SuccessMessages,
-    Libs\Language;
+    Libs\Language,
+    Libs\PageFunctions,
+    Libs\CurrentUserData;
 
 ?>
 <div class='col-lg-12 col-md-12 col-sm-12'>
@@ -18,7 +20,9 @@ use Libs\Form,
     <div class='col-lg-8 col-md-8 col-sm-8'>
     	<div class='card mb-3'>
     		<div class='card-header h4'>
-    			<h3 class='jumbotron-heading'><?php echo $data['title']." - ".$user_data[0]->username;  ?></h3>
+    			<?php echo $data['title']." - ".$user_data[0]->username;  ?>
+          <?php echo PageFunctions::displayPopover('User Admin', 'Site User Admin allows the user profile data to be altered, set group, etc.', false, 'btn btn-sm btn-light'); ?>
+          <font class='float-right' size='2'><?php echo CurrentUserData::getUserStatus($user_data[0]->userID); ?></font>
     		</div>
     		<div class='card-body'>
     			<p><?php echo $data['welcomeMessage'] ?></p>
@@ -117,7 +121,7 @@ use Libs\Form,
     <div class='col-lg-4 col-md-4 col-sm-4'>
       <div class='card mb-3'>
         <div class='card-header h4'>
-          <h3 class='jumbotron-heading'>User Stats</h3>
+          User Stats
         </div>
         <div class='card-body'>
           <b>Last Login</b>: <?php if($user_data[0]->LastLogin){ echo date("F d, Y",strtotime($user_data[0]->LastLogin)); }else{ echo "Never"; } ?><br>
@@ -150,7 +154,7 @@ use Libs\Form,
 
       <div class='card mb-3'>
         <div class='card-header h4'>
-          <h3 class='jumbotron-heading'>User Groups</h3>
+          User Groups
         </div>
           <?php
             echo "<table class='table table-hover responsive'>";

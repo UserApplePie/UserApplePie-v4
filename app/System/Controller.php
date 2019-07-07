@@ -76,7 +76,10 @@ abstract class Controller {
         $this->user->cleanOfflineUsers();
         /** initialise the language object */
         $this->language = new Language();
-
+        /** Check Page Permissions **/
+        /** Set userID to 0 if null **/
+        if(!isset($u_id)){$u_id='0';}
+        $this->PageFunctions->systemPagePermission($u_id);
 
     }
 

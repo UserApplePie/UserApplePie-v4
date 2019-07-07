@@ -16,7 +16,7 @@ class Members extends Models
 {
     /**
      * Get all accounts that were activated
-     * @return array
+     * @return array dataset
      */
     public function getActivatedAccounts()
     {
@@ -25,7 +25,7 @@ class Members extends Models
 
     /**
      * Get all accounts that are on the Online table
-     * @return array
+     * @return array dataset
      */
     public function getOnlineAccounts()
     {
@@ -33,8 +33,11 @@ class Members extends Models
     }
 
     /**
-     * Get all members that are activated with info
-     * @return array
+     * Get all members that are activated with info based on input
+     * @param string $orderby
+     * @param string $limit
+     * @param string $search
+     * @return array dataset
      */
     public function getMembers($orderby, $limit = null, $search = null)
     {
@@ -51,7 +54,6 @@ class Members extends Models
           // Default order
           $run_order = "u.userID ASC";
         }
-
         if(isset($search)){
             // Load users that match search criteria and are active
             $users = $this->db->select("
@@ -129,19 +131,15 @@ class Members extends Models
                 $limit
             ");
         }
-
         return $users;
     }
 
     /**
-    * getTotalMembers
-    *
     * Gets total count of users that are active
-    *
     * @return int count
     */
     public function getTotalMembers(){
-      $data = $this->db->select("
+      $data = $this->db->selectCount("
           SELECT
             *
           FROM
@@ -149,18 +147,16 @@ class Members extends Models
           WHERE
   					isactive = true
           ");
-      return count($data);
+      return $data;
     }
 
     /**
-    * getTotalMembersSearch
-    *
     * Gets total count of users found in search
-    *
+    * @param string $search
     * @return int count
     */
     public function getTotalMembersSearch($search = null){
-      $data = $this->db->select("
+      $data = $this->db->selectCount("
             SELECT
                 username,
                 firstName,
@@ -174,12 +170,12 @@ class Members extends Models
             GROUP BY
                 userID
           ", array(':search' => '%'.$search.'%'));
-      return count($data);
+      return $data;
     }
 
     /**
      * Get all info on members that are online
-     * @return array
+     * @return array dataset
      */
     public function getOnlineMembers()
     {
@@ -221,7 +217,7 @@ class Members extends Models
     /**
      * Get specific user's info
      * @param $username
-     * @return array
+     * @return array dataset
      */
     public function getUserProfile($user)
     {
@@ -275,11 +271,9 @@ class Members extends Models
     }
 
     /**
-    * getUserName
-    *
     * get User Name based on userID
-    *
-    * @return array userID, username
+    * @param int $id
+    * @return array dataset
     */
     public function getUserName($id)
     {
@@ -287,11 +281,16 @@ class Members extends Models
     }
 
     /**
-    * updateProfile
-    *
-    * Update user profile
-    *
-    * @return int rows
+    * Update user's profile based on userID
+    * @param int $u_id
+    * @param string $firstName
+    * @param string $lastName
+    * @param string $gender
+    * @param string $website
+    * @param string $aboutme
+    * @param string $signature
+    * @param string $location
+    * @return int count
     */
     public function updateProfile($u_id, $firstName, $lastName, $gender, $website, $aboutme, $signature, $location)
     {
@@ -299,10 +298,11 @@ class Members extends Models
     }
 
     /**
-    * updateUPrivacy
-    *
     * Update user privacy settings
-    *
+    * @param int $u_id
+    * @param string $privacy_massemail
+    * @param string $privacy_pm
+    * @param string $privacy_profile
     * @return boolean true/false
     */
     public function updateUPrivacy($u_id, $privacy_massemail, $privacy_pm, $privacy_profile)
@@ -316,12 +316,11 @@ class Members extends Models
     }
 
     /**
-    * addUserImage
-    *
     * Add user image to database when uploaded.
     * If no default image then first image is default.
-    *
-    * @return int total rows
+    * @param int $u_id
+    * @param string $userImage
+    * @return int count
     */
     public function addUserImage($u_id, $userImage)
     {
@@ -335,25 +334,21 @@ class Members extends Models
     }
 
     /**
-    * getUserImageMain
-    *
     * Get User Main Profile Image by userID
-    *
-    * @return string userImage
+    * @param int $id
+    * @return string data
     */
     public function getUserImageMain($id)
     {
         $data = $this->db->select("SELECT userImage FROM ".PREFIX."users_images WHERE userID=:id AND defaultImage = '1' ",array(":id"=>$id));
-
         return $data[0]->userImage;
     }
 
     /**
-    * getUserImages
-    *
     * Get User Profile Images by userID
-    *
-    * @return array id, userImage
+    * @param int $id
+    * @param string $limit
+    * @return array dataset
     */
     public function getUserImages($id, $limit = 'LIMIT 20')
     {
@@ -361,38 +356,33 @@ class Members extends Models
     }
 
     /**
-    * getUserImage
-    *
     * Get User Main Profile Image by ID
-    *
-    * @return string userImage
+    * @param int $userID
+    * @param int $imageID
+    * @return string data
     */
     public function getUserImage($userID, $imageID)
     {
         $data = $this->db->select("SELECT userImage FROM ".PREFIX."users_images WHERE id = :imageID AND userID = :userID ",array(":imageID"=>$imageID, ":userID"=>$userID));
-
         return $data[0]->userImage;
     }
 
     /**
-    * getUserImageMainID
-    *
     * Get User Main Profile Image ID
-    *
-    * @return int id
+    * @param int $id
+    * @return int data
     */
     public function getUserImageMainID($id)
     {
         $data = $this->db->select("SELECT id FROM ".PREFIX."users_images WHERE userID=:id AND defaultImage = '1' ",array(":id"=>$id));
-
         return $data[0]->id;
     }
 
     /**
-    * updateUserImage
-    *
     * Update Photo in database
-    *
+    * @param int $userID
+    * @param int $imageID
+    * @param string $action
     * @return boolean true/false
     */
     public function updateUserImage($userID, $imageID, $action)
@@ -406,10 +396,9 @@ class Members extends Models
     }
 
     /**
-    * deleteUserImage
-    *
     * Delete Photo from database
-    *
+    * @param int $userID
+    * @param int $imageID
     * @return boolean true/false
     */
     public function deleteUserImage($userID, $imageID)
@@ -423,14 +412,12 @@ class Members extends Models
     }
 
     /**
-    * getTotalImages
-    *
     * Gets total count of images that belong to user
-    *
+    * @param int $userID
     * @return int count
     */
     public function getTotalImages($userID){
-      $data = $this->db->select("
+      $data = $this->db->selectCount("
           SELECT
             *
           FROM
@@ -438,14 +425,13 @@ class Members extends Models
           WHERE
   					userID = :userID
           ", array(':userID' => $userID));
-      return count($data);
+      return $data;
     }
 
     /**
-    * getUserStatusUpdates
-    *
     * Gets total count of images that belong to user
-    *
+    * @param int $userID
+    * @param int $limit
     * @return int count
     */
     public function getUserStatusUpdates($userID, $limit = '10'){
@@ -463,10 +449,8 @@ class Members extends Models
     }
 
     /**
-    * getUserStatusUpdatesTotal
-    *
     * Gets total count of images that belong to user
-    *
+    * @param int $userID
     * @return int count
     */
     public function getUserStatusUpdatesTotal($userID){
