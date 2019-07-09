@@ -26,7 +26,7 @@ use Libs\Language, Libs\Form;
 							<div class='input-group-prepend'>
 								<span class='input-group-text'><i class='fas fa-user'></i></span>
 							</div>
-							<?php echo Form::input(array('id' => 'username', 'name' => 'username', 'class' => 'form-control', 'placeholder' => Language::show('register_field_username', 'Auth'))); ?>
+							<?php echo Form::input(array('id' => 'username', 'name' => 'username', 'class' => 'form-control', 'placeholder' => Language::show('register_field_username', 'Auth'), 'value' => $data['username'])); ?>
 							<div class='input-group-append'>
 								<span id='resultun' class='input-group-text'></span>
 							</div>
@@ -65,7 +65,7 @@ use Libs\Language, Libs\Form;
 						<div class='input-group-prepend'>
 							<span class='input-group-text'><i class='fas fa-envelope'></i></span>
 						</div>
-						<?php echo Form::input(array('id' => 'email', 'type' => 'text', 'name' => 'email', 'class' => 'form-control', 'placeholder' => Language::show('register_field_email', 'Auth'))); ?>
+						<?php echo Form::input(array('id' => 'email', 'type' => 'text', 'name' => 'email', 'class' => 'form-control', 'placeholder' => Language::show('register_field_email', 'Auth'), 'value' => $data['email'])); ?>
 						<div class='input-group-append'>
 							<span id='resultemail' class='input-group-text'></span>
 						</div>

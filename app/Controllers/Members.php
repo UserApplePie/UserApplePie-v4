@@ -592,7 +592,6 @@ class Members extends Controller
                 }
             }
         }
-
         /** Check users settings to see if privacy mass email is enabled or not **/
         if($data['currentUserData'][0]->privacy_massemail == "true"){
           $data['pme_checked'] = "checked";

@@ -26,7 +26,7 @@ function process()
 
   <div class='card mb-3'>
       <div class='card-header h4'>
-          <h3>Users Status</h3>
+          Users Status
       </div>
       <ul class="list-group list-group-flush">
           <li class="list-group-item"><a href="<?php echo DIR; ?>Members">Members: <?php echo CurrentUserData::getMembers(); ?></a></li>

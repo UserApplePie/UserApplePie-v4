@@ -75,7 +75,7 @@ return [
 	'register_username_exist' => "Username is already in use!",
 	'register_email_exist' => "Email is already in use!",
 	'register_success' => "Registration Successful! Check Your Email For Activating your Account.",
-	'register_success_noact' => "Registration Successful! Click <a href='".DIR."Login'>Login</a> to login.",
+	'register_success_noact' => "Registration Successful! You may login.",
 	'register_email_loggedin' => "You are currently logged in!",
 	'register_error' => "Registration Error: Please try again",
 	'register_error_recap' => "reCAPTCHA Error: Please try again",

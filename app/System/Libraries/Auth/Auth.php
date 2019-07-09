@@ -334,114 +334,6 @@ class Auth {
     }
 
     /**
-     * Directly register an user without sending email confirmation
-     * @param string $username
-     * @param string $password
-     * @param string $verifypassword
-     * @param string $email
-     * @return boolean If succesfully registered true false otherwise
-     */
-    public function directRegister($username, $password, $verifypassword, $email) {
-        if (!Cookie::get(SESSION_PREFIX.'auth_session')) {
-            // Input Verification :
-            if (strlen($username) == 0) {
-                $this->errormsg[] = $this->language->get('register_username_empty');
-            } elseif (strlen($username) > MAX_USERNAME_LENGTH) {
-                $this->errormsg[] = $this->language->get('register_username_long');
-            } elseif (strlen($username) < MIN_USERNAME_LENGTH) {
-                $this->errormsg[] = $this->language->get('register_username_short');
-            } elseif (!preg_match("/^[a-zA-Z\p{Cyrillic}0-9]+$/u", $username)) {
-							$this->errormsg[] = $this->language->get('Username is Invalid');
-						}
-            if (strlen($password) == 0) {
-                $this->errormsg[] = $this->language->get('register_password_empty');
-            } elseif (strlen($password) > MAX_PASSWORD_LENGTH) {
-                $this->errormsg[] = $this->language->get('register_password_long');
-            } elseif (strlen($password) < MIN_PASSWORD_LENGTH) {
-                $this->errormsg[] = $this->language->get('register_password_short');
-            } elseif ($password !== $verifypassword) {
-                $this->errormsg[] = $this->language->get('register_password_nomatch');
-            } elseif (strstr($password, $username)) {
-                $this->errormsg[] = $this->language->get('register_password_username');
-            }
-						// Remove all illegal characters from email
-						$email = filter_var($email, FILTER_SANITIZE_EMAIL);
-						$domain_name = substr(strrchr($email, "@"), 1);
-						if (!checkdnsrr($domain_name, 'MX')) {
-								// Email Domain does now show valid
-								$this->errormsg[] = $this->language->get('register_email_invalid');
-						} elseif (strlen($email) == 0) {
-                $this->errormsg[] = $this->language->get('register_email_empty');
-            } elseif (strlen($email) > MAX_EMAIL_LENGTH) {
-                $this->errormsg[] = $this->language->get('register_email_long');
-            } elseif (strlen($email) < MIN_EMAIL_LENGTH) {
-                $this->errormsg[] = $this->language->get('register_email_short');
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $this->errormsg[] = $this->language->get('register_email_invalid');
-            }
-            if (!isset($this->errormsg) || count($this->errormsg) == 0) {
-                // Input is valid
-                $query = $this->authorize->getAccountInfo($username);
-                $count = count($query);
-                if ($count != 0) {
-                    // Username already exists
-                    $this->logActivity("UNKNOWN", "AUTH_REGISTER_FAIL", "Username ({$username}) already exists");
-                    $this->errormsg[] = $this->language->get('register_username_exist');
-                    return false;
-                } else {
-                    // Check to see if E-Mail exists
-                    $query = $this->authorize->getAccountInfoEmail($email);
-                    $count = count($query);
-                    if ($count != 0) {
-                        // Email Alread Exists
-                        $this->logActivity("UNKNOWN", "AUTH_REGISTER_FAIL", "Email ({$email}) already exists");
-                        $this->errormsg[] = $this->language->get('register_email_exist');
-                        return false;
-                    } else {
-                        // Everything looks good, sign user up
-                        $password = $this->hashPass($password);
-                        $activekey = $this->randomKey(RANDOM_KEY_LENGTH); // Create a random key for account activation
-                        $info = array("username" => $username, "password" => $password, "email" => $email, "activekey" => $activekey, "pass_change_timestamp" => date("Y-m-d H:i:s"));
-                        $user_id = $this->authorize->addIntoDB("users", $info);
-												/* Add default User Image to User Profile */
-												$info = array("userID"=>$user_id, "userImage"=>"default-".rand(1,5).".jpg", "defaultImage"=>"1");
-                        $this->authorize->addIntoDB("users_images", $info);
-												/* Add New user to New Members Group */
-                        $info = array('userID' => $user_id, 'groupID' => 1);
-                        $this->authorize->addIntoDB("users_groups",$info);
-												/* Log changes */
-                        $this->logActivity($username, "AUTH_REGISTER_SUCCESS", "Account created");
-                        $this->successmsg[] = $this->language->get('register_success');
-                        // Everything looks good.  Now activate account
-                        $this->activateAccount($username, $activekey); // Activates User's Account
-                        return true;
-                    }
-                }
-            } else {
-								$this->logActivity($username, "AUTH_REGISTER_FAIL", "User Info Standards Not Met");
-								if(isset($this->errormsg)){
-									$error_data = "<hr>";
-									foreach($this->errormsg as $row){
-										$error_data .= " - ".$row."<br>";
-									}
-								}else{
-									$error_data = "";
-								}
-								/* Error Message Display */
-								ErrorMessages::push($this->language->get('register_error')." ".$error_data, 'Register');
-                return false; // Return Error
-            }
-        } else {
-            // User is logged in
-            $this->errormsg[] = $this->language->get('register_email_loggedin');
-						$this->logActivity($username, "AUTH_REGISTER_FAIL", "Error With Site Cookie");
-						/* Error Message Display */
-            ErrorMessages::push($this->language->get('register_email_loggedin'), 'Register');
-            return false;
-        }
-    }
-
-    /**
      * Register a new user into the database
      * @param string $username
      * @param string $password
@@ -450,113 +342,134 @@ class Auth {
      * @return boolean
      */
     public function register($username, $password, $verifypassword, $email) {
-        if (!Cookie::get(SESSION_PREFIX.'auth_session')) {
-            // Input Verification :
-            if (strlen($username) == 0) {
-                $this->errormsg[] = $this->language->get('register_username_empty');
-            } elseif (strlen($username) > MAX_USERNAME_LENGTH) {
-                $this->errormsg[] = $this->language->get('register_username_long');
-            } elseif (strlen($username) < MIN_USERNAME_LENGTH) {
-                $this->errormsg[] = $this->language->get('register_username_short');
-            } elseif (!preg_match("/^[a-zA-Z\p{Cyrillic}0-9]+$/u", $username)) {
-								$this->errormsg[] = $this->language->get('Username is Invalid');
-						}
-            if (strlen($password) == 0) {
-                $this->errormsg[] = $this->language->get('register_password_empty');
-            } elseif (strlen($password) > MAX_PASSWORD_LENGTH) {
-                $this->errormsg[] = $this->language->get('register_password_long');
-            } elseif (strlen($password) < MIN_PASSWORD_LENGTH) {
-                $this->errormsg[] = $this->language->get('register_password_short');
-            } elseif ($password !== $verifypassword) {
-                $this->errormsg[] = $this->language->get('register_password_nomatch');
-            } elseif (strstr($password, $username)) {
-                $this->errormsg[] = $this->language->get('register_password_username');
-            }
-						// Remove all illegal characters from email
-						$email = filter_var($email, FILTER_SANITIZE_EMAIL);
-						$domain_name = substr(strrchr($email, "@"), 1);
-						if (!checkdnsrr($domain_name, 'MX')) {
-						    // Email Domain does now show valid
-								$this->errormsg[] = $this->language->get('register_email_invalid');
-						} elseif (strlen($email) == 0) {
-                $this->errormsg[] = $this->language->get('register_email_empty');
-            } elseif (strlen($email) > MAX_EMAIL_LENGTH) {
-                $this->errormsg[] = $this->language->get('register_email_long');
-            } elseif (strlen($email) < MIN_EMAIL_LENGTH) {
-                $this->errormsg[] = $this->language->get('register_email_short');
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $this->errormsg[] = $this->language->get('register_email_invalid');
-            }
-            if (!isset($this->errormsg) || count($this->errormsg) == 0) {
-                // Input is valid
-                $query = $this->authorize->getAccountInfo($username);
-                $count = count($query);
-                if ($count != 0) {
-                    // Username already exists
-                    $this->logActivity("UNKNOWN", "AUTH_REGISTER_FAIL", "Username ({$username}) already exists");
-                    $this->errormsg[] = $this->language->get('register_username_exist');
-                    return false;
-                } else {
-                    // Username is not taken
-                    $query = $this->authorize->getAccountInfoEmail($email);
-                    $count = count($query);
-                    if ($count != 0) {
-                        // Email address is already used
-                        $this->logActivity("UNKNOWN", "AUTH_REGISTER_FAIL", "Email ({$email}) already exists");
-                        $this->errormsg[] = $this->language->get('register_email_exist');
-                        return false;
-                    } else {
-                        // Email address isn't already used
-                        $password = $this->hashPass($password);
-                        $activekey = $this->randomKey(RANDOM_KEY_LENGTH);
-                        $info = array("username" => $username, "password" => $password, "email" => $email, "activekey" => $activekey, "pass_change_timestamp" => date("Y-m-d H:i:s"));
-                        $user_id = $this->authorize->addIntoDB("users", $info);
-												/* Add default User Image to User Profile */
-												$info = array("userID"=>$user_id, "userImage"=>"default-".rand(1,5).".jpg", "defaultImage"=>"1");
-                        $this->authorize->addIntoDB("users_images", $info);
-												/* Add New user to New Members Group */
-                        $info = array('userID' => $user_id, 'groupID' => 1);
-                        $this->authorize->addIntoDB("users_groups",$info);
-                        //EMAIL MESSAGE USING PHPMAILER
-                        $mail = new \Libs\PhpMailer\Mail();
-                        $mail->addAddress($email);
-												$mail->setFrom(SITEEMAIL, EMAIL_FROM_NAME);
-                        $mail->subject(SITE_TITLE. " - EMAIL VERIFICATION");
-                        $body = $this->language->get('regi_email_hello')." {$username}<br/><br/>";
-                        $body .= $this->language->get('regi_email_recently_registered')." ".SITE_TITLE."<br/>";
-                        $body .= $this->language->get('regi_email_to_activate')."<br/><br/>";
-                        $body .= "<b><a href='".SITE_URL.ACTIVATION_ROUTE."/username/{$username}/key/{$activekey}'>".$this->language->get('regi_email_act_my_acc')."</a></b>";
-                        $body .= "<br><br> ".$this->language->get('regi_email_you_may_copy').": <br>";
-                        $body .= SITE_URL.ACTIVATION_ROUTE."/username/{$username}/key/{$activekey}";
-                        $mail->body($body);
-                        $mail->send();
-                        $this->logActivity($username, "AUTH_REGISTER_SUCCESS", "Account created and activation email sent");
-                        $this->successmsg[] = $this->language->get('register_success');
-                        return true;
-                    }
-                }
-            } else {
-                //some error
-								$this->logActivity($username, "AUTH_REGISTER_FAIL", "User Info Standards Not Met");
-								if(isset($this->errormsg)){
-									$error_data = "<hr>";
-									foreach($this->errormsg as $row){
-										$error_data .= " - ".$row."<br>";
-									}
-								}else{
-									$error_data = "";
-								}
-								/* Error Message Display */
-								ErrorMessages::push($this->language->get('register_error')." ".$error_data, 'Register');
-                return false;
-            }
-        } else {
-            // User is logged in
-						$this->logActivity($username, "AUTH_REGISTER_FAIL", "User Already Logged In");
-						/* Error Message Display */
-            ErrorMessages::push($this->language->get('register_email_loggedin'), 'Register');
-            return false;
+      if (!Cookie::get(SESSION_PREFIX.'auth_session')) {
+        /** Input Verification **/
+				/** Check Username **/
+        if (strlen($username) == 0) {
+            $this->errormsg[] = $this->language->get('register_username_empty');
+        } elseif (strlen($username) > MAX_USERNAME_LENGTH) {
+            $this->errormsg[] = $this->language->get('register_username_long');
+        } elseif (strlen($username) < MIN_USERNAME_LENGTH) {
+            $this->errormsg[] = $this->language->get('register_username_short');
+        } elseif (!preg_match("/^[a-zA-Z\p{Cyrillic}0-9]+$/u", $username)) {
+						$this->errormsg[] = $this->language->get('Username is Invalid');
+				}
+				/** Check Password **/
+        if (strlen($password) == 0) {
+            $this->errormsg[] = $this->language->get('register_password_empty');
+        } elseif (strlen($password) > MAX_PASSWORD_LENGTH) {
+            $this->errormsg[] = $this->language->get('register_password_long');
+        } elseif (strlen($password) < MIN_PASSWORD_LENGTH) {
+            $this->errormsg[] = $this->language->get('register_password_short');
+        } elseif ($password !== $verifypassword) {
+            $this->errormsg[] = $this->language->get('register_password_nomatch');
+        } elseif (strstr($password, $username)) {
+            $this->errormsg[] = $this->language->get('register_password_username');
         }
+				/** Check Email **/
+				$email = filter_var($email, FILTER_SANITIZE_EMAIL);
+				$domain_name = substr(strrchr($email, "@"), 1);
+				if(!empty($email)){
+					if (strlen($email) == 0) {
+              $this->errormsg[] = $this->language->get('register_email_empty');
+          } elseif (strlen($email) > MAX_EMAIL_LENGTH) {
+              $this->errormsg[] = $this->language->get('register_email_long');
+          } elseif (strlen($email) < MIN_EMAIL_LENGTH) {
+              $this->errormsg[] = $this->language->get('register_email_short');
+          } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+              $this->errormsg[] = $this->language->get('register_email_invalid');
+          } elseif (!checkdnsrr($domain_name, 'MX')) {
+					    // Email Domain does now show valid
+							$this->errormsg[] = $this->language->get('register_email_invalid');
+					}
+				}else{
+					$this->errormsg[] = $this->language->get('register_email_invalid');
+				}
+				/** Check to see if Inputs passed checks **/
+        if (!isset($this->errormsg) || count($this->errormsg) == 0) {
+          /** User Inputs passed now Check Database for Username **/
+          $query = $this->authorize->getAccountInfo($username);
+          $count = count($query);
+          if ($count != 0) {
+            /** Username is already in use **/
+						/** Log activity to the auth database **/
+            $this->logActivity("UNKNOWN", "AUTH_REGISTER_FAIL", "Username ({$username}) already exists");
+            $this->errormsg[] = $this->language->get('register_username_exist');
+          } else {
+            /** Username is good now Check database for email **/
+            $query = $this->authorize->getAccountInfoEmail($email);
+            $count = count($query);
+            if ($count != 0) {
+              /** Email is already in use **/
+							/** Log activity to the auth database **/
+              $this->logActivity("UNKNOWN", "AUTH_REGISTER_FAIL", "Email ({$email}) already exists");
+              $this->errormsg[] = $this->language->get('register_email_exist');
+            } else {
+              /** User Input is good - Register the user for site **/
+							$password = $this->hashPass($password);
+              $activekey = $this->randomKey(RANDOM_KEY_LENGTH);
+							/** Add New User's data to database **/
+              $info = array("username" => $username, "password" => $password, "email" => $email, "activekey" => $activekey, "pass_change_timestamp" => date("Y-m-d H:i:s"));
+              $user_id = $this->authorize->addIntoDB("users", $info);
+							/** Add default User Image to User Profile **/
+							$info = array("userID"=>$user_id, "userImage"=>"default-".rand(1,5).".jpg", "defaultImage"=>"1");
+              $this->authorize->addIntoDB("users_images", $info);
+							/** Add New user to New Members Group **/
+              $info = array('userID' => $user_id, 'groupID' => 1);
+              $this->authorize->addIntoDB("users_groups",$info);
+							/** Check to see if Account Activation is required **/
+              $account_activation = ACCOUNT_ACTIVATION;
+							if($account_activation == "true"){
+                /** Activation Enabled - Send Email to the new user **/
+                $mail = new \Libs\PhpMailer\Mail();
+                $mail->addAddress($email);
+								$mail->setFrom(SITEEMAIL, EMAIL_FROM_NAME);
+                $mail->subject(SITE_TITLE. " - EMAIL VERIFICATION");
+                $body = $this->language->get('regi_email_hello')." {$username}<br/><br/>";
+                $body .= $this->language->get('regi_email_recently_registered')." ".SITE_TITLE."<br/>";
+                $body .= $this->language->get('regi_email_to_activate')."<br/><br/>";
+                $body .= "<b><a href='".SITE_URL.ACTIVATION_ROUTE."/username/{$username}/key/{$activekey}'>".$this->language->get('regi_email_act_my_acc')."</a></b>";
+                $body .= "<br><br> ".$this->language->get('regi_email_you_may_copy').": <br>";
+                $body .= SITE_URL.ACTIVATION_ROUTE."/username/{$username}/key/{$activekey}";
+                $mail->body($body);
+                $mail->send();
+							}else{
+								/** Activation Disabled - Activate the account **/
+								$this->activateAccount($username, $activekey);
+								/** Log activity to the auth database **/
+	              $this->logActivity($username, "AUTH_REGISTER_SUCCESS", "Account created and activated");
+							}
+							/** Check to see if new user was added to the database **/
+							if($user_id > 0){
+								/** Log activity to the auth database **/
+	              $this->logActivity($username, "AUTH_REGISTER_SUCCESS", "Account created and activation email sent");
+								/** Send Success to Auth Controller **/
+	              return 'registered';
+							}else{
+								/** Log activity to the auth database **/
+								$this->logActivity($username, "AUTH_REGISTER_FAIL", "User Not Added to Database");
+								return false;
+							}
+            }
+          }
+        } else {
+          /** Log activity to the auth database **/
+					$this->logActivity($username, "AUTH_REGISTER_FAIL", "User Info Standards Not Met");
+        }
+      } else {
+        /** Log activity to the auth database **/
+				$this->logActivity($username, "AUTH_REGISTER_FAIL", "User Already Logged In");
+        return false;
+      }
+			if(isset($this->errormsg)){
+				$error_data = "<hr>";
+				foreach($this->errormsg as $row){
+					$error_data .= " - ".$row."<br>";
+				}
+			}else{
+				$error_data = "";
+			}
+			return $error_data;
     }
 
     /**
