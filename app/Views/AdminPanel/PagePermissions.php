@@ -56,21 +56,45 @@ use Libs\Form,
       </div>
       <div class='card-footer'>
 				<!-- CSRF Token -->
-				<input type="hidden" name="token_page" value="<?php echo $data['csrfToken']; ?>" />
+				<input type="hidden" name="token_pages_permissions" value="<?php echo $data['csrfToken']; ?>" />
 				<input type="hidden" name="page_id" value="<?php echo $data['page_data'][0]->id; ?>" />
         <input type="hidden" name="update_page" value="true" />
 				<button class="btn btn-md btn-success" name="submit" type="submit">
 					Update Page Permission
 				</button>
 			<?php echo Form::close(); ?>
-
       <?php
-          echo Form::open(array('method' => 'post', 'class' => 'float-right', 'style' => 'display:inline'));
-          echo "<input type='hidden' name='token_page' value='".$data['csrfToken']."'>";
-          echo "<input type='hidden' name='delete_page' value='true' />";
-          echo "<input type='hidden' name='id' value='".$data['page_data'][0]->id."'>";
-          echo "<button class='btn btn-sm btn-danger' name='submit' type='submit'>Delete Page Permission</button>";
-          echo Form::close();
+      echo "<a href='#DeleteModal' class='btn btn-sm btn-danger trigger-btn float-right' data-toggle='modal'>Delete</a>";
+
+      echo "
+        <div class='modal fade' id='DeleteModal' tabindex='-1' role='dialog' aria-labelledby='DeleteLabel' aria-hidden='true'>
+          <div class='modal-dialog' role='document'>
+            <div class='modal-content'>
+              <div class='modal-header'>
+                <h5 class='modal-title' id='DeleteLabel'>Delete Page?</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+                </button>
+              </div>
+              <div class='modal-body'>
+                Do you want to delete this page?<br><br>
+                ".$data['page_data'][0]->url."
+              </div>
+              <div class='modal-footer'>
+                <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancel</button>
+                ";
+                echo Form::open(array('method' => 'post', 'class' => 'float-right', 'style' => 'display:inline'));
+                echo "<input type='hidden' name='token_pages_permissions' value='".$data['csrfToken']."'>";
+                echo "<input type='hidden' name='delete_page' value='true' />";
+                echo "<input type='hidden' name='page_id' value='".$data['page_data'][0]->id."'>";
+                echo "<button class='btn btn-md btn-danger' name='submit' type='submit'>Delete Page Permission</button>";
+                echo Form::close();
+                echo "
+              </div>
+            </div>
+          </div>
+        </div>
+      ";
       ?>
 		</div>
 	</div>

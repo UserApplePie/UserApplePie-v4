@@ -151,11 +151,12 @@ class Auth extends Controller
 
         //The form is submmited
         if (isset($_POST['submit'])) {
-
+            // Get Post Data just in case of fail
+            $data['username'] = $_POST['username'];
+            $data['email'] = $_POST['email'];
             //Check the CSRF token first
             if(Csrf::isTokenValid('register')) {
                 $captcha_fail = false;
-
                 //Check the reCaptcha if the public and private keys were provided
                 if (RECAP_PUBLIC_KEY != "" && RECAP_PRIVATE_KEY != "") {
                     if (isset($_POST['g-recaptcha-response'])) {
@@ -167,7 +168,6 @@ class Auth extends Controller
                             $captcha_fail = true;
                     }
                 }
-
                 /** Check for site user invite code **/
                 $site_user_invite_code = strip_tags( trim( Request::post('site_user_invite_code') ) );
                 $site_user_invite_code_db = SITE_USER_INVITE_CODE;
@@ -177,49 +177,41 @@ class Auth extends Controller
                     ErrorMessages::push($this->language->get('register_error'), 'Register');
                   }
                 }
-
                 /* Get User Bot Protection Field - Should be empty if Human */
                 $ubp_name = Request::post('ubp_name');
-
-                //Only continue if captcha did not fail
+                /** Only continue if captcha did not fail **/
                 if (!$captcha_fail && empty($ubp_name)) {
                     $username = strip_tags( trim( Request::post('username') ) );
                     $password = Request::post('password');
                     $verifypassword = Request::post('passwordc');
                     $email = trim ( Request::post('email') );
-
-                    // Get Account Activation Setting
-                    $account_activation = ACCOUNT_ACTIVATION;
-
-                    // Register with our without email verification
-                    if($account_activation == "true"){
-                        $registered = $this->auth->register($username, $password, $verifypassword, $email);
-                    }else{
-                        $registered = $this->auth->directRegister($username, $password, $verifypassword, $email);
-                    }
-
-                    if ($registered) {
+                    /** Register with our without email verification **/
+                    $registered = $this->auth->register($username, $password, $verifypassword, $email);
+                    /** Check for New User Registration Success **/
+                    if ($registered == 'registered') {
+                        /** Check to see if Account Activation is required **/
+                        $account_activation = ACCOUNT_ACTIVATION;
                         if($account_activation == "true"){
                             $data['message'] = $this->language->get('register_success');
                         }else{
                             $data['message'] = $this->language->get('register_success_noact');
                         }
                         /** Success Message Display **/
-                        SuccessMessages::push($data['message'], 'Register');
+                        SuccessMessages::push($data['message'], 'Login');
                     }
                     else{
                         /** Error Message Display **/
-                        ErrorMessages::push($this->language->get('register_error'), 'Register');
+                        $data['error'] = $this->language->get('register_error').$registered;
                     }
                 }
                 else{
                     /** Error Message Display **/
-                    ErrorMessages::push($this->language->get('register_error_recap'), 'Register');
+                    $data['error'] = $this->language->get('register_error_recap');
                 }
             }
             else{
                 /** Error Message Display **/
-                ErrorMessages::push($this->language->get('register_error'), 'Register');
+                $data['error'] = $this->language->get('register_error');
             }
         }
 
@@ -249,7 +241,6 @@ class Auth extends Controller
         /** Get lang Code **/
         $langeCode = \Libs\Language::setLang();
         /** Add JS Files requried for live checks **/
-    	  $data['js'] = "<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>";
         $data['js'] .= "<script type='text/javascript'>
                         var char_limit = {
                           username_min: '".MIN_USERNAME_LENGTH."',
@@ -364,7 +355,6 @@ class Auth extends Controller
         $langeCode = \Libs\Language::setLang();
 
         /** Add JS Files requried for live checks **/
-    		$data['js'] = "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>";
         $data['js'] = "<script type='text/javascript'>
                         var char_limit = {
                           password_min: '".MIN_PASSWORD_LENGTH."',
@@ -392,7 +382,7 @@ class Auth extends Controller
 
             if(Csrf::isTokenValid('changeemail')) {
                 $password = Request::post('passwordemail');
-                $newEmail = trim( Request::post('newemail') );
+                $newEmail = trim( Request::post('email') );
                 $username = $this->auth->currentSessionInfo()['username'];
 
                 if($this->auth->changeEmail($username, $newEmail, $password)){
@@ -432,7 +422,6 @@ class Auth extends Controller
         $langeCode = \Libs\Language::setLang();
 
         /** Add JS Files requried for live checks **/
-    		$data['js'] = "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>";
         $data['js'] = "<script type='text/javascript'>
                         var char_limit = {
                           email_min: '".MIN_EMAIL_LENGTH."',

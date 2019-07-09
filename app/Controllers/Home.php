@@ -116,17 +116,6 @@ class Home extends Controller {
               ErrorMessages::push($this->language->get('status_update_error'), '');
             }
           }
-          /** Setup Friends Search Feature **/
-          $data['js'] = "
-            <script>
-            function process()
-              {
-              var url='".SITE_URL."Friends/UN-ASC/1/' + document.getElementById('forumSearch').value;
-              location.href=url;
-              return false;
-              }
-            </script>
-          ";
 
           /* Add Java Stuffs */
           $data['js'] = "<script src='".Url::templatePath()."js/bbcode_status.js'></script>";

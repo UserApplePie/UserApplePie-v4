@@ -13,7 +13,14 @@
   use Libs\CurrentUserData;
 
 ?>
-
+<script>
+function processFriends()
+  {
+  var url='<?=SITE_URL?>Friends/UN-ASC/1/' + document.getElementById('friendSearch').value;
+  location.href=url;
+  return false;
+  }
+</script>
 
   <div class='card mb-3'>
     <div class='card-header h4'>
@@ -42,13 +49,13 @@
   </div>
 
   <div class='card mb-3'>
-      <form onSubmit="return process();" class="form" method="post">
+      <form onSubmit="return processFriends();" class="form" method="post">
           <div class='card-header h4'>
           <?=Language::show('search_friends', 'Friends'); ?>
           </div>
           <div class='card-body'>
               <div class="form-group">
-              <input type="forumSearch" class="form-control" id="forumSearch" placeholder="<?=Language::show('search_friends', 'Friends'); ?>" value="<?php if(isset($data['search'])){ echo $data['search']; } ?>">
+              <input type="friendSearch" class="form-control" id="friendSearch" placeholder="<?=Language::show('search_friends', 'Friends'); ?>" value="<?php if(isset($data['search'])){ echo $data['search']; } ?>">
               </div>
           <button type="submit" class="btn btn-secondary"><?=Language::show('search', 'Friends'); ?></button>
           </div>
@@ -57,7 +64,7 @@
 
     <div class='card mb-3'>
         <div class='card-header h4'>
-            <h3>Friends List</h3>
+          Friends List
         </div>
         <ul class="list-group list-group-flush">
           <?php
@@ -87,7 +94,7 @@
 
     <div class='card mb-3'>
         <div class='card-header h4'>
-            <h3>Suggested Friends</h3>
+            Suggested Friends
         </div>
         <ul class="list-group list-group-flush">
           <?php

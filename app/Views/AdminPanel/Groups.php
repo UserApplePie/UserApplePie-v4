@@ -114,8 +114,8 @@ $orderby = $data['orderby'];
                   <div class='modal-dialog' role='document'>
                     <div class='modal-content'>
                       <div class='modal-header'>
-                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-                        <h4 class='modal-title' id='myModalLabel'><span class='fa fa-fw  fa-tower'></span> ".$row->groupName." Information</h4>
+                        <h4 class='modal-title' id='myModalLabel'><span class='fas fa-fw fa-users'></span> ".$row->groupName." Information</h4>
+                        <button type='button' class='close float-right' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
                       </div>
                       <div class='modal-body'>
                         <b style='border-bottom: 1px solid #ccc'>Group Name Display:</b><br>

@@ -50,7 +50,7 @@ use Libs\Form,
       				<span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> E-Mail From Name</span>
             </div>
     				<?php echo Form::input(array('type' => 'text', 'name' => 'site_email_fromname', 'class' => 'form-control', 'value' => $site_email_fromname, 'placeholder' => 'E-Mail From Name', 'maxlength' => '100')); ?>
-            <?php echo PageFunctions::displayPopover('E-Mail From Name', 'E-Mail From Name will display this E-Mail address as the sender for emails sent from this site.', true, 'input-group-text'); ?>
+            <?php echo PageFunctions::displayPopover('E-Mail From Name', 'E-Mail From Name will display this name you chose with from email. ex: My Website No Reply', true, 'input-group-text'); ?>
     			</div>
 
           <!-- E-Mail Host -->

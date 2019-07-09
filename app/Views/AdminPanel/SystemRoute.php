@@ -25,7 +25,7 @@ use Libs\Form,
 
 			<p><?php echo $data['welcomeMessage'] ?></p>
 
-			<?php echo Form::open(array('method' => 'post')); ?>
+			<?php echo Form::open(array('method' => 'post', 'style' => 'display:inline')); ?>
 
 			<!-- Controller -->
 			<div class='input-group mb-3' style='margin-bottom: 25px'>
@@ -84,14 +84,41 @@ use Libs\Form,
 					Update System Route
 				</button>
 			<?php echo Form::close(); ?>
-
       <?php
-          echo Form::open(array('method' => 'post', 'class' => 'float-right'));
-          echo "<input type='hidden' name='token_route' value='".$data['csrfToken']."'>";
-          echo "<input type='hidden' name='delete_route' value='true' />";
-          echo "<input type='hidden' name='id' value='".$data['system_route'][0]->id."'>";
-          echo "<button class='btn btn-sm btn-danger' name='submit' type='submit'>Delete System Route</button>";
-          echo Form::close();
+      echo "<a href='#DeleteModal' class='btn btn-sm btn-danger trigger-btn float-right' data-toggle='modal'>Delete</a>";
+
+      echo "
+        <div class='modal fade' id='DeleteModal' tabindex='-1' role='dialog' aria-labelledby='DeleteLabel' aria-hidden='true'>
+          <div class='modal-dialog' role='document'>
+            <div class='modal-content'>
+              <div class='modal-header'>
+                <h5 class='modal-title' id='DeleteLabel'>Delete System Route?</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+                </button>
+              </div>
+              <div class='modal-body'>
+                Do you want to delete this system route?<br><br>
+                ".$data['system_route'][0]->url."
+              </div>
+              <div class='modal-footer'>
+                <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancel</button>
+                ";
+                echo Form::open(array('method' => 'post', 'class' => 'float-right', 'style' => 'display:inline'));
+                echo "<input type='hidden' name='token_route' value='".$data['csrfToken']."'>";
+                echo "<input type='hidden' name='delete_route' value='true' />";
+                echo "<input type='hidden' name='id' value='".$data['system_route'][0]->id."'>";
+                echo "<button class='btn btn-md btn-danger' name='submit' type='submit'>Delete System Route</button>";
+                echo Form::close();
+                echo "
+              </div>
+            </div>
+          </div>
+        </div>
+      ";
+      ?>
+      <?php
+
       ?>
 		</div>
 	</div>

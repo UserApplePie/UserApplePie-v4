@@ -154,7 +154,7 @@ use Libs\Language,
   ?>
         <div class='card mb-3'>
             <div class='card-header h4'>
-                <h3><?php echo $data['profile']->username; ?>'s <?=Language::show('friends', 'Members'); ?></h3>
+                <?php echo $data['profile']->username; ?>'s <?=Language::show('friends', 'Members'); ?>
             </div>
             <ul class="list-group list-group-flush">
               <?php

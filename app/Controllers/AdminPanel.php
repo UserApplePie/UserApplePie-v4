@@ -1841,77 +1841,86 @@ class AdminPanel extends Controller{
         /** Check to see if site is a demo site */
         if(DEMO_SITE != 'TRUE'){
           /** Check to make sure the csrf token is good */
-          if (Csrf::isTokenValid('route')) {
+          if (Csrf::isTokenValid('pages_permissions')) {
             /** Check to see if admin is editing page */
             if($_POST['update_page'] == "true"){
               /** Catch inputs using the Request helper */
               $page_id = Request::post('page_id');
               $group_id = Request::post('group_id');
 
-                /** Get all permissions for page */
-                $get_page_groups = $this->model->getPageGroups($page_id);
-                /** Get Page Name */
-                $page_name = $this->model->getPage($page_id);
-                /** Check to see if Public is checked */
-                if(isset($group_id[0])){
-                  /** Add to database if not already done */
-                  /** Check to see if Permission is already in database */
-                  if(!$this->model->checkForPagePermission($page_id, 0)){
-                    /** Add Page Permission to database */
-                    if($this->model->addPagePermission($page_id, 0)){
-                      $success[] = " - Added Public Permission for page: ".$page_name[0]->url;
-                    }
-                  }
-                }else{
-                  /** Remove from database if exists */
-                  /** Check to see if Permission is already in database */
-                  if($this->model->checkForPagePermission($page_id, 0)){
-                    /** Add Page Permission to database */
-                    if($this->model->removePagePermission($page_id, 0)){
-                      $success[] = " - Removed Public Permission for page: ".$page_name[0]->url;
-                    }
+              /** Get all permissions for page */
+              $get_page_groups = $this->model->getPageGroups($page_id);
+              /** Get Page Name */
+              $page_name = $this->model->getPage($page_id);
+              /** Check to see if Public is checked */
+              if(isset($group_id[0])){
+                /** Add to database if not already done */
+                /** Check to see if Permission is already in database */
+                if(!$this->model->checkForPagePermission($page_id, 0)){
+                  /** Add Page Permission to database */
+                  if($this->model->addPagePermission($page_id, 0)){
+                    $success[] = " - Added Public Permission for page: ".$page_name[0]->url;
                   }
                 }
-                /** Updated pages permissions database for site user groups */
-                if(!empty($data['site_groups'])){
-                  foreach ($data['site_groups'] as $key => $value) {
-                    /** Get group name for success display */
-                    $get_group_data = $this->model->getGroupData($value->groupID);
-                    if(isset($group_id[$value->groupID])){
-                      /** Add to database if not already done */
-                      /** Check to see if Permission is already in database */
-                      if(!$this->model->checkForPagePermission($page_id, $value->groupID)){
-                        /** Add Page Permission to database */
-                        if($this->model->addPagePermission($page_id, $value->groupID)){
-                          $success[] = " - Added ".$get_group_data[0]->groupName." Permission for page: ".$page_name[0]->url;
-                        }
+              }else{
+                /** Remove from database if exists */
+                /** Check to see if Permission is already in database */
+                if($this->model->checkForPagePermission($page_id, 0)){
+                  /** Add Page Permission to database */
+                  if($this->model->removePagePermission($page_id, 0)){
+                    $success[] = " - Removed Public Permission for page: ".$page_name[0]->url;
+                  }
+                }
+              }
+              /** Updated pages permissions database for site user groups */
+              if(!empty($data['site_groups'])){
+                foreach ($data['site_groups'] as $key => $value) {
+                  /** Get group name for success display */
+                  $get_group_data = $this->model->getGroupData($value->groupID);
+                  if(isset($group_id[$value->groupID])){
+                    /** Add to database if not already done */
+                    /** Check to see if Permission is already in database */
+                    if(!$this->model->checkForPagePermission($page_id, $value->groupID)){
+                      /** Add Page Permission to database */
+                      if($this->model->addPagePermission($page_id, $value->groupID)){
+                        $success[] = " - Added ".$get_group_data[0]->groupName." Permission for page: ".$page_name[0]->url;
                       }
-                    }else{
-                      /** Remove from database if exists */
-                      /** Check to see if Permission is already in database */
-                      if($this->model->checkForPagePermission($page_id, $value->groupID)){
-                        /** Add Page Permission to database */
-                        if($this->model->removePagePermission($page_id, $value->groupID)){
-                          $success[] = " - Removed ".$get_group_data[0]->groupName." Permission for page: ".$page_name[0]->url;
-                        }
+                    }
+                  }else{
+                    /** Remove from database if exists */
+                    /** Check to see if Permission is already in database */
+                    if($this->model->checkForPagePermission($page_id, $value->groupID)){
+                      /** Add Page Permission to database */
+                      if($this->model->removePagePermission($page_id, $value->groupID)){
+                        $success[] = " - Removed ".$get_group_data[0]->groupName." Permission for page: ".$page_name[0]->url;
                       }
                     }
                   }
                 }
               }
-              if(!empty($success)){
-                /** Change success from a array to a variable */
-                $success_msg = "";
-                foreach($success as $sm){
-                  $success_msg .= "$sm<Br>";
-                }
+            }else if($_POST['delete_page'] == "true"){
+              /** Catch inputs using the Request helper */
+              $page_id = Request::post('page_id');
+              /** Admin wants to delete this page **/
+              if($this->model->deletePage($page_id)){
                 /** Success Message Display */
-                \Libs\SuccessMessages::push('Page Permissions have been updated!<Br><br>'.$success_msg, 'AdminPanel-PagePermissions/'.$page_id);
-              }else{
-                  /** Error Message Display */
-                  \Libs\ErrorMessages::push('Page Permissions were not changed!', 'AdminPanel-PagePermissions/'.$page_id);
+                \Libs\SuccessMessages::push('Page Permissions have been updated!<Br><br>The following page has been deleted from database: '.$page_name[0]->url, 'AdminPanel-PagesPermissions');
               }
             }
+            /** Check for changes **/
+            if(!empty($success)){
+              /** Change success from a array to a variable */
+              $success_msg = "";
+              foreach($success as $sm){
+                $success_msg .= "$sm<Br>";
+              }
+              /** Success Message Display */
+              \Libs\SuccessMessages::push('Page Permissions have been updated!<Br><br>'.$success_msg, 'AdminPanel-PagePermissions/'.$page_id);
+            }else{
+                /** Error Message Display */
+                \Libs\ErrorMessages::push('Page Permissions were not changed!', 'AdminPanel-PagePermissions/'.$page_id);
+            }
+          }
         }else{
             /** Error Message Display */
             \Libs\ErrorMessages::push('Demo Limit - Site Routes Settings Disabled', 'AdminPanel-PagePermissions');

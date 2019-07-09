@@ -360,8 +360,6 @@ use App\System\Controller,
                         // Check to see if post is going on a new page
                         $page_reply_limit = $this->forum_topic_reply_limit;
                         $redirect_page_num = ceil(($total_num_replys + 1) / $page_reply_limit);
-                        // Send emails to those who are subscribed to this topic
-                        $this->model->sendTopicSubscribeEmails($id, $u_id, $data['title'], $data['forum_cat'], $data['fpr_content']);
 
                         /** Ready site to upload Files for TOPIC REPLY **/
                         if(!empty($_FILES['forumImage']['name'][0])){
@@ -409,6 +407,8 @@ use App\System\Controller,
                         }else{
                           $img_success = "<br> No Image Selected to Be Uploaded";
                         }
+                        // Send emails to those who are subscribed to this topic
+                        $this->model->sendTopicSubscribeEmails($id, $u_id, $data['title'], $data['forum_cat'], $data['fpr_content']);
 
               					// Success
                         SuccessMessages::push('You Have Successfully Created a New Topic Reply'.$img_success, 'Topic/'.$id.'/'.$redirect_page_num.'#topicreply'.$reply_id);
