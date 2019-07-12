@@ -148,7 +148,7 @@ class Comments
           $button_title = "Post Comment";
           $button_color = "success";
           $button_img_size = "col-2";
-          $table_style = "bg-light";
+          $table_style = "";
         }else{
           $button_title = "Post Reply";
           $button_color = "info";

@@ -194,6 +194,13 @@ class LoadSiteSettings {
             *****************/
             // Get Site Wide Message
             define('SITE_WIDE_MESSAGE', $this->model->getSettings('site_message'));
+            /*****************
+             *                *
+             *  Online Bubble *
+             *                *
+             *****************/
+             // Get Site Wide Message
+             define('ONLINE_BUBBLE', $this->model->getSettings('online_bubble'));
     }
 
 }

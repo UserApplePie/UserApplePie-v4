@@ -50,7 +50,14 @@ use Libs\Form,
     </div>
     <table class='table table-hover responsive'>
       <tr>
-        <th>Link Title</th><th>URL</th><th>Alt Text</th><th>Drop Down</th><th>Require Plugin</th><th>Permission</th><th>Icon</th><th></th>
+        <th>Link Title</th>
+        <th>URL</th>
+        <th class='d-none d-md-table-cell'>Alt Text</th>
+        <th class='d-none d-md-table-cell'>Drop Down</th>
+        <th class='d-none d-md-table-cell'>Require Plugin</th>
+        <th class='d-none d-md-table-cell'>Permission</th>
+        <th class='d-none d-md-table-cell'>Icon</th>
+        <th></th>
       </tr>
       <?php
         if(isset($main_site_links)){
@@ -58,13 +65,13 @@ use Libs\Form,
             echo "<tr>";
             echo "<td>".$link->title."</td>";
             echo "<td>".$link->url."</td>";
-            echo "<td>".$link->alt_text."</td>";
-            echo "<td>";
+            echo "<td class='d-none d-md-table-cell'>".$link->alt_text."</td>";
+            echo "<td class='d-none d-md-table-cell'>";
               if($link->drop_down == "1"){ echo "Drop Down Link"; }
             echo "</td>";
-            echo "<td>".$link->require_plugin."</td>";
-            echo "<td>".CurrentUserData::getGroupData($link->permission)."</td>";
-            echo "<td> <i class='$link->icon'></i> </td>";
+            echo "<td class='d-none d-md-table-cell'>".$link->require_plugin."</td>";
+            echo "<td class='d-none d-md-table-cell'>".CurrentUserData::getGroupData($link->permission)."</td>";
+            echo "<td class='d-none d-md-table-cell'> <i class='$link->icon'></i> </td>";
             echo "<td align='right'>";
             /** Check to see if object is at top **/
             if($link->link_order > 1){

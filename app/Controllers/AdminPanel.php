@@ -208,13 +208,13 @@ class AdminPanel extends Controller{
                     $site_recapcha_private = Request::post('site_recapcha_private');
                     $site_theme = Request::post('site_theme');
                     $site_message = Request::post('site_message');
-                    if($this->model->updateSetting('site_title', $site_title)){}else{ $errors[] = 'Site Title Error'; }
-                    if($this->model->updateSetting('site_description', $site_description)){}else{ $errors[] = 'Site Description Error'; }
-                    if($this->model->updateSetting('site_keywords', $site_keywords)){}else{ $errors[] = 'Site Keywords Error'; }
-                    if($this->model->updateSetting('site_recapcha_public', $site_recapcha_public)){}else{ $errors[] = 'Site reCAPCHA Public Error'; }
-                    if($this->model->updateSetting('site_recapcha_private', $site_recapcha_private)){}else{ $errors[] = 'Site reCAPCHA Private Error'; }
-                    if($this->model->updateSetting('site_theme', $site_theme)){}else{ $errors[] = 'Site Theme Error'; }
-                    if($this->model->updateSetting('site_message', $site_message)){}else{ $errors[] = 'Site Wide Message Error'; }
+                    if(!$this->model->updateSetting('site_title', $site_title)){ $errors[] = 'Site Title Error'; }
+                    if(!$this->model->updateSetting('site_description', $site_description)){ $errors[] = 'Site Description Error'; }
+                    if(!$this->model->updateSetting('site_keywords', $site_keywords)){ $errors[] = 'Site Keywords Error'; }
+                    if(!$this->model->updateSetting('site_recapcha_public', $site_recapcha_public)){ $errors[] = 'Site reCAPCHA Public Error'; }
+                    if(!$this->model->updateSetting('site_recapcha_private', $site_recapcha_private)){ $errors[] = 'Site reCAPCHA Private Error'; }
+                    if(!$this->model->updateSetting('site_theme', $site_theme)){ $errors[] = 'Site Theme Error'; }
+                    if(!$this->model->updateSetting('site_message', $site_message)){ $errors[] = 'Site Wide Message Error'; }
 
                     // Run the update settings script
                     if(!isset($errors) || count($errors) == 0){
@@ -302,6 +302,7 @@ class AdminPanel extends Controller{
             if (Csrf::isTokenValid('settings')) {
                 /** Check to make sure Admin is updating settings */
                 if($_POST['update_advanced_settings'] == "true"){
+                  var_dump($_POST);
                     /** Get data sbmitted by form */
                     $site_user_activation = Request::post('site_user_activation');
                     if($site_user_activation != 'true'){ $site_user_activation = 'false'; }
@@ -325,28 +326,31 @@ class AdminPanel extends Controller{
                     $sweet_title_display = Request::post('sweet_title_display');
                     $sweet_button_display = Request::post('sweet_button_display');
                     $image_max_size = Request::post('image_max_size');
+                    $online_bubble = Request::post('online_bubble');
+                    if($online_bubble != 'true'){ $online_bubble = 'false'; }
 
-                    if($this->model->updateSetting('site_user_activation', $site_user_activation)){}else{ $errors[] = 'Site User Activation Error'; }
-                    if($this->model->updateSetting('site_user_invite_code', $site_user_invite_code)){}else{ $errors[] = 'site_user_invite_code Error'; }
-                    if($this->model->updateSetting('max_attempts', $max_attempts)){}else{ $errors[] = 'max_attempts Error'; }
-                    if($this->model->updateSetting('security_duration', $security_duration)){}else{ $errors[] = 'security_duration Error'; }
-                    if($this->model->updateSetting('session_duration', $session_duration)){}else{ $errors[] = 'session_duration Error'; }
-                    if($this->model->updateSetting('session_duration_rm', $session_duration_rm)){}else{ $errors[] = 'session_duration_rm Error'; }
-                    if($this->model->updateSetting('min_username_length', $min_username_length)){}else{ $errors[] = 'min_username_length Error'; }
-                    if($this->model->updateSetting('max_username_length', $max_username_length)){}else{ $errors[] = 'max_username_length Error'; }
-                    if($this->model->updateSetting('min_password_length', $min_password_length)){}else{ $errors[] = 'min_password_length Error'; }
-                    if($this->model->updateSetting('max_password_length', $max_password_length)){}else{ $errors[] = 'max_password_length Error'; }
-                    if($this->model->updateSetting('min_email_length', $min_email_length)){}else{ $errors[] = 'min_email_length Error'; }
-                    if($this->model->updateSetting('max_email_length', $max_email_length)){}else{ $errors[] = 'max_email_length Error'; }
-                    if($this->model->updateSetting('random_key_length', $random_key_length)){}else{ $errors[] = 'random_key_length Error'; }
-                    if($this->model->updateSetting('default_timezone', $default_timezone)){}else{ $errors[] = 'default_timezone Error'; }
-                    if($this->model->updateSetting('users_pageinator_limit', $users_pageinator_limit)){}else{ $errors[] = 'users_pageinator_limit Error'; }
-                    if($this->model->updateSetting('friends_pageinator_limit', $friends_pageinator_limit)){}else{ $errors[] = 'friends_pageinator_limit Error'; }
-                    if($this->model->updateSetting('message_quota_limit', $message_quota_limit)){}else{ $errors[] = 'message_quota_limit Error'; }
-                    if($this->model->updateSetting('message_pageinator_limit', $message_pageinator_limit)){}else{ $errors[] = 'message_pageinator_limit Error'; }
-                    if($this->model->updateSetting('sweet_title_display', $sweet_title_display)){}else{ $errors[] = 'sweet_title_display Error'; }
-                    if($this->model->updateSetting('sweet_button_display', $sweet_button_display)){}else{ $errors[] = 'sweet_button_display Error'; }
-                    if($this->model->updateSetting('image_max_size', $image_max_size)){}else{ $errors[] = 'image_max_size Error'; }
+                    if(!$this->model->updateSetting('site_user_activation', $site_user_activation)){ $errors[] = 'Site User Activation Error'; }
+                    if(!$this->model->updateSetting('site_user_invite_code', $site_user_invite_code)){ $errors[] = 'site_user_invite_code Error'; }
+                    if(!$this->model->updateSetting('max_attempts', $max_attempts)){ $errors[] = 'max_attempts Error'; }
+                    if(!$this->model->updateSetting('security_duration', $security_duration)){ $errors[] = 'security_duration Error'; }
+                    if(!$this->model->updateSetting('session_duration', $session_duration)){ $errors[] = 'session_duration Error'; }
+                    if(!$this->model->updateSetting('session_duration_rm', $session_duration_rm)){ $errors[] = 'session_duration_rm Error'; }
+                    if(!$this->model->updateSetting('min_username_length', $min_username_length)){ $errors[] = 'min_username_length Error'; }
+                    if(!$this->model->updateSetting('max_username_length', $max_username_length)){ $errors[] = 'max_username_length Error'; }
+                    if(!$this->model->updateSetting('min_password_length', $min_password_length)){ $errors[] = 'min_password_length Error'; }
+                    if(!$this->model->updateSetting('max_password_length', $max_password_length)){ $errors[] = 'max_password_length Error'; }
+                    if(!$this->model->updateSetting('min_email_length', $min_email_length)){ $errors[] = 'min_email_length Error'; }
+                    if(!$this->model->updateSetting('max_email_length', $max_email_length)){ $errors[] = 'max_email_length Error'; }
+                    if(!$this->model->updateSetting('random_key_length', $random_key_length)){ $errors[] = 'random_key_length Error'; }
+                    if(!$this->model->updateSetting('default_timezone', $default_timezone)){ $errors[] = 'default_timezone Error'; }
+                    if(!$this->model->updateSetting('users_pageinator_limit', $users_pageinator_limit)){ $errors[] = 'users_pageinator_limit Error'; }
+                    if(!$this->model->updateSetting('friends_pageinator_limit', $friends_pageinator_limit)){ $errors[] = 'friends_pageinator_limit Error'; }
+                    if(!$this->model->updateSetting('message_quota_limit', $message_quota_limit)){ $errors[] = 'message_quota_limit Error'; }
+                    if(!$this->model->updateSetting('message_pageinator_limit', $message_pageinator_limit)){ $errors[] = 'message_pageinator_limit Error'; }
+                    if(!$this->model->updateSetting('sweet_title_display', $sweet_title_display)){ $errors[] = 'sweet_title_display Error'; }
+                    if(!$this->model->updateSetting('sweet_button_display', $sweet_button_display)){ $errors[] = 'sweet_button_display Error'; }
+                    if(!$this->model->updateSetting('image_max_size', $image_max_size)){ $errors[] = 'image_max_size Error'; }
+                    if(!$this->model->updateSetting('online_bubble', $online_bubble)){ $errors[] = 'online_bubble Error'; }
 
                     // Run the update settings script
                     if(!isset($errors) || count($errors) == 0){
@@ -401,6 +405,7 @@ class AdminPanel extends Controller{
         $data['sweet_title_display'] = $this->model->getSettings('sweet_title_display');
         $data['sweet_button_display'] = $this->model->getSettings('sweet_button_display');
         $data['image_max_size'] = $this->model->getSettings('image_max_size');
+        $data['online_bubble'] = $this->model->getSettings('online_bubble');
 
         /** Setup Token for Form */
         $data['csrfToken'] = Csrf::makeToken('settings');
@@ -456,13 +461,13 @@ class AdminPanel extends Controller{
                     $site_email_smtp = Request::post('site_email_smtp');
                     $site_email_site = Request::post('site_email_site');
 
-                    if($this->model->updateSetting('site_email_username', $site_email_username)){}else{ $errors[] = 'Site Email Username Error'; }
-                    if($this->model->updateSetting('site_email_password', $site_email_password)){}else{ $errors[] = 'Site Email Password Error'; }
-                    if($this->model->updateSetting('site_email_fromname', $site_email_fromname)){}else{ $errors[] = 'Site Email From Name Error'; }
-                    if($this->model->updateSetting('site_email_host', $site_email_host)){}else{ $errors[] = 'Site Email Host Error'; }
-                    if($this->model->updateSetting('site_email_port', $site_email_port)){}else{ $errors[] = 'Site Email Port Error'; }
-                    if($this->model->updateSetting('site_email_smtp', $site_email_smtp)){}else{ $errors[] = 'Site Email SMTP Auth Error'; }
-                    if($this->model->updateSetting('site_email_site', $site_email_site)){}else{ $errors[] = 'Site Email Error'; }
+                    if(!$this->model->updateSetting('site_email_username', $site_email_username)){ $errors[] = 'Site Email Username Error'; }
+                    if(!$this->model->updateSetting('site_email_password', $site_email_password)){ $errors[] = 'Site Email Password Error'; }
+                    if(!$this->model->updateSetting('site_email_fromname', $site_email_fromname)){ $errors[] = 'Site Email From Name Error'; }
+                    if(!$this->model->updateSetting('site_email_host', $site_email_host)){ $errors[] = 'Site Email Host Error'; }
+                    if(!$this->model->updateSetting('site_email_port', $site_email_port)){ $errors[] = 'Site Email Port Error'; }
+                    if(!$this->model->updateSetting('site_email_smtp', $site_email_smtp)){ $errors[] = 'Site Email SMTP Auth Error'; }
+                    if(!$this->model->updateSetting('site_email_site', $site_email_site)){ $errors[] = 'Site Email Error'; }
 
                     // Run the update settings script
                     if(!isset($errors) || count($errors) == 0){
@@ -1617,10 +1622,10 @@ class AdminPanel extends Controller{
                       $adds_sidebar_top = Request::post('adds_sidebar_top');
                       $adds_sidebar_bottom = Request::post('adds_sidebar_bottom');
 
-                      if($this->model->updateSetting('adds_top', $adds_top)){}else{ $errors[] = 'Adds Main Top Error'; }
-                      if($this->model->updateSetting('adds_bottom', $adds_bottom)){}else{ $errors[] = 'Adds Main Bottom Error'; }
-                      if($this->model->updateSetting('adds_sidebar_top', $adds_sidebar_top)){}else{ $errors[] = 'Adds Sidebar Top Error'; }
-                      if($this->model->updateSetting('adds_sidebar_bottom', $adds_sidebar_bottom)){}else{ $errors[] = 'Adds Sidebar Bottom Error'; }
+                      if(!$this->model->updateSetting('adds_top', $adds_top)){ $errors[] = 'Adds Main Top Error'; }
+                      if(!$this->model->updateSetting('adds_bottom', $adds_bottom)){ $errors[] = 'Adds Main Bottom Error'; }
+                      if(!$this->model->updateSetting('adds_sidebar_top', $adds_sidebar_top)){ $errors[] = 'Adds Sidebar Top Error'; }
+                      if(!$this->model->updateSetting('adds_sidebar_bottom', $adds_sidebar_bottom)){ $errors[] = 'Adds Sidebar Bottom Error'; }
 
                       // Run the update settings script
                       if(!isset($errors) || count($errors) == 0){

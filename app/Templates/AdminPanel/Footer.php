@@ -20,14 +20,15 @@ if(isset($data['ownjs'])){
 }
 ?>
 <?=Assets::js([
-		SITE_URL.'Templates/AdminPanel/Assets/js/jquery.min.js',
-		SITE_URL.'Templates/AdminPanel/Assets/js/bootstrap.bundle.min.js',
-		SITE_URL.'Templates/AdminPanel/Assets/js/jquery.easing.min.js',
-		SITE_URL.'Templates/AdminPanel/Assets/js/sb-admin.min.js',
-		SITE_URL.'Templates/AdminPanel/Assets/js/lumino.glyphs.js',
-		SITE_URL.'Templates/AdminPanel/Assets/js/chart.min.js',
+		Url::templatePath('AdminPanel').'js/jquery.min.js',
+		Url::templatePath('AdminPanel').'js/bootstrap.bundle.min.js',
+		Url::templatePath('AdminPanel').'js/jquery.easing.min.js',
+		Url::templatePath('AdminPanel').'js/sb-admin.min.js',
+		Url::templatePath('AdminPanel').'js/lumino.glyphs.js',
+		Url::templatePath('AdminPanel').'js/chart.min.js',
 		'https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/js/bootstrap4-toggle.min.js',
 		'https://use.fontawesome.com/releases/v5.9.0/js/all.js',
+		Url::templatePath().'js/loader.js'
 ]);
 ?>
 <script>

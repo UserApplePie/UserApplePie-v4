@@ -54,14 +54,52 @@ if(isset($_GET['install_step'])){
 <!DOCTYPE html>
 <html lang="En">
 <head>
-    <meta charset="utf-8">
+  <meta charset="utf-8">
 	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>UAP v4 Installation</title>
+  <title>UAP v4 Installation</title>
 	<link rel='shortcut icon' href='http://uap3demo.userapplepie.com/templates/default/assets/images/favicon.ico'>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    .loader {
+        position: fixed;
+        z-index: 99;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .loader > img {
+        width: 100px;
+    }
+    .loader.hidden {
+        animation: fadeOut 1s;
+        animation-fill-mode: forwards;
+    }
+    @keyframes fadeOut {
+        100% {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+    .thumb {
+        height: 100px;
+        border: 1px solid black;
+        margin: 10px;
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Loading Display -->
+	<div class="loader">
+    <img src="uap4logo_wait_animation.gif" alt="Loading..." />
+	</div>
+
 <br>
 	<div class='container'>
 		<div class='row'>

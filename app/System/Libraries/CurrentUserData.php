@@ -329,23 +329,26 @@ class CurrentUserData
    */
   public static function getUserStatusDot($userID)
   {
-    self::$db = Database::get();
-    $data = self::$db->select("
-      SELECT
-        userID
-      FROM
-        ".PREFIX."users_online
-      WHERE
-        userID = :userID
-      GROUP BY
-        userID
-      ORDER BY
-        userID DESC", array(':userID' => $userID));
-      if($data[0]->userID > 0){
-        return " <i class='dot bg-success'></i> ";
-      }else{
-        return " <i class='dot bg-danger'></i> ";
-      }
+    /** Check to see if Online Dot is enabled **/
+    if(ONLINE_BUBBLE == true){
+      self::$db = Database::get();
+      $data = self::$db->select("
+        SELECT
+          userID
+        FROM
+          ".PREFIX."users_online
+        WHERE
+          userID = :userID
+        GROUP BY
+          userID
+        ORDER BY
+          userID DESC", array(':userID' => $userID));
+        if($data[0]->userID > 0){
+          return " <i class='dot bg-success'></i> ";
+        }else{
+          return " <i class='dot bg-danger'></i> ";
+        }
+    }
   }
 
     /**

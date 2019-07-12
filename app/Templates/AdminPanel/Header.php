@@ -29,13 +29,18 @@ use Libs\ErrorMessages,
 		<link rel='shortcut icon' href='<?=Url::templatePath()?>images/favicon.ico'>
     <?=Assets::css([
 		'https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css',
-		SITE_URL.'Templates/AdminPanel/Assets/css/sb-admin.css',
+		Url::templatePath('AdminPanel').'css/sb-admin.css',
 		'https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css',
 		'https://use.fontawesome.com/releases/v5.9.0/css/all.css'
     ]);
     ?>
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+
+	<!-- Loading Display -->
+	<div class="loader">
+    <img src="<?=Url::templatePath()?>images/uap4logo_wait_animation.gif" alt="Loading..." />
+	</div>
 
 	<!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">

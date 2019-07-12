@@ -57,19 +57,15 @@ class Url
         return '/';
     }
     /**
-     * Created the absolute address to the assets folder.
-     *
-     * @param  string|null $module
-     * @return string url to assets folder
+     * Created the absolute address to the user profile image.
+     *  <?=SITE_URL?>assets/images/profile-pics/username/image
+     * @param $username
+     * @param $image
+     * @return string url to profile image
      */
-    public static function resourcePath($module = null)
+    public static function profileImageURL($image = null)
     {
-        if ($module !== null) {
-            $path = sprintf('modules/%s/', Inflector::tableize($module));
-        } else {
-            $path = '';
-        }
-        return SITE_URL .$path .'assets/';
+        return SITE_URL .'assata/images/profile-pics/'.$image;
     }
     /**
      * Created the absolute address to the template folder.

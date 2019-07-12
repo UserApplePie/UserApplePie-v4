@@ -161,6 +161,25 @@ use Libs\Form,
     <div class='col-lg-12 col-md-12 col-sm-12'>
       <div class='card mb-3'>
         <div class='card-header h4'>
+          Members Settings
+          <?php echo PageFunctions::displayPopover('Members Settings', 'Site Members Settings allows admin to edit members settings site wide.', false, 'btn btn-sm btn-light'); ?>
+        </div>
+        <div class='card-body'>
+          <!-- Site Activation -->
+          <div class='input-group mb-3' style='margin-bottom: 25px'>
+            <div class="input-group-prepend">
+              <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Online Bubble</span>
+            </div>
+            <input type="checkbox" class='form-control' id='online_bubble' name='online_bubble' data-toggle="toggle" data-on="Enabled" data-off="Disabled" data-onstyle="success" data-offstyle="warning" value="true" <?php if($online_bubble == "true"){echo "CHECKED";}?> >
+            <?php echo PageFunctions::displayPopover('Online Bubble', 'Default: Enabled - When Enabled a small bubble displays next to each username with online status. Green = Online. Red = Offline.', true, 'input-group-text'); ?>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-lg-12 col-md-12 col-sm-12'>
+      <div class='card mb-3'>
+        <div class='card-header h4'>
           Site Time Zone Settings
           <?php echo PageFunctions::displayPopover('Time Zone Settings', 'Site Time Zone Settings are used to set default Time Zone settings.', false, 'btn btn-sm btn-light'); ?>
         </div>
@@ -311,6 +330,8 @@ use Libs\Form,
       </div>
     </div>
   </div>
+
+
 
     <div class='col-lg-12 col-md-12 col-sm-12'>
         <button class="btn btn-md btn-success" name="submit" type="submit">
