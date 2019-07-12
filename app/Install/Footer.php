@@ -6,6 +6,7 @@
 * @author David (DaVaR) Sargent <davar@userapplepie.com>
 * @version 4.3.0
 */
+use Libs\Url;
 ?>
 
 	</div>
@@ -32,6 +33,12 @@
 <script src="https://code.jquery.com/jquery-1.12.1.min.js" type="text/javascript"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js" type="text/javascript"></script>
+<script type="text/javascript">
+window.addEventListener("load", function () {
+    const loader = document.querySelector(".loader");
+    loader.className += " hidden"; // class "loader hidden"
+});
+</script>
 
 </body>
 </html>
