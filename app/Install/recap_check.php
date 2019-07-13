@@ -21,5 +21,3 @@ $errors = array();
 <label>If you can see the ReCaptcha, you have entered your keys correctly.</label>
 <div class="g-recaptcha" data-sitekey="<?=RECAP_PUBLIC_KEY?>"></div>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<?php
-}

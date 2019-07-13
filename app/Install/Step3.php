@@ -23,13 +23,18 @@
 
 		<?php
 			/** Check to see if user is importing data **/
-			if(isset($_GET['import_database'])){
-				if($_GET['import_database'] == "true"){
+			if(isset($_GET['import_database']) || isset($_POST['import_database'])){
+				if($_GET['import_database'] == "true" || $_POST['import_database'] == "true"){
 					/** Include the Import DB File **/
 					require ROOTDIR.'app/Install/database_import.php';
 				}
 			}else{
-				echo "<a href='/?install_step=3&import_database=true' class='btn btn-primary btn-lg'>Import Data to Database</a><br>";
+				echo "<form method='get' action=''>";
+				echo "<input type='hidden' name='install_step' value='3'>";
+				echo "<input type='hidden' name='import_database' value='true'>";
+				echo "<button class='btn btn-primary btn-lg' id='submit'>Import Data to Database</button>";
+				echo "</form>";
+				echo "<Br>";
 			}
 
 			/** Database Import Success, Show button to move on **/

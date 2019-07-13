@@ -30,7 +30,7 @@ if (!file_exists(APPDIR.'Config.php')) {
 		  if($_GET['install_step'] == "2"){
 				/** Display step2 **/
 				require APPDIR.'Install/Step2.php';
-			}else if($_GET['install_step'] == "3"){
+			}else if($_GET['install_step'] == "3" || $_POST['install_step'] == "3"){
 				/** Display step3 **/
 				require APPDIR.'Install/Step3.php';
 			}else if($_GET['install_step'] == "4"){
