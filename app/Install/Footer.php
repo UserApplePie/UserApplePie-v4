@@ -35,10 +35,12 @@ use Libs\Url;
 <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js" type="text/javascript"></script>
 <script type="text/javascript">
 window.addEventListener("load", function () {
-    const loader = document.querySelector(".loader");
-    loader.className += " hidden"; // class "loader hidden"
+		const loader = document.querySelector(".loader");
+		loader.className += " hidden"; // class "loader hidden"
+});
+$("#submit").on("click", function() {
+	$(this).prop("disabled", true);
 });
 </script>
-
 </body>
 </html>
