@@ -199,4 +199,62 @@ class Home extends Controller {
         }
     }
 
+    /**
+    * SiteMap Method
+    * Auto Generates a SiteMap for SEO
+    */
+    public function sitemap(){
+
+      /** Load Home Model **/
+      $Home = new HomeModel();
+
+      header('Content-type: text/xml');
+      echo "<?xml version='1.0' encoding='UTF-8'?>\n";
+      echo "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>\n";
+
+      /** Get Enabled Pages from Pages **/
+      $getPublicURLs = $Home->getPublicURLs();
+      if(isset($getPublicURLs)){
+        foreach ($getPublicURLs as $key => $value) {
+          if(isset($value->edit_timestamp)){
+            $loc_date = $value->edit_timestamp;
+          }else{
+            $loc_date = $value->timestamp;
+          }
+          echo "<url>\n";
+            echo "<loc>".SITE_URL.$value->url."</loc>\n";
+            echo "<lastmod>".date('Y-m-d',strtotime($loc_date))."</lastmod>\n";
+          echo "</url>\n";
+        }
+      }
+
+      /** Get Forum Posts **/
+      $getForumPosts = $Home->getForumPosts();
+      if(isset($getForumPosts)){
+        foreach ($getForumPosts as $key => $value) {
+          /** Check Forum Post Replies for latest post date **/
+          $latest_forum_reply = $Home->getLatestForumReply($value->forum_post_id);
+          if(isset($latest_forum_reply)){
+            $loc_date = $latest_forum_reply;
+          }else if(isset($value->forum_edit_date)){
+            $loc_date = $value->forum_edit_date;
+          }else{
+            $loc_date = $value->forum_timestamp;
+          }
+          /** Check to see if topic has url set **/
+          if(isset($value->forum_url)){
+            $url_link = $value->forum_url;
+          }else{
+            $url_link = $value->forum_post_id;
+          }
+          echo "<url>\n";
+            echo "<loc>".SITE_URL."Topic/".$url_link."/</loc>\n";
+            echo "<lastmod>".date('Y-m-d',strtotime($loc_date))."</lastmod>\n";
+          echo "</url>\n";
+        }
+      }
+
+      echo "</urlset>";
+
+    }
 }

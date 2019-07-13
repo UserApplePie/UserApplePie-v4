@@ -56,12 +56,20 @@ use App\System\Language,
           $f_p_id = $row2->forum_post_id;
           $f_p_id_cat = $row2->forum_id;
           $f_p_title = $row2->forum_title;
+          $f_p_url = $row2->forum_url;
           $f_p_timestamp = $row2->forum_timestamp;
           $f_p_user_id = $row2->forum_user_id;
           $f_p_status = $row2->forum_status;
           $tstamp = $row2->tstamp;
           $f_p_user_name = CurrentUserData::getUserName($f_p_user_id);
           $has_user_read = ForumStats::checkUserRead($data['current_userID'], $f_p_id, $tstamp);
+
+          /** Check to see if topic has url set **/
+          if(isset($f_p_url)){
+            $url_link = $f_p_url;
+          }else{
+            $url_link = $f_p_id;
+          }
 
           $f_p_title = stripslashes($f_p_title);
                   echo "<tr><td>";
@@ -77,7 +85,7 @@ use App\System\Language,
                             }else{
                                 echo "<span class='far fa-star' aria-hidden='true' style='color: #DDD'></span> ";
                             }
-                          echo "<a href='".DIR."Topic/$f_p_id/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
+                          echo "<a href='".DIR."Topic/$url_link/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
                           echo "</strong>";
                           echo "<div class='text small'>";
                             echo " Created by <a href='".DIR."Profile/$f_p_user_id' style='font-weight: bold'>$f_p_user_name</a> - ";

@@ -29,9 +29,12 @@ use Libs\Form,
           <!-- Site Activation -->
       	  <div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
-    				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> New User Account Activation</span>
+    				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> New User Activation</span>
             </div>
-            <input type="checkbox" class='form-control' id='site_user_activation' name='site_user_activation' data-toggle="toggle" data-on="Enabled" data-off="Disabled" data-onstyle="success" data-offstyle="warning" value="true" <?php if($site_user_activation == "true"){echo "CHECKED";}?> >
+            <label class='switch form-control'>
+              <input type="checkbox" class='form-control' id='site_user_activation' name='site_user_activation' value="true" <?php if($site_user_activation == "true"){echo "CHECKED";}?> />
+              <span class="slider block"></span>
+            </label>
             <?php echo PageFunctions::displayPopover('New User Account Activation', 'Default: Disabled - Requires new users to confirm their account via E-Mail activation link.', true, 'input-group-text'); ?>
     			</div>
 
@@ -130,7 +133,7 @@ use Libs\Form,
           <!-- Failed Login Attempts Block Time -->
           <div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
-              <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Block Failed Login User Duration in Minutes</span>
+              <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Block Failed Login in Minutes</span>
             </div>
             <?php echo Form::input(array('type' => 'text', 'name' => 'security_duration', 'class' => 'form-control', 'value' => $security_duration, 'placeholder' => 'Block Failed Login User Duration in Minutes', 'maxlength' => '255')); ?>
             <?php echo PageFunctions::displayPopover('Block Failed Login User Duration in Minutes', 'Default: 5 - Sets amount of Minutes user is blocked from being able to login.', true, 'input-group-text'); ?>
@@ -139,7 +142,7 @@ use Libs\Form,
           <!-- Basic User Session Duration -->
           <div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
-              <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Basic User Session Duration in Days</span>
+              <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Basic User Session in Days</span>
             </div>
             <?php echo Form::input(array('type' => 'text', 'name' => 'session_duration', 'class' => 'form-control', 'value' => $session_duration, 'placeholder' => 'How Many Days a User Stays Logged In', 'maxlength' => '255')); ?>
             <?php echo PageFunctions::displayPopover('Basic User Session Duration in Days', 'Default: 1 - Sets amount of Days users stay logged in to a basic session.', true, 'input-group-text'); ?>
@@ -148,7 +151,7 @@ use Libs\Form,
           <!-- Remember Me User Session Duration -->
           <div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
-              <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Remember Me Session Duration in Months</span>
+              <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Remember Me in Months</span>
             </div>
             <?php echo Form::input(array('type' => 'text', 'name' => 'session_duration_rm', 'class' => 'form-control', 'value' => $session_duration_rm, 'placeholder' => 'How Many Months a User Stays Logged In', 'maxlength' => '255')); ?>
             <?php echo PageFunctions::displayPopover('Remember Me Session Duration in Months', 'Default: 1 - Sets amount of Months users stay logged in when they check Remember Me.', true, 'input-group-text'); ?>
@@ -165,12 +168,15 @@ use Libs\Form,
           <?php echo PageFunctions::displayPopover('Members Settings', 'Site Members Settings allows admin to edit members settings site wide.', false, 'btn btn-sm btn-light'); ?>
         </div>
         <div class='card-body'>
-          <!-- Site Activation -->
+          <!-- Online Bubble -->
           <div class='input-group mb-3' style='margin-bottom: 25px'>
             <div class="input-group-prepend">
               <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Online Bubble</span>
             </div>
-            <input type="checkbox" class='form-control' id='online_bubble' name='online_bubble' data-toggle="toggle" data-on="Enabled" data-off="Disabled" data-onstyle="success" data-offstyle="warning" value="true" <?php if($online_bubble == "true"){echo "CHECKED";}?> >
+            <label class='switch form-control'>
+              <input type="checkbox" class='form-control' id='online_bubble' name='online_bubble' value="true" <?php if($online_bubble == "true"){echo "CHECKED";}?> />
+              <span class="slider block"></span>
+            </label>
             <?php echo PageFunctions::displayPopover('Online Bubble', 'Default: Enabled - When Enabled a small bubble displays next to each username with online status. Green = Online. Red = Offline.', true, 'input-group-text'); ?>
           </div>
         </div>

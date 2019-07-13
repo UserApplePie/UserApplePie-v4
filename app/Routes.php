@@ -87,6 +87,11 @@ class Routes {
         $routes[] = self::add('ChangeLang', 'ChangeLang', 'index', '(:any)');
         /* End Language Code Change Routing */
 
+        /* Site Map Route */
+        $routes[] = self::add('sitemap', 'Home', 'sitemap');
+        $routes[] = self::add('sitemap.xml', 'Home', 'sitemap');
+        /* End Site Map Route */
+
         /* Forum Plugin Routing */
         /** Check to see if Forum Plugin is installed, if it is show link **/
         if(file_exists(ROOTDIR.'app/Plugins/Forum/Controllers/Forum.php')){
@@ -96,7 +101,7 @@ class Routes {
             if($forum_on_off == 'Enabled'){
                 $routes[] = self::add('Forum', 'Plugins\Forum\Controllers\Forum', 'forum');
                 $routes[] = self::add('Topics', 'Plugins\Forum\Controllers\Forum','topics','(:num)/(:num)');
-                $routes[] = self::add('Topic', 'Plugins\Forum\Controllers\Forum','topic','(:num)/(:num)');
+                $routes[] = self::add('Topic', 'Plugins\Forum\Controllers\Forum','topic','(:any)/(:num)');
                 $routes[] = self::add('NewTopic', 'Plugins\Forum\Controllers\Forum','newtopic','(:num)');
                 $routes[] = self::add('AdminPanel-Forum-Categories', 'Plugins\Forum\Controllers\ForumAdmin','forum_categories','(:any)/(:any)/(:any)');
                 $routes[] = self::add('AdminPanel-Forum-Blocked-Content', 'Plugins\Forum\Controllers\ForumAdmin','forum_blocked');

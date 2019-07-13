@@ -302,7 +302,7 @@ class AdminPanel extends Controller{
             if (Csrf::isTokenValid('settings')) {
                 /** Check to make sure Admin is updating settings */
                 if($_POST['update_advanced_settings'] == "true"){
-                  var_dump($_POST);
+
                     /** Get data sbmitted by form */
                     $site_user_activation = Request::post('site_user_activation');
                     if($site_user_activation != 'true'){ $site_user_activation = 'false'; }
@@ -1852,7 +1852,13 @@ class AdminPanel extends Controller{
               /** Catch inputs using the Request helper */
               $page_id = Request::post('page_id');
               $group_id = Request::post('group_id');
+              $sitemap = Request::post('sitemap');
+              if($sitemap != 'true'){ $sitemap = 'false'; }
 
+              /** Updated Sitemap Setting **/
+              if($this->model->updatePageSiteMap($page_id, $sitemap)){
+                $success[] = " - Changed SiteMap Setting to $sitemap for page: ".$page_name[0]->url;
+              }
               /** Get all permissions for page */
               $get_page_groups = $this->model->getPageGroups($page_id);
               /** Get Page Name */

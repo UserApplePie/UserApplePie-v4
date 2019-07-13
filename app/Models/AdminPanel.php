@@ -1368,4 +1368,19 @@ class AdminPanel extends Models {
       }
     }
 
+    /**
+    * updates Page Permissions sitemap
+    * @param int $page_id
+    * @param boolean $sitemap
+    * @return boolean true/false
+    */
+    public function updatePageSiteMap($page_id = null, $sitemap = null){
+      $query = $this->db->update(PREFIX.'pages', array('sitemap' => $sitemap), array('id' => $page_id));
+      if($query > 0){
+        return true;
+      }else{
+        return false;
+      }
+    }
+
 }

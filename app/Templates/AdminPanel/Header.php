@@ -30,7 +30,6 @@ use Libs\ErrorMessages,
     <?=Assets::css([
 		'https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css',
 		Url::templatePath('AdminPanel').'css/sb-admin.css',
-		'https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css',
 		'https://use.fontawesome.com/releases/v5.9.0/css/all.css'
     ]);
     ?>

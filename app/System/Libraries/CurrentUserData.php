@@ -330,7 +330,7 @@ class CurrentUserData
   public static function getUserStatusDot($userID)
   {
     /** Check to see if Online Dot is enabled **/
-    if(ONLINE_BUBBLE == true){
+    if(ONLINE_BUBBLE == 'true'){
       self::$db = Database::get();
       $data = self::$db->select("
         SELECT

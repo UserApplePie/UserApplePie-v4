@@ -61,6 +61,7 @@ class ForumStats
                     SELECT
                         fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
                         fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
+                        fp.forum_url as forum_url,
                         fp.forum_edit_date as forum_edit_date,
                         fp.forum_timestamp as forum_timestamp, fpr.id as id,
                         fpr.fpr_post_id as fpr_post_id, fpr.fpr_id as fpr_id,
@@ -99,6 +100,7 @@ class ForumStats
                     SELECT
                         fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
                         fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
+                        fp.forum_url as forum_url,
                         fp.forum_edit_date as forum_edit_date,
                         fp.forum_timestamp as forum_timestamp, fpr.id as id,
                         fpr.fpr_post_id as fpr_post_id, fpr.fpr_id as fpr_id,
@@ -133,6 +135,7 @@ class ForumStats
               SELECT
                   fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
                   fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
+                  fp.forum_url as forum_url,
                   fp.forum_edit_date as forum_edit_date,
                   fp.forum_timestamp as forum_timestamp,
                   fp.forum_status as forum_status, fpr.id as id,
@@ -154,6 +157,7 @@ class ForumStats
               SELECT
                   fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
                   fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
+                  fp.forum_url as forum_url,
                   fp.forum_edit_date as forum_edit_date,
                   fp.forum_timestamp as forum_timestamp,
                   fp.forum_status as forum_status, fpr.id as id,
@@ -229,6 +233,7 @@ class ForumStats
                         SELECT
                             fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
                             fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
+                            fp.forum_url as forum_url,
                             fp.forum_edit_date as forum_edit_date,
                             fp.forum_timestamp as forum_timestamp,
                             fp.forum_status as forum_status, fpr.id as id,
@@ -300,6 +305,7 @@ class ForumStats
         $data = self::$db->select("
           SELECT count(*) as total_views,
               fp.forum_title as forum_title,
+              fp.forum_url as forum_url,
               fp.forum_post_id as forum_post_id
           FROM ".PREFIX."views v
           LEFT JOIN ".PREFIX."forum_posts fp
@@ -326,6 +332,7 @@ class ForumStats
         $data = self::$db->select("
           SELECT count(*) as total_sweets,
               fp.forum_title as forum_title,
+              fp.forum_url as forum_url,
               fp.forum_post_id as forum_post_id
           FROM ".PREFIX."sweets s
           LEFT JOIN ".PREFIX."forum_posts fp

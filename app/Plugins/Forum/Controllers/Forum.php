@@ -159,11 +159,6 @@ use App\System\Controller,
     // Forum Topic Display
     public function topic($id = null, $current_page = null){
 
-        /** Check to see if user entered a Topic ID **/
-        if(!$id){
-          ErrorMessages::push('The Forum Topic entered does not exist!', 'Forum');
-        }
-
         /** Check to see if user is logged in **/
         if($data['isLoggedIn'] = $this->auth->isLogged()){
             /** User is logged in - Get their data **/
@@ -172,6 +167,16 @@ use App\System\Controller,
             $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
         }else{
             $u_id = "";
+        }
+
+        /** Check to see if topic is requested by string or int **/
+        if(!ctype_digit($id)){
+          $id = $this->model->get_topic_url_id($id);
+        }
+
+        /** Check to see if user entered a Topic ID **/
+        if(!$id){
+          ErrorMessages::push('The Forum Topic entered does not exist!', 'Forum');
         }
 
         // Get Cat ID for this topic

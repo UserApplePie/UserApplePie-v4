@@ -11,7 +11,8 @@
 
 namespace App\Plugins\Forum\Models;
 
-use App\System\Models;
+use App\System\Models,
+    Libs\Url;
 
 class Forum extends Models {
 
@@ -103,6 +104,7 @@ class Forum extends Models {
           SELECT
               fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
               fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
+              fp.forum_url as forum_url,
               fp.forum_edit_date as forum_edit_date,
               fp.forum_timestamp as forum_timestamp, fpr.id as id,
               fpr.fpr_post_id as fpr_post_id, fpr.fpr_id as fpr_id,
@@ -204,6 +206,7 @@ class Forum extends Models {
                 SELECT
                     fp.forum_post_id as forum_post_id, fp.forum_id as forum_id,
                     fp.forum_user_id as forum_user_id, fp.forum_title as forum_title,
+                    fp.forum_url as forum_url,
                     fp.forum_edit_date as forum_edit_date,
                     fp.forum_timestamp as forum_timestamp,
                     fp.forum_status as forum_status, fpr.id as id,
@@ -247,6 +250,40 @@ class Forum extends Models {
       ",
       array(':where_id' => $where_id));
       return $data[0]->forum_id;
+    }
+
+    /**
+     * get Topic ID based on URL request
+     * @param string $forum_url
+     * @return int data
+     */
+    public function get_topic_url_id($forum_url){
+      $data = $this->db->select("
+        SELECT forum_post_id
+        FROM ".PREFIX."forum_posts
+        WHERE forum_url = :forum_url
+        LIMIT 1
+      ",
+      array(':forum_url' => $forum_url));
+      return $data[0]->forum_post_id;
+    }
+
+    /**
+     * get Topic ID based on URL request
+     * @param string $forum_url
+     * @param int $id
+     * @return int data
+     */
+    public function get_topic_url($forum_url, $id){
+      $data = $this->db->select("
+        SELECT forum_post_id
+        FROM ".PREFIX."forum_posts
+        WHERE forum_url = :forum_url
+        AND NOT forum_post_id = :forum_post_id
+        LIMIT 1
+      ",
+      array(':forum_url' => $forum_url, ':forum_post_id' => $id));
+      return $data[0]->forum_post_id;
     }
 
     /**
@@ -538,10 +575,15 @@ class Forum extends Models {
      * @return booleen true/false
      */
     public function sendTopic($forum_user_id, $forum_id, $forum_title, $forum_content, $forum_publish = "0"){
-      // Format the Content for database
-      //$forum_content = nl2br($forum_content);
-      // Update messages table
-      $query = $this->db->insert(PREFIX.'forum_posts', array('forum_id' => $forum_id, 'forum_user_id' => $forum_user_id, 'forum_title' => $forum_title, 'forum_content' => $forum_content, 'forum_publish' => $forum_publish));
+      /** Generate URL based on title **/
+      $forum_url = URL::generateSafeSlug($forum_title);
+      /** Check to see if URL already exsist **/
+      if(SELF::get_topic_url_id($forum_url)){
+        $rand_string = mt_rand(1, 99);
+        $forum_url = $forum_url."-rn".$rand_string;
+      }
+      /** Add to Forum Posts **/
+      $query = $this->db->insert(PREFIX.'forum_posts', array('forum_id' => $forum_id, 'forum_user_id' => $forum_user_id, 'forum_title' => $forum_title, 'forum_url' => $forum_url, 'forum_content' => $forum_content, 'forum_publish' => $forum_publish));
       $last_insert_id = $this->db->lastInsertId('forum_post_id');
       $query_track = $this->db->insert(PREFIX.'forum_post_tracker', array('forum_post_id' => $last_insert_id));
       $count = $query + $query_track;
@@ -613,8 +655,14 @@ class Forum extends Models {
      * @return booleen true/false
      */
     public function updateTopic($id, $forum_title, $forum_content){
-      // Update messages table
-      $query = $this->db->update(PREFIX.'forum_posts', array('forum_title' => $forum_title, 'forum_content' => $forum_content, 'forum_edit_date' => date('Y-m-d H:i:s')), array('forum_post_id' => $id));
+      /** Generate URL based on title **/
+      $forum_url = URL::generateSafeSlug($forum_title);
+      /** Check to see if URL already exsist **/
+      if(SELF::get_topic_url($forum_url, $id)){
+        $forum_url = $forum_url."-".$id;
+      }
+      /** Update the Forum Post **/
+      $query = $this->db->update(PREFIX.'forum_posts', array('forum_title' => $forum_title, 'forum_content' => $forum_content, 'forum_url' => $forum_url, 'forum_edit_date' => date('Y-m-d H:i:s')), array('forum_post_id' => $id));
       // Check to make sure Topic was Created
       if($query > 0){
         return true;
@@ -655,6 +703,13 @@ class Forum extends Models {
      * @return booleen true/false
      */
     public function updateSavedTopic($id, $forum_title, $forum_content, $forum_publish = "0"){
+      /** Generate URL based on title **/
+      $forum_url = URL::generateSafeSlug($forum_title);
+      /** Check to see if URL already exsist **/
+      if(SELF::get_topic_url($forum_url, $id)){
+        $rand_string = mt_rand(1, 99);
+        $forum_url = $forum_url."-rn".$rand_string;
+      }
       // Check to see if Topic is already published.  If so then block edits.
       $is_published = SELF::topic_is_published($id);
       if($is_published == "0"){
@@ -1128,6 +1183,7 @@ class Forum extends Models {
           forum_status,
           forum_publish,
           allow,
+          forum_url,
           'main_post' AS post_type
         FROM
           `".PREFIX."forum_posts`
@@ -1150,6 +1206,7 @@ class Forum extends Models {
           fp.forum_status as forum_status,
           fpr.forum_publish,
           fpr.allow,
+          fp.forum_url as forum_url,
           'reply_post' AS post_type
         FROM
           `".PREFIX."forum_post_replies` fpr

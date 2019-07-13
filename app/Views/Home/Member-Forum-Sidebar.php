@@ -59,11 +59,19 @@ function process()
         $f_p_id = $row_rp->forum_post_id;
         $f_p_id_cat = $row_rp->forum_id;
         $f_p_title = $row_rp->forum_title;
+        $f_p_url = $row_rp->forum_url;
         $f_p_timestamp = $row_rp->forum_timestamp;
         $f_p_user_id = $row_rp->forum_user_id;
         $f_p_user_name = CurrentUserData::getUserName($f_p_user_id);
         $online_check = CurrentUserData::getUserStatusDot($f_p_user_id);
         $f_p_title = stripslashes($f_p_title);
+
+        /** Check to see if topic has url set **/
+        if(isset($f_p_url)){
+          $url_link = $f_p_url;
+        }else{
+          $url_link = $f_p_id;
+        }
 
         //Reply information
         $rp_user_id2 = $row_rp->fpr_user_id;
@@ -79,7 +87,7 @@ function process()
           echo "<ul class='list-group-item'>";
           echo " $online_check <a href='".DIR."Profile/$f_p_user_id'>$f_p_user_name</a> created.. <br>";
           echo "<strong>";
-          echo "<a href='".DIR."Topic/$f_p_id/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
+          echo "<a href='".DIR."Topic/$url_link/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
           echo "</strong>";
           echo "<br>";
           //Display how long ago this was posted
@@ -95,7 +103,7 @@ function process()
           echo "<ul class='list-group-item'>";
           echo " $online_check2 <a href='".DIR."Profile/$rp_user_id2'>$rp_user_name2</a> posted on.. <br>";
           echo "<strong>";
-          echo "<a href='".DIR."Topic/$f_p_id/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
+          echo "<a href='".DIR."Topic/$url_link/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
           echo "</strong>";
           //Display how long ago this was posted
           $timestart = $rp_timestamp2;  //Time of post
