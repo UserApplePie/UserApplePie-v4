@@ -66,41 +66,47 @@ use Core\Language,
           echo "<div class='col-lg-12 col-md-12 col-sm-12'>";
         foreach($data['forum_topics'] as $row2)
         {
-                      echo "<hr>";
-                      echo "<div class='card mb-3'>";
-                        echo "<div class='card-header h4'>";
-                          echo "<h4>";
-                          $title = stripslashes($row2->title);
-                          $title_output = highlight_search_text($title, $data['search_text']);
-                          if($row2->post_type == "reply_post"){ echo "Reply to: "; }
-                          echo "<a href='".DIR."Topic/$row2->forum_post_id/' title='$title' ALT='$title'>$title_output</a>";
-                          echo "</h4>";
-                        echo "</div>";
-                        echo "<div class='card-body'>";
-                          echo "<div class='row'>";
-                            echo "<div class='col-lg-12 col-md-12 col-sm-12'>";
-                            if(!empty($row2->content)){
-                              $bb_content = BBCode::getHtml($row2->content);
-                              $countent_output = highlight_search_text($bb_content, $data['search_text']);
-                              echo $countent_output;
-                            }
-                            echo "</div>";
-                          echo "</div>";
-                        echo "</div>";
-                      echo "<div class='card-footer text-muted'>";
-                        echo "<div class='text small'>";
-                          $poster_username = CurrentUserData::getUserName($row2->forum_user_id);
-                          echo " Posted by <a href='".DIR."Profile/$row2->forum_user_id' style='font-weight: bold'>$poster_username</a> - ";
-                          //Display how long ago this was posted
-                          $timestart = $row2->tstamp;  //Time of post
-                          echo " " . TimeDiff::dateDiff("now", "$timestart", 1) . " ago ";
-                          // Display Locked Message if Topic has been locked by admin
-                          if($row2->forum_status == 2){
-                            echo " <strong><font color='red'>Topic Locked</font></strong> ";
-                          }
-                        echo "</div>";
-                      echo "</div>";
+          /** Check to see if topic has url set **/
+          if(isset($row2->forum_url)){
+            $url_link = $row2->forum_url;
+          }else{
+            $url_link = $row2->forum_post_id;
+          }
+              echo "<hr>";
+              echo "<div class='card mb-3'>";
+                echo "<div class='card-header h4'>";
+                  echo "<h4>";
+                  $title = stripslashes($row2->title);
+                  $title_output = highlight_search_text($title, $data['search_text']);
+                  if($row2->post_type == "reply_post"){ echo "Reply to: "; }
+                  echo "<a href='".DIR."Topic/$url_link/' title='$title' ALT='$title'>$title_output</a>";
+                  echo "</h4>";
+                echo "</div>";
+                echo "<div class='card-body'>";
+                  echo "<div class='row'>";
+                    echo "<div class='col-lg-12 col-md-12 col-sm-12'>";
+                    if(!empty($row2->content)){
+                      $bb_content = BBCode::getHtml($row2->content);
+                      $countent_output = highlight_search_text($bb_content, $data['search_text']);
+                      echo $countent_output;
+                    }
                     echo "</div>";
+                  echo "</div>";
+                echo "</div>";
+              echo "<div class='card-footer text-muted'>";
+                echo "<div class='text small'>";
+                  $poster_username = CurrentUserData::getUserName($row2->forum_user_id);
+                  echo " Posted by <a href='".DIR."Profile/$row2->forum_user_id' style='font-weight: bold'>$poster_username</a> - ";
+                  //Display how long ago this was posted
+                  $timestart = $row2->tstamp;  //Time of post
+                  echo " " . TimeDiff::dateDiff("now", "$timestart", 1) . " ago ";
+                  // Display Locked Message if Topic has been locked by admin
+                  if($row2->forum_status == 2){
+                    echo " <strong><font color='red'>Topic Locked</font></strong> ";
+                  }
+                echo "</div>";
+              echo "</div>";
+            echo "</div>";
           } // End query
 
             echo "</div>";

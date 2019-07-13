@@ -33,7 +33,10 @@ use Libs\Form,
           <div class="input-group-prepend">
             <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Forum Enable</span>
           </div>
-          <input type="checkbox" class='form-control' id='forum_on_off' name='forum_on_off' data-toggle="toggle" data-on="Enabled" data-off="Disabled" data-onstyle="success" data-offstyle="warning" value="Enabled" <?php if($forum_on_off == "Enabled"){echo "CHECKED";}?> >
+          <label class='switch form-control'>
+            <input type="checkbox" class='form-control' id='forum_on_off' name='forum_on_off' value="Enabled" <?php if($forum_on_off == "Enabled"){echo "CHECKED";}?> />
+            <span class="slider block"></span>
+          </label>
           <?php echo PageFunctions::displayPopover('Forum Enable/Disable', 'Default: Enabled - Turn the Forum ON(Enable) or OFF(Disable). Hides the Forum from all users if Disabled.', true, 'input-group-text'); ?>
         </div>
 
@@ -80,16 +83,19 @@ use Libs\Form,
         <!-- Enable / Disable Forum Auto Member Group Change -->
         <div class='input-group mb-3'>
           <div class='input-group-prepend'>
-            <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Auto New Member Group Change</span>
+            <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Auto Member</span>
           </div>
-          <input type="checkbox" class='form-control' id='forum_posts_group_change_enable' name='forum_posts_group_change_enable' data-toggle="toggle" data-on="Enabled" data-off="Disabled" data-onstyle="success" data-offstyle="warning" value="true" <?php if($forum_posts_group_change_enable == "true"){echo "CHECKED";}?> >
+          <label class='switch form-control'>
+            <input type="checkbox" class='form-control' id='forum_posts_group_change_enable' name='forum_posts_group_change_enable' value="true" <?php if($forum_posts_group_change_enable == "true"){echo "CHECKED";}?> />
+            <span class="slider block"></span>
+          </label>
           <?php echo PageFunctions::displayPopover('Auto New Member Group Change', 'Default: Enabled - When enabled, the site will automatically upgrade a user that is a member of the New Member group to the Member group when goal is reached.', true, 'input-group-text'); ?>
         </div>
 
         <!-- Forum Posts Group Change Limit -->
         <div class='input-group mb-3'>
           <div class='input-group-prepend'>
-            <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Auto New Member Group Change Posts Limit</span>
+            <span class='input-group-text' id='basic-addon1'><i class='fa fa-fw fa-cog'></i> Auto Member Posts Limit</span>
           </div>
           <?php echo Form::input(array('type' => 'text', 'name' => 'forum_posts_group_change', 'class' => 'form-control', 'value' => $data['forum_posts_group_change'], 'placeholder' => 'New Member Group Change Posts Limit', 'maxlength' => '100')); ?>
           <?php echo PageFunctions::displayPopover('New Member Group Change Limit', 'Default: 15 - Sets the total number of posts a New Member must post to upgrade to a Member if Enabled.', true, 'input-group-text'); ?>

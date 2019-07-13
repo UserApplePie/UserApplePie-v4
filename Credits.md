@@ -21,5 +21,3 @@ Cam Tosh
 EddyBeaupre
 
 Bootswatch Themes - https://www.bootswatch.com
-
-Bootstrap Switch Button - https://gitbrent.github.io/bootstrap4-toggle/

@@ -78,6 +78,7 @@ use Libs\Language,
 				<th class='d-none d-md-table-cell'><?php echo "<a href='".DIR."AdminPanel-PagesPermissions/$obc_value/' class='btn btn-info btn-sm'>Controller $obc_icon</button>"; ?></th>
         <th class='d-none d-md-table-cell'><?php echo "<a href='".DIR."AdminPanel-PagesPermissions/$obm_value/' class='btn btn-info btn-sm'>Method $obm_icon</button>"; ?></th>
         <th>Allowed User Groups</th>
+        <th class='d-none d-md-table-cell'>SiteMap</th>
         <th></th>
 			</tr>
 			<?php
@@ -88,6 +89,13 @@ use Libs\Language,
               echo "<td class='d-none d-md-table-cell'>$row->controller</td>";
               echo "<td class='d-none d-md-table-cell'>$row->method</td>";
               echo "<td>".PageFunctions::getPageGroupName($row->id)."</td>";
+              echo "<td class='d-none d-md-table-cell text-center'>";
+                if($row->sitemap == 'true'){
+                  echo "<i class='dot bg-success'></i>";
+                }else{
+                  echo "<i class='dot bg-danger'></i>";
+                }
+              echo "</td>";
               echo "<td align='right'>";
               echo "<a href='".DIR."AdminPanel-PagePermissions/$row->id' class='btn btn-sm btn-primary'><span class='fas fa-fw fa-edit'></span></a>";
               echo "</td>";

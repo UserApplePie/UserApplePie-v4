@@ -26,7 +26,6 @@ if(isset($data['ownjs'])){
 		Url::templatePath('AdminPanel').'js/sb-admin.min.js',
 		Url::templatePath('AdminPanel').'js/lumino.glyphs.js',
 		Url::templatePath('AdminPanel').'js/chart.min.js',
-		'https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/js/bootstrap4-toggle.min.js',
 		'https://use.fontawesome.com/releases/v5.9.0/js/all.js',
 		Url::templatePath().'js/loader.js'
 ]);

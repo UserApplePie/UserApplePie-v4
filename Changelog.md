@@ -4,8 +4,12 @@ https://www.userapplepie.com
 ----------------------------------------------------------------------------------------
 UAP v4.2.1 to v4.3.0
 ----------------------------------------------------------------------------------------
+### SiteMap
+ - Added auto site map generator
+ - Set to only work if page is public and enabled for sitemap
 ### PageFunctions
  - Added Online Bubble that can be displayed next to user names
+ - Added Admin Enable and Disable option to Admin Panel
 ### Pages Permissions
  - Added a Pages Permissions page to the Admin Panel
  - Set site to check all page permissions before letting user continue
@@ -31,6 +35,7 @@ UAP v4.2.1 to v4.3.0
 ### Missing Lang Logger
  - Logs any missing language fields so that they can be added to lang files.
 ### Styles
+ - Added loader gif for Admin Panel and install pages
  - Updated styles on many pages to look better on computer screens.
 ### Install
  - Updated Example-Config.php title in install files (visual)
@@ -61,6 +66,7 @@ UAP v4.2.1 to v4.3.0
  - Updated Account home page
  - Added Forum Recent Post list based on user's id
 ### Updated Forum Plugin
+ - Added Feature to Forum that auto generates url based on topic title
  - Added Auto Save Draft feature to new topics and replies with auto recover.
  - Added Image Max Size option to Admin Settings
  - Added BBcode buttons for text areas

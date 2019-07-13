@@ -312,6 +312,7 @@
     `url` varchar(255) DEFAULT NULL,
     `controller` varchar(255) DEFAULT NULL,
     `method` varchar(255) DEFAULT NULL,
+    `sitemap` varchar(5) NOT NULL DEFAULT 'true',
     `edit_timestamp` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
@@ -322,70 +323,71 @@
   -- Dumping data for table `uap4_pages`
   --
   -- --------------------------------------------------------
-  INSERT INTO `uap4_pages` (`id`, `url`, `controller`, `method`, `edit_timestamp`) VALUES
-  (1, 'Home', 'Home', 'Home', NULL),
-  (2, 'Templates', 'Home', 'Templates', NULL),
-  (3, 'assets', 'Home', 'assets', NULL),
-  (4, 'Register', 'Auth', 'register', NULL),
-  (5, 'Activate', 'Auth', 'activate', NULL),
-  (6, 'Forgot-Password', 'Auth', 'forgotPassword', NULL),
-  (7, 'ResetPassword', 'Auth', 'resetPassword', NULL),
-  (8, 'Resend-Activation-Email', 'Auth', 'resendActivation', NULL),
-  (9, 'Login', 'Auth', 'login', NULL),
-  (10, 'Logout', 'Auth', 'logout', NULL),
-  (11, 'Settings', 'Auth', 'settings', NULL),
-  (12, 'Change-Email', 'Auth', 'changeEmail', NULL),
-  (13, 'Change-Password', 'Auth', 'changePassword', NULL),
-  (14, 'Edit-Profile', 'Members', 'editProfile', NULL),
-  (15, 'Edit-Profile-Images', 'Members', 'editProfileImages', NULL),
-  (16, 'Privacy-Settings', 'Members', 'privacy', NULL),
-  (17, 'Account-Settings', 'Members', 'account', NULL),
-  (18, 'LiveCheckEmail', 'LiveCheck', 'emailCheck', NULL),
-  (19, 'LiveCheckUserName', 'LiveCheck', 'userNameCheck', NULL),
-  (20, 'Members', 'Members', 'members', NULL),
-  (21, 'Online-Members', 'Members', 'online', NULL),
-  (22, 'Profile', 'Members', 'viewProfile', NULL),
-  (23, 'AdminPanel', 'AdminPanel', 'Dashboard', NULL),
-  (24, 'AdminPanel-Settings', 'AdminPanel', 'Settings', NULL),
-  (25, 'AdminPanel-AdvancedSettings', 'AdminPanel', 'AdvancedSettings', NULL),
-  (26, 'AdminPanel-EmailSettings', 'AdminPanel', 'EmailSettings', NULL),
-  (27, 'AdminPanel-Users', 'AdminPanel', 'Users', NULL),
-  (28, 'AdminPanel-User', 'AdminPanel', 'User', NULL),
-  (29, 'AdminPanel-Groups', 'AdminPanel', 'Groups', NULL),
-  (30, 'AdminPanel-Group', 'AdminPanel', 'Group', NULL),
-  (31, 'AdminPanel-MassEmail', 'AdminPanel', 'MassEmail', NULL),
-  (32, 'AdminPanel-SystemRoutes', 'AdminPanel', 'SystemRoutes', NULL),
-  (33, 'AdminPanel-SystemRoute', 'AdminPanel', 'SystemRoute', NULL),
-  (34, 'AdminPanel-AuthLogs', 'AdminPanel', 'AuthLogs', NULL),
-  (35, 'AdminPanel-SiteLinks', 'AdminPanel', 'SiteLinks', NULL),
-  (36, 'AdminPanel-SiteLink', 'AdminPanel', 'SiteLink', NULL),
-  (37, 'AdminPanel-Adds', 'AdminPanel', 'Adds', NULL),
-  (38, 'AdminPanel-Upgrade', 'AdminPanel', 'Upgrade', NULL),
-  (39, 'AdminPanel-PagesPermissions', 'AdminPanel', 'PagesPermissions', NULL),
-  (40, 'AdminPanel-PagePermissions', 'AdminPanel', 'PagePermissions', NULL),
-  (41, 'ChangeLang', 'ChangeLang', 'index', NULL),
-  (42, 'Forum', 'Plugins\\Forum\\Controllers\\Forum', 'forum', NULL),
-  (43, 'Topics', 'Plugins\\Forum\\Controllers\\Forum', 'topics', NULL),
-  (44, 'Topic', 'Plugins\\Forum\\Controllers\\Forum', 'topic', NULL),
-  (45, 'NewTopic', 'Plugins\\Forum\\Controllers\\Forum', 'newtopic', NULL),
-  (46, 'AdminPanel-Forum-Categories', 'Plugins\\Forum\\Controllers\\ForumAdmin', 'forum_categories', NULL),
-  (47, 'AdminPanel-Forum-Blocked-Content', 'Plugins\\Forum\\Controllers\\ForumAdmin', 'forum_blocked', NULL),
-  (48, 'AdminPanel-Forum-Unpublished-Content', 'Plugins\\Forum\\Controllers\\ForumAdmin', 'forum_unpublished', NULL),
-  (49, 'SearchForum', 'Plugins\\Forum\\Controllers\\Forum', 'forumSearch', NULL),
-  (50, 'AdminPanel-Forum-Settings', 'Plugins\\Forum\\Controllers\\ForumAdmin', 'forum_settings', NULL),
-  (51, 'Messages', 'Plugins\\Messages\\Controllers\\Messages', 'messages', NULL),
-  (52, 'ViewMessage', 'Plugins\\Messages\\Controllers\\Messages', 'view', NULL),
-  (53, 'MessagesInbox', 'Plugins\\Messages\\Controllers\\Messages', 'inbox', NULL),
-  (54, 'MessagesOutbox', 'Plugins\\Messages\\Controllers\\Messages', 'outbox', NULL),
-  (55, 'NewMessage', 'Plugins\\Messages\\Controllers\\Messages', 'newmessage', NULL),
-  (56, 'Friends', 'Plugins\\Friends\\Controllers\\Friends', 'friends', NULL),
-  (57, 'FriendRequests', 'Plugins\\Friends\\Controllers\\Friends', 'friendrequests', NULL),
-  (58, 'UnFriend', 'Plugins\\Friends\\Controllers\\Friends', 'unfriend', NULL),
-  (59, 'AddFriend', 'Plugins\\Friends\\Controllers\\Friends', 'addfriend', NULL),
-  (60, 'ApproveFriend', 'Plugins\\Friends\\Controllers\\Friends', 'approvefriend', NULL),
-  (61, 'CancelFriend', 'Plugins\\Friends\\Controllers\\Friends', 'cancelfriend', NULL),
-  (62, 'About', 'Home', 'About', NULL),
-  (63, 'Contact', 'Home', 'Contact', NULL);
+  INSERT INTO `uap4_pages` (`id`, `url`, `controller`, `method`, `edit_timestamp`, `sitemap`) VALUES
+  (1, 'Home', 'Home', 'Home', NULL, 'true'),
+  (2, 'Templates', 'Home', 'Templates', NULL, 'false'),
+  (3, 'assets', 'Home', 'assets', NULL, 'false'),
+  (4, 'Register', 'Auth', 'register', NULL, 'false'),
+  (5, 'Activate', 'Auth', 'activate', NULL, 'false'),
+  (6, 'Forgot-Password', 'Auth', 'forgotPassword', NULL, 'false'),
+  (7, 'ResetPassword', 'Auth', 'resetPassword', NULL, 'false'),
+  (8, 'Resend-Activation-Email', 'Auth', 'resendActivation', NULL, 'false'),
+  (9, 'Login', 'Auth', 'login', NULL, 'false'),
+  (10, 'Logout', 'Auth', 'logout', NULL, 'false'),
+  (11, 'Settings', 'Auth', 'settings', NULL, 'false'),
+  (12, 'Change-Email', 'Auth', 'changeEmail', NULL, 'false'),
+  (13, 'Change-Password', 'Auth', 'changePassword', NULL, 'false'),
+  (14, 'Edit-Profile', 'Members', 'editProfile', NULL, 'false'),
+  (15, 'Edit-Profile-Images', 'Members', 'editProfileImages', NULL, 'false'),
+  (16, 'Privacy-Settings', 'Members', 'privacy', NULL, 'false'),
+  (17, 'Account-Settings', 'Members', 'account', NULL, 'false'),
+  (18, 'LiveCheckEmail', 'LiveCheck', 'emailCheck', NULL, 'false'),
+  (19, 'LiveCheckUserName', 'LiveCheck', 'userNameCheck', NULL, 'false'),
+  (20, 'Members', 'Members', 'members', NULL, 'true'),
+  (21, 'Online-Members', 'Members', 'online', NULL, 'true'),
+  (22, 'Profile', 'Members', 'viewProfile', NULL, 'false'),
+  (23, 'AdminPanel', 'AdminPanel', 'Dashboard', NULL, 'false'),
+  (24, 'AdminPanel-Settings', 'AdminPanel', 'Settings', NULL, 'false'),
+  (25, 'AdminPanel-AdvancedSettings', 'AdminPanel', 'AdvancedSettings', NULL, 'false'),
+  (26, 'AdminPanel-EmailSettings', 'AdminPanel', 'EmailSettings', NULL, 'false'),
+  (27, 'AdminPanel-Users', 'AdminPanel', 'Users', NULL, 'false'),
+  (28, 'AdminPanel-User', 'AdminPanel', 'User', NULL, 'false'),
+  (29, 'AdminPanel-Groups', 'AdminPanel', 'Groups', NULL, 'false'),
+  (30, 'AdminPanel-Group', 'AdminPanel', 'Group', NULL, 'false'),
+  (31, 'AdminPanel-MassEmail', 'AdminPanel', 'MassEmail', NULL, 'false'),
+  (32, 'AdminPanel-SystemRoutes', 'AdminPanel', 'SystemRoutes', NULL, 'false'),
+  (33, 'AdminPanel-SystemRoute', 'AdminPanel', 'SystemRoute', NULL, 'false'),
+  (34, 'AdminPanel-AuthLogs', 'AdminPanel', 'AuthLogs', NULL, 'false'),
+  (35, 'AdminPanel-SiteLinks', 'AdminPanel', 'SiteLinks', NULL, 'false'),
+  (36, 'AdminPanel-SiteLink', 'AdminPanel', 'SiteLink', NULL, 'false'),
+  (37, 'AdminPanel-Adds', 'AdminPanel', 'Adds', NULL, 'false'),
+  (38, 'AdminPanel-Upgrade', 'AdminPanel', 'Upgrade', NULL, 'false'),
+  (39, 'AdminPanel-PagesPermissions', 'AdminPanel', 'PagesPermissions', NULL, 'false'),
+  (40, 'AdminPanel-PagePermissions', 'AdminPanel', 'PagePermissions', NULL, 'false'),
+  (41, 'ChangeLang', 'ChangeLang', 'index', NULL, 'false'),
+  (42, 'Forum', 'Plugins\\Forum\\Controllers\\Forum', 'forum', NULL, 'true'),
+  (43, 'Topics', 'Plugins\\Forum\\Controllers\\Forum', 'topics', NULL, 'true'),
+  (44, 'Topic', 'Plugins\\Forum\\Controllers\\Forum', 'topic', NULL, 'false'),
+  (45, 'NewTopic', 'Plugins\\Forum\\Controllers\\Forum', 'newtopic', NULL, 'false'),
+  (46, 'AdminPanel-Forum-Categories', 'Plugins\\Forum\\Controllers\\ForumAdmin', 'forum_categories', NULL, 'false'),
+  (47, 'AdminPanel-Forum-Blocked-Content', 'Plugins\\Forum\\Controllers\\ForumAdmin', 'forum_blocked', NULL, 'false'),
+  (48, 'AdminPanel-Forum-Unpublished-Content', 'Plugins\\Forum\\Controllers\\ForumAdmin', 'forum_unpublished', NULL, 'false'),
+  (49, 'SearchForum', 'Plugins\\Forum\\Controllers\\Forum', 'forumSearch', NULL, 'false'),
+  (50, 'AdminPanel-Forum-Settings', 'Plugins\\Forum\\Controllers\\ForumAdmin', 'forum_settings', NULL, 'false'),
+  (51, 'Messages', 'Plugins\\Messages\\Controllers\\Messages', 'messages', NULL, 'false'),
+  (52, 'ViewMessage', 'Plugins\\Messages\\Controllers\\Messages', 'view', NULL, 'false'),
+  (53, 'MessagesInbox', 'Plugins\\Messages\\Controllers\\Messages', 'inbox', NULL, 'false'),
+  (54, 'MessagesOutbox', 'Plugins\\Messages\\Controllers\\Messages', 'outbox', NULL, 'false'),
+  (55, 'NewMessage', 'Plugins\\Messages\\Controllers\\Messages', 'newmessage', NULL, 'false'),
+  (56, 'Friends', 'Plugins\\Friends\\Controllers\\Friends', 'friends', NULL, 'false'),
+  (57, 'FriendRequests', 'Plugins\\Friends\\Controllers\\Friends', 'friendrequests', NULL, 'false'),
+  (58, 'UnFriend', 'Plugins\\Friends\\Controllers\\Friends', 'unfriend', NULL, 'false'),
+  (59, 'AddFriend', 'Plugins\\Friends\\Controllers\\Friends', 'addfriend', NULL, 'false'),
+  (60, 'ApproveFriend', 'Plugins\\Friends\\Controllers\\Friends', 'approvefriend', NULL, 'false'),
+  (61, 'CancelFriend', 'Plugins\\Friends\\Controllers\\Friends', 'cancelfriend', NULL, 'false'),
+  (62, 'About', 'Home', 'About', NULL, 'true'),
+  (63, 'Contact', 'Home', 'Contact', NULL, 'true'),
+  (64, 'sitemap', 'Home', 'sitemap', NULL, 'false');
 
   -- --------------------------------------------------------
   --
@@ -418,6 +420,30 @@
   (53, 4),(54, 1),(54, 2),(54, 3),(54, 4),(55, 1),(55, 2),(55, 3),(55, 4),(45, 1),
   (45, 2),(45, 3),(45, 4),(16, 1),(16, 2),(16, 3),(16, 4),(11, 1),(11, 2),(11, 3),
   (11, 4),(58, 1),(58, 2),(58, 3),(58, 4),(52, 1),(52, 2),(52, 3),(52, 4);
+
+  -- --------------------------------------------------------
+  --
+  -- Table : uap4_forum_posts
+  -- Add forum_url if not already updated
+  --
+  -- --------------------------------------------------------
+    SET @dbname = DATABASE();
+    SET @tablename = 'uap4_forum_posts';
+    SET @columnname = 'forum_url';
+    SET @preparedStatement = (SELECT IF(
+      (
+        SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+        WHERE
+          (table_name = @tablename)
+          AND (table_schema = @dbname)
+          AND (column_name = @columnname)
+      ) > 0,
+      'SELECT 1',
+      CONCAT('ALTER TABLE ', @tablename, ' ADD ', @columnname, ' VARCHAR(255) DEFAULT NULL AFTER `forum_title`')
+    ));
+    PREPARE alterIfNotExists FROM @preparedStatement;
+    EXECUTE alterIfNotExists;
+    DEALLOCATE PREPARE alterIfNotExists;
 
   -- --------------------------------------------------------
   --

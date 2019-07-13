@@ -30,29 +30,36 @@ use Libs\Form,
         <h4>Permission Levels for Page: <a href='<?php echo SITE_URL.$data['page_data'][0]->url; ?>' target='_blank'><?=$data['page_data'][0]->url?></a></h4>
         Check the User Groups that are Allowed to view this page.
         <hr>
-      <?php
-        if(\Libs\PageFunctions::checkPageGroup($data['page_data'][0]->id, '0')){ $checked = "checked"; }
+        <?php
+          if(\Libs\PageFunctions::checkPageGroup($data['page_data'][0]->id, '0')){ $checked = "checked"; }
 
-        echo "<div class='custom-control custom-checkbox'>";
-          echo "<input type='checkbox' class='custom-control-input' id='group_id_0' name='group_id[]' value='0' $checked>";
-          echo "<label class='custom-control-label' for='group_id_0'>Public</label>";
-        echo "</div>";
-        unset($checked);
+          echo "<div class='custom-control custom-checkbox'>";
+            echo "<input type='checkbox' class='custom-control-input' id='group_id_0' name='group_id[]' value='0' $checked>";
+            echo "<label class='custom-control-label' for='group_id_0'>Public</label>";
+          echo "</div>";
+          unset($checked);
 
-        if(isset($site_groups)){
-          foreach ($site_groups as $key => $value) {
-            $group_display = \Libs\CurrentUserData::getGroupData($value->groupID);
-            if(\Libs\PageFunctions::checkPageGroup($data['page_data'][0]->id, $value->groupID)){ $checked = "checked"; }
+          if(isset($site_groups)){
+            foreach ($site_groups as $key => $value) {
+              $group_display = \Libs\CurrentUserData::getGroupData($value->groupID);
+              if(\Libs\PageFunctions::checkPageGroup($data['page_data'][0]->id, $value->groupID)){ $checked = "checked"; }
 
-            echo "<div class='custom-control custom-checkbox'>";
-              echo "<input type='checkbox' class='custom-control-input' id='group_id_$value->groupID' name='group_id[$value->groupID]' value='$value->groupID' $checked>";
-              echo "<label class='custom-control-label' for='group_id_$value->groupID'>".$group_display."</label>";
-            echo "</div>";
-            unset($checked);
+              echo "<div class='custom-control custom-checkbox'>";
+                echo "<input type='checkbox' class='custom-control-input' id='group_id_$value->groupID' name='group_id[$value->groupID]' value='$value->groupID' $checked>";
+                echo "<label class='custom-control-label' for='group_id_$value->groupID'>".$group_display."</label>";
+              echo "</div>";
+              unset($checked);
+            }
           }
-        }
-      ?>
-
+        ?>
+        <hr>
+        <?php
+          if($data['page_data'][0]->sitemap == 'true'){ $sitemap_checked = "checked"; }
+          echo "<div class='custom-control custom-checkbox'>";
+            echo "<input type='checkbox' class='custom-control-input' id='sitemap' name='sitemap' value='true' $sitemap_checked>";
+            echo "<label class='custom-control-label' for='sitemap'>Allow Page to be vissible on SiteMap.xml?</label>";
+          echo "</div>";
+        ?>
       </div>
       <div class='card-footer'>
 				<!-- CSRF Token -->

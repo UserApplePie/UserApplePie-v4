@@ -61,10 +61,18 @@ foreach($data['forum_recent_posts'] as $row_rp)
   $f_p_id = $row_rp->forum_post_id;
   $f_p_id_cat = $row_rp->forum_id;
   $f_p_title = $row_rp->forum_title;
+  $f_p_url = $row_rp->forum_url;
   $f_p_timestamp = $row_rp->forum_timestamp;
   $f_p_user_id = $row_rp->forum_user_id;
   $f_p_user_name = CurrentUserData::getUserName($f_p_user_id);
   $online_check = CurrentUserData::getUserStatusDot($f_p_user_id);
+
+  /** Check to see if topic has url set **/
+  if(isset($f_p_url)){
+    $url_link = $f_p_url;
+  }else{
+    $url_link = $f_p_id;
+  }
 
   $f_p_title = stripslashes($f_p_title);
 
@@ -82,7 +90,7 @@ foreach($data['forum_recent_posts'] as $row_rp)
     echo "<ul class='list-group-item'>";
     echo " $online_check <a href='".DIR."Profile/$f_p_user_id'>$f_p_user_name</a> created.. <br>";
     echo "<strong>";
-    echo "<a href='".DIR."Topic/$f_p_id/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
+    echo "<a href='".DIR."Topic/$url_link/' title='$f_p_title' ALT='$f_p_title'>$f_p_title</a>";
     echo "</strong>";
     echo "<br>";
     //Display how long ago this was posted
