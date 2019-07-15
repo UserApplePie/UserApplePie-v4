@@ -211,6 +211,17 @@ if($uap_files_version > $uap_database_version){
 		<div class='col-lg-12 col-md-12'>
 			<div class='card mb-3'>
 				<div class='card-header h4'>
+					Site Map File
+				</div>
+				<ul class='list-group list-group-flush'>
+						<li class='list-group-item'><a href='<?=SITE_URL?>sitemap.xml' target='_blank' class='pull-left'><?=SITE_URL?>sitemap.xml</a><span class='float-right'>Copy URL to <a href='https://search.google.com/search-console/' target='_blank'>Google Search Console</a></span></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class='col-lg-12 col-md-12'>
+			<div class='card mb-3'>
+				<div class='card-header h4'>
 					UserApplePie Support and Community
 				</div>
 				<ul class='list-group list-group-flush'>

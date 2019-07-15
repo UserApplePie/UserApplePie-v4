@@ -110,7 +110,7 @@ if(isset($_GET['install_step'])){
 				<div class='card-header h4'>
 					<div class='row'>
 						<div class='col-lg-12 col-md-12 col-sm-12' align='center'>
-							<h3>UserApplePie v4.3.0 Beta Installation</h3>
+							<h3>UserApplePie v4.3.0 Installation</h3>
 						</div>
 						<div class='col-lg-12 col-md-12 col-sm-12'>
 							<hr>

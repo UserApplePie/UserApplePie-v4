@@ -28,7 +28,7 @@ use Libs\ErrorMessages,
     <title><?php echo $title.' - '.SITE_TITLE.' Admin Panel';?></title>
 		<link rel='shortcut icon' href='<?=Url::templatePath()?>images/favicon.ico'>
     <?=Assets::css([
-		'https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css',
+		'https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
 		Url::templatePath('AdminPanel').'css/sb-admin.css',
 		'https://use.fontawesome.com/releases/v5.9.0/css/all.css'
     ]);

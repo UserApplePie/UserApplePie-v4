@@ -81,7 +81,7 @@ class Home extends Controller {
           $data['recent_limit'] = $limit;
           /** Check for user status Update **/
           $data['csrfToken'] = Csrf::makeToken('status');
-          if (isset($_POST['submit'])) {
+          if (isset($_POST['submit']) && isset($_POST['action'])) {
             if(Csrf::isTokenValid('status')) {
               $status_feeling = htmlspecialchars(Request::post('status_feeling'));
               $status_content = htmlspecialchars(Request::post('status_content'));
