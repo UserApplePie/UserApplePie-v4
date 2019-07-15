@@ -374,6 +374,7 @@ use Libs\Language,
                       echo $status_content;
                     echo "</div>";
                     echo "<div class='card-footer'>";
+                      echo "<div class='row'><div class='col-12'>";
                       echo TimeDiff::dateDiff("now", "$recent->timestamp", 1) . " ago ";
                       echo "<div class='float-right'>";
                         // Hide button if they are currently editing this reply
@@ -392,8 +393,10 @@ use Libs\Language,
                         /** Start Sweet **/
                         echo Sweets::getSweets($recent->id, 'Status', $recent->status_userID);
                         echo Comments::getComments($recent->id, 'Status', $recent->status_userID);
-                      echo "</div>";
-                      echo Comments::displayComments($recent->id, 'Status', $currentUserData[0]->userID, $recent->status_userID, $sweets_url);
+                        echo "</div></div></div>";
+                        echo "<div class='col-12 p-0'>";
+                          echo Comments::displayComments($recent->id, 'Status', $currentUserData[0]->userID, $recent->status_userID, $sweets_url);
+                        echo "</div>";
                     echo "</div>";
                   echo "</div>";
                 }

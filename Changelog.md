@@ -4,6 +4,8 @@ https://www.userapplepie.com
 ----------------------------------------------------------------------------------------
 UAP v4.2.1 to v4.3.0
 ----------------------------------------------------------------------------------------
+### Comments Plugin
+ - Added Commments Plugin to display all comments per post
 ### SiteMap
  - Added auto site map generator
  - Set to only work if page is public and enabled for sitemap
@@ -22,6 +24,8 @@ UAP v4.2.1 to v4.3.0
 ### Comments Library
  - Added new comments Library
  - Setup with status updates
+ - Setup enable user to edit and delete their comments
+ - Setup Media Elements to look clean and readable.
 ### Language
  - Added misc lang data
 ### Header

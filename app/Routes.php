@@ -135,6 +135,13 @@ class Routes {
         }
         /* End Friends Plugin Routing */
 
+        /* Comments Plugin Routing */
+        /** Check to see if Comments Plugin is installed, if it is show link **/
+        if(file_exists(ROOTDIR.'app/Plugins/Comments/Controllers/Comments.php')){
+            $routes[] = self::add('Comments', 'Plugins\Comments\Controllers\Comments', 'comments', '(:any)/(:num)');
+        }
+        /* End Comments Plugin Routing */
+
         /** Get Routes from Database **/
         self::$db = Database::get();
         $db_routes = self::$db->select("
