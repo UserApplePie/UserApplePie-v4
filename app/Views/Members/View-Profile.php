@@ -316,17 +316,14 @@ use Libs\Language,
     						if(isset($data['user_images'])){
     							foreach ($data['user_images'] as $row) {
     								echo "<div class='col-lg-2 col-md-3 col-sm-4 col-xs-6' style='padding-bottom: 6px'>";
-    									echo "<a href='#imageModal".$row->id."' data-toggle='modal' data-target='#imageModal".$row->id."'><img src='".SITE_URL.IMG_DIR_PROFILE."$row->userImage' class='img-thumbnail'></a>";
+    									echo "<a href='#myImg".$row->id."' data-toggle='modal' data-target='#myImg".$row->id."'><img id='myImg' src='".SITE_URL.IMG_DIR_PROFILE."$row->userImage' class='img-thumbnail'></a>";
     								echo "</div>";
 
                     /** Image Model **/
                     echo "
-                      <div id='imageModal".$row->id."' class='modal fade' tabindex='-1' role='dialog'>
-                        <div class='modal-dialog modal-dialog-centered modal-lg'>
-                          <div class='modal-content'>
-                            <img src='".SITE_URL.IMG_DIR_PROFILE."$row->userImage' class='img-responsive'>
-                          </div>
-                        </div>
+                      <div id='myImg".$row->id."' class='modal-img' tabindex='-1' role='dialog'>
+                          <span class='close-img'>&times;</span>
+                        <img id='img".$row->id."' src='".SITE_URL.IMG_DIR_PROFILE."$row->userImage' class='modal-content-img'>
                       </div>
                     ";
     							}

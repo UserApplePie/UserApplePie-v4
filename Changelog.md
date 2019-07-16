@@ -4,6 +4,8 @@ https://www.userapplepie.com
 ----------------------------------------------------------------------------------------
 UAP v4.2.1 to v4.3.0
 ----------------------------------------------------------------------------------------
+### Messages Plugin
+ - Fixed issue where mass email message would not delete after users reads
 ### Comments Plugin
  - Added Commments Plugin to display all comments per post
 ### SiteMap
