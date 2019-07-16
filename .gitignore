@@ -3,5 +3,8 @@ app/_notes/dwsync.xml
 app/Templates/Default/_notes/dwsync.xml
 *.xml
 [Vv]endor/
+app/Example-Config.php
+app/Example-Config.php
 assets/images/profile-pics/DaVaR/DaVaR_PROFILE_53498547eb.jpg
 assets/images/profile-pics/DaVaR/DaVaR_PROFILE_b32cf2b964.jpg
+errors/php-error.log

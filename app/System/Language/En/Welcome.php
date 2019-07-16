@@ -55,7 +55,7 @@ return [
 	'recent_posts' => "Friends Recent Activity",
 
 	// Lang Change Success Message
-	'lang_change_success' => "You have successfully change the site language.",
+	'lang_change_success' => "You have successfully changed the site language.",
 
 	// Footer
 	'uap_poweredby' => "Powered By",

@@ -565,7 +565,7 @@ class AdminPanel extends Models {
     // Format the Content for database
 		$content = nl2br($content);
 		// Update messages table
-		$query = $this->db->insert(PREFIX.'messages', array('to_userID' => $to_userID, 'from_userID' => $from_userID, 'subject' => $subject, 'content' => $content));
+		$query = $this->db->insert(PREFIX.'messages', array('to_userID' => $to_userID, 'from_userID' => $from_userID, 'subject' => $subject, 'content' => $content, 'from_delete' => 'true'));
 		// Check to make sure something was updated
 		if($query > 0){
       // Message was updated in database, now we send the to user an email notification.
