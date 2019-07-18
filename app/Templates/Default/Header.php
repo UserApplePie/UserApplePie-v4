@@ -42,6 +42,7 @@ use Libs\Assets,
             SITE_URL.'assets/themes/'.SITE_THEME.'/bootstrap.css',
             'https://bootswatch.com/_assets/css/custom.min.css',
             'https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css',
+            'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css',
             Url::templatePath().'css/style.css'
         ])?>
         <?=(isset($css)) ? $css : ""?>

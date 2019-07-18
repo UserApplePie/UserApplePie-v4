@@ -21,3 +21,5 @@ Cam Tosh
 EddyBeaupre
 
 Bootswatch Themes - https://www.bootswatch.com
+
+Lightbox - https://lokeshdhakar.com/projects/lightbox2/

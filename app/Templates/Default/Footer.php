@@ -48,7 +48,7 @@ use Libs\Assets,
             'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js',
             'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js',
             'https://use.fontawesome.com/releases/v5.9.0/js/all.js',
-            Url::templatePath().'js/images_model.js'
+            'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js'
         ])?>
         <?=(isset($js)) ? $js : ""?>
         <?php if(isset($ownjs)){ foreach ($ownjs as $eachownjs) { echo "$eachownjs"; } } ?>
