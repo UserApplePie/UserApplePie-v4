@@ -256,11 +256,11 @@ class Comments
             $display_comments .= "</a>";
             $display_comments .= "</div>";
             $display_comments .= "<div class='media-body text-break'>";
-            $display_comments .= "<div class='media-heading'>";
+            $display_comments .= "<div class='media-heading bg-default'>";
             $display_comments .= CurrentUserData::getUserStatusDot($com->com_owner_userid);
             $display_comments .= "<b><a href='".SITE_URL."Profile/{$com_userName}'>$com_userName</a> <font class='text-muted' size='1'> $com_timeago</font></b>";
             $display_comments .= "</div>";
-            $display_comments .= "<div class='media-content border p-1 bg-light'>";
+            $display_comments .= "<div class='media-content'>";
             if($edit_comment == 'true' && $post_edit_id == $com->id && $com->com_owner_userid == $com_owner_userid){
               $display_comments .= $com_edit_display;
             }else{
