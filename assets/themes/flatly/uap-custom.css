@@ -1,0 +1,16 @@
+.comment-box .media-body p {
+    border: 1px solid #ddd;
+    padding: 2px;
+}
+.comment-box .media-content {
+    border: 1px solid #ddd;
+    padding: 2px;
+}
+.comment-box .media-heading {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+}
+.comment-box .media-heading:before {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+}
