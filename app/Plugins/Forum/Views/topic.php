@@ -167,21 +167,8 @@ use Core\Language,
               foreach($data['forum_topic_images'] as $check_for_image){
                 /** Display Image **/
                 echo "<div class='col-lg-2 col-md-3 col-sm-4 col-xs-6' style='padding-bottom: 6px'>";
-                echo "<a href='#imageModal".$check_for_image->imageName."' data-toggle='modal' data-target='#imageModal".$check_for_image->imageName."'>";
-                echo "<img src=".SITE_URL."{$check_for_image->imageLocation}{$check_for_image->imageName} class='img-thumbnail border-secondary' style='height: 100px'>";
-                echo "</a>";
+                echo "<a href='".SITE_URL."{$check_for_image->imageLocation}{$check_for_image->imageName}' data-lightbox='topic'><img id='myImg' class='img-thumbnail' src='".SITE_URL."{$check_for_image->imageLocation}{$check_for_image->imageName}' style='height: 100px'></a>";
                 echo "</div>";
-
-                /** Image Model **/
-                echo "
-                  <div id='imageModal".$check_for_image->imageName."' class='modal fade' tabindex='-1' role='dialog'>
-                    <div class='modal-dialog modal-dialog-centered modal-lg'>
-                      <div class='modal-content'>
-                        <img src='".SITE_URL."{$check_for_image->imageLocation}{$check_for_image->imageName}' class='img-responsive' style='width: 100%'>
-                      </div>
-                    </div>
-                  </div>
-                ";
               }
               echo "</div></fieldset>";
             }
@@ -361,21 +348,8 @@ use Core\Language,
                     foreach($check_for_images as $check_for_image){
                       /** Display Image **/
                       echo "<div class='col-lg-2 col-md-3 col-sm-4 col-xs-6' style='padding-bottom: 6px'>";
-                      echo "<a href='#imageModal".$check_for_image->imageName."' data-toggle='modal' data-target='#imageModal".$check_for_image->imageName."'>";
-                      echo "<img src=".SITE_URL."{$check_for_image->imageLocation}{$check_for_image->imageName} class='img-thumbnail border-secondary' style='height: 100px'>";
-                      echo "</a>";
+                      echo "<a href='".SITE_URL."{$check_for_image->imageLocation}{$check_for_image->imageName}' data-lightbox='topicreply{$rf_p_main_id}'><img id='myImg' class='img-thumbnail' src='".SITE_URL."{$check_for_image->imageLocation}{$check_for_image->imageName}' style='height: 100px'></a>";
                       echo "</div>";
-
-                      /** Image Model **/
-                      echo "
-                        <div id='imageModal".$check_for_image->imageName."' class='modal fade' tabindex='-1' role='dialog'>
-                          <div class='modal-dialog modal-dialog-centered modal-lg'>
-                            <div class='modal-content'>
-                              <img src='".SITE_URL."{$check_for_image->imageLocation}{$check_for_image->imageName}' class='img-responsive' style='width: 100%'>
-                            </div>
-                          </div>
-                        </div>
-                      ";
                     }
                     echo "</div></fieldset>";
                   }
