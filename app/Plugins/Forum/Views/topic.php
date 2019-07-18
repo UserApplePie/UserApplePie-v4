@@ -87,7 +87,7 @@ use Core\Language,
             $user_signup_display = CurrentUserData::getSignUp($data['topic_creator']);
             $user_total_posts = ForumStats::getTotalPosts($data['topic_creator']);
             if(!empty($user_image_display)){
-              echo "<img src='".SITE_URL.IMG_DIR_PROFILE.$user_image_display."' class='img-fluid' style='margin-bottom: 2px'>";
+              echo "<img src='".SITE_URL.IMG_DIR_PROFILE.$user_image_display."' class='img-fluid rounded' style='margin-bottom: 2px'>";
             }else{
               echo "<span class='fas fa-user icon-size' style='margin-bottom: 2px'></span>";
             }
@@ -269,7 +269,7 @@ use Core\Language,
                 $user_signup_display = CurrentUserData::getSignUp($rf_p_user_id);
                 $user_total_posts = ForumStats::getTotalPosts($rf_p_user_id);
                 if(!empty($user_image_display)){
-                  echo "<img src='".SITE_URL.IMG_DIR_PROFILE.$user_image_display."' class='img-fluid' style='margin-bottom: 2px'>";
+                  echo "<img src='".SITE_URL.IMG_DIR_PROFILE.$user_image_display."' class='img-fluid rounded' style='margin-bottom: 2px'>";
                 }else{
                   echo "<span class='fas fa-user icon-size' style='margin-bottom: 2px'></span>";
                 }
@@ -450,7 +450,7 @@ use Core\Language,
                 </span>
               </div>
               <?php (isset($data['fpr_content'])) ? $data['fpr_content'] = $data['fpr_content'] : $data['fpr_content'] = ""; ?>
-              <?php echo Form::textBox(array('type' => 'text', 'id' => 'fpr_content', 'name' => 'fpr_content', 'class' => 'form-control', 'value' => $data['fpr_content'], 'placeholder' => 'Topic Reply Content', 'rows' => '6')); ?>
+              <?php echo Form::textBox(array('type' => 'text', 'id' => 'forum_content', 'name' => 'fpr_content', 'class' => 'form-control', 'value' => $data['fpr_content'], 'placeholder' => 'Topic Reply Content', 'rows' => '6')); ?>
             </div>
 
             <?php

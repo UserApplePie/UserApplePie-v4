@@ -139,6 +139,23 @@ class AdminPanel extends Controller{
     }
     $data['apd_plugin_friends'] = $friends_status;
 
+    /** Check to see if Comments Plugin is Installed */
+    if(file_exists(ROOTDIR.'app/Plugins/Comments/Controllers/Comments.php')){
+      $comments_status = "Installed";
+      /** Get Current UAP Version Data From UserApplePie.com */
+      $check_url = 'https://www.userapplepie.com/uapversion.php?getversion=Comments';
+      if(UR_exists($check_url)){
+        $html = file_get_contents($check_url);
+        preg_match("/UAP-Comments v(.*) UAP-Comments/i", $html, $match);
+        require_once(ROOTDIR.'app/Plugins/Comments/CommentsVersion.php');
+        $cur_uap_comments_version = UAPCommentsVersion;
+        if($cur_uap_comments_version < $match[1]){ $data['cur_uap_comments_version'] = $match[1]; }
+      }
+    }else{
+      $comments_status = "NOT Installed";
+    }
+    $data['apd_plugin_comments'] = $comments_status;
+
     /** Check to see if UAP Files are Newer than Database Version */
     $data['uap_files_version'] = UAPVersion;
     $data['uap_database_version'] = $this->model->getDatabaseVersion();

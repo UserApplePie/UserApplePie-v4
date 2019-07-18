@@ -7,7 +7,7 @@
 * @version 4.3.0
 */
 
-if(isset($cur_uap_version) || isset($cur_uap_messages_version) || isset($cur_uap_forum_version) || isset($cur_uap_friends_version)){
+if(isset($cur_uap_version) || isset($cur_uap_messages_version) || isset($cur_uap_forum_version) || isset($cur_uap_friends_version) || isset($cur_uap_comments_version)){
 	echo "<div class='col-lg-12 col-md-12 col-sm-12'>";
 	echo "<div class='alert alert-danger'>";
 		if(isset($cur_uap_version)){
@@ -29,6 +29,11 @@ if(isset($cur_uap_version) || isset($cur_uap_messages_version) || isset($cur_uap
 			echo "<br><b>New Update Released for UAP Friends Plugin! <br>";
 			echo "New Version:</b> $cur_uap_friends_version <br>";
 			echo "<b>Current Version:</b> ".UAPFriendsVersion."<br>";
+		}
+		if(isset($cur_uap_comments_version)){
+			echo "<br><b>New Update Released for UAP Comments Plugin! <br>";
+			echo "New Version:</b> $cur_uap_comments_version <br>";
+			echo "<b>Current Version:</b> ".UAPCommentsVersion."<br>";
 		}
 		echo "<hr>Visit <a href='http://www.userapplepie.com' target='_blank'>www.UserApplePie.com</a> For Updates";
 	echo "</div>";
@@ -56,7 +61,7 @@ if($uap_files_version > $uap_database_version){
               </div>
               <div class="mr-5"><?=$activatedAccounts?></div>
             </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
+            <a class="card-footer text-white clearfix small z-1" href="<?=SITE_URL?>AdminPanel-Users">
               <span class="float-left">Site Members</span>
               <span class="float-rightt">
                 <i class="fa fa-angle-right"></i>
@@ -73,7 +78,7 @@ if($uap_files_version > $uap_database_version){
               </div>
               <div class="mr-5"><?=$usergroups?></div>
             </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
+            <a class="card-footer text-white clearfix small z-1" href="<?=SITE_URL?>AdminPanel-Groups">
               <span class="float-left">User Groups</span>
               <span class="float-rightt">
                 <i class="fa fa-angle-right"></i>
@@ -90,7 +95,7 @@ if($uap_files_version > $uap_database_version){
               </div>
               <div class="mr-5"><?=$onlineAccounts?></div>
             </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
+            <a class="card-footer text-white clearfix small z-1" href="<?=SITE_URL?>AdminPanel-Users">
               <span class="float-left">Online Members</span>
               <span class="float-rightt">
                 <i class="fa fa-angle-right"></i>
@@ -204,6 +209,7 @@ if($uap_files_version > $uap_database_version){
 						<li class='list-group-item'><span class='pull-left'>Forum Plugin:</span><span class='float-right'><?=$apd_plugin_forum?></span><div class='clearfix'></div></li>
 						<li class='list-group-item'><span class='pull-left'>Private Messages Plugin:</span><span class='float-right'><?=$apd_plugin_message?></span><div class='clearfix'></div></li>
 						<li class='list-group-item'><span class='pull-left'>Friends Plugin:</span><span class='float-right'><?=$apd_plugin_friends?></span><div class='clearfix'></div></li>
+						<li class='list-group-item'><span class='pull-left'>Comments Plugin:</span><span class='float-right'><?=$apd_plugin_comments?></span><div class='clearfix'></div></li>
 				</ul>
 			</div>
 		</div>
