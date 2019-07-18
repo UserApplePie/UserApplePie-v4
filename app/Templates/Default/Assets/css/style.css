@@ -110,74 +110,52 @@ a.anchor {
     top: -150px;
     visibility: hidden;
 }
-/* Style the Image Used to Trigger the Modal */
+
 #myImg {
  border-radius: 5px;
  cursor: pointer;
  transition: 0.3s;
 }
 #myImg:hover {opacity: 0.5;}
-/* The Modal (background) */
-.modal-img {
- display: none; /* Hidden by default */
- position: fixed; /* Stay in place */
- z-index: 3; /* Sit on top */
- padding-top: 100px; /* Location of the box */
- left: 0;
- top: 0;
- width: 100%; /* Full width */
- height: 100%; /* Full height */
- overflow: auto; /* Enable scroll if needed */
- background-color: rgb(0,0,0); /* Fallback color */
- background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+
+.photo-gallery {
+  color:#313437;
+  background-color:#fff;
 }
-/* Modal Content (Image) */
-.modal-content-img {
- margin: auto;
- display: block;
- border-radius: 15px;
- width: 80%;
- max-width: 700px;
+
+.photo-gallery p {
+  color:#7d8285;
 }
-/* Caption of Modal Image (Image Text) - Same Width as the Image */
-#caption {
-  margin: auto;
-  display: block;
-  width: 80%;
-  max-width: 700px;
-  text-align: center;
-  color: #ccc;
-  padding: 10px 0;
-  height: 150px;
+
+.photo-gallery h2 {
+  font-weight:bold;
+  margin-bottom:40px;
+  padding-top:40px;
+  color:inherit;
 }
-/* Add Animation - Zoom in the Modal */
-.modal-content-img {
- animation-name: zoom;
- animation-duration: 0.6s;
+
+@media (max-width:767px) {
+  .photo-gallery h2 {
+    margin-bottom:25px;
+    padding-top:25px;
+    font-size:24px;
+  }
 }
-@keyframes zoom {
- from {transform:scale(0)}
- to {transform:scale(1)}
+
+.photo-gallery .intro {
+  font-size:16px;
+  max-width:500px;
+  margin:0 auto 40px;
 }
-/* The Close Button */
-.close-img {
- position: absolute;
- top: 50px;
- right: 35px;
- color: #f1f1f1;
- font-size: 40px;
- font-weight: bold;
- transition: 0.3s;
+
+.photo-gallery .intro p {
+  margin-bottom:0;
 }
-.close-img:hover,
-.close-img:focus {
- color: #bbb;
- text-decoration: none;
- cursor: pointer;
+
+.photo-gallery .photos {
+  padding-bottom:20px;
 }
-/* 100% Image Width on Smaller Screens */
-@media only screen and (max-width: 700px){
- .modal-content-img {
-    width: 100%;
- }
+
+.photo-gallery .item {
+  padding-bottom:30px;
 }

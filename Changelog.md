@@ -4,6 +4,8 @@ https://www.userapplepie.com
 ----------------------------------------------------------------------------------------
 UAP v4.2.1 to v4.3.0
 ----------------------------------------------------------------------------------------
+### Images
+ - Added Lightbox to fix the styles for image pop-ups
 ### Messages Plugin
  - Fixed issue where mass email message would not delete after users reads
 ### Comments Plugin

@@ -211,25 +211,12 @@ use Libs\Language,
                 echo " $online_check <a href='".DIR."Profile/{$recent_userName}'>$recent_userName</a> changed their default photo..";
               echo "</div>";
               echo "<div class='card-body'>";
-                echo "<a href='#imageModal".$recent->RP_02."' data-toggle='modal' data-target='#imageModal".$recent->RP_02."'>";
-                echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$recent->RP_03." class='img-thumbnail' style='height: 100px'>";
-                echo "</a>";
+                echo "<a href='".SITE_URL.IMG_DIR_PROFILE."$recent->RP_03' data-lightbox='photos{$recent->RP_06}{$recent->RP_01}{$recent->RP_02}'><img id='myImg' class='img-thumbnail' src='".SITE_URL.IMG_DIR_PROFILE."$recent->RP_03' style='height: 100px'></a>";
               echo "</div>";
               echo "<div class='card-footer'>";
                 echo TimeDiff::dateDiff("now", "$recent->RP_01", 1) . " ago ";
               echo "</div>";
             echo "</div>";
-
-            /** Image Model **/
-            echo "
-              <div id='imageModal".$recent->RP_02."' class='modal fade' tabindex='-1' role='dialog'>
-                <div class='modal-dialog modal-dialog-centered modal-lg'>
-                  <div class='modal-content'>
-                    <img src='".SITE_URL.IMG_DIR_PROFILE."$recent->RP_03' class='img-responsive'>
-                  </div>
-                </div>
-              </div>
-            ";
           }
 
           /** Check to see if recent default image **/
@@ -254,37 +241,11 @@ use Libs\Language,
                 if(count($multi_photo) > 1){
                   foreach ($multi_photo as $photo) {
                     /** Display Image **/
-                    echo "<a href='#imageModal".$photo->id."' data-toggle='modal' data-target='#imageModal".$photo->id."'>";
-                    echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$photo->userImage." class='img-thumbnail' style='height: 100px'>";
-                    echo "</a>";
-
-                    /** Image Model **/
-                    echo "
-                      <div id='imageModal".$photo->id."' class='modal fade' tabindex='-1' role='dialog'>
-                        <div class='modal-dialog modal-dialog-centered modal-lg'>
-                          <div class='modal-content'>
-                            <img src='".SITE_URL.IMG_DIR_PROFILE."$photo->userImage' class='img-responsive' style='width: 100%'>
-                          </div>
-                        </div>
-                      </div>
-                    ";
+                    echo "<a href='".SITE_URL.IMG_DIR_PROFILE."$photo->userImage' data-lightbox='photos{$recent->RP_06}{$recent->RP_01}{$recent->RP_02}'><img id='myImg' class='img-thumbnail' src='".SITE_URL.IMG_DIR_PROFILE."$photo->userImage' style='height: 100px'></a>";
                   }
                 }else{
                   /** Display Image **/
-                  echo "<a href='#imageModal".$recent->RP_02."' data-toggle='modal' data-target='#imageModal".$recent->RP_02."'>";
-                  echo "<img src=".SITE_URL.IMG_DIR_PROFILE.$recent->RP_03." class='img-thumbnail' style='height: 100px'>";
-                  echo "</a>";
-
-                  /** Image Model **/
-                  echo "
-                    <div id='imageModal".$recent->RP_02."' class='modal fade' tabindex='-1' role='dialog'>
-                      <div class='modal-dialog modal-dialog-centered modal-lg'>
-                        <div class='modal-content'>
-                          <img src='".SITE_URL.IMG_DIR_PROFILE."$recent->RP_03' class='img-responsive' style='width: 100%'>
-                        </div>
-                      </div>
-                    </div>
-                  ";
+                  echo "<a href='".SITE_URL.IMG_DIR_PROFILE."$recent->RP_03' data-lightbox='photos{$recent->RP_06}{$recent->RP_01}{$recent->RP_02}'><img id='myImg' class='img-thumbnail' src='".SITE_URL.IMG_DIR_PROFILE."$recent->RP_03' style='height: 100px'></a>";
                 }
 
               echo "</div>";

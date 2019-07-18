@@ -316,16 +316,8 @@ use Libs\Language,
     						if(isset($data['user_images'])){
     							foreach ($data['user_images'] as $row) {
     								echo "<div class='col-lg-2 col-md-3 col-sm-4 col-xs-6' style='padding-bottom: 6px'>";
-    									echo "<a href='#myImg".$row->id."' data-toggle='modal' data-target='#myImg".$row->id."'><img id='myImg' src='".SITE_URL.IMG_DIR_PROFILE."$row->userImage' class='img-thumbnail'></a>";
+                      echo "<a href='".SITE_URL.IMG_DIR_PROFILE."$row->userImage' data-lightbox='profilephotos'><img id='myImg' class='img-thumbnail' src='".SITE_URL.IMG_DIR_PROFILE."$row->userImage'></a>";
     								echo "</div>";
-
-                    /** Image Model **/
-                    echo "
-                      <div id='myImg".$row->id."' class='modal-img' tabindex='-1' role='dialog'>
-                          <span class='close-img'>&times;</span>
-                        <img id='img".$row->id."' src='".SITE_URL.IMG_DIR_PROFILE."$row->userImage' class='modal-content-img'>
-                      </div>
-                    ";
     							}
     						}
     					?>
