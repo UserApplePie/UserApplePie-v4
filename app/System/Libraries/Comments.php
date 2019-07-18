@@ -16,7 +16,8 @@ use Libs\Database,
     Libs\Request,
     Libs\TimeDiff,
     Libs\CurrentUserData,
-    Libs\Sweets;
+    Libs\Sweets,
+    Libs\BBCode;
 
 class Comments
 {
@@ -263,7 +264,8 @@ class Comments
             if($edit_comment == 'true' && $post_edit_id == $com->id && $com->com_owner_userid == $com_owner_userid){
               $display_comments .= $com_edit_display;
             }else{
-              $display_comments .= "<div class='forum'>".$com->com_content."</div>";
+              $comment_content = BBCode::getHtml($com->com_content);
+              $display_comments .= "<div class='forum'>".$comment_content."</div>";
             }
             $display_comments .= Sweets::displaySweetsLink($com->id, 'Comment'.$com_location, $com_owner_userid, $com_sec_id, $clean_com_url."/#viewcom$com->id");
             if($com->com_owner_userid == $com_owner_userid){ $display_comments .= $com_edit_button_display; }
@@ -300,7 +302,7 @@ class Comments
         $post_com_location = Request::post('com_location');
         $post_com_owner_userid = Request::post('com_owner_userid');
         $post_com_sec_id = Request::post('com_sec_id');
-        $post_com_content = Request::post('com_content');
+        $post_com_content = htmlspecialchars(Request::post('com_content'));
         if($submit_comment == "true" && $post_com_id == $com_id && $post_com_location == $com_location){
           self::addComment($post_com_id, $post_com_location, $post_com_owner_userid, $post_com_sec_id, $com_url, $post_com_content);
         }else if($update_comment == "true" && $post_com_id == $com_id && $post_com_location == $com_location){
