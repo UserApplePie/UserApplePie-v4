@@ -625,8 +625,27 @@ class AdminPanel extends Models {
      * @param string $method
      * @return boolean true/false
      */
-    public function addRoute($controller, $method){
-      $data = $this->db->insert(PREFIX.'routes', array('controller' => $controller, 'method' => $method, 'url' => $method));
+    public function addRoute($controller, $method, $url){
+      $data = $this->db->insert(PREFIX.'routes', array('controller' => $controller, 'method' => $method, 'url' => $url));
+      if($data > 0){
+        return true;
+      }else{
+        return false;
+      }
+    }
+
+    /**
+    * checks systems routes for URL
+    * @return boolean true/false
+    */
+    public function checkPagesURL($url){
+      $data = $this->db->selectCount("
+        SELECT
+          *
+        FROM
+          ".PREFIX."pages
+        WHERE url = :url
+        ", array(':url' => $url));
       if($data > 0){
         return true;
       }else{

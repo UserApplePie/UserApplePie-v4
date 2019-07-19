@@ -1174,13 +1174,21 @@ class AdminPanel extends Controller{
               /** Might have it do soemthing later... */
             }else{
               /** Controller and Method Do Not Exist in Database */
+              /** Check to see if URL is already in the database and add numbers if it is **/
+              if($this->model->checkPagesURL($single_route['method'])){
+                /** URL Exist - Make it different **/
+                $route_url = $single_route['method'].rand(10, 99);
+              }else{
+                /** URL Does Not Exist - Keep it the same **/
+                $route_url = $single_route['method'];
+              }
               /** Add Controller and Method to Database */
-              if($this->model->addRoute($single_route['controller'], $single_route['method'])){
+              if($this->model->addRoute($single_route['controller'], $single_route['method'], $route_url)){
                   $new_routes[] = $single_route['controller']." - ".$single_route['method']."<Br>";
                   /** New Route added to database.  Add to site Links */
-                  if($this->model->addSiteLink($single_route['method'], $single_route['method'], $single_route['controller']." - ".$single_route['method'], 'header_main', '0', '')){
+                  if($this->model->addSiteLink($single_route['method'], $route_url, $single_route['controller']." - ".$single_route['method'], 'header_main', '0', '')){
                     /** Success */
-                    $new_routes[] = $single_route['controller']." - ".$single_route['method']." Added to Site Links<Br>";
+                    $new_routes[] = $single_route['controller']." - ".$route_url." Added to Site Links<Br>";
                   }
               }
             }
