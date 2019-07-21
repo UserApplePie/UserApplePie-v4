@@ -61,4 +61,7 @@ return [
 	// Footer
 	'uap_poweredby' => "Propulsé par",
 	'uap_all_rights' => "Tous droits réservés",
+
+	// Friends
+	'uap_friends' => "Copains",
 ];

@@ -101,7 +101,7 @@ return [
 	'ps_success' => "You have Successfully updated your Privacy Settings!",
 	'ps_error' => "Error Updating Privacy Settings!",
 
-	/** New Lang Stuff **/
+	/** New Lang Stuff 4.3.0 **/
 	'status_updates' => "Status Updates",
 	'ep_delete_profile_photo' => "Delete Profile Photo",
 	'ep_delete_profile_photo_question' => "Do you want to Delete Profile Photo?",
@@ -127,4 +127,5 @@ return [
 	'edit_profile_default_image_not_set' => "Your Profile Image is set to a default photo. Upload a new one and set as main.",
 	'members_profile_user_no_posts' => "User has not yet posted in the forum.",
 	'user_profile_forum_recent_posts' => "Recent Posts in Forum",
+	'edit_profile_first_name_not_set' => "First Name has not been set.",
 ];

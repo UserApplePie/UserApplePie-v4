@@ -196,4 +196,9 @@ return [
 	'logactivity_action_short' => "¡Se encontró un error !",
 	'logactivity_action_long' => "¡Se encontró un error !",
 	'logactivity_addinfo_long' => "¡Se encontró un error !",
+
+	/** New Stuff - 4.3.0 **/
+	'new_password_label' => "Nueva contraseña",
+	'confirm_new_password_label' => "Confirmar nueva contraseña",
+	'change_my_password_button' => "Cambiar mi contraseña",
 ];

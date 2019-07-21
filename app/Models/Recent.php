@@ -42,6 +42,8 @@ class Recent extends Models {
               )
               AND
                   u.userID != :userID
+              AND
+                  u.isactive = 1
               GROUP BY
                   u.username
               LIMIT $limit
@@ -207,11 +209,14 @@ class Recent extends Models {
         LEFT JOIN ".PREFIX."friends fri
           ON (swe.sweet_owner_userid = fri.uid1 AND fri.uid2 = :userID)
           OR (swe.sweet_owner_userid = fri.uid2 AND fri.uid1 = :userID)
+        LEFT JOIN ".PREFIX."users usr
+          ON (swe.sweet_owner_userid = usr.userID)
         WHERE ( fri.status1 = '1' AND fri.status2 = '1'
           AND NOT swe.sweet_owner_userid = :userID )
           AND NOT swe.sweet_location = 'Status'
           AND NOT swe.sweet_location = 'CommentStatus'
           AND NOT swe.sweet_location = 'CommentSecStatus'
+          AND usr.isactive = 1
         GROUP BY swe.sid)
     ";
     return $sweets;
@@ -241,10 +246,13 @@ class Recent extends Models {
         LEFT JOIN ".PREFIX."friends fri
           ON (fp.forum_user_id = fri.uid1 AND fri.uid2 = :userID)
           OR (fp.forum_user_id = fri.uid2 AND fri.uid1 = :userID)
+        LEFT JOIN ".PREFIX."users usr
+          ON (fp.forum_user_id = usr.userID)
         WHERE ( fri.status1 = '1' AND fri.status2 = '1'
           AND NOT fp.forum_user_id = :userID )
           AND fp.allow = 'TRUE'
           AND (fp.forum_publish = '1')
+          AND usr.isactive = 1
         GROUP BY fp.forum_post_id)
     ";
     return $forum_posts;
@@ -274,10 +282,13 @@ class Recent extends Models {
         LEFT JOIN ".PREFIX."friends fri
           ON (fpr.fpr_user_id = fri.uid1 AND fri.uid2 = :userID)
           OR (fpr.fpr_user_id = fri.uid2 AND fri.uid1 = :userID)
+        LEFT JOIN ".PREFIX."users usr
+          ON (fpr.fpr_user_id = usr.userID)
         WHERE ( fri.status1 = '1' AND fri.status2 = '1'
           AND NOT fpr.fpr_user_id = :userID )
           AND fpr.allow = 'TRUE'
           AND (fpr.forum_publish = '1')
+          AND usr.isactive = 1
         GROUP BY fpr.id)
     ";
     return $forum_post_replies;
@@ -307,9 +318,12 @@ class Recent extends Models {
         LEFT JOIN ".PREFIX."friends fri
           ON (ui.userID = fri.uid1 AND fri.uid2 = :userID)
           OR (ui.userID = fri.uid2 AND fri.uid1 = :userID)
+        LEFT JOIN ".PREFIX."users usr
+          ON (ui.userID = usr.userID)
         WHERE ( fri.status1 = '1' AND fri.status2 = '1'
           AND NOT ui.userID = :userID )
           AND ui.defaultImage = '1'
+          AND usr.isactive = 1
         GROUP BY ui.id)
     ";
     return $default_images;
@@ -339,8 +353,11 @@ class Recent extends Models {
         LEFT JOIN ".PREFIX."friends fri
           ON (ui.userID = fri.uid1 AND fri.uid2 = :userID)
           OR (ui.userID = fri.uid2 AND fri.uid1 = :userID)
+        LEFT JOIN ".PREFIX."users usr
+          ON (ui.userID = usr.userID)
         WHERE ( fri.status1 = '1' AND fri.status2 = '1'
           AND NOT ui.userID = :userID )
+          AND usr.isactive = 1
         GROUP BY UNIX_TIMESTAMP(ui.timestamp) DIV 600)
     ";
     return $profile_images;
@@ -370,8 +387,11 @@ class Recent extends Models {
         LEFT JOIN ".PREFIX."friends fri
           ON (s.status_userID = fri.uid1 AND fri.uid2 = :userID)
           OR (s.status_userID = fri.uid2 AND fri.uid1 = :userID)
+        LEFT JOIN ".PREFIX."users usr
+          ON (s.status_userID = usr.userID)
         WHERE ( fri.status1 = '1' AND fri.status2 = '1'
           AND NOT s.status_userID = :userID )
+          AND usr.isactive = 1
         GROUP BY s.id)
     ";
     return $status;
@@ -402,7 +422,10 @@ class Recent extends Models {
         LEFT JOIN ".PREFIX."friends fri
           ON (s.status_userID = fri.uid1 AND fri.uid2 = :userID)
           OR (s.status_userID = fri.uid2 AND fri.uid1 = :userID)
+        LEFT JOIN ".PREFIX."users usr
+          ON (s.status_userID = usr.userID)
         WHERE ( s.status_userID = :userID )
+        AND usr.isactive = 1
         GROUP BY s.id)
     ";
     return $status_cur_user;

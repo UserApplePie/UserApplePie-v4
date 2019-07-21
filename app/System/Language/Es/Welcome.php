@@ -59,4 +59,7 @@ return [
 	// Footer
 	'uap_poweredby' => "Energizado por",
 	'uap_all_rights' => "Todos los derechos reservados",
+
+	// Friends
+	'uap_friends' => "Amigos",
 ];

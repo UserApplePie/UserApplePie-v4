@@ -57,6 +57,7 @@ UAP v4.2.1 to v4.3.0
  - Checks to see if site version matches database version
  - Runs update script based on current version
 ### Added Recent Friends Activity
+ - Set to only show data for activated users
  - If Forum and Friends Plugins are installed show recents when logged in
  - Added Friends sidebar with friends list and suggested friends
  - Added Fourm sidebar
@@ -87,6 +88,7 @@ UAP v4.2.1 to v4.3.0
  - Set site to block registration if field has data
  - Updated for more strict email check
 ### Admin panel
+ - Added auto Friend Options to Advanced Settings
  - Updated admin panel to not show adds
  - Fixed a bug in the settings that created duplicate entries
  - Added Site Wide Message in the settings
@@ -95,6 +97,7 @@ UAP v4.2.1 to v4.3.0
  - Added top referer stats to dashboard
 ### User Auth
  - Updated user auth pages to not show adds
+ - Setup auto friend feature for new users
 ### Mass Email
  - Updated to only send emails to active users
 ### Database Library

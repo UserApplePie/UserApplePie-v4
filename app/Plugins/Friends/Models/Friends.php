@@ -61,6 +61,8 @@ class Friends extends Models {
                 AND
                     u.userID != :userID
                 AND
+                    u.isactive = 1
+                AND
                     (u.username LIKE :search OR u.firstName LIKE :search OR u.lastName LIKE :search)
                 GROUP BY
                     u.username
@@ -92,6 +94,8 @@ class Friends extends Models {
                 )
                 AND
                     u.userID != :userID
+                AND
+                    u.isactive = 1
                 GROUP BY
                     u.username
                 ORDER BY
