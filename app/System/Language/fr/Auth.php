@@ -197,4 +197,9 @@ return [
 	'logactivity_action_short' => "Erreur rencontrée!",
 	'logactivity_action_long' => "Erreur rencontrée!",
 	'logactivity_addinfo_long' => "Erreur rencontrée!",
+
+	/** New Stuff - 4.3.0 **/
+	'new_password_label' => "Nouveau mot de passe",
+	'confirm_new_password_label' => "Confirmer le nouveau mot de passe",
+	'change_my_password_button' => "Changer mon mot de passe",
 ];

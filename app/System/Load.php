@@ -9,6 +9,10 @@
 
 namespace App\System;
 
+use   Libs\Auth\Auth as AuthHelper,
+      App\Models\Users,
+      App\Models\Members as MembersModel;
+
 /**
 * Load Class Loads Views Based on settings in Controllers
 */
@@ -19,8 +23,29 @@ class Load {
     ** Loads files needed to display a page.
     */
     static function View($viewFile, $viewVars = array(), $sidebarFile = "", $template = DEFAULT_TEMPLATE, $useHeadFoot = true, $sidebarFile2 = ""){
+
+        /** Get Common User Data For Site **/
+        /** initialise the AuthHelper object */
+        $auth = new AuthHelper();
+        /** initialise the Users object */
+        $user = new Users();
+        /** Check to see if user is logged in **/
+        if($user_data['isLoggedIn'] = $auth->isLogged()){
+          /** User is logged in - Get their data **/
+          $u_id = $auth->user_info();
+          $user_data['currentUserData'] = $user->getCurrentUserData($u_id);
+          $user_data['isAdmin'] = $user->checkIsAdmin($u_id);
+          $user_data['current_userID'] = $u_id;
+        }
+        /** Get Data For Member Totals Stats Sidebar **/
+        $onlineUsers = new MembersModel();
+        $user_data['activatedAccounts'] = count($onlineUsers->getActivatedAccounts());
+        $user_data['onlineAccounts'] = count($onlineUsers->getOnlineAccounts());
+
         (empty($template)) ? $template = DEFAULT_TEMPLATE : "";
-        $data = $viewVars;
+        $data = array_merge($user_data, $viewVars);
+        /** Extract the $data array to vars **/
+        extract($user_data);
         extract($viewVars);
 
         /* Setup Main View File */
@@ -113,8 +138,29 @@ class Load {
     ** Loads files needed to display a plugin page.
     */
     static function ViewPlugin($viewFile, $viewVars = array(), $sidebarFile = "", $pluginFolder = "", $template = DEFAULT_TEMPLATE, $useHeadFoot = true){
+      
+        /** Get Common User Data For Site **/
+        /** initialise the AuthHelper object */
+        $auth = new AuthHelper();
+        /** initialise the Users object */
+        $user = new Users();
+        /** Check to see if user is logged in **/
+        if($user_data['isLoggedIn'] = $auth->isLogged()){
+          /** User is logged in - Get their data **/
+          $u_id = $auth->user_info();
+          $user_data['currentUserData'] = $user->getCurrentUserData($u_id);
+          $user_data['isAdmin'] = $user->checkIsAdmin($u_id);
+          $user_data['current_userID'] = $u_id;
+        }
+        /** Get Data For Member Totals Stats Sidebar **/
+        $onlineUsers = new MembersModel();
+        $user_data['activatedAccounts'] = count($onlineUsers->getActivatedAccounts());
+        $user_data['onlineAccounts'] = count($onlineUsers->getOnlineAccounts());
+
         (empty($template)) ? $template = DEFAULT_TEMPLATE : "";
-        $data = $viewVars;
+        $data = array_merge($user_data, $viewVars);
+        /** Extract the $data array to vars **/
+        extract($user_data);
         extract($viewVars);
 
         /* Setup Main View File */

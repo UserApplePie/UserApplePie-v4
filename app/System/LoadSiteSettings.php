@@ -201,6 +201,18 @@ class LoadSiteSettings {
              *****************/
              // Get Site Wide Message
              define('ONLINE_BUBBLE', $this->model->getSettings('online_bubble'));
+             /*****************
+              *                *
+              *  Auto Friend   *
+              *                *
+              *****************/
+              // Enable Site Auto Friend and Provide User ID
+              define('SITE_AUTO_FRIEND', $this->model->getSettings('site_auto_friend'));
+              if(!empty($check_for_safi = $this->model->getSettings('site_auto_friend_id'))){
+                define('SITE_AUTO_FRIEND_ID', $check_for_safi);
+              }else{
+                define('SITE_AUTO_FRIEND_ID', '1');
+              }
     }
 
 }

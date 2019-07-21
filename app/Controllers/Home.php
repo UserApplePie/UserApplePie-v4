@@ -45,11 +45,9 @@ class Home extends Controller {
         $data['bodyText'] = $this->language->get('homeMessage');
         /** Check to see if user is logged in **/
         if($data['isLoggedIn'] = $this->auth->isLogged()){
-          //** User is logged in - Get their data **/
+          /** User is logged in - Get their data **/
           $u_id = $this->auth->user_info();
           $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
-          $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
-          $data['current_userID'] = $u_id;
           /** Check to see if user is missing anything in their profile **/
           $firstNameCheck = $data['currentUserData'][0]->firstName;
           $aboutmeCheck = $data['currentUserData'][0]->aboutme;
@@ -64,10 +62,6 @@ class Home extends Controller {
             }
           }
         }
-        /** Get Data For Member Totals Stats Sidebar **/
-        $onlineUsers = new MembersModel();
-        $data['activatedAccounts'] = count($onlineUsers->getActivatedAccounts());
-        $data['onlineAccounts'] = count($onlineUsers->getOnlineAccounts());
 
         /** Check to see if user is logged in - if so then display recent stuff **/
         if($data['isLoggedIn'] && file_exists(ROOTDIR.'app/Plugins/Forum/Controllers/Forum.php') && file_exists(ROOTDIR.'app/Plugins/Friends/Controllers/Friends.php')){
@@ -132,20 +126,9 @@ class Home extends Controller {
     * About Method
     */
     public function About(){
-
+        /** Set the Basic Page Data **/
         $data['title'] = $this->language->get('aboutText');
         $data['bodyText'] = $this->language->get('aboutMessage');
-        /** Check to see if user is logged in **/
-        if($data['isLoggedIn'] = $this->auth->isLogged()){
-          //** User is logged in - Get their data **/
-          $u_id = $this->auth->user_info();
-          $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
-          $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
-        }
-        /** Get Data For Member Totals Stats Sidebar **/
-        $onlineUsers = new MembersModel();
-        $data['activatedAccounts'] = count($onlineUsers->getActivatedAccounts());
-        $data['onlineAccounts'] = count($onlineUsers->getOnlineAccounts());
 
         /** Push data to the view **/
         Load::View("Home::About", $data, "Members::Member-Stats-Sidebar::Left");
@@ -155,19 +138,9 @@ class Home extends Controller {
     * Contact Method
     */
     public function Contact(){
+        /** Set the Basic Page Data **/
         $data['title'] = $this->language->get('contactText');
         $data['bodyText'] = $this->language->get('contactMessage');
-        /** Check to see if user is logged in **/
-        if($data['isLoggedIn'] = $this->auth->isLogged()){
-          //** User is logged in - Get their data **/
-          $u_id = $this->auth->user_info();
-          $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
-          $data['isAdmin'] = $this->user->checkIsAdmin($u_id);
-        }
-        /** Get Data For Member Totals Stats Sidebar **/
-        $onlineUsers = new MembersModel();
-        $data['activatedAccounts'] = count($onlineUsers->getActivatedAccounts());
-        $data['onlineAccounts'] = count($onlineUsers->getOnlineAccounts());
 
         /** Push data to the view **/
         Load::View("Home::Contact", $data, "Members::Member-Stats-Sidebar::Right");

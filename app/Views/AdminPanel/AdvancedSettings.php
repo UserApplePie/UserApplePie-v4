@@ -110,6 +110,27 @@ use Libs\Form,
             <?php echo PageFunctions::displayPopover('Account Activation Token Length', 'Default: 15 - Character length for tokens that are generated for new users when required to activate via email.', true, 'input-group-text'); ?>
           </div>
 
+          <!-- Site Auto Friend -->
+      	  <div class='input-group mb-3' style='margin-bottom: 25px'>
+            <div class="input-group-prepend">
+    				  <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Site Auto Friend</span>
+            </div>
+            <label class='switch form-control'>
+              <input type="checkbox" class='form-control' id='site_auto_friend' name='site_auto_friend' value="TRUE" <?php if($site_auto_friend == "TRUE"){echo "CHECKED";}?> />
+              <span class="slider block"></span>
+            </label>
+            <?php echo PageFunctions::displayPopover('Site Auto Friend', 'Default: Disabled - When enabled, when a new user registers for the site they will be added as friends with set User ID.', true, 'input-group-text'); ?>
+    			</div>
+
+          <!-- Site Auto Friend ID -->
+          <div class='input-group mb-3' style='margin-bottom: 25px'>
+            <div class="input-group-prepend">
+              <span class='input-group-text'><i class='fa fa-fw  fa-globe'></i> Site Auto Friend ID</span>
+            </div>
+            <?php echo Form::input(array('type' => 'text', 'name' => 'site_auto_friend_id', 'class' => 'form-control', 'value' => $site_auto_friend_id, 'placeholder' => 'Site Auto Friend User ID', 'maxlength' => '11')); ?>
+            <?php echo PageFunctions::displayPopover('Site Auto Friend User ID', 'Default: 1 - UserID that new users will be automatically friends with when registering a new account.', true, 'input-group-text'); ?>
+          </div>
+
         </div>
       </div>
     </div>

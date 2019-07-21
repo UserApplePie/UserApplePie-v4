@@ -417,6 +417,11 @@ class Auth {
 							/** Add New user to New Members Group **/
               $info = array('userID' => $user_id, 'groupID' => 1);
               $this->authorize->addIntoDB("users_groups",$info);
+							if(SITE_AUTO_FRIEND != FALSE){
+								/** Add New user as Friend with Main User **/
+								$info = array('uid1' => $user_id, 'uid2' => SITE_AUTO_FRIEND_ID, 'status1' => 1, 'status2' => 1);
+								$this->authorize->addIntoDB("friends",$info);
+							}
 							/** Check to see if Account Activation is required **/
               $account_activation = ACCOUNT_ACTIVATION;
 							if($account_activation == "true"){

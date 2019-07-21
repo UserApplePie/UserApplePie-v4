@@ -345,6 +345,9 @@ class AdminPanel extends Controller{
                     $image_max_size = Request::post('image_max_size');
                     $online_bubble = Request::post('online_bubble');
                     if($online_bubble != 'true'){ $online_bubble = 'false'; }
+                    $site_auto_friend = Request::post('site_auto_friend');
+                    if($site_auto_friend != 'TRUE'){ $site_auto_friend = 'FALSE'; }
+                    $site_auto_friend_id = Request::post('site_auto_friend_id');
 
                     if(!$this->model->updateSetting('site_user_activation', $site_user_activation)){ $errors[] = 'Site User Activation Error'; }
                     if(!$this->model->updateSetting('site_user_invite_code', $site_user_invite_code)){ $errors[] = 'site_user_invite_code Error'; }
@@ -368,6 +371,8 @@ class AdminPanel extends Controller{
                     if(!$this->model->updateSetting('sweet_button_display', $sweet_button_display)){ $errors[] = 'sweet_button_display Error'; }
                     if(!$this->model->updateSetting('image_max_size', $image_max_size)){ $errors[] = 'image_max_size Error'; }
                     if(!$this->model->updateSetting('online_bubble', $online_bubble)){ $errors[] = 'online_bubble Error'; }
+                    if(!$this->model->updateSetting('site_auto_friend', $site_auto_friend)){ $errors[] = 'site_auto_friend Error'; }
+                    if(!$this->model->updateSetting('site_auto_friend_id', $site_auto_friend_id)){ $errors[] = 'site_auto_friend_id Error'; }
 
                     // Run the update settings script
                     if(!isset($errors) || count($errors) == 0){
@@ -423,6 +428,8 @@ class AdminPanel extends Controller{
         $data['sweet_button_display'] = $this->model->getSettings('sweet_button_display');
         $data['image_max_size'] = $this->model->getSettings('image_max_size');
         $data['online_bubble'] = $this->model->getSettings('online_bubble');
+        $data['site_auto_friend'] = $this->model->getSettings('site_auto_friend');
+        $data['site_auto_friend_id'] = $this->model->getSettings('site_auto_friend_id');
 
         /** Setup Token for Form */
         $data['csrfToken'] = Csrf::makeToken('settings');
@@ -1848,7 +1855,7 @@ class AdminPanel extends Controller{
     * @param $id
     */
     public function PagePermissions($id = null){
-
+      $data['current_page'] = $_SERVER['REQUEST_URI'];
       /** Check to see if user is logged in */
       if($data['isLoggedIn'] = $this->auth->isLogged()){
         /** User is logged in - Get their data */

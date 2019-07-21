@@ -197,4 +197,9 @@ return [
 	'logactivity_action_short' => "Error encountered!",
 	'logactivity_action_long' => "Error encountered!",
 	'logactivity_addinfo_long' => "Error encountered!",
+
+	/** New Stuff - 4.3.0 **/
+	'new_password_label' => "New Password",
+	'confirm_new_password_label' => "Confirm New Password",
+	'change_my_password_button' => "Change my Password",
 ];
