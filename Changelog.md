@@ -4,6 +4,9 @@ https://www.userapplepie.com
 ----------------------------------------------------------------------------------------
 UAP v4.2.1 to v4.3.0
 ----------------------------------------------------------------------------------------
+### Terms and Privacy
+ - Added Terms and Privacy Pages 
+ - Added Terms and Privacy Admin Page
 ### Images
  - Added Lightbox to fix the styles for image pop-ups
 ### Messages Plugin

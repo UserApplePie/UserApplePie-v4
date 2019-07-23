@@ -17,7 +17,7 @@ use Libs\Assets,
                     <!-- Footer (sticky) -->
                     <footer class='footer'>
                         <div class='container'>
-                            <span class='text-muted'>
+                            <span class='text-muted text-center'>
 
                                 <!-- Footer links / text -->
                     						<?=Language::show('uap_poweredby', 'Welcome');?> <a href='https://www.userapplepie.com' title='View UserApplePie Website' ALT='UserApplePie' target='_blank'>UserApplePie v4</a>
@@ -25,6 +25,14 @@ use Libs\Assets,
                     						<!-- Display Copywrite stuff with auto year -->
                     						 &copy; <?php echo date("Y") ?> <?php echo SITE_TITLE;?> <?=Language::show('uap_all_rights', 'Welcome');?>.
                                  |
+                                <!-- Terms / Privacy Links -->
+                                <?php if($data['terms_enabled'] == true){ ?>
+                     						<a href='<?=SITE_URL?>Terms'><?=Language::show('terms_title', 'Welcome');?></a>
+                                 |
+                                <?php } if($data['privacy_enabled'] == true){ ?>
+                                <a href='<?=SITE_URL?>Privacy'><?=Language::show('privacy_title', 'Welcome');?></a>
+                                 |
+                                <?php } ?>
                     							<?php
                     								/** Get List of all enabled Languages **/
                     								$languages = \Libs\Language::getlangs();

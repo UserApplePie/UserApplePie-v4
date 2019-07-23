@@ -141,6 +141,12 @@ use Libs\ErrorMessages,
 				</a>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+				<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-TermsPrivacy">
+					<i class="fas fa-fw fa-info-circle"></i>
+					<span class="nav-link-text">Terms and Privacy</span>
+				</a>
+			</li>
+			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
 				<a class="nav-link" href="<?php echo DIR; ?>AdminPanel-AuthLogs">
 					<i class="fa fa-fw fa-server"></i>
 					<span class="nav-link-text">Auth Logs</span>

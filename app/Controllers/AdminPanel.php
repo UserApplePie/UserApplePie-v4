@@ -1991,4 +1991,92 @@ class AdminPanel extends Controller{
       Load::View("AdminPanel/PagePermissions", $data, "", "AdminPanel");
     }
 
+    /**
+    * Admin Panel Terms and Policy
+    * Allows admins to change content for Terms and Policy
+    */
+    public function TermsPrivacy(){
+        /** Get data for dashboard */
+        $data['current_page'] = $_SERVER['REQUEST_URI'];
+        $data['title'] = "Terms and Policy";
+        $data['welcomeMessage'] = "Welcome to the Admin Panel Terms and Policy Editor!";
+
+        /** Check to see if user is logged in */
+        if($data['isLoggedIn'] = $this->auth->isLogged()){
+            /** User is logged in - Get their data */
+            $u_id = $this->auth->user_info();
+            $data['currentUserData'] = $this->user->getCurrentUserData($u_id);
+            if($data['isAdmin'] = $this->user->checkIsAdmin($u_id) == 'false'){
+                /** User Not Admin - kick them out */
+                \Libs\ErrorMessages::push('You are Not Admin', '');
+            }
+        }else{
+            /** User Not logged in - kick them out */
+            \Libs\ErrorMessages::push('You are Not Logged In', 'Login');
+        }
+
+        /** Check to see if Admin is submiting form data */
+        if(isset($_POST['submit'])){
+          /** Check to see if site is a demo site */
+          if(DEMO_SITE != 'TRUE'){
+            /** Check to make sure the csrf token is good */
+            if (Csrf::isTokenValid('TermsPrivacy')) {
+                /** Check to make sure Admin is updating settings */
+                if($_POST['update_settings'] == "true"){
+                    /** Get data sbmitted by form */
+                    $site_terms_content = Request::post('site_terms_content');
+                    $site_privacy_content = Request::post('site_privacy_content');
+                    if(!$this->model->updateSetting('site_terms_content', $site_terms_content)){ $errors[] = 'Site Terms Error'; }
+                    if(!$this->model->updateSetting('site_privacy_content', $site_privacy_content)){ $errors[] = 'Site Policy Error'; }
+
+                    // Run the update settings script
+                    if(!isset($errors) || count($errors) == 0){
+                        /** Success */
+                        \Libs\SuccessMessages::push('You Have Successfully Updated Site Terms and Policy Content', 'AdminPanel-TermsPrivacy');
+                    }else{
+                        // Error
+                        if(isset($errors)){
+                            $error_data = "<hr>";
+                            foreach($errors as $row){
+                                $error_data .= " - ".$row."<br>";
+                            }
+                        }else{
+                            $error_data = "";
+                        }
+                        /** Error Message Display */
+                        \Libs\ErrorMessages::push('Error Updating Site Terms and Policy Content'.$error_data, 'AdminPanel-TermsPrivacy');
+                    }
+                }else{
+                    /** Error Message Display */
+                    \Libs\ErrorMessages::push('Error Updating Site Terms and Policy Content', 'AdminPanel-TermsPrivacy');
+                }
+            }else{
+                /** Error Message Display */
+                \Libs\ErrorMessages::push('Error Updating Site Terms and Policy Content', 'AdminPanel-TermsPrivacy');
+            }
+          }else{
+          	/** Error Message Display */
+          	\Libs\ErrorMessages::push('Demo Limit - Settings Disabled', 'AdminPanel-TermsPrivacy');
+          }
+        }
+
+        /** Get Settings Data */
+        $data['site_terms_content'] = $this->model->getSettings('site_terms_content');
+        $data['site_privacy_content'] = $this->model->getSettings('site_privacy_content');
+
+
+        /** Setup Token for Form */
+        $data['csrfToken'] = Csrf::makeToken('TermsPrivacy');
+
+        /** Setup Breadcrumbs */
+        $data['breadcrumbs'] = "
+          <li class='breadcrumb-item'><a href='".DIR."AdminPanel'><i class='fa fa-fw fa-cog'></i> Admin Panel</a></li>
+          <li class='breadcrumb-item active'><i class='fas fa-fw fa-info-circle'></i> ".$data['title']."</li>
+        ";
+
+        /** Push data to the view */
+        Load::View("AdminPanel/TermsPrivacy", $data, "", "AdminPanel");
+    }
+
+
 }

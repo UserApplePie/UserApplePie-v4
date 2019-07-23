@@ -22,7 +22,8 @@ use App\System\Controller,
     Libs\ErrorMessages,
     Libs\Url,
     Libs\Request,
-    Libs\Language;
+    Libs\Language,
+    App\Models\AdminPanel;
 
 class Home extends Controller {
 
@@ -144,6 +145,34 @@ class Home extends Controller {
 
         /** Push data to the view **/
         Load::View("Home::Contact", $data, "Members::Member-Stats-Sidebar::Right");
+    }
+
+    /**
+    * Terms Method
+    */
+    public function Terms(){
+        /** Get data from Site Settings **/
+        $this->settings = new AdminPanel();
+        /** Set the Basic Page Data **/
+        $data['title'] = $this->language->get('terms_title');
+        $data['bodyText'] = $this->settings->getSettings('site_terms_content');
+
+        /** Push data to the view **/
+        Load::View("Home::Content", $data, "Members::Member-Stats-Sidebar::Right");
+    }
+
+    /**
+    * Privacy Method
+    */
+    public function Privacy(){
+        /** Get data from Site Settings **/
+        $this->settings = new AdminPanel();
+        /** Set the Basic Page Data **/
+        $data['title'] = $this->language->get('privacy_title');
+        $data['bodyText'] = $this->settings->getSettings('site_privacy_content');
+
+        /** Push data to the view **/
+        Load::View("Home::Content", $data, "Members::Member-Stats-Sidebar::Right");
     }
 
     /**

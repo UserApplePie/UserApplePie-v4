@@ -28,8 +28,8 @@ class Routes {
 
         /* Default Routing */
         $routes[] = self::add('Home', 'Home', 'Home', '(:any)/(:num)');
-        //$routes[] = self::add('About', 'Home', 'About');
-        //$routes[] = self::add('Contact', 'Home', 'Contact');
+        $routes[] = self::add('Terms', 'Home', 'Terms');
+        $routes[] = self::add('Privacy', 'Home', 'Privacy');
         $routes[] = self::add('Templates', 'Home', 'Templates');
         $routes[] = self::add('assets', 'Home', 'assets');
         /* End default routes */
@@ -81,6 +81,7 @@ class Routes {
         $routes[] = self::add('AdminPanel-Upgrade', 'AdminPanel', 'Upgrade');
         $routes[] = self::add('AdminPanel-PagesPermissions', 'AdminPanel', 'PagesPermissions', '(:any)');
         $routes[] = self::add('AdminPanel-PagePermissions', 'AdminPanel', 'PagePermissions', '(:num)');
+        $routes[] = self::add('AdminPanel-TermsPrivacy', 'AdminPanel', 'TermsPrivacy');
         /* End Admin Panel Routing */
 
         /* Language Code Change */

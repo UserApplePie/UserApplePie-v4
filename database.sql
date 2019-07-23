@@ -727,7 +727,9 @@ INSERT INTO `uap4_pages` (`id`, `url`, `controller`, `method`, `edit_timestamp`,
 (62, 'About', 'Home', 'About', NULL, 'true'),
 (63, 'Contact', 'Home', 'Contact', NULL, 'true'),
 (64, 'sitemap', 'Home', 'sitemap', NULL, 'false'),
-(65, 'Comments', 'Plugins\\Comments\\Controllers\\Comments', 'comments', NULL, 'false');
+(65, 'Comments', 'Plugins\\Comments\\Controllers\\Comments', 'comments', NULL, 'false'),
+(66, 'Terms', 'Home', 'Terms', NULL, 'false'),
+(67, 'Privacy', 'Home', 'Privacy', NULL, 'false');
 
 -- --------------------------------------------------------
 
@@ -762,6 +764,6 @@ INSERT INTO `uap4_pages_permissions` (`page_id`, `group_id`) VALUES
 (53, 4),(54, 1),(54, 2),(54, 3),(54, 4),(55, 1),(55, 2),(55, 3),(55, 4),(45, 1),
 (45, 2),(45, 3),(45, 4),(16, 1),(16, 2),(16, 3),(16, 4),(11, 1),(11, 2),(11, 3),
 (11, 4),(58, 1),(58, 2),(58, 3),(58, 4),(52, 1),(52, 2),(52, 3),(52, 4),(65, 1),
-(65, 2),(65, 3),(65, 4);
+(65, 2),(65, 3),(65, 4),(66, 0),(67, 0);
 
 -- --------------------------------------------------------

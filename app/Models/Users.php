@@ -286,4 +286,19 @@ class Users extends Models
     return $data[0]->userImage;
   }
 
+  /**
+  * Check site setting for content
+  * @param string $setting_title
+  * @return boolean true/false
+  */
+  public function checkSiteSetting($setting_title)
+  {
+      $data = $this->db->select("SELECT setting_data FROM ".PREFIX."settings WHERE setting_title = :setting_title", array(':setting_title' => $setting_title));
+      if(!empty($data[0]->setting_data)){
+        return true;
+      }else{
+        return false;
+      }
+  }
+
 }

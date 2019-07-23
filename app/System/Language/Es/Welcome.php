@@ -62,4 +62,8 @@ return [
 
 	// Friends
 	'uap_friends' => "Amigos",
+
+	// Terms and Privacy
+	'terms_title' => "Condiciones",
+	'privacy_title' => "Intimidad",
 ];
