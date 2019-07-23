@@ -41,6 +41,9 @@ class Load {
         $onlineUsers = new MembersModel();
         $user_data['activatedAccounts'] = count($onlineUsers->getActivatedAccounts());
         $user_data['onlineAccounts'] = count($onlineUsers->getOnlineAccounts());
+        /** Check to if Terms and Privacy are enabled **/
+        $user_data['terms_enabled'] = $user->checkSiteSetting('site_terms_content');
+        $user_data['privacy_enabled'] = $user->checkSiteSetting('site_privacy_content');
 
         (empty($template)) ? $template = DEFAULT_TEMPLATE : "";
         $data = array_merge($user_data, $viewVars);
@@ -138,7 +141,7 @@ class Load {
     ** Loads files needed to display a plugin page.
     */
     static function ViewPlugin($viewFile, $viewVars = array(), $sidebarFile = "", $pluginFolder = "", $template = DEFAULT_TEMPLATE, $useHeadFoot = true){
-      
+
         /** Get Common User Data For Site **/
         /** initialise the AuthHelper object */
         $auth = new AuthHelper();

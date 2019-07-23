@@ -22,7 +22,7 @@ class PageFunctions {
 		/* List of Pages that user should never get redirected to when logged in */
 		$no_redir_pages = array("login", "register", "logout", "forgot-password", "resend-activation-email", "reset-password", "activate",
 								"Login", "Register", "Logout", "Forgot-Password", "Resend-Activation-Email", "Reset-Password", "Activate",
-								"Templates", "assets");
+								"Templates", "assets", "favicon.ico");
 		/* Get Current Page so we have something to compair to */
 		$cur_page = $_SERVER['REQUEST_URI'];
 		/* Remove the extra forward slash from link */
