@@ -1,4 +1,4 @@
-![UserApplePie](https://uap4demo.userapplepie.com//Templates/Default/Assets/images/uap3logolg.gif)
+![UserApplePie](https://www.userapplepie.com/uap4logo.gif)
 
 ---
 
